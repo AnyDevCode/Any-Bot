@@ -31,8 +31,8 @@ module.exports = class StatsCommand extends Command {
       CPU       :: ${cpu.model()}
       Cores     :: ${cpu.count()}
       CPU Usage :: ${await cpu.usage()} %
-      RAM       :: ${totalMemMb} GB
-      RAM Usage :: ${usedMemMb} GB 
+      RAM       :: ${(totalMemMb/1024).toFixed(2)} GB
+      RAM Usage :: ${(usedMemMb/1024).toFixed(2)} GB 
     `;
     const embed = new MessageEmbed()
       .setTitle('Any Bot\'s Statistics')
@@ -43,7 +43,7 @@ module.exports = class StatsCommand extends Command {
       .addField('Server', `\`\`\`asciidoc\n${serverStats}\`\`\``)
       .addField(
         'Links', 
-        '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599) | ' +
+        '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8) | ' +
         '[Support Server](https://discord.gg/2FRpkNr) **'
       )
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))

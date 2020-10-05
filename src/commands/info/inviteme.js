@@ -17,7 +17,7 @@ module.exports = class InviteMeCommand extends Command {
       .setTitle('Invite Me')
       .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
       .setDescription(oneLine`
-        Click [here](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599)
+        Click [here](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8)
         to invite me to your server!
       `)
       .addField('Other Links', 

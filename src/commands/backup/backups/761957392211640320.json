@@ -1,0 +1,2968 @@
+{
+    "name": "Prueba",
+    "region": "us-central",
+    "verificationLevel": "MEDIUM",
+    "explicitContentFilter": "ALL_MEMBERS",
+    "defaultMessageNotifications": "MENTIONS",
+    "afk": {
+        "name": "💤》afk",
+        "timeout": 3600
+    },
+    "widget": {
+        "channel": null
+    },
+    "channels": {
+        "categories": [
+            {
+                "name": "🎇┃Bienvenidas e información",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 2048
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "『❗』bienvenidos",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎇┃Bienvenidas e información",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "Nadeko",
+                                "avatar": "https://cdn.discordapp.com/avatars/116275390695079945/0de545b2efc0baeda0fbf458f3f884dc.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Bienvenido 😀",
+                                        "type": "rich",
+                                        "description": "Bienvenido <@!733728002910715977> al servidor de Discord de Los GameBois, esperamos que la pases bien con todos.",
+                                        "timestamp": null,
+                                        "color": 15406156,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/avatars/733728002910715977/2c51d34587f039803f0e5fed17e64f9e.png?size=128",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/RO9twDSfBWDZ89K2A1i75nrT5-rDPTdnhDzluHXOAfI/%3Fsize%3D128/https/cdn.discordapp.com/avatars/733728002910715977/2c51d34587f039803f0e5fed17e64f9e.png",
+                                            "height": 128,
+                                            "width": 128
+                                        },
+                                        "image": null,
+                                        "author": {
+                                            "name": "Any Bot#4704",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/733728002910715977/2c51d34587f039803f0e5fed17e64f9e.png?size=128"
+                                        },
+                                        "footer": {
+                                            "text": "User id: 733728002910715977",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/733728002910715977/2c51d34587f039803f0e5fed17e64f9e.png?size=128"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Xenon",
+                                "avatar": "https://cdn.discordapp.com/avatars/416358583220043796/ad778b4c47b314d61e76dcff35135333.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Click [here](https://discord.com/api/oauth2/authorize?client_id=416358583220043796&permissions=8&scope=bot) to **invite Xenon** to your server.",
+                                        "timestamp": null,
+                                        "color": 4689870,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "Info",
+                                            "icon_url": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678110-sign-info-512.png"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "x! invite",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Nadeko",
+                                "avatar": "https://cdn.discordapp.com/avatars/116275390695079945/0de545b2efc0baeda0fbf458f3f884dc.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Bienvenido 😀",
+                                        "type": "rich",
+                                        "description": "Bienvenido <@!734837119478005760> al servidor de Discord de Los GameBois, esperamos que la pases bien con todos.",
+                                        "timestamp": null,
+                                        "color": 15406156,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/avatars/734837119478005760/d598ce25339a06f7a10f681751aeabd0.png?size=128",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/8-yhcWLYhn7Lo_WchNGvOXbdVNf16nyvRXcmIvnWf1Y/%3Fsize%3D128/https/cdn.discordapp.com/avatars/734837119478005760/d598ce25339a06f7a10f681751aeabd0.png",
+                                            "height": 128,
+                                            "width": 128
+                                        },
+                                        "image": null,
+                                        "author": {
+                                            "name": "Catzilla#0283",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/734837119478005760/d598ce25339a06f7a10f681751aeabd0.png?size=128"
+                                        },
+                                        "footer": {
+                                            "text": "User id: 734837119478005760",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/734837119478005760/d598ce25339a06f7a10f681751aeabd0.png?size=128"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Xenon",
+                                "avatar": "https://cdn.discordapp.com/avatars/416358583220043796/ad778b4c47b314d61e76dcff35135333.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Successfully **created backup** with the id `41ac31p48p`.",
+                                        "timestamp": null,
+                                        "color": 4771436,
+                                        "fields": [
+                                            {
+                                                "name": "Usage",
+                                                "value": "```x!backup load 41ac31p48p```\n```x!backup info 41ac31p48p```",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "Success",
+                                            "icon_url": "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678134-sign-check-512.png"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "x!backup create",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Nadeko",
+                                "avatar": "https://cdn.discordapp.com/avatars/116275390695079945/0de545b2efc0baeda0fbf458f3f884dc.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Bienvenido 😀",
+                                        "type": "rich",
+                                        "description": "Bienvenido <@!416358583220043796> al servidor de Discord de Los GameBois, esperamos que la pases bien con todos.",
+                                        "timestamp": null,
+                                        "color": 15406156,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/avatars/416358583220043796/8f702ebf579bce2d7a6f0a4419ac5faf.png?size=128",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/9ljfK5cflK79mdSR3DMpa_ky6y5i4tnt8KkteH3LU0c/%3Fsize%3D128/https/cdn.discordapp.com/avatars/416358583220043796/8f702ebf579bce2d7a6f0a4419ac5faf.png",
+                                            "height": 128,
+                                            "width": 128
+                                        },
+                                        "image": null,
+                                        "author": {
+                                            "name": "Xenon#7325",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/416358583220043796/8f702ebf579bce2d7a6f0a4419ac5faf.png?size=128"
+                                        },
+                                        "footer": {
+                                            "text": "User id: 416358583220043796",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/416358583220043796/8f702ebf579bce2d7a6f0a4419ac5faf.png?size=128"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "unknown.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/734526977247150086/759107157865005116/unknown.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Nadeko",
+                                "avatar": "https://cdn.discordapp.com/avatars/116275390695079945/0de545b2efc0baeda0fbf458f3f884dc.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Bienvenido 😀",
+                                        "type": "rich",
+                                        "description": "Bienvenido <@!349966335352242187> al servidor de Discord de Los GameBois, esperamos que la pases bien con todos.",
+                                        "timestamp": null,
+                                        "color": 15406156,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/avatars/349966335352242187/e63b1c9406254ec8bbeefd8f0c048e4e.png?size=128",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/uHGxBZnS_pDzrVJbQhV2FwPzOZOfVoj0H5j13zj_RkA/%3Fsize%3D128/https/cdn.discordapp.com/avatars/349966335352242187/e63b1c9406254ec8bbeefd8f0c048e4e.png",
+                                            "height": 128,
+                                            "width": 128
+                                        },
+                                        "image": null,
+                                        "author": {
+                                            "name": "Twilight Sparkle#1866",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/349966335352242187/e63b1c9406254ec8bbeefd8f0c048e4e.png?size=128"
+                                        },
+                                        "footer": {
+                                            "text": "User id: 349966335352242187",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/349966335352242187/e63b1c9406254ec8bbeefd8f0c048e4e.png?size=128"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "DogeNova",
+                                "avatar": "https://cdn.discordapp.com/avatars/717465816903450696/fe0dda2529a478891b7a87cabf2b8d97.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "**Muteado**",
+                                        "type": "rich",
+                                        "description": "Muteado: <@696491260071903233>\nMuteado por: <@696491260071903233>\nRazón:",
+                                        "timestamp": null,
+                                        "color": 141065,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Muteado por MDC."
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『❗』reglas",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎇┃Bienvenidas e información",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『❗』roles",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎇┃Bienvenidas e información",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 2048,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『❗』boosts",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎇┃Bienvenidas e información",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『❗』anuncios",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎇┃Bienvenidas e información",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "💎┃Vip Chat´s",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 1049600
+                    },
+                    {
+                        "roleName": "Bot's",
+                        "allow": 3072,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "VIP Cargo",
+                        "allow": 0,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+                        "allow": 0,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "voice",
+                        "name": "》💎Música",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "💎┃Vip Chat´s",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 1049600
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "VIP Cargo",
+                                "allow": 3146752,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "name": "》💎colores-especiales",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "💎┃Vip Chat´s",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 1049600
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "VIP Cargo",
+                                "allow": 1024,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》💎bots",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "💎┃Vip Chat´s",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 1049600
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "VIP Cargo",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》💎Chat VIP",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "💎┃Vip Chat´s",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 1049600
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "VIP Cargo",
+                                "allow": 3146752,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "🔐┃staff",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 3072
+                    },
+                    {
+                        "roleName": "Support",
+                        "allow": 3072,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "Moderation Helper",
+                        "allow": 3072,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "Moderator",
+                        "allow": 3072,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "Administrator",
+                        "allow": 3072,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "》🔐staff-chat",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🔐┃staff",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 64,
+                                "deny": 68608
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 805829713,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Support",
+                                "allow": 68608,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderation Helper",
+                                "allow": 379968,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderator",
+                                "allow": 379968,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Administrator",
+                                "allow": 3072,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🔐staff-en-testing",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🔐┃staff",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 3072
+                            },
+                            {
+                                "roleName": "Support",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderation Helper",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderator",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Administrator",
+                                "allow": 3072,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🔐audit-messages",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🔐┃staff",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 3072
+                            },
+                            {
+                                "roleName": "Support",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderation Helper",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Moderator",
+                                "allow": 3072,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Administrator",
+                                "allow": 3072,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Message deleted in <#734526977247150086>",
+                                        "timestamp": "2020-09-09T14:14:09.645Z",
+                                        "color": 11342935,
+                                        "fields": [
+                                            {
+                                                "name": "Content",
+                                                "value": "https://cdn.discordapp.com/attachments/410197118263754753/579495760383705108/SPOILER_meme.png",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "MDC#9285",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/696491260071903233/c57ae13072501052f4d95b238833f726.png?size=256"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Message deleted in <#734526977247150086>",
+                                        "timestamp": "2020-09-09T14:13:51.201Z",
+                                        "color": 11342935,
+                                        "fields": [
+                                            {
+                                                "name": "Content",
+                                                "value": "https://cdn.discordapp.com/attachments/410197118263754753/579495760383705108/SPOILER_meme.png",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "MDC#9285",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/696491260071903233/c57ae13072501052f4d95b238833f726.png?size=256"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "1596424312170-734526977775501404-chat-general.txt",
+                                        "attachment": "https://cdn.discordapp.com/attachments/734526977775501402/739681919750373456/1596424312170-734526977775501404-chat-general.txt"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "**21** messages were deleted in <#734526977775501404>",
+                                        "timestamp": "2020-08-03T03:11:51.997Z",
+                                        "color": 11342935,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Message deleted in <#734526977775501404>",
+                                        "timestamp": "2020-08-03T03:11:51.535Z",
+                                        "color": 11342935,
+                                        "fields": [
+                                            {
+                                                "name": "Content",
+                                                "value": ">purge 200",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "MDC#9285",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/696491260071903233/d7ac2a9310a0739e4cabfd8698e1bfa1.png?size=256"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "1596423320402-734526977247150088-roles.txt",
+                                        "attachment": "https://cdn.discordapp.com/attachments/734526977775501402/739677760024477706/1596423320402-734526977247150088-roles.txt"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "**18** messages were deleted in <#734526977247150088>",
+                                        "timestamp": "2020-08-03T02:55:20.201Z",
+                                        "color": 11342935,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "Message deleted in <#734526977247150088>",
+                                        "timestamp": "2020-08-03T02:55:19.700Z",
+                                        "color": 11342935,
+                                        "fields": [
+                                            {
+                                                "name": "Content",
+                                                "value": ">purge 50",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": {
+                                            "name": "MDC#9285",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/696491260071903233/d7ac2a9310a0739e4cabfd8698e1bfa1.png?size=256"
+                                        },
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "1596423309644-734526977247150088-roles.txt",
+                                        "attachment": "https://cdn.discordapp.com/attachments/734526977775501402/739677714847629412/1596423309644-734526977247150088-roles.txt"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "description": "**10** messages were deleted in <#734526977247150088>",
+                                        "timestamp": "2020-08-03T02:55:09.474Z",
+                                        "color": 11342935,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "🍻┃Discusión",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "『💬』chat-general",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『📲』redes-sociales",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『🎭』arte",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『📸』fotos-y-videos",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『😄』memes-y-shitposting",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『🍜』otaku",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Otaku",
+                                "allow": 115712,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『🎮』gamer",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Gamer",
+                                "allow": 115712,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『⛔』spoilers",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『📌』mural",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "『🔞』nsfw",
+                        "nsfw": true,
+                        "rateLimitPerUser": 0,
+                        "parent": "🍻┃Discusión",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 3072
+                            },
+                            {
+                                "roleName": "More than 18",
+                                "allow": 3072,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "⭐┃Comunidades",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 1049600
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "voice",
+                        "name": "》🎉 Chat de voz para eventos",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "⭐┃Comunidades",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1049600,
+                                "deny": 2048
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "name": "》⭐soporte",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 66560,
+                                "deny": 264256
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》📥sugerencias",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3072,
+                                "deny": 1048576
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》📁reclutamiento-de-staff",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🎬peliculas",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3072,
+                                "deny": 1048576
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🎉aniversario",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "<a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515> <a:Etada2:555881472586809345> <a:cz_hyper_tada:612253048621760515>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 1050624
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🎁eventos",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》❌quejas",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⭐┃Comunidades",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 1049600
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "⛄┃Spam de bots",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "Bot's",
+                        "allow": 0,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "》👾comandos-de-bots",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⛄┃Spam de bots",
+                        "topic": "<a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386> <a:azulamarelo:661029313717600257> <a:roxovermelho:661029314422243339> <a:verdeamarelo:661029314526969886>  <a:vermelhoazul:661030795259019283> <a:amareloverde:661029313679720448> <a:vermeioroxo:661029314711781386>",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 0,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": ">backupcreate",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "@​MDC haz subido al nivel **5**. GG!",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "@​MDC has reached level **4**. GG!",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Arcane",
+                                "avatar": "https://cdn.discordapp.com/avatars/437808476106784770/adc47330f4e441cee24e1f54be055b11.webp",
+                                "content": "@​MDC has reached level **3**. GG!",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "》👾uno-bot",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "⛄┃Spam de bots",
+                        "topic": "",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 0,
+                                "deny": 3072
+                            },
+                            {
+                                "roleName": "Uno",
+                                "allow": 3072,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "🔊┃Chats de voz",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 3148800,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "Bot's",
+                        "allow": 3148800,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "voice",
+                        "name": "》🔊 General",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3145728,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 General (99 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 99,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 Salon (15 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 15,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 Salon (8 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 8,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 Cuarto (6 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 6,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 Cuarto (5 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 5,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🔊 Cuarto (4 personas)",
+                        "bitrate": 64000,
+                        "userLimit": 4,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》👹Solitario",
+                        "bitrate": 64000,
+                        "userLimit": 3,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "💤》afk",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "🔊┃Chats de voz",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 3147776
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 0,
+                                "deny": 3146752
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "🎶┃Música",
+                "permissions": [],
+                "children": [
+                    {
+                        "type": "voice",
+                        "name": "》🎵 Música-1",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "🎶┃Música",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1049600,
+                                "deny": 2099200
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Members (Lvl 0)",
+                                "allow": 0,
+                                "deny": 2097152
+                            },
+                            {
+                                "roleName": "Level 1",
+                                "allow": 1049600,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "text",
+                        "name": "》🧣comandos-de-música",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "🎶┃Música",
+                        "topic": "Bots de Música que recomendo:\n- Rythm: https://rythmbot.co/\n- Groovy: https://groovy.bot/invite?bot=prod",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 3145728
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3145728,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Members (Lvl 0)",
+                                "allow": 0,
+                                "deny": 3145728
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🎵 Música-2",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "🎶┃Música",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1049600,
+                                "deny": 2099200
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Members (Lvl 0)",
+                                "allow": 0,
+                                "deny": 2097152
+                            },
+                            {
+                                "roleName": "Level 1",
+                                "allow": 1049600,
+                                "deny": 0
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "》🎵 Música-3",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "🎶┃Música",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1049600,
+                                "deny": 2099200
+                            },
+                            {
+                                "roleName": "Bot's",
+                                "allow": 3148800,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Members (Lvl 0)",
+                                "allow": 0,
+                                "deny": 2097152
+                            },
+                            {
+                                "roleName": "Level 1",
+                                "allow": 1049600,
+                                "deny": 0
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "others": []
+    },
+    "roles": [
+        {
+            "name": "⠀⠀⠀⠀⠀⠀⠀ Administrative Positions ⠀⠀⠀⠀⠀⠀⠀",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 164
+        },
+        {
+            "name": "Administrator",
+            "color": "#000000",
+            "hoist": true,
+            "permissions": 2146959359,
+            "mentionable": true,
+            "position": 163
+        },
+        {
+            "name": "Moderator",
+            "color": "#000000",
+            "hoist": true,
+            "permissions": 267861959,
+            "mentionable": true,
+            "position": 162
+        },
+        {
+            "name": "Moderation Helper",
+            "color": "#000000",
+            "hoist": true,
+            "permissions": 267595459,
+            "mentionable": true,
+            "position": 161
+        },
+        {
+            "name": "Support",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 65536,
+            "mentionable": true,
+            "position": 160
+        },
+        {
+            "name": "Bot's",
+            "color": "#d30000",
+            "hoist": true,
+            "permissions": 103272001,
+            "mentionable": false,
+            "position": 159
+        },
+        {
+            "name": "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ Cores ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 158
+        },
+        {
+            "name": "Black",
+            "color": "#050505",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 157
+        },
+        {
+            "name": "DimGray",
+            "color": "#696969",
+            "hoist": false,
+            "permissions": 1177931329,
+            "mentionable": false,
+            "position": 156
+        },
+        {
+            "name": "Gray",
+            "color": "#808080",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 155
+        },
+        {
+            "name": "DarkGray",
+            "color": "#a9a9a9",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 154
+        },
+        {
+            "name": "Silver",
+            "color": "#c0c0c0",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 153
+        },
+        {
+            "name": "LightGrey",
+            "color": "#d3d3d3",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 152
+        },
+        {
+            "name": "Gainsboro",
+            "color": "#dcdcdc",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 151
+        },
+        {
+            "name": "White",
+            "color": "#ffffff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 150
+        },
+        {
+            "name": "SlateBlue",
+            "color": "#6a5acd",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 149
+        },
+        {
+            "name": "DarkSlateBlue",
+            "color": "#483d8b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 148
+        },
+        {
+            "name": "MidnightBlue",
+            "color": "#191970",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 147
+        },
+        {
+            "name": "Navy",
+            "color": "#000080",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 146
+        },
+        {
+            "name": "DarkBlue",
+            "color": "#00008b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 145
+        },
+        {
+            "name": "MediumBlue",
+            "color": "#0000cd",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 144
+        },
+        {
+            "name": "Blue",
+            "color": "#0000ff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 143
+        },
+        {
+            "name": "CornflowerBlue",
+            "color": "#6495ed",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 142
+        },
+        {
+            "name": "RoyalBlue",
+            "color": "#4169e1",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 141
+        },
+        {
+            "name": "DodgerBlue",
+            "color": "#1e90ff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 140
+        },
+        {
+            "name": "DeepSkyBlue",
+            "color": "#00bfff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 139
+        },
+        {
+            "name": "LightSkyBlue",
+            "color": "#87cefa",
+            "hoist": false,
+            "permissions": 103927361,
+            "mentionable": false,
+            "position": 138
+        },
+        {
+            "name": "SkyBlue",
+            "color": "#87ceeb",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 137
+        },
+        {
+            "name": "LightBlue",
+            "color": "#add8e6",
+            "hoist": false,
+            "permissions": 103927361,
+            "mentionable": false,
+            "position": 136
+        },
+        {
+            "name": "SteelBlue",
+            "color": "#4682b4",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 135
+        },
+        {
+            "name": "AquaCyan",
+            "color": "#00ffff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 134
+        },
+        {
+            "name": "DarkTurquoise",
+            "color": "#00ced1",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 133
+        },
+        {
+            "name": "MediumTurquoise",
+            "color": "#48d1cc",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 132
+        },
+        {
+            "name": "Turquoise",
+            "color": "#40e0d0",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 131
+        },
+        {
+            "name": "LightSeaGreen",
+            "color": "#20b2aa",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 130
+        },
+        {
+            "name": "DarkCyan",
+            "color": "#008b8b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 129
+        },
+        {
+            "name": "Teal",
+            "color": "#008b8b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 128
+        },
+        {
+            "name": "MediumAquamarine",
+            "color": "#66cdaa",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 127
+        },
+        {
+            "name": "Aquamarine",
+            "color": "#7fffd4",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 126
+        },
+        {
+            "name": "CadetBlue",
+            "color": "#5f9ea0",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 125
+        },
+        {
+            "name": "MediumSpringGreen",
+            "color": "#00fa9a",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 124
+        },
+        {
+            "name": "SpringGreen",
+            "color": "#00ff7f",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 123
+        },
+        {
+            "name": "PaleGreen",
+            "color": "#98fb98",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 122
+        },
+        {
+            "name": "LightGreen",
+            "color": "#90ee90",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 121
+        },
+        {
+            "name": "DarkSeaGreen",
+            "color": "#8fbc8f",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 120
+        },
+        {
+            "name": "MediumSeaGreen",
+            "color": "#3cb371",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 119
+        },
+        {
+            "name": "SeaGreen",
+            "color": "#2e8b57",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 118
+        },
+        {
+            "name": "DarkGreen",
+            "color": "#006400",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 117
+        },
+        {
+            "name": "Green",
+            "color": "#008000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 116
+        },
+        {
+            "name": "ForestGreen",
+            "color": "#228b22",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 115
+        },
+        {
+            "name": "LimeGreen",
+            "color": "#32cd32",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 114
+        },
+        {
+            "name": "Lime",
+            "color": "#00ff00",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 113
+        },
+        {
+            "name": "DarkKhaki",
+            "color": "#bdb76b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 112
+        },
+        {
+            "name": "Goldenrod",
+            "color": "#daa520",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 111
+        },
+        {
+            "name": "DarkGoldenrod",
+            "color": "#b8860b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 110
+        },
+        {
+            "name": "SaddleBrown",
+            "color": "#8b4513",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 109
+        },
+        {
+            "name": "Sienna",
+            "color": "#a0522d",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 108
+        },
+        {
+            "name": "RosyBrown",
+            "color": "#bc8f8f",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 107
+        },
+        {
+            "name": "Peru",
+            "color": "#cd853f",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 106
+        },
+        {
+            "name": "Chocolate",
+            "color": "#d2691e",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 105
+        },
+        {
+            "name": "SandyBrown",
+            "color": "#f4a460",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 104
+        },
+        {
+            "name": "NavajoWhite",
+            "color": "#ffdead",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 103
+        },
+        {
+            "name": "Wheat",
+            "color": "#f5deb3",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 102
+        },
+        {
+            "name": "BurlyWood",
+            "color": "#deb887",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 101
+        },
+        {
+            "name": "Tan",
+            "color": "#d2b48c",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 100
+        },
+        {
+            "name": "MediumSlateBlue",
+            "color": "#7b68ee",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 99
+        },
+        {
+            "name": "MediumPurple",
+            "color": "#9370db",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 98
+        },
+        {
+            "name": "BlueViolet",
+            "color": "#8a2be2",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 97
+        },
+        {
+            "name": "Indigo",
+            "color": "#4b0082",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 96
+        },
+        {
+            "name": "DarkViolet",
+            "color": "#9400d3",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 95
+        },
+        {
+            "name": "DarkOrchid",
+            "color": "#9932cc",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 94
+        },
+        {
+            "name": "MediumOrchid",
+            "color": "#ba55d3",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 93
+        },
+        {
+            "name": "Purple",
+            "color": "#800080",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 92
+        },
+        {
+            "name": "DarkMagenta",
+            "color": "#8b008b",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 91
+        },
+        {
+            "name": "Magenta",
+            "color": "#ff00ff",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 90
+        },
+        {
+            "name": "Violet",
+            "color": "#ee82ee",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 89
+        },
+        {
+            "name": "Orchid",
+            "color": "#da70d6",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 88
+        },
+        {
+            "name": "Plum",
+            "color": "#dda0dd",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 87
+        },
+        {
+            "name": "MediumVioletRed",
+            "color": "#c71585",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 86
+        },
+        {
+            "name": "DeepPink",
+            "color": "#ff1493",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 85
+        },
+        {
+            "name": "HotPink",
+            "color": "#ff69b4",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 84
+        },
+        {
+            "name": "New Pink",
+            "color": "#ffacda",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 83
+        },
+        {
+            "name": "PaleVioletRed",
+            "color": "#db7093",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 82
+        },
+        {
+            "name": "LightPink",
+            "color": "#ffb6c1",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 81
+        },
+        {
+            "name": "Pink",
+            "color": "#ffc0cb",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 80
+        },
+        {
+            "name": "LightCoral",
+            "color": "#f08080",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 79
+        },
+        {
+            "name": "IndianRed",
+            "color": "#cd5c5c",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 78
+        },
+        {
+            "name": "Crimson",
+            "color": "#dc143c",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 77
+        },
+        {
+            "name": "Maroon",
+            "color": "#800000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 76
+        },
+        {
+            "name": "DarkRed",
+            "color": "#8b0000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 75
+        },
+        {
+            "name": "FireBrick",
+            "color": "#b22222",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 74
+        },
+        {
+            "name": "Salmon",
+            "color": "#fa8072",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 73
+        },
+        {
+            "name": "DarkSalmon",
+            "color": "#e9967a",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 72
+        },
+        {
+            "name": "LightSalmon",
+            "color": "#ffa07a",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 71
+        },
+        {
+            "name": "Coral",
+            "color": "#ff7f50",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 70
+        },
+        {
+            "name": "Tomato",
+            "color": "#ff6347",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 69
+        },
+        {
+            "name": "Red",
+            "color": "#ff0000",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 68
+        },
+        {
+            "name": "OrangeRed",
+            "color": "#ff4500",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 67
+        },
+        {
+            "name": "DarkOrange",
+            "color": "#ff8c00",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 66
+        },
+        {
+            "name": "Orange",
+            "color": "#ffa500",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 65
+        },
+        {
+            "name": "Gold",
+            "color": "#ffd700",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 64
+        },
+        {
+            "name": "Yellow",
+            "color": "#ffff00",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 63
+        },
+        {
+            "name": "Khaki",
+            "color": "#f0e68c",
+            "hoist": false,
+            "permissions": 103140929,
+            "mentionable": false,
+            "position": 62
+        },
+        {
+            "name": "Verde",
+            "color": "#1a6626",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 61
+        },
+        {
+            "name": "Verde Claro",
+            "color": "#2ecc71",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 60
+        },
+        {
+            "name": "Azul",
+            "color": "#206694",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 59
+        },
+        {
+            "name": "Azul Claro",
+            "color": "#3498db",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 58
+        },
+        {
+            "name": "Rosa Claro",
+            "color": "#fa93f0",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 57
+        },
+        {
+            "name": "Rosa",
+            "color": "#ff0077",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 56
+        },
+        {
+            "name": "Roxo",
+            "color": "#b700ff",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 55
+        },
+        {
+            "name": "Amarelo",
+            "color": "#ffd700",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 54
+        },
+        {
+            "name": "Laranja",
+            "color": "#ff4500",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 53
+        },
+        {
+            "name": "Vermelho",
+            "color": "#e21010",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 52
+        },
+        {
+            "name": "Preto",
+            "color": "#070606",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 51
+        },
+        {
+            "name": "Cinza",
+            "color": "#95a5a6",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 50
+        },
+        {
+            "name": "Branco",
+            "color": "#ffffff",
+            "hoist": false,
+            "permissions": 35979840,
+            "mentionable": false,
+            "position": 49
+        },
+        {
+            "name": "⠀⠀⠀⠀⠀⠀⠀ VIP Positions ⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 67489345,
+            "mentionable": false,
+            "position": 48
+        },
+        {
+            "name": "VIP Cargo",
+            "color": "#ffd000",
+            "hoist": true,
+            "permissions": 104189504,
+            "mentionable": false,
+            "position": 47
+        },
+        {
+            "name": "⠀⠀⠀⠀⠀⠀⠀ Charges for Levels ⠀⠀⠀⠀⠀⠀⠀⠀",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 46
+        },
+        {
+            "name": "Level 200",
+            "color": "#010201",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 45
+        },
+        {
+            "name": "Level 100",
+            "color": "#ff0000",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 44
+        },
+        {
+            "name": "Level 90",
+            "color": "#dd6464",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 43
+        },
+        {
+            "name": "Level 80",
+            "color": "#58c948",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 42
+        },
+        {
+            "name": "Level 70",
+            "color": "#3498db",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 41
+        },
+        {
+            "name": "Level 60",
+            "color": "#06ecd8",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 40
+        },
+        {
+            "name": "Level 50",
+            "color": "#2dabb8",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 39
+        },
+        {
+            "name": "Level 40",
+            "color": "#e91e63",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 38
+        },
+        {
+            "name": "Level 30",
+            "color": "#607d8b",
+            "hoist": true,
+            "permissions": 36818497,
+            "mentionable": false,
+            "position": 37
+        },
+        {
+            "name": "Level 25",
+            "color": "#1f8b4c",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 36
+        },
+        {
+            "name": "Level 20",
+            "color": "#620a97",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 35
+        },
+        {
+            "name": "Level 15",
+            "color": "#202cc7",
+            "hoist": true,
+            "permissions": 103878209,
+            "mentionable": false,
+            "position": 34
+        },
+        {
+            "name": "Level 10",
+            "color": "#e67e22",
+            "hoist": true,
+            "permissions": 36769345,
+            "mentionable": false,
+            "position": 33
+        },
+        {
+            "name": "Level 5",
+            "color": "#33e7ac",
+            "hoist": true,
+            "permissions": 103878209,
+            "mentionable": false,
+            "position": 32
+        },
+        {
+            "name": "Level 2",
+            "color": "#e74c3c",
+            "hoist": true,
+            "permissions": 34603009,
+            "mentionable": false,
+            "position": 31
+        },
+        {
+            "name": "Level 1",
+            "color": "#eee8aa",
+            "hoist": true,
+            "permissions": 101711873,
+            "mentionable": false,
+            "position": 30
+        },
+        {
+            "name": "Members (Lvl 0)",
+            "color": "#3498db",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 29
+        },
+        {
+            "name": "⠀⠀⠀⠀⠀⠀⠀⠀Autoroles⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 28
+        },
+        {
+            "name": "Boy",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 27
+        },
+        {
+            "name": "Girl",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 26
+        },
+        {
+            "name": "More than 18",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 25
+        },
+        {
+            "name": "Under 18",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 24
+        },
+        {
+            "name": "Uno",
+            "color": "#1abc9c",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 23
+        },
+        {
+            "name": "DJ",
+            "color": "#1abc9c",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 22
+        },
+        {
+            "name": "Gamer",
+            "color": "#1abc9c",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 21
+        },
+        {
+            "name": "Otaku",
+            "color": "#1abc9c",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 20
+        },
+        {
+            "name": "Infrator LV2",
+            "color": "#ff0000",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": true,
+            "position": 19
+        },
+        {
+            "name": "Infrator LV1",
+            "color": "#ff9400",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": true,
+            "position": 18
+        },
+        {
+            "name": "new role",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 12
+        },
+        {
+            "name": "Muted",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 11
+        },
+        {
+            "name": "The Crown",
+            "color": "#000000",
+            "hoist": true,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 8
+        },
+        {
+            "name": "#Seafoam",
+            "color": "#92d4cb",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 6
+        },
+        {
+            "name": "#Baby Blue",
+            "color": "#7fbff3",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 5
+        },
+        {
+            "name": "#Coral",
+            "color": "#e67b41",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 4
+        },
+        {
+            "name": "#Pastel Red",
+            "color": "#ff5858",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 3
+        },
+        {
+            "name": "#Rose Gold",
+            "color": "#c57f8b",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 2
+        },
+        {
+            "name": "#Seagrass",
+            "color": "#6fc785",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 1
+        }
+    ],
+    "bans": [],
+    "emojis": [
+        {
+            "name": "black",
+            "url": "https://cdn.discordapp.com/emojis/755485314528706621.png"
+        },
+        {
+            "name": "black_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485317657526433.png"
+        },
+        {
+            "name": "brown_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485323374624768.png"
+        },
+        {
+            "name": "blue_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485323609374831.png"
+        },
+        {
+            "name": "green_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485323856969808.png"
+        },
+        {
+            "name": "lime_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485323999314162.png"
+        },
+        {
+            "name": "cyan_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485324154634311.png"
+        },
+        {
+            "name": "orange_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485324423200811.png"
+        },
+        {
+            "name": "pink_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485324708413570.png"
+        },
+        {
+            "name": "red_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485324758614177.png"
+        },
+        {
+            "name": "purple_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485324884443356.png"
+        },
+        {
+            "name": "white_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485325333364766.png"
+        },
+        {
+            "name": "yellow_dead",
+            "url": "https://cdn.discordapp.com/emojis/755485325358530610.png"
+        },
+        {
+            "name": "green",
+            "url": "https://cdn.discordapp.com/emojis/755485327178727464.png"
+        },
+        {
+            "name": "orange",
+            "url": "https://cdn.discordapp.com/emojis/755485327279259691.png"
+        },
+        {
+            "name": "blue",
+            "url": "https://cdn.discordapp.com/emojis/755485327350562947.png"
+        },
+        {
+            "name": "brown",
+            "url": "https://cdn.discordapp.com/emojis/755485327652814859.png"
+        },
+        {
+            "name": "cyan",
+            "url": "https://cdn.discordapp.com/emojis/755485327703146538.png"
+        },
+        {
+            "name": "purple",
+            "url": "https://cdn.discordapp.com/emojis/755485327740633249.png"
+        },
+        {
+            "name": "red",
+            "url": "https://cdn.discordapp.com/emojis/755485327753478224.png"
+        },
+        {
+            "name": "pink",
+            "url": "https://cdn.discordapp.com/emojis/755485327790964917.png"
+        },
+        {
+            "name": "lime",
+            "url": "https://cdn.discordapp.com/emojis/755485327958999060.png"
+        },
+        {
+            "name": "yellow",
+            "url": "https://cdn.discordapp.com/emojis/755485328059531314.png"
+        },
+        {
+            "name": "white",
+            "url": "https://cdn.discordapp.com/emojis/755485328256532641.png"
+        }
+    ],
+    "createdTimestamp": 1601735198787,
+    "guildID": "734526976332791889",
+    "id": "761957392211640320"
+}

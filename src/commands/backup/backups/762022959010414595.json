@@ -1,0 +1,2916 @@
+{
+    "name": "🎃┊Tuto Config {BDFD}",
+    "region": "us-central",
+    "verificationLevel": "MEDIUM",
+    "explicitContentFilter": "ALL_MEMBERS",
+    "defaultMessageNotifications": "MENTIONS",
+    "afk": null,
+    "widget": {
+        "enabled": false,
+        "channel": null
+    },
+    "channels": {
+        "categories": [
+            {
+                "name": "📊 SERVER STATS 📊",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 1024,
+                        "deny": 825235473
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "voice",
+                        "name": "Todos: 171",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "📊 SERVER STATS 📊",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 825235473
+                            }
+                        ]
+                    },
+                    {
+                        "type": "voice",
+                        "name": "Users: 146",
+                        "bitrate": 64000,
+                        "userLimit": 0,
+                        "parent": "📊 SERVER STATS 📊",
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 825235473
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "〔Recepcion〕┊🔦",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 1024,
+                        "deny": 2048
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "〔⭐〕ɴᴜᴇᴠᴏs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Recepcion〕┊🔦",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 66561,
+                                "deny": 805763152
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​Fabbi gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 170**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020818149441596/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​✞✡•kiyoshy-sun•✡✞ gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 169**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020812998967356/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​Brandatlos 🎃 gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 168**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020807492501524/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​¡TomasDev gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 167**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020801620082718/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​RX8XD gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 166**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020796897951784/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​alan1560 gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 167**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020791235117076/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​SevenKey gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 166**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020786290163712/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​ᴹᴿＰａｋｏ gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 167**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020781424902174/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​ᴸʰ〈Ale 👑 ᴬⁿ〉 gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 167**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020776865431582/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Koya",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765268049970/f059e8c0ea7420fd2b85e94a19bc7f3b.webp",
+                                "content": "**Oh, Bienvenido @​Shiro gracias por entrar a este server de ayuda pásate por #〔🎋〕ʀᴇɢʟᴀs para que no cometas sanciones**\r\n\r\n〔📌〕┊**Contigo somos: 167**",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "welcome.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020761392513046/762020771047931954/welcome.png"
+                                    }
+                                ],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🎋〕ʀᴇɢʟᴀs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Recepcion〕┊🔦",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020765411180605/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "@everyone | **Reglas** | `🔌`\n\n\n`1️⃣` | `No hacer spam`\n\n`2️⃣` | `No hacer flood`\n\n`3️⃣` | `No hacer spam de links de servers, y redes`\n\n`4️⃣` | `No promocionar  servers al md de los  usuarios o en el server si  hacen eso a alguno de los  usuarios ablarme a mi md`\n\n**Pronto abran más reglas**",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🎐〕ʙᴏᴏsᴛs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Recepcion〕┊🔦",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "〔IMPORTANTE〕┊💨",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 1024,
+                        "deny": 2112
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "〔🔌〕ᴀɴᴜɴᴄɪᴏs",
+                        "nsfw": false,
+                        "parent": "〔IMPORTANTE〕┊💨",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 66561,
+                                "deny": 805763152
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/760554040853266462/f15ff78bea64406c3090859e9725bec5.webp",
+                                "content": "ese es el username y el Tag",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/760554040853266462/f15ff78bea64406c3090859e9725bec5.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "Screenshot_2020-10-03-13-44-10.png",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020758440378399/762022670145159198/Screenshot_2020-10-03-13-44-10.png"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/760554040853266462/f15ff78bea64406c3090859e9725bec5.webp",
+                                "content": "ayúdenme a reportar al que raideo",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/760554040853266462/f15ff78bea64406c3090859e9725bec5.webp",
+                                "content": "@everyone\n\n**Amigos**",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": true
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🐣〕sᴏʀᴛᴇᴏs",
+                        "nsfw": false,
+                        "parent": "〔IMPORTANTE〕┊💨",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 328705,
+                                "deny": 805501008
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": true
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🍪〕ʙᴏᴏsᴛᴇʀs-ʙᴇɴᴇғɪᴄɪᴏs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔IMPORTANTE〕┊💨",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 66561,
+                                "deny": 805500944
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "Sr. Fyxed",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020762583564339/f4ff98c31cf86c54fa8108670ac7a0dc.webp",
+                                "content": "@everyone | Boosts Beneficios | 💎\n\n**1 Boost**\n\n**Rol** @〔💗〕┊Booster permisos, `añadir reacciones` | `cambiarse su apodo` | `cambiar el apodo de los demas` | `enviar imágenes en canales generales` | `meter emojis y sacar a tu gusto` | `Promocionar tu server solo 1, 2 por 2 boost`\n\n**2 Boost**\n\n**`sorteos privados` | `ayuda más rápida de lo que es ahora` | `hablar con staff o owner privado` | `promocionar tu server solo 2 en un canal de boost promociones` | `añadir emojis los que quieras` | `posibilidad de ser staff`**\n\n**Pronto abran más beneficios**",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔💨〕ᴘɪɴɢs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔IMPORTANTE〕┊💨",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020763502903336/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "@everyone",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020763502903336/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "**Reacciona para ser llamado (ya no abra pings para alianzas %0 ping)**\n\n**`🔦` : @〔📢〕┊ping-anuncios **\n\n**`💡` : @〔🎁〕┊ping-sorteos **\n\n**`🎭` : @〔🔧〕┊ejemplos-bdfd **",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "〔General〕┊🎑",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 3072,
+                        "deny": 49152
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "〔🔋〕ᴄʜᴀᴛ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔General〕┊🎑",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 330817,
+                                "deny": 805498896
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "A171YT",
+                                "avatar": "https://cdn.discordapp.com/avatars/540250871221583923/5f0160436196732008c70d10773ca186.webp",
+                                "content": ".-.",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": ">backupcreate",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "por si acaso",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "voy a hacer otra copia",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                                "content": "s1",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/604349513460744200/4553be5c8ed7e4a66c145d3125371d37.webp",
+                                "content": "Nose",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "N4CH00-_GP",
+                                "avatar": "https://cdn.discordapp.com/avatars/700922970855571486/a_74246de5adc9a2dc57c101ec22c4ae51.webp",
+                                "content": "El booster raideo?",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/604349513460744200/4553be5c8ed7e4a66c145d3125371d37.webp",
+                                "content": "Gracias",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/604349513460744200/4553be5c8ed7e4a66c145d3125371d37.webp",
+                                "content": "Osea yo",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "N4CH00-_GP",
+                                "avatar": "https://cdn.discordapp.com/avatars/700922970855571486/a_74246de5adc9a2dc57c101ec22c4ae51.webp",
+                                "content": "No mames",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🔧〕ᴄᴏᴍᴀɴᴅᴏs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔General〕┊🎑",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/6247407f25d5bf32225985937d028054.webp",
+                                "content": ">backupcreate",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Walker 412",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/4100e53f08f07a2ecc75c80ac80398d2.webp",
+                                "content": "Mejor xd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "WoldFreX ツ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/af746ebdbd10999fdfd58d230d016f16.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "**Mi Prefix Es `w!`,Ejemplo: w!ping**.",
+                                        "type": "rich",
+                                        "description": "WoldFreX | Comandos\n▬▬▬▬▬▬▬▬▬▬▬▬▬\nWoldFreX |  Help | Escoge la categoría de comandos que quieras ver.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n<:MafuAre:738931127921934396>  • 「**Bot.**」 | `w!bothelp`\n <:MafuHeh:738931127112302613> • 「**Utiles.**」 | `w!utilhelp`\n<a:DiscordCarga:738931144996683846> • 「**Moderación.**」 | `w!modehelp`\n<a:Trofeo:739297454393917531> • 「**Niveles.**」 | `w!nivelhelp`\n<a:TierraBlanca:739298723871326248> • 「**Busqueda.**」 | `w!busquehelp`\n<a:RobotFace:739298505792815155> • 「**Comandos de Info**」 | `w!infohelp`\n<a:Estrellitas:739297464296931389> • 「**Edicion de IMG.**」 | `w!imghelp`\n<a:Komi:739298989035487322> • 「**Perfil.**」 | `w!profilehelp` || Muy Pronto ||\n<:MafuFlor:738931128643223563> • 「**Diversión.**」 | `w!diverhelp`\n<:MafuNom:738931126726557777> • 「**Interación.**」 | `w!interhelp`\n<:akkoShrug:717571385110560850> • 「**Debates.**」 | `w!debhelp`\n<a:RainbowHeart:739297452451954858> • 「**Variado.**」 | `w!variahelp`\n<a:2BTe:739297950877876244> • 「**Spam.**」 | `w!extrahelp`\n<a:Procesando:739297978833043598> • 「**Novedades.**」 | `w!news`",
+                                        "timestamp": null,
+                                        "color": 1203230,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Ayuda | WoldFreX | Categorías",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/566281392413999114/15adcbbd78a1a10297301368ffe959fb.png"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Walker 412",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/4100e53f08f07a2ecc75c80ac80398d2.webp",
+                                "content": "w!help",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Any Bot",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/cc5eff9eb866017d66b826666305470d.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Hi, I'm Any Bot. Need help?",
+                                        "type": "rich",
+                                        "description": "You can see everything I can do by using the `>help` command.",
+                                        "timestamp": null,
+                                        "color": 16210269,
+                                        "fields": [
+                                            {
+                                                "name": "Invite Me",
+                                                "value": "You can add me to your server by clicking  [here](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599)!",
+                                                "inline": false
+                                            },
+                                            {
+                                                "name": "Support",
+                                                "value": "If you have questions, suggestions, or found a bug, please join the  [Any Bot Support Server](https://discord.gg/2FRpkNr)!",
+                                                "inline": false
+                                            }
+                                        ],
+                                        "thumbnail": {
+                                            "url": "https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/RrQQzz_sWSBty3ekBAyLXw1eVhZDFu2NnRQXHveM0tc/%3Fv%3D1595260265531/https/cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%252Fezgif.com-gif-to-apng.png",
+                                            "height": 500,
+                                            "width": 500
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/6247407f25d5bf32225985937d028054.webp",
+                                "content": "@​Any Bot",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MDC",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/6247407f25d5bf32225985937d028054.webp",
+                                "content": "@​✞✡•kiyoshy-sun•✡✞ literal nomás debes poner >color pastel red",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Walker 412",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/4100e53f08f07a2ecc75c80ac80398d2.webp",
+                                "content": "Mmm",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "WoldFreX ツ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/af746ebdbd10999fdfd58d230d016f16.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "**Mi Prefix Es `w!`,Ejemplo: w!ping**.",
+                                        "type": "rich",
+                                        "description": "WoldFreX | Comandos\n▬▬▬▬▬▬▬▬▬▬▬▬▬\nWoldFreX |  Help | Escoge la categoría de comandos que quieras ver.\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n<:MafuAre:738931127921934396>  • 「**Bot.**」 | `w!bothelp`\n <:MafuHeh:738931127112302613> • 「**Utiles.**」 | `w!utilhelp`\n<a:DiscordCarga:738931144996683846> • 「**Moderación.**」 | `w!modehelp`\n<a:Trofeo:739297454393917531> • 「**Niveles.**」 | `w!nivelhelp`\n<a:TierraBlanca:739298723871326248> • 「**Busqueda.**」 | `w!busquehelp`\n<a:RobotFace:739298505792815155> • 「**Comandos de Info**」 | `w!infohelp`\n<a:Estrellitas:739297464296931389> • 「**Edicion de IMG.**」 | `w!imghelp`\n<a:Komi:739298989035487322> • 「**Perfil.**」 | `w!profilehelp` || Pronto ||\n<:MafuFlor:738931128643223563> • 「**Diversión.**」 | `w!diverhelp`\n<:MafuNom:738931126726557777> • 「**Interación.**」 | `w!interhelp`\n<:akkoShrug:717571385110560850> • 「**Debates.**」 | `w!debhelp`\n<a:RainbowHeart:739297452451954858> • 「**Variado.**」 | `w!variahelp`\n<a:2BTe:739297950877876244> • 「**Extras.**」 | `w!extrahelp`\n<a:Procesando:739297978833043598> • 「**Novedades.**」 | `w!news`",
+                                        "timestamp": null,
+                                        "color": 2877209,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Ayuda | WoldFreX | Categorías",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/566281392413999114/15adcbbd78a1a10297301368ffe959fb.png"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Walker 412",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770502672414/4100e53f08f07a2ecc75c80ac80398d2.webp",
+                                "content": "w!help",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🔌〕ᴍᴜʟᴛɪᴍᴇᴅɪᴀ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔General〕┊🎑",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 379969,
+                                "deny": 805449744
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "@​tiger_dark!!",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tiger_dark!!",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/ada5a32f1c69194796e74b0911f1b5c0.webp",
+                                "content": "que es mulimedia @​〔Owner〕┊Unsolved Problems",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tiger_dark!!",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/ada5a32f1c69194796e74b0911f1b5c0.webp",
+                                "content": "hola",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YordiSimulator",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/7d8a3c00b7f30bbfaf1adb8596ac4d53.webp",
+                                "content": "Pero quiero arreglarlo en el de `giverole`",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YordiSimulator",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/7d8a3c00b7f30bbfaf1adb8596ac4d53.webp",
+                                "content": "Hay 2 comandos en los que me pasa eso",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YordiSimulator",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/7d8a3c00b7f30bbfaf1adb8596ac4d53.webp",
+                                "content": ":\"c",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YordiSimulator",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/7d8a3c00b7f30bbfaf1adb8596ac4d53.webp",
+                                "content": "Si",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Ese es el emoji?",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "〔Soporte BDFD〕┊🄿🄴🅁🅁🄾🄽🄸🅇™",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/a6660730e46867168e27341c8da72a6e.webp",
+                                "content": ":Si:",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YordiSimulator",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020770851061791/7d8a3c00b7f30bbfaf1adb8596ac4d53.webp",
+                                "content": "._.",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🎎〕ʙᴏᴛs-ᴛᴇsᴛs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔General〕┊🎑",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 330817,
+                                "deny": 805498896
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "Mosasaurus Bot",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/f14fed2105e9a81f6a8f795f4e723e06.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Hey AllisonBK04! Estos son mis comandos:",
+                                        "type": "rich",
+                                        "description": "Mi prefix es **ms!**, por ahora no se puede cambiar.\r\n\r\n⛔️ `ms!help moderator`\r\nMuestra los comandos de moderador.\r\n\r\nℹ️ `ms!help info`\r\nMuestra los comandos de información.\r\n\r\n🤣 `ms!help fun`\r\nMuestra comandos divertidos.\r\n\r\n❗ `ms!help support`\r\nMuestra los comandos de soporte.\r\n\r\n❓ `ms!help other`\r\nMuestra otros comandos.\r\n\r\n💰 `ms!help economy`\r\nMuestra comandos de economía\r\n\r\n🎵 `ms!help music (24/7)!!!`\r\nMuestra comandos de música.",
+                                        "timestamp": null,
+                                        "color": 296826,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": null,
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Ayuda pedida por AllisonBK04",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/630059877628379156/2864520992c576682899cb7a8e82dfdd.png"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "AllisonBK04",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/1ee52d4d420f965113e196e7255bf685.webp",
+                                "content": "ms!help",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/c1815a623357380ecfec513ff82efe5e.webp",
+                                "content": "._.",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Mosasaurus Bot",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/f14fed2105e9a81f6a8f795f4e723e06.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Calculador de gays!!",
+                                        "type": "rich",
+                                        "description": "gus2131, tu eres 67% gay!!",
+                                        "timestamp": null,
+                                        "color": 44017,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": {
+                                            "url": "http://www.yarntomato.com/percentbarmaker/button.php?barPosition=67&leftFill=00ff00",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/jdDn0WLRwgLvDn3n3XD0DYe3HIwgEuvgTKam9GX_idg/%3FbarPosition%3D67%26leftFill%3D00ff00/http/www.yarntomato.com/percentbarmaker/button.php",
+                                            "height": 15,
+                                            "width": 102
+                                        },
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Calculador pedido por gus2131",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/604349513460744200/95a92677bfb4066f4f1f26f112c650ef.png"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/c1815a623357380ecfec513ff82efe5e.webp",
+                                "content": "ms!% gay",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "Mosasaurus Bot",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/f14fed2105e9a81f6a8f795f4e723e06.webp",
+                                "content": "",
+                                "embeds": [
+                                    {
+                                        "title": "Calculador de gays!!",
+                                        "type": "rich",
+                                        "description": "gus2131, tu eres 76% gay!!",
+                                        "timestamp": null,
+                                        "color": 552150,
+                                        "fields": [],
+                                        "thumbnail": null,
+                                        "image": {
+                                            "url": "http://www.yarntomato.com/percentbarmaker/button.php?barPosition=76&leftFill=00ff00",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/09hOQqJ4zUBS4PoXcu_ZtxBs4HQ31pPMseuJjj0oYvk/%3FbarPosition%3D76%26leftFill%3D00ff00/http/www.yarntomato.com/percentbarmaker/button.php",
+                                            "height": 15,
+                                            "width": 102
+                                        },
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Calculador pedido por gus2131",
+                                            "icon_url": "https://cdn.discordapp.com/avatars/604349513460744200/95a92677bfb4066f4f1f26f112c650ef.png"
+                                        }
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/c1815a623357380ecfec513ff82efe5e.webp",
+                                "content": "ms!% gay",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Ahhh aki no está xd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Xd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020772596154398/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "No le sirve",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔⚒〕ʟᴏɢs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔General〕┊🎑",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 3072,
+                                "deny": 49152
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "tiger_dark!!",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020775690633216/ada5a32f1c69194796e74b0911f1b5c0.webp",
+                                "content": "que mergas",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "〔BDFD〕┊🔧",
+                "permissions": [],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "〔🔭〕ᴇᴊᴇᴍᴘʟᴏs-ʙᴅғᴅ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔BDFD〕┊🔧",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 328769,
+                                "deny": 805500944
+                            },
+                            {
+                                "roleName": "〔📌〕┊soporte-bdfd",
+                                "allow": 314432,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Nuevo:\n\n__Buscar en yt__\n\nCode:\n\n```\n$nomention\n$color[ff0101]\n$authorIcon[https://cdn.discordapp.com/attachments/578508199330840579/582510059360092161/social-youtube-circular-button.png]\n$author[YouTube Search]\n$description[Search YouTube...\nhttps://m.youtube.com/results?search_query=$message\nSearch: **$message**\nAuthor: **$username**]\n$argsCheck[>1;Hey! Haz escrito algo mal, `M/youtube` `lo que quieras buscar`]\n$deletecommand\n```\n\n\nPor: @​〔Soporte BDFD〕┊🄿🄴🅁🅁🄾🄽🄸🅇™",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "GIF_47.gif",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020763724677121/762020786139430962/GIF_47.gif"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "〔Soporte BDFD〕┊🄿🄴🅁🅁🄾🄽🄸🅇™",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/a6660730e46867168e27341c8da72a6e.webp",
+                                "content": "Ejemplo ruleta:\n\n\n\n**Importante tener economía en el bot**\n\n\nCode:\n\n```\n\n$nomention\n$cooldown[1m;Espera unos minutos para jugar de nuevo.]\n$suppressErrors[<a:Error:760864766687445082>|Ponga la cantidad de dinero que quiere apostar.]\n$onlyIf[$message[1]>=100; La apuesta mínima para girar la ruleta es de `100`]\n\n$onlyIf[$checkContains[$toLowercase[$message[2]];rojo;negro]==true; Elige a que color le apuestas tu dinero `rojo` o `negro`]\n\n$onlyIf[$message[1]<=$getUserVar[money];No tienes esa cantidad de dinero]\n\n$setUserVar[money;$$replaceText[$replaceText[$checkCondition[$message[2]==$randomText[rojo;negro]];true;sum;-1];false;sub;-1][$getUserVar[money];$message[1]]]\n\n$title[$replaceText[$replaceText[$checkCondition[$message[2]==$randomText[rojo;negro]];true;Ganaste;1];false;Perdiste;1]]\n$description[**Jugador:\n <@$authorID>**\n\n**Calló en el color:**\n `$randomText[rojo;negro]`\n\n**Tu acabas de :**\n`$replaceText[$replaceText[$checkCondition[$message[2]==$randomText[rojo;negro]];true;ganaste;1];false;perdiste;1] $$sum[$replaceText[$replaceText[$checkCondition[$message[2]==$randomText[rojo;negro]];true; $message[1];1];false;0;1];$message[1]]`]\n$footer[Jugada por: $username]\n$color[$replaceText[$replaceText[$checkCondition[$message[2]==$randomText[rojo;negro]];true;1bbe00;1];false;eb0000;1]]\n$image[https://m.gifmania.com.mx/Gifs-Animados-Objetos/Gif-Animadas-Juguetes/Imagenes-Animadas-Casino/Ruleta/Ruleta-Casino-89320.gif]\n```",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "Su categoría es auto-role",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "gus2131",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/c1815a623357380ecfec513ff82efe5e.webp",
+                                "content": "@​〔Soporte BDFD〕┊Soy Igor  de que es el comando?",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "> @〔🔧〕┊ejemplos-bdfd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "> **Variables necesitadas:**\n> \n> canal\n> -\n> **Valor:** _ _\n> \n> -\n> rol\n> **Valor:** _ _\n> \n> **Comando verify o add [Auto-roles] By @​〔Soporte BDFD〕┊Soy Igor**\n> \n> **Code:**\n> \n```\n$nomention\n$dm\n$title[Completed ✅]\n$description[Successfully verified You in $serverName[$guildID]]\n$footer[]\n$color[ff436]\n$onlyForChannels[$getServerVar[canal];Only for the channel <#$getServerVar[canal]>]\n$giveRole[$authorID;$getServerVar[rol]]  \n```\n> _Esta en inglés pero es mi código_",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "> **Variables necesitadas:**\n> \n> canal\n> -\n> **Valor:** _ _\n> \n> -\n> rol\n> **Valor:** _ _\n> \n> **Comando setRole [Auto-roles] By @​〔Soporte BDFD〕┊Soy Igor**\n> \n> **Code:**\n> \n```$nomention\n$argsCheck[>1;Please mention a role] \n$title[Completed ✅]\n$description[The role $message has been selected]\n$footer[]\n$color[ff436]\n$setServerVar[rol;$mentionedRoles[>]]\n$onlyPerms[manageroles;Missing Permissions!]```\n> _Esta en inglés pero es mi código_",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "> @〔🔧〕┊ejemplos-bdfd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "! SσყIɠσɾ「YT」ᵗᵇʰ ˢᶠ",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020766782455808/3c514c4c1e36f3540f7d6cc61a0af359.webp",
+                                "content": "**Variables necesitadas:**\n\ncanal\n-\n**Valor:** _ _\n\n-\nrol\n**Valor:** _ _\n\n**Comando setChannel [Auto-roles] By @​〔Soporte BDFD〕┊Soy Igor**\n\n**Code:**\n\n```\n$nomention\n$argsCheck[>1;Invalid usage! Usage: `v/setChannel <#channel-mention>`.]\n$title[Completed ✅]\n$description[The channel has changed to <#$mentionedChannels[>]>]\n$footer[]\n$color[ff436]\n$setServerVar[canal;$mentionedChannels[>]]\n$onlyPerms[managechannels;Missing Permissions!] \n```\n_Esta en inglés pero es mi código_",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔⭐〕sᴏᴘᴏʀᴛᴇ-ʙᴅғᴅ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔BDFD〕┊🔧",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "〔📌〕┊soporte-bdfd",
+                                "allow": 379969,
+                                "deny": 805449744
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "✞✡•kiyoshy-sun•✡✞",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/15fefd846fb857bf9a178b0620711330.webp",
+                                "content": ":v",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "!DiegoGamer18YT",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/0033c74cbb83a1cf0ee68579a13723e5.webp",
+                                "content": "Xd",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "!DiegoGamer18YT",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/0033c74cbb83a1cf0ee68579a13723e5.webp",
+                                "content": "Xf",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "!DiegoGamer18YT",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/0033c74cbb83a1cf0ee68579a13723e5.webp",
+                                "content": "Qe",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "> Yo tengo el code de buscar en yt xd\n@​!DiegoGamer18YT...",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "!DiegoGamer18YT",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/0033c74cbb83a1cf0ee68579a13723e5.webp",
+                                "content": "A",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MAQU1NA",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/1cdab9b8a0fdc942b3db6389d89422f8.webp",
+                                "content": "Pls",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MAQU1NA",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/1cdab9b8a0fdc942b3db6389d89422f8.webp",
+                                "content": "Me lo pasas?",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MAQU1NA",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/1cdab9b8a0fdc942b3db6389d89422f8.webp",
+                                "content": "@​!DiegoGamer18YT",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "MAQU1NA",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020767474778142/1cdab9b8a0fdc942b3db6389d89422f8.webp",
+                                "content": "A ok",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔💡〕ɢᴜɪᴀ-ʙᴅғᴅ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔BDFD〕┊🔧",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 66561,
+                                "deny": 805501008
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Para eso sirve el $nomention",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "GuiaBDFD",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/59812711331f0bf6239ccd3a3c1a4cd0.webp",
+                                "content": "@​YoungFua Hola",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Hola Bot",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Ahora sin el $nomention",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "Screenshot_20201002-135107.jpg",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020765595467807/762020787912835072/Screenshot_20201002-135107.jpg"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "GuiaBDFD",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/59812711331f0bf6239ccd3a3c1a4cd0.webp",
+                                "content": "Hola",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Hola Bot",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Aqui esta el comando con el $nomention",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "Screenshot_20201002-135010.jpg",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020765595467807/762020777071083520/Screenshot_20201002-135010.jpg"
+                                    }
+                                ],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "¡Muy buena pregunta!\nEl $nomention sirve para que cuando se realize el comando, no tagee a la persona que realizo el comando. Aqui se vera un ejemplo",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "**Una pregunta YoungFua, ¿que es __`$nomention`__? o para que podría servir?**",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "YoungFua",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768326352906/6d70e57f5bb39f5ad3b6aee44a508b2b.webp",
+                                "content": "Como se ve en la imagen, al poner *__Crear Comando__* se vera haci",
+                                "embeds": [],
+                                "files": [
+                                    {
+                                        "name": "Screenshot_20201002-134412.jpg",
+                                        "attachment": "https://cdn.discordapp.com/attachments/762020765595467807/762020771476144128/Screenshot_20201002-134412.jpg"
+                                    }
+                                ],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🎎〕ᴇɴᴄᴜᴇsᴛᴀs-ʙᴅғᴅ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔BDFD〕┊🔧",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "〔📌〕┊soporte-bdfd",
+                                "allow": 183296,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Quieren code de BUSCAR EN YT?\n\nReacciona a :+1: si quieres\n\nReacciona a 👎 si no quieres\n\n|| @〔📢〕┊ping-anuncios ||",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": ":v",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Si este mensaje llega a las 15 relaciones paso code de **MINI JUEGO RULETA**\n\n:3\n\nReacciona a: <:DEVELOPER:761084812257394698>\n\nPor: ||@​〔Soporte BDFD〕┊🄿🄴🅁🅁🄾🄽🄸🅇™||\nPing:  ||@〔📢〕┊ping-anuncios||",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tɛɛn",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/6188d7f0602c2d495a5b7d98f8c0ebb5.webp",
+                                "content": "Ya volví",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tɛɛn",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/6188d7f0602c2d495a5b7d98f8c0ebb5.webp",
+                                "content": "**20 o 30 minutos y lo paso**",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tɛɛn",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/6188d7f0602c2d495a5b7d98f8c0ebb5.webp",
+                                "content": "Esperen unos minutos y lo paso",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tɛɛn",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/6188d7f0602c2d495a5b7d98f8c0ebb5.webp",
+                                "content": "@〔📢〕┊ping-anuncios",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "tɛɛn",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/6188d7f0602c2d495a5b7d98f8c0ebb5.webp",
+                                "content": "Sí esto llega a **10** reacciones paso los siguientes comandos:\n\n> <:DEVELOPER:761084812257394698> - Niveles/rank\n\n> <:DEVELOPER:761084812257394698> - Anti links \n\n> <:DEVELOPER:761084812257394698> - Comando **Jumbo**\n\n> <:DEVELOPER:761084812257394698> - Lockdown",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃✨🄿🄴🅁🅁🄾🄽🄸🅇™✨🎃",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/18d299238de6e9bcd3f8831900356542.webp",
+                                "content": "Falta una reacción y mando code\n\n\n@〔📢〕┊ping-anuncios",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020768921419786/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "@〔📢〕┊ping-anuncios",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    }
+                ]
+            },
+            {
+                "name": "〔Alianzas〕┊🔰",
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 1024,
+                        "deny": 2048
+                    },
+                    {
+                        "roleName": "〔😎〕┊Owner",
+                        "allow": 871890001,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "〔⚔️〕┊Co-Owner",
+                        "allow": 871890001,
+                        "deny": 0
+                    },
+                    {
+                        "roleName": "〔🔭〕┊Administrador",
+                        "allow": 12971072,
+                        "deny": 858918929
+                    },
+                    {
+                        "roleName": "〔💗〕┊Booster",
+                        "allow": 379968,
+                        "deny": 871510033
+                    },
+                    {
+                        "roleName": "━━━━━Permisos━━━━━━",
+                        "allow": 871890001,
+                        "deny": 0
+                    }
+                ],
+                "children": [
+                    {
+                        "type": "text",
+                        "name": "〔👻〕ᴀʟɪᴀɴᴢᴀs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Alianzas〕┊🔰",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "〔🔰〕┊Alianzas Manager",
+                                "allow": 445505,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "Muted",
+                                "allow": 0,
+                                "deny": 2112
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "｡ﾟﾟ･｡･ﾟﾟ｡\nﾟ Welcome to ❏：🎀Soft Bunnies🎀 . . ୨୧\n    ﾟ･｡･ﾟ・・・ ୨♡୧ ・・・\n\n\n୨୧::Soft Bunnies;; una comunidad para pasar el rato entre amigos y realizar nuevas amistades~☆ﾟ.\n-Somos bastante nuevos asi que somos pocos, pero estariamos muy contentos si te unes y le das una oportunidad ♡\n\n『🍥 』꒱·· 0% Toxicidad, a veces son re inactivos. ♡\n『🍓』꒱·· muchos bots aunque se usen la mitad de esos♡\n『☕ 』꒱··roles por nivel aunque pocos lo logran  a♡\n『🌙 』꒱··autoroles ♡ \n『🧸 』꒱··server bien decorado y soft♡\n『🌸 』꒱··muchos emotes hasta nos quedamos sin espacio ahr♡\n\nTodo eso y más ♡\n\n── Que Estas Esperando? Únete uwu 🌸✨ ahre que decia\n(server en progreso)\n\n︶︶︶︶︶︶︶︶꒷꒦︶︶︶︶︶︶︶︶꒷꒦☆ﾟ.･\n🍙 Invitación: https://discord.gg/6YWuVzn\n🍣 gif: https://media.discordapp.net/attachments/737081899394138143/737545531253063690/image1.gif https://cdn\n🌷ping:",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://media.discordapp.net/attachments/737081899394138143/737545531253063690/image1.gif",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://media.discordapp.net/attachments/737081899394138143/737545531253063690/image1.gif",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/9yKkbUgkPRt0CnitN9EdmyHshQ__y23HEUw_bNHYLls/https/media.discordapp.net/attachments/737081899394138143/737545531253063690/image1.gif",
+                                            "height": 258,
+                                            "width": 498
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "୨  ╴╴╴╴╴╴╴╴╴「⛩️」  ╴╴╴╴╴╴╴╴╴୧\n┊       ┊     ┊   ˚✯ ｡˚                          ˚｡ ✯˚   ┊     ┊         ┊\n🏮     ┊   ✫    °     𝕂𝕚𝕟𝕘𝕕𝕠𝕞 𝕊𝕝𝕒𝕪𝕖𝕣     °    ✫   ┊     🏮 \n┊       ⊹       🌙     °       °             °       °     🌙        ⊹       ┊\n✯  ⋆     °     ✩      °      ˚                      ˚      °      ✩     °     ⋆  ✯\n୨  ╴╴╴╴╴╴╴╴╴「⛩️」  ╴╴╴╴╴╴╴╴╴୧\n｡˚ ✧ ⁀➷ 🍡 𝓞𝓯𝓻𝓮𝓬𝓮𝓶𝓸𝓼:\n╭ʚ🍣ɞ˚  :: ¡Comunidad activa! ✦ \n┊ʚ🍜ɞ˚  :: Sistema de niveles con tematica de Demon Slayer. ✧\n┊ʚ🍣ɞ˚  :: Sorteos exclusivos por aportar la etiqueta. ✦ \n┊ʚ🍜ɞ˚  :: Bots Divertidos para jugar. ✧\n┊ʚ🍣ɞ˚  :: Eventos Nitro. ✦ \n╰ʚ🍜ɞ˚  :: Canal de Alianzas y Mini Alianzas. ✧\n୨  ╴╴╴╴╴╴╴╴╴「⛩️」  ╴╴╴╴╴╴╴╴╴୧\n┊₊˚๑ ʚ🍥ɞ・Ping: @eveyone | @hre\n┊₊˚๑ ʚ🍥ɞ・Invitación: https://discord.gg/UEVbPSR\n┊₊˚๑ ʚ🍥ɞ・Banner1: https://imgur.com/YKlZeG8\n┊₊˚๑ ʚ🍥ɞ・Banner2: https://imgur.com/T2jplU0\n୨  ╴╴╴╴╴╴╴╴╴「⛩️」  ╴╴╴╴╴╴╴╴╴୧",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/YKlZeG8",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/YKlZeG8.png",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/4s9wsBVEo8FYknx2lbFTqbFgjB-0yiAz6n9x6g4XjEU/https/i.imgur.com/YKlZeG8.png",
+                                            "height": 1080,
+                                            "width": 2176
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    },
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/T2jplU0",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/T2jplU0h.jpg",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/8LjxFPvkGHSZv1VgolEyquYPIGlcyp0_ZPahAjnhNgg/https/i.imgur.com/T2jplU0h.jpg",
+                                            "height": 0,
+                                            "width": 0
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "●▬▬▬๑۩۩๑▬▬▬▬●●▬▬▬๑۩۩๑▬▬▬▬●\n\n                   ┏─━─━─━∞◆∞━─━─━─┓\n\n                                 ❀ | Nowhere | ❀\n\n                   ┗─━─━─━∞◆∞━─━─━─┛ \n\n´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦•.¸¸\n\n     ┏━                           •◦இ•◦                            ━┓\n\n✦  -『 的な 🍶 』 Variedad de Auto Roles.\n\n✦  -『 的な  🍾 』 Staff Activo 24/7.\n\n✦  -『 的な 🥂 』 Canales interactivos para la comunidad.\n\n✦  -『 的な 🍸 』 Comunidad activa.\n\n✦  -『 的な 🥤 』 Bot de Economía (opción de comprar roles).\n\n✦  -『 的な 🍷 』 Personas con las que estar en call siempre que quieras.\n\n✦  -『  的な 🥃 』 Bot de caza Pokémon.\n\n✦  -『 的な 🍹 』 Canal de Mudae.\n\n      ┗━                           •◦இ•◦                            ━┛\n\n´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦´¨•.¸¸.✦•.¸¸\n\n-  𝖮𝖶𝖭𝖤𝖱: <@193332341995864066>\n-  𝖨𝖭𝖵𝖨𝖳𝖤: https://discord.gg/ejC3CuC\n-  𝖡𝖠𝖭𝖭𝖤𝖱: https://imgur.com/IkR6zep\n-  𝖯𝖨𝖭𝖦: @hee @everone\n\n●▬▬▬๑۩۩๑▬▬▬▬●●▬▬▬๑۩۩๑▬▬▬▬●",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/IkR6zep",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/IkR6zep.jpg",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/Qvc2QLNt2JP1ZojgzdIg2RDzOHVavppjyJ_60ueDs58/https/i.imgur.com/IkR6zep.jpg",
+                                            "height": 1836,
+                                            "width": 3264
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "//---------- ୧ ━━━━━━━━━━━━━━━ ୨   ∞ \n   ☆ﾟ･*:.˛ ˚ღﾟ:ﾟ   `🌹` `**S͓̽OCIAL ƑRIENDS**`\n//---------- ୧ ━━━━━━━━━━━━━━━ ୨   ∞ \n\n╭┈┈┈┈┈┈┈┈┈┈┈┈  ☆ﾟ･ღﾟ:ﾟ:•:｡.: ★\n┊`🍥`  ➥  Una Comunidad Divertida \n┊`🍥`  ➥  Servidor para pasar el Rato\n┊`🍥`  ➥  Diversidad de eventos\n╰┈┈┈┈┈┈┈┈┈┈┈┈  ☆ﾟ･ღﾟ:ﾟ:•:｡.: ★\n\n  ✎﹏﹏﹏ `**__TE OFRECEMOS:__**` \n\n  ୨`📜`୧・Un S͓̽TAƑƑ activo para atenderte\n\n  ୨`☕`୧・BOTS͓̽ (mudae, unbelievaboat, Mantaro, etc) \n\n  ୨`🤝`୧・Canal para Alianzas y MiniAlianzas \n\n  ୨`🎁`୧・`**__EVENTOS  DE NITRO__**`\n\n  ୨`🐱`୧・Canal de pokémon activo\n\n`**Tenemos Una Etiqueta que nos Representa y une - - ୨ |SF|**`\n︿︿︿︿︿︿︿︿︿︿︿︿︿︿︿ ･﹢ ── . . .∞\nღ|`📌`Link - - - ୨ https://discord.gg/WPzmbrR\nღ|`📌`Banner - ୨ https://i.imgur.com/sGkvbll.png\nღ|`📌` Ping- - - ୨ @eveyone / @hee\nღ|`📌`Lema - - ୨  `**SF forever**`\n︿︿︿︿︿︿︿︿︿︿︿︿︿︿︿ ･﹢ ── . . .∞",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/sGkvbll",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/sGkvbll.png",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/WFZ-fNenGe8qLCZjFPxMsZqR-D6qcKL2MQs8W-kcj_E/https/i.imgur.com/sGkvbll.png",
+                                            "height": 889,
+                                            "width": 1434
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "■ □ 𝐿𝑜𝓋𝑒𝓁𝓎 𝐹𝒶𝓂𝒾𝓁𝓎 | 𝒞𝑜𝓂𝓊𝓃𝒾𝓉𝓎 □ ■\n\n``°o.¿Qᴜɪᴇɴᴇꜱ ꜱᴏᴍᴏꜱ?.o°``\n\n**_~~-Somos 𝐿𝑜𝓋𝑒𝓁𝓎 𝐹𝒶𝓂𝒾𝓁𝓎 | 𝒞𝑜𝓂𝓊𝓃𝒾𝓉𝓎 una linda comunidad social con tematica de Angeles~~_**\n\n**_~~-Un lugar super comodo en el cual puedes realiza variedad de vínculos u amistades , ademastenemos una buena configuración y atención 24/7 , ¿Que esperas?♡~~_**\n\n  ╠ о• ℚ𝕦𝕖 𝕠𝕗𝕣𝕖𝕔𝕖𝕞𝕠𝕤 •о ╣\n\n╭・¦-°• **_🤖 Variedades de Bots interactivos 🤖_** •°\n┊ ¦\n┊・¦-°• **_✨ Staff y gente que te ayudara y aconsejara ✨_** •° \n┊ ¦\n┊・¦-°• **_📝 Postulaciones abiertas 📝_** •°\n┊ ¦\n╰・¦-°• **_☁️ Roleplay ☁️_**•° \n\n``•◊•♡•◊•♡ Ｉｎｆｏｒｍａｃｉｏｎ ♡•◊•♡•◊•``\n\n╭°•¦✨¦•° ℑ𝔫𝔳𝔦𝔱𝔞𝔠𝔦𝔬𝔫\n┊°•¦♡¦•°https://discord.gg/s4RfY8n\n┊°•¦-¦•°\n┊°•¦🌟¦•° 𝔅𝔞𝔫𝔫𝔢𝔯\n┊°•¦♡¦•°\n┊°•¦♡¦•°https://cdn.discordapp.com/attachments/719721012517929072/723611717770281000/ezgif-3-8f57836ccba5.gif\n┊°•¦♡¦•° \n┊°•¦♡¦•°https://cdn.discordapp.com/attachments/733494499090759690/734195052162711642/GIF_47.gif\n┊°•¦♡¦•°\n┊°•¦:begginer:¦•° ``🅿🅸🅽🅶:`` (personalizado)\n┊°•¦♡¦•°\n╰°•¦👑¦•° ``🅾🆆🅽🅴🆁:`` 𒆜ℕ𝕒𝕥𝕪ⁿᵇᵗ♛#6642",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://cdn.discordapp.com/attachments/719721012517929072/723611717770281000/ezgif-3-8f57836ccba5.gif",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/attachments/719721012517929072/723611717770281000/ezgif-3-8f57836ccba5.gif",
+                                            "proxyURL": "https://media.discordapp.net/attachments/719721012517929072/723611717770281000/ezgif-3-8f57836ccba5.gif",
+                                            "height": 281,
+                                            "width": 500
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    },
+                                    {
+                                        "type": "rich",
+                                        "url": "https://cdn.discordapp.com/attachments/733494499090759690/734195052162711642/GIF_47.gif",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/attachments/733494499090759690/734195052162711642/GIF_47.gif",
+                                            "proxyURL": "https://media.discordapp.net/attachments/733494499090759690/734195052162711642/GIF_47.gif",
+                                            "height": 4,
+                                            "width": 450
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "❥⠈.⋆.·∽» 𝙲𝚒𝚝𝚢 ᶜʳᵃᶻʸ ♡ ↶｡ﾟ✦୨blossom୧∽ ๑ \n﹀ ﹀ ﹀ ﹀ ﹀ ﹀ ﹀\n\n╭━━━━୨❁୧₊˚.༄ ↷︵︵︵୭˚•₊₊\n┊ ❞ Somos un servidor de temática variada\n┊  en el que Puedes Hablar, Conocer Y Jugar con\n┊  otras personas. ❞\n╰┄┄┄✫ ˚♡ ⋆｡ ❀┄┄┄┄┄┄┄┄┄┄┄\n\nʚ ₊˚⋆°Ofrecemos lo siguiente: •ଓ.° \n◠◠◠◠◠◠◠◠◠◠◠◠⌢⌢⌢⌢⌢⌢\n\n╭─ ─ ─ ─ ─ ── ─ ─ ─  ─ •  ｡ﾟ\n ⋮ ・video_game Sala de juegos. \n ⋮ ・strawberry  Chat \n ⋮ ・rainbow Colores.\n ⋮ ・dango Auto Roles.\n ⋮ ・star2 Staff Activo.\n ⋮ ・icecream Conversaciones Randoms. \n ⋮ ・white_heart Haz Amistades.\n ⋮ ・cherry_blossom No tóxicos.\n ⋮ ・notes Música.\n ⋮ ・cake Y Mucho mas...\n╰────────────────ɞ\n\n» Experiencias únicas\n» Comunidad no toxica\n» Amor y Cariño\n╰─╮\n        ╰─➤ UNETE!\n                   ︶︶︶︶\n➜No te Arrepentirás !!!\n\n❚Ping: @her//@every// <Tu Ping>\n❚Invitacion:https://discord.gg/fzdeUbe\n❚Imagen:https://media.discordapp.net/attachments/719730777088196718/761454408813772810/CITY_CRAZY_HALLOWEEN.png?width=710&height=395\n❚Gif: \n\n✿Dueña : ↳ Javi ↬ ᶜᶜ ɞ#7378",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://media.discordapp.net/attachments/719730777088196718/761454408813772810/CITY_CRAZY_HALLOWEEN.png?width=710&height=395",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://media.discordapp.net/attachments/719730777088196718/761454408813772810/CITY_CRAZY_HALLOWEEN.png?width=710&height=395",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/Ud1_Hq-Tqj_RQ-68Ilgt4trig8PUXIaZRiyq2lbuJEU/%3Fwidth%3D710%26height%3D395/https/media.discordapp.net/attachments/719730777088196718/761454408813772810/CITY_CRAZY_HALLOWEEN.png",
+                                            "height": 395,
+                                            "width": 710
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "✿ ------------------------ ✿ ----------------------- ✿   \n\n╭─────────────────\n╰──➤  ↷.*◌ butterfly ❛Infinite Love❜꒱\n\n❝¡Bienvenidos! somos una comunidad agradable con una temática de todo tipo, para pasar el rato, habla y conocerás personas muy amistosas❞\n⊹   ︵︵︵︵︵︵︵︵︵︵\n¿Qué ofrecemos?\n\n♡⃕~ ❛ Bots propios ༉‧₊˚\n♡⃕~ ❛ Auto Roles ༉‧₊˚\n♡⃕~ ❛ Economía y Mudae  ༉‧₊˚\n♡⃕ ~❛ Sorteos cada cierto tiempo ༉‧₊˚\n♡⃕~ ❛ Staff activo  ༉‧₊˚\n♡⃕~ ❛Canales de Música  ༉‧₊˚\n♡⃕~ ❛ Secciones de juegos ༉‧₊˚\n♡⃕~ ❛ Boosteado nivel 1 ༉‧₊˚\n⊹   ︵︵︵︵︵︵︵︵︵︵\n\n   ੈ ‧₊¡Únete para formar de esta linda comunidad!   ੈ ‧₊\n\n─ - ̗̀♡ ✎Banner::https://imgur.com/MT6Ga1q\n\n─ - ̗̀♡ ✎invitación:https://discord.gg/f6ZgCcE\n\n✿ ------------------------ ✿ ----------------------- ✿",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/MT6Ga1q",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/MT6Ga1q.png",
+                                            "proxyURL": "https://images-ext-1.discordapp.net/external/ASCrQLV40R169LMSz5i6ZixtNMRQ3Iff_WNqzXE5ioM/https/i.imgur.com/MT6Ga1q.png",
+                                            "height": 365,
+                                            "width": 960
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "◜・**Bienvenid@s a La Cueva Pony**・◞\n➴ Este es un grupo sociable y libre de toxicidad, somos activos todo el día y hacemos distintas actividades como juegos, fiestas, eventos, etc. No te dejes engañar por la temática del servidor ya qué hay pocos bronys.Los staff igualmente son activos así que evita romper las reglas, Espero y la pases bien. ( No te juntes con Quaker ✘ )\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n**_▸ Contamos con:_**\n୨˚🌥️˚୧ **Sorteos regularmente activos**\n୨˚✨˚୧ **Staff Agradable**\n୨˚🎈˚୧ **Nuevo Bot Pokécord ! (No es el mismo pero es similar)**\n୨˚🌥️˚୧ **Canal de reacción donde puedes controlar los pings que te lleguen**\n୨˚✨˚୧ **Acostumbramos hacer 'party’s ' jugando Minecraft o cualquier juego**\n୨˚🎈˚୧ **Miembros divertidos con qué puedas socializar y casi siempre activos **\n୨˚🌥️˚୧ **Economía con diferentes temáticas**\n୨˚✨˚୧ **Minijuegos (Pokémon,  Mudae, CleverBot)**\n୨˚🎈˚୧ **Eventos de minecraft** \n୨˚🌥️˚୧ **Actualizaciones constantes**\n୨˚✨˚୧ **Zona NSFW**\n୨˚🎈˚୧ **Varios bots de música**\n୨˚🎊˚୧ **Canales privados de voz/música**\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n**✦ Así que…**\n**┊¿Que esperas para unirte a esta bella comunidad?**\n\n┏ **Twitter**: https://twitter.com/gameplayciones\n├ **Invitación**: https://discord.gg/BJpUzW7 \n├ **Pings**: @everone┊@her\n├ **Banner**: https://cdn.discordapp.com/attachments/584600152208048138/750572484163665931/image0-9.png\n┗ **Gif**: https://tenor.com/view/my-little-pony-fist-bump-partner-cartoon-restaurant-gif-16757644",
+                                "embeds": [
+                                    {
+                                        "title": "TerioGameplayciones (@gameplayciones)",
+                                        "type": "rich",
+                                        "description": "Solo soy un simple brony que tiene un grupo de discord, gracias por su atención.",
+                                        "url": "https://twitter.com/gameplayciones",
+                                        "timestamp": null,
+                                        "color": 1942002,
+                                        "fields": [
+                                            {
+                                                "name": "Tweets",
+                                                "value": "252",
+                                                "inline": true
+                                            },
+                                            {
+                                                "name": "Followers",
+                                                "value": "59",
+                                                "inline": true
+                                            }
+                                        ],
+                                        "thumbnail": {
+                                            "url": "https://pbs.twimg.com/profile_images/1309699577537351680/p8PUEXmd_normal.jpg",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/_CakEEIYP5279uD_i5j_VgNkEobyJKb7-nj2nFTm8x4/https/pbs.twimg.com/profile_images/1309699577537351680/p8PUEXmd_normal.jpg",
+                                            "height": 0,
+                                            "width": 0
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": {
+                                            "text": "Twitter",
+                                            "icon_url": "https://abs.twimg.com/icons/apple-touch-icon-192x192.png"
+                                        }
+                                    },
+                                    {
+                                        "type": "rich",
+                                        "url": "https://cdn.discordapp.com/attachments/584600152208048138/750572484163665931/image0-9.png",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://cdn.discordapp.com/attachments/584600152208048138/750572484163665931/image0-9.png",
+                                            "proxyURL": "https://media.discordapp.net/attachments/584600152208048138/750572484163665931/image0-9.png",
+                                            "height": 500,
+                                            "width": 1500
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    },
+                                    {
+                                        "type": "rich",
+                                        "url": "https://tenor.com/view/my-little-pony-fist-bump-partner-cartoon-restaurant-gif-16757644",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://media.tenor.co/images/792c108d96aa048fb7af4b016b2c476a/tenor.png",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/r48rEqLPHJBuj87Mm9jHGShSJ9P61xJUYwrWZCxtXKs/https/media.tenor.co/images/792c108d96aa048fb7af4b016b2c476a/tenor.png",
+                                            "height": 360,
+                                            "width": 640
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "・━━━━━━━━━━━━━━━━━━━━━ ꒰♡꒱━━━━━━━━━━━━━━━━━━━━━・\n                                     • *・° • *┋ ❤️  **'ハナン'• your WORLD OF ANIME** ❤️┋ *・° • ・° • \n・━━━━━━━━━━━━━━━━━━━━━ ꒰♡꒱━━━━━━━━━━━━━━━━━━━━━・\n                                                \n                                               🌺 Servidor activo, basado en la socialización y anime  🌺 \n\n🚫 **NO hay reglas estrictas, por lo tanto, tu puedes hablar con toda la confianza del mundo.**\n\n✅ **Contenido NSFW super permitido, con bots que suben contenido diario y cada 3 minutos acerca del tema.**\n\n✅ **Staff activo y amigable**\n\n✅ **PUEDES promocionar tus streams, o canales de Youtube**\n\n🔍 **Ayudamos a buscar EL NAME de esa serie anime que tanto paras buscando**.\n\n🎥 **Sala de cine** \n\n🐱 **Galeria de nekos, waifus y memes anime**\n\n🔴 **Reddit** \n\n🔴 **CANAL DE GIFS!**\n\n||Pings: @everone @hee||\nBanner: https://bit.ly/32OieMt\nInvitacion: https://discord.gg/xea3WeU",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://bit.ly/32OieMt",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://bit.ly/32OieMt",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/MNLWS0SclYz2wrfVMupa8YQdWOq_H_4Q3v596KPDd7Y/https/bit.ly/32OieMt",
+                                            "height": 608,
+                                            "width": 1080
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            },
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774349242380/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "╭───────────────۵˚୭̥.\n╰──➢  ↫ [cloud] ↬ ʜᴇᴀᴠᴇɴ ᴏғ sᴀᴛᴜʀɴ\n╭ • ︿︿︿︿︿︿︿︿︿︿︿︿︿︿︿︿︿୨୧\n \nHey tu! Se bienvenido a ʜᴇᴀᴠᴇɴ ᴏғ sᴀᴛᴜʀɴ!! Si te quedaste para leer esto seguro te preguntas... que tenemos para ofrecer? Pues te lo diré!\n\n︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶\n\n cloud ›˚₊· ͟͟͞➳❥ Comunidad social y amigable libre de personas tóxicas uwu. \n\n cloud›˚₊· ͟͟͞➳❥ Servidor bien configurado y adornado para una excelente experiencia. \n\n  cloud›˚₊· ͟͟͞➳❥ Eventos, encuestas, minijuegos y más!\n\n︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶\n\n╭・cloud┊ Role play nsfw activo.\n╎・cloud┊ Diversos canales nsfw.\n╎・cloud┊ Alianzas con cualquier server. \n╎・cloud┊ Simps/buitres = ban. \n╰・cloud┊ Servidor activo 24/7.\n\n︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶\ncloud ›˚₊· ͟͟͞➳❥ https://discord.gg/eVZdJEs\n\ncloud ›˚₊· ͟͟͞➳❥   https://imgur.com/85SiGX5 \n\n╰ •︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶︶୨୧",
+                                "embeds": [
+                                    {
+                                        "type": "rich",
+                                        "url": "https://imgur.com/85SiGX5",
+                                        "timestamp": null,
+                                        "fields": [],
+                                        "thumbnail": {
+                                            "url": "https://i.imgur.com/85SiGX5h.jpg",
+                                            "proxyURL": "https://images-ext-2.discordapp.net/external/bas5w7cO3RtEhlmkgmN9q7hEn82ZdTapcFGniJJHUcQ/https/i.imgur.com/85SiGX5h.jpg",
+                                            "height": 0,
+                                            "width": 0
+                                        },
+                                        "image": null,
+                                        "author": null,
+                                        "footer": null
+                                    }
+                                ],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔📥〕ʀᴇǫᴜɪsɪᴛᴏs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Alianzas〕┊🔰",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "〔😎〕┊Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔⚔️〕┊Co-Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔🛡️〕┊Moderadores",
+                                "allow": 12971072,
+                                "deny": 858918929
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "━━━━━Permisos━━━━━━",
+                                "allow": 871890001,
+                                "deny": 0
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020774163906621/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "@everyone\n\n**Requisitos para alianzas**\n\n**`1️⃣` : Tener más de 20 usuarios sin contar los bots**\n\n**`2️⃣` : Usuarios no toxicos**\n\n**`3️⃣` : No se permiten servers nsfw pero si con canal nsfw**\n\n**`4️⃣` : 0% toxicidad**\n\n**`5️⃣` : estar el que hicso la alianza en el server**\n\n**`6️⃣` : no salirse del server o se cancela la alianza**\n\n**Alianzas a mi DM/MD 🔰 o al md de los @〔🔰〕┊Alianzas Manager **",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🍻〕ᴀᴍɪɢᴏs",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Alianzas〕┊🔰",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 0,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "〔😎〕┊Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔⚔️〕┊Co-Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔🎀〕┊Miembros",
+                                "allow": 377920,
+                                "deny": 871512081
+                            },
+                            {
+                                "roleName": "〔🔭〕┊Administrador",
+                                "allow": 12971072,
+                                "deny": 858918929
+                            },
+                            {
+                                "roleName": "〔🛡️〕┊Moderadores",
+                                "allow": 12971072,
+                                "deny": 858918929
+                            },
+                            {
+                                "roleName": "〔🔧〕┊Bot-Staff",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔🔰〕┊Alianzas Manager",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔🎀〕┊Sorteos Manager",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔📌〕┊soporte-bdfd",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔🔧〕┊soporte-node.js",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔💗〕┊Booster",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "━━━━━Permisos━━━━━━",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔💰〕┊Premium",
+                                "allow": 379968,
+                                "deny": 871510033
+                            }
+                        ],
+                        "messages": [
+                            {
+                                "username": "🎃 - - ୨ Soul King 👻",
+                                "avatar": "https://cdn.discordapp.com/avatars/762020775384711198/40bf01fda0b6440ad2d409f3b0bb742b.webp",
+                                "content": "╭ ╍ ╍ ╍ ╍ ╍ ୨୧ ╍ ╍ ╍ ╍ ╍ ╮\n     ˗ ˏ ˋ  IMPERIO GALISTICO   ˎ ˊ ˗\n╰ ╍ ╍ ╍ ╍ ╍ ୨୧ ╍ ╍ ╍ ╍ ╍ ╯\n╭━─━─━─≪✠≫─━─━─━╮\n❀] »→ Autoroles Paises,sexo y color favorito \n❀] »→ Muchos bots y canales variados\n❀] »→ Server para jugar y ayudar\n❀] »→  Economia en desarrollo\n❀] »→ Prueba tu bot y te ayudamos en lo que sea\n❀] »→ Roles chidos y canales de musica como salas publicas\n╰━─━─━─≪✠≫─━─━─━╯\nhttps://discord.gg/uB7KVBP\n@everyone @hre",
+                                "embeds": [],
+                                "files": [],
+                                "pinned": false
+                            }
+                        ],
+                        "isNews": false
+                    },
+                    {
+                        "type": "text",
+                        "name": "〔🎭〕ʙʟᴀᴄᴋʟɪsᴛ",
+                        "nsfw": false,
+                        "rateLimitPerUser": 0,
+                        "parent": "〔Alianzas〕┊🔰",
+                        "topic": null,
+                        "permissions": [
+                            {
+                                "roleName": "@everyone",
+                                "allow": 1024,
+                                "deny": 2048
+                            },
+                            {
+                                "roleName": "〔😎〕┊Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔⚔️〕┊Co-Owner",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔🎀〕┊Miembros",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔🔭〕┊Administrador",
+                                "allow": 12971072,
+                                "deny": 858918929
+                            },
+                            {
+                                "roleName": "〔✨〕┊Bots",
+                                "allow": 330816,
+                                "deny": 871559185
+                            },
+                            {
+                                "roleName": "〔🛡️〕┊Moderadores",
+                                "allow": 12971072,
+                                "deny": 858918929
+                            },
+                            {
+                                "roleName": "〔🔧〕┊Bot-Staff",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔🔰〕┊Alianzas Manager",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔🎀〕┊Sorteos Manager",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔📌〕┊soporte-bdfd",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔🔧〕┊soporte-node.js",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "〔💗〕┊Booster",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "━━━━━Permisos━━━━━━",
+                                "allow": 871890001,
+                                "deny": 0
+                            },
+                            {
+                                "roleName": "〔💰〕┊Premium",
+                                "allow": 379968,
+                                "deny": 871510033
+                            },
+                            {
+                                "roleName": "Silenciado",
+                                "allow": 0,
+                                "deny": 2048
+                            }
+                        ],
+                        "messages": [],
+                        "isNews": false
+                    }
+                ]
+            }
+        ],
+        "others": [
+            {
+                "type": "text",
+                "name": "•┊👤┊sᴏʟᴏ-sᴛᴀғғ",
+                "nsfw": false,
+                "rateLimitPerUser": 0,
+                "parent": null,
+                "topic": null,
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 3072
+                    }
+                ],
+                "messages": [
+                    {
+                        "username": "gus2131",
+                        "avatar": "https://cdn.discordapp.com/avatars/604349513460744200/4553be5c8ed7e4a66c145d3125371d37.webp",
+                        "content": "Quien raideo",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "Any Bot",
+                        "avatar": "https://cdn.discordapp.com/avatars/733728002910715977/2c51d34587f039803f0e5fed17e64f9e.webp",
+                        "content": ":warning: | When the backup is loaded, all the channels, roles, etc. will be replaced! React with ✅ to confirm!",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": ">backupload 761818333711564802",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": "no esta",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": "a",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": ">backupload 761818333711564802",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": "ahsd}",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": "ahora se traba",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": "a",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    },
+                    {
+                        "username": "MDC",
+                        "avatar": "https://cdn.discordapp.com/avatars/696491260071903233/e66c9529ac6eb4e983ccb79a734dc0fa.webp",
+                        "content": ">backupload 761818333711564802",
+                        "embeds": [],
+                        "files": [],
+                        "pinned": false
+                    }
+                ],
+                "isNews": false
+            },
+            {
+                "type": "voice",
+                "name": "🎃〕— Musica",
+                "bitrate": 64000,
+                "userLimit": 0,
+                "parent": null,
+                "permissions": [
+                    {
+                        "roleName": "@everyone",
+                        "allow": 0,
+                        "deny": 1048576
+                    }
+                ]
+            }
+        ]
+    },
+    "roles": [
+        {
+            "name": "━━━━━Permisos━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 42
+        },
+        {
+            "name": "〔😎〕┊Owner",
+            "color": "#00fff2",
+            "hoist": true,
+            "permissions": 104320585,
+            "mentionable": false,
+            "position": 41
+        },
+        {
+            "name": "〔⚔️〕┊Co-Owner",
+            "color": "#7effff",
+            "hoist": true,
+            "permissions": 2146959103,
+            "mentionable": true,
+            "position": 40
+        },
+        {
+            "name": "The Crown",
+            "color": "#000000",
+            "hoist": true,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 38
+        },
+        {
+            "name": "〔🔧〕┊Bot-Staff",
+            "color": "#f7595d",
+            "hoist": true,
+            "permissions": 2147483647,
+            "mentionable": false,
+            "position": 36
+        },
+        {
+            "name": "〔⚔️〕┊Co-Owner",
+            "color": "#7effff",
+            "hoist": true,
+            "permissions": 2146959103,
+            "mentionable": true,
+            "position": 35
+        },
+        {
+            "name": "〔🛡️〕┊Moderadores",
+            "color": "#4cff00",
+            "hoist": true,
+            "permissions": 37211841,
+            "mentionable": false,
+            "position": 34
+        },
+        {
+            "name": "〔😎〕┊Owner",
+            "color": "#00fff2",
+            "hoist": true,
+            "permissions": 104320585,
+            "mentionable": false,
+            "position": 33
+        },
+        {
+            "name": "〔🔰〕┊Alianzas Manager",
+            "color": "#3eff00",
+            "hoist": true,
+            "permissions": 1275364033,
+            "mentionable": false,
+            "position": 32
+        },
+        {
+            "name": "〔🔭〕┊Administrador",
+            "color": "#ffca00",
+            "hoist": true,
+            "permissions": 506973899,
+            "mentionable": false,
+            "position": 31
+        },
+        {
+            "name": "〔🎀〕┊Sorteos Manager",
+            "color": "#00ff9a",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 30
+        },
+        {
+            "name": "━━━━━Permisos━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 29
+        },
+        {
+            "name": "━━━━━Especiales━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 28
+        },
+        {
+            "name": "〔💰〕┊Premium",
+            "color": "#fbff00",
+            "hoist": true,
+            "permissions": 3260928,
+            "mentionable": false,
+            "position": 27
+        },
+        {
+            "name": "#Baby Blue",
+            "color": "#7fbff3",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 26
+        },
+        {
+            "name": "━━━━━Otros━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 25
+        },
+        {
+            "name": "Muted",
+            "color": "#5b2076",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": true,
+            "position": 24
+        },
+        {
+            "name": "#Seafoam",
+            "color": "#92d4cb",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 23
+        },
+        {
+            "name": "━━━━━Soporte━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 22
+        },
+        {
+            "name": "Silenciado",
+            "color": "#818386",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 21
+        },
+        {
+            "name": "#Seagrass",
+            "color": "#6fc785",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 20
+        },
+        {
+            "name": "#Pastel Red",
+            "color": "#ff5858",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 19
+        },
+        {
+            "name": "〔🔧〕┊soporte-node.js",
+            "color": "#1eabce",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 18
+        },
+        {
+            "name": "〔📌〕┊soporte-bdfd",
+            "color": "#c85555",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 17
+        },
+        {
+            "name": "━━━━━Regulares━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 16
+        },
+        {
+            "name": "〔💸〕┊Mini Vip",
+            "color": "#d9ff00",
+            "hoist": true,
+            "permissions": 576,
+            "mentionable": false,
+            "position": 15
+        },
+        {
+            "name": "〔🌐〕┊ejemplos-node.js",
+            "color": "#1eabce",
+            "hoist": false,
+            "permissions": 37211649,
+            "mentionable": false,
+            "position": 14
+        },
+        {
+            "name": "〔📢〕┊ping-anuncios",
+            "color": "#ffec00",
+            "hoist": false,
+            "permissions": 37211649,
+            "mentionable": false,
+            "position": 13
+        },
+        {
+            "name": "〔🛑〕┊Bots Nuevos",
+            "color": "#f8f8f9",
+            "hoist": false,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 12
+        },
+        {
+            "name": "#Rose Gold",
+            "color": "#c57f8b",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 11
+        },
+        {
+            "name": "Prueba",
+            "color": "#00ffa7",
+            "hoist": true,
+            "permissions": 37031489,
+            "mentionable": false,
+            "position": 10
+        },
+        {
+            "name": "〔✨〕┊Bots",
+            "color": "#9b9683",
+            "hoist": true,
+            "permissions": 768,
+            "mentionable": false,
+            "position": 9
+        },
+        {
+            "name": "〔🔧〕┊ejemplos-bdfd",
+            "color": "#c85555",
+            "hoist": false,
+            "permissions": 37211649,
+            "mentionable": false,
+            "position": 8
+        },
+        {
+            "name": "#Coral",
+            "color": "#e67b41",
+            "hoist": false,
+            "permissions": 0,
+            "mentionable": false,
+            "position": 7
+        },
+        {
+            "name": "————————————————",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 37031497,
+            "mentionable": false,
+            "position": 6
+        },
+        {
+            "name": "━━━━━Bots-Roles━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 5
+        },
+        {
+            "name": "〔🎀〕┊Miembros",
+            "color": "#9cff7b",
+            "hoist": true,
+            "permissions": 512,
+            "mentionable": false,
+            "position": 4
+        },
+        {
+            "name": "━━━━━Pings━━━━━━",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 104189505,
+            "mentionable": false,
+            "position": 3
+        },
+        {
+            "name": "〔🎁〕┊ping-sorteos",
+            "color": "#eb2281",
+            "hoist": false,
+            "permissions": 37211649,
+            "mentionable": false,
+            "position": 2
+        },
+        {
+            "name": "mute",
+            "color": "#000000",
+            "hoist": false,
+            "permissions": 37031489,
+            "mentionable": false,
+            "position": 1
+        }
+    ],
+    "bans": [
+        {
+            "id": "324260503465492500",
+            "reason": null
+        },
+        {
+            "id": "335102688624771073",
+            "reason": null
+        },
+        {
+            "id": "370322250873700361",
+            "reason": null
+        },
+        {
+            "id": "378934419089784832",
+            "reason": null
+        },
+        {
+            "id": "395653612170117130",
+            "reason": null
+        },
+        {
+            "id": "406455063075094528",
+            "reason": null
+        },
+        {
+            "id": "416420099579314199",
+            "reason": null
+        },
+        {
+            "id": "422523101797154827",
+            "reason": null
+        },
+        {
+            "id": "461922966817472512",
+            "reason": "461922966817472512"
+        },
+        {
+            "id": "471806677323087873",
+            "reason": null
+        },
+        {
+            "id": "472952734841045002",
+            "reason": null
+        },
+        {
+            "id": "488041092332257290",
+            "reason": null
+        },
+        {
+            "id": "490690920182972419",
+            "reason": null
+        },
+        {
+            "id": "490965213982490645",
+            "reason": null
+        },
+        {
+            "id": "508356344819220492",
+            "reason": null
+        },
+        {
+            "id": "510887099210399771",
+            "reason": null
+        },
+        {
+            "id": "513008420610375685",
+            "reason": null
+        },
+        {
+            "id": "527687535804022784",
+            "reason": null
+        },
+        {
+            "id": "530443298028912650",
+            "reason": null
+        },
+        {
+            "id": "564538693679841281",
+            "reason": null
+        },
+        {
+            "id": "582919829946892301",
+            "reason": null
+        },
+        {
+            "id": "584742171664711706",
+            "reason": null
+        },
+        {
+            "id": "595184006123880464",
+            "reason": null
+        },
+        {
+            "id": "597637301249769472",
+            "reason": null
+        },
+        {
+            "id": "654831736013717516",
+            "reason": null
+        },
+        {
+            "id": "658233467519238145",
+            "reason": "As sido seleccionado para el ban semanal :) "
+        },
+        {
+            "id": "663570885910724629",
+            "reason": null
+        },
+        {
+            "id": "664222113909047316",
+            "reason": null
+        },
+        {
+            "id": "664254535509868556",
+            "reason": null
+        },
+        {
+            "id": "675722369876230145",
+            "reason": null
+        },
+        {
+            "id": "681859169120419840",
+            "reason": null
+        },
+        {
+            "id": "688541237724053504",
+            "reason": null
+        },
+        {
+            "id": "693983115827478559",
+            "reason": null
+        },
+        {
+            "id": "694018894964457613",
+            "reason": null
+        },
+        {
+            "id": "701583859762069575",
+            "reason": null
+        },
+        {
+            "id": "707628804260102227",
+            "reason": null
+        },
+        {
+            "id": "713114857796272240",
+            "reason": null
+        },
+        {
+            "id": "713153300265959504",
+            "reason": null
+        },
+        {
+            "id": "713851130001621092",
+            "reason": null
+        },
+        {
+            "id": "717766097469702155",
+            "reason": null
+        },
+        {
+            "id": "719278575055929365",
+            "reason": null
+        },
+        {
+            "id": "720756594065014876",
+            "reason": null
+        },
+        {
+            "id": "720885834806722583",
+            "reason": null
+        },
+        {
+            "id": "727351405555482664",
+            "reason": null
+        },
+        {
+            "id": "728398783037308951",
+            "reason": null
+        },
+        {
+            "id": "728785623737040948",
+            "reason": null
+        },
+        {
+            "id": "729497505280294944",
+            "reason": null
+        },
+        {
+            "id": "729741708509708289",
+            "reason": null
+        },
+        {
+            "id": "732249244349497414",
+            "reason": null
+        },
+        {
+            "id": "733163847988281365",
+            "reason": null
+        },
+        {
+            "id": "735251706966704217",
+            "reason": null
+        },
+        {
+            "id": "736615518001430578",
+            "reason": null
+        },
+        {
+            "id": "737053033279651980",
+            "reason": null
+        },
+        {
+            "id": "738802226557878373",
+            "reason": null
+        },
+        {
+            "id": "738840613687918633",
+            "reason": null
+        },
+        {
+            "id": "739236979056836609",
+            "reason": null
+        },
+        {
+            "id": "739551120703094824",
+            "reason": null
+        },
+        {
+            "id": "740207234650472518",
+            "reason": null
+        },
+        {
+            "id": "740218301526966361",
+            "reason": null
+        },
+        {
+            "id": "741668903725563914",
+            "reason": null
+        },
+        {
+            "id": "742450396563505213",
+            "reason": null
+        },
+        {
+            "id": "743861172163575839",
+            "reason": null
+        },
+        {
+            "id": "743862573790920724",
+            "reason": null
+        },
+        {
+            "id": "743863222855270451",
+            "reason": null
+        },
+        {
+            "id": "743865968887070800",
+            "reason": null
+        },
+        {
+            "id": "743867673896812584",
+            "reason": null
+        },
+        {
+            "id": "743871492273733632",
+            "reason": null
+        },
+        {
+            "id": "743885499118387282",
+            "reason": null
+        },
+        {
+            "id": "743886080708706426",
+            "reason": null
+        },
+        {
+            "id": "743886851496083567",
+            "reason": null
+        },
+        {
+            "id": "744022875476066332",
+            "reason": null
+        },
+        {
+            "id": "744568423278837832",
+            "reason": null
+        },
+        {
+            "id": "744656460826411152",
+            "reason": null
+        },
+        {
+            "id": "745474293856731177",
+            "reason": null
+        },
+        {
+            "id": "745673068579389440",
+            "reason": null
+        },
+        {
+            "id": "746002721991032883",
+            "reason": null
+        },
+        {
+            "id": "748961011934953593",
+            "reason": null
+        },
+        {
+            "id": "750351208556003409",
+            "reason": "750351208556003409"
+        },
+        {
+            "id": "750793738913185805",
+            "reason": null
+        },
+        {
+            "id": "752012845662601277",
+            "reason": null
+        },
+        {
+            "id": "752704802378743943",
+            "reason": null
+        },
+        {
+            "id": "753340440001904841",
+            "reason": "Por que fargan se fue fkim"
+        },
+        {
+            "id": "755121288317632661",
+            "reason": null
+        },
+        {
+            "id": "755983545368838184",
+            "reason": null
+        }
+    ],
+    "emojis": [
+        {
+            "name": "Rata",
+            "url": "https://cdn.discordapp.com/emojis/762020754199806006.png"
+        },
+        {
+            "name": "Aplausosmarica",
+            "url": "https://cdn.discordapp.com/emojis/762020754954911795.gif"
+        },
+        {
+            "name": "DEVELOPER",
+            "url": "https://cdn.discordapp.com/emojis/762020756266811392.png"
+        },
+        {
+            "name": "aloading",
+            "url": "https://cdn.discordapp.com/emojis/762020757323776012.gif"
+        },
+        {
+            "name": "asearch",
+            "url": "https://cdn.discordapp.com/emojis/762020759128244226.gif"
+        },
+        {
+            "name": "Pudrete",
+            "url": "https://cdn.discordapp.com/emojis/762020763188330506.png"
+        },
+        {
+            "name": "offline",
+            "url": "https://cdn.discordapp.com/emojis/762020764069134378.png"
+        },
+        {
+            "name": "awarning",
+            "url": "https://cdn.discordapp.com/emojis/762020765163454488.gif"
+        },
+        {
+            "name": "Si",
+            "url": "https://cdn.discordapp.com/emojis/762020767511609368.gif"
+        },
+        {
+            "name": "No",
+            "url": "https://cdn.discordapp.com/emojis/762020769383055400.gif"
+        },
+        {
+            "name": "Saltitos",
+            "url": "https://cdn.discordapp.com/emojis/762020771085811732.gif"
+        },
+        {
+            "name": "online",
+            "url": "https://cdn.discordapp.com/emojis/762020771887317085.png"
+        },
+        {
+            "name": "idle",
+            "url": "https://cdn.discordapp.com/emojis/762020773539086366.png"
+        },
+        {
+            "name": "Uff",
+            "url": "https://cdn.discordapp.com/emojis/762020774423953418.png"
+        },
+        {
+            "name": "Ok",
+            "url": "https://cdn.discordapp.com/emojis/762020775686307850.png"
+        },
+        {
+            "name": "cuenta",
+            "url": "https://cdn.discordapp.com/emojis/762020778082304000.gif"
+        },
+        {
+            "name": "XD",
+            "url": "https://cdn.discordapp.com/emojis/762020779021172747.png"
+        },
+        {
+            "name": "XDDD",
+            "url": "https://cdn.discordapp.com/emojis/762020782808760320.gif"
+        },
+        {
+            "name": "averified",
+            "url": "https://cdn.discordapp.com/emojis/762020785270685747.gif"
+        },
+        {
+            "name": "dnd",
+            "url": "https://cdn.discordapp.com/emojis/762020786433032192.png"
+        },
+        {
+            "name": "Mecalientas",
+            "url": "https://cdn.discordapp.com/emojis/762020787259310101.png"
+        },
+        {
+            "name": "BOT",
+            "url": "https://cdn.discordapp.com/emojis/762020788316405811.png"
+        },
+        {
+            "name": "emoji_37",
+            "url": "https://cdn.discordapp.com/emojis/762020789276246036.png"
+        }
+    ],
+    "createdTimestamp": 1601750831130,
+    "guildID": "755087729062314084",
+    "id": "762022959010414595",
+    "iconURL": "https://cdn.discordapp.com/icons/755087729062314084/a710f9d95ad232957113603a75fb42ce.webp"
+}

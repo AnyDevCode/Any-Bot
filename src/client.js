@@ -39,6 +39,7 @@ class Client extends Discord.Client {
       COLOR: 'color',
       POINTS: 'points',
       MISC: 'misc',
+      GAMES: 'games',
       MOD: 'mod',
       ADMIN: 'admin',
       MUSIC: 'music',

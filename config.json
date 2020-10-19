@@ -6,6 +6,7 @@
   "serverLogId": "serverLogId",
   "apiKeys": {
     "catApi": "catApiKey",
-    "googleApi": "googleApiKey"
+    "googleApi": "googleApiKey",
+    "fortniteshopApi": "fortniteshopApi"
   }
 }

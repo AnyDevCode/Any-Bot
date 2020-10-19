@@ -14,10 +14,11 @@ module.exports = class FortniteShopCommand extends Command {
     });
   }
   async run(message, args) {
+          const apiKey = message.client.apiKeys.fortniteshopApi;
 const swiftcord = require("swiftcord") //requerimos
 const canva = new swiftcord.Canvas() //el canvas de swiftcord
 const image = await canva.Fortnite() //necesitaremos tener el evento message asincrono
-.setKey("013f3da5-148e-4c7e-96e3-30185e765a14")
+.setKey(apiKey)
 .toAttachment() //la convertimos en un attachment
 let attachment = new Discord.MessageAttachment(image, "tienda.png") //hacemos un attachment de la tienda
 return message.channel.send(attachment) //enviamos el attachment

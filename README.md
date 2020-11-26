@@ -45,7 +45,13 @@ After installation edit the config.json
   "serverLogId": "serverLogId",
   "apiKeys": {
     "catApi": "catApiKey",
-    "googleApi": "googleApiKey"
+    "googleApi": "googleApiKey",
+    "fortniteshopApi": "fnrb.co Api Key",
+    "fortniteApi": "Fortnite Traker key",
+    "geometrydash": {
+      "user": "Username",
+      "password": "Password"
+    }
     }
 }
 ```

@@ -1,20 +1,24 @@
 {
-  "name": "calypso",
-  "version": "1.7.0",
+  "name": "any-bot",
+  "version": "1.1.7",
   "description": "A fully customizable bot built with discord.js",
   "main": "app.js",
   "dependencies": {
     "ascii-table": "0.0.9",
     "better-sqlite3": "^7.1.0",
     "booru": "^2.3.2",
+    "canvas": "^2.6.1",
     "common-tags": "^1.8.0",
     "dblapi.js": "^2.4.1",
     "discord-backup": "^2.2.5",
+    "discord-canvas": "^1.4.1",
     "discord.js": "^12.3.1",
     "fortnite": "^4.3.2",
     "geometry-dash-api": "^2.0.0",
+    "google-play-scraper": "^8.0.2",
     "he": "^1.2.0",
     "math-expression-evaluator": "^1.2.22",
+    "meowdb": "^2.1.6",
     "minecraft-server-util": "^3.0.2",
     "minimist": ">=1.2.2",
     "moment": "^2.22.2",
@@ -37,16 +41,18 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "shard": "node shard.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://sabattle@github.com/sabattle/CalypsoBot.git"
+    "url": "git+https://github.com/MDCYT/Any-Bot.git"
   },
-  "author": "Sebastian Battle",
+  "author": "MDCYT",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/sabattle/CalypsoBot/issues"
+    "url": "https://github.com/MDCYT/Any-Bot/issues"
   },
-  "homepage": "https://github.com/sabattle/CalypsoBot#readme"
+  "homepage": "https://github.com/MDCYT/Any-Bot#readme"
 }

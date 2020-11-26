@@ -6,19 +6,20 @@ I am [**Any Bot**](https://top.gg/bot/733728002910715977), a multifunctional Dis
 
 # Features
 
-Currently the Bot has more than 137 commands and 11 categories with which you have a variety of useful and fun commands.
+Currently the Bot has more than 148 commands and 12 categories with which you have a variety of useful and fun commands.
 
 - Categories:
-  - **Info [25]**
-  - **Fun [29]**
+  - **Info [24]**
+  - **Fun [30]**
   - **Color [5]**
   - **Points [8]**
   - **Misc [3]**
-  - **Games [3]**
+  - **Games [6]**
   - **Mod [16]**
   - **Admin [34]**
   - **Music [10]**
   - **Backup [3]**
+  - **Owner [8]**
   - **Nsfw [1]**
 
 

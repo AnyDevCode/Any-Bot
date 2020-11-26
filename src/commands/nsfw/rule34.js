@@ -16,7 +16,7 @@ module.exports = class Rule34Command extends Command {
   }
   async run(message, args) {
 	  if(!message.channel.nsfw) return message.channel.send("Sorry but this channel is not NSFW.")
-       const tags = args.join(" ") //los tags que buscaremos
+       const tags = args.join(" ").replace(" ", "%20") //los tags que buscaremos
       if(!tags) return message.channel.send("Write something to look for in Rule 34.")
         booru.search('rule34', [tags], { limit: 1, random: true })//el primero es para buscar en la rule 34, luego se busca con los tags, luego agarramos una sola imagen y que sea una imagen aleatoria
         .then(posts => {//el json como toda la informacion

@@ -7,6 +7,11 @@
   "apiKeys": {
     "catApi": "catApiKey",
     "googleApi": "googleApiKey",
-    "fortniteshopApi": "fortniteshopApi"
+    "fortniteshopApi": "fortniteshopApi",
+    "fortniteApi": "FortniteTrakerApi",
+    "geometrydash": {
+      "user": "Username",
+      "password": "Password"
+    }
   }
 }

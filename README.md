@@ -64,4 +64,4 @@ Make sure you have **PRESENCE INTENT** and **SERVER MEMBERS INTENT** enabled on 
 
 ## Need help?
 
-You can enter the [Any Bot Support server](https://discord.gg/2FRpkNr) or send me an MD (MDC#9285)
+You can enter the [Any Bot Support server](https://discord.gg/2FRpkNr) or send me an MD (MDC#0001)

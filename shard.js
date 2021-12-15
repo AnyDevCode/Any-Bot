@@ -5,8 +5,12 @@ const bldapikey = require("./blapi.json");
 
 const { ShardingManager } = require('discord.js');
 
+global.__basedir = __dirname;
+
 const config = require('./config.json')
 const shardManager = new ShardingManager(`${__dirname}/app.js`, { token: config.token });
+const Client = require("./src/client.js");
+const client = new Client(config);
 
 var details = {
   users: client.users.cache.size,
@@ -43,9 +47,6 @@ postertopgg.on("posted", async (stats) => {
   });
 });
 
-poster.on("posted", (stats) => {
-  console.log("Posteado en Top.gg | " + stats.serverCount + " servers")
-})
 
 shardManager.spawn('auto');
 shardManager.on('shardCreate', shard => console.log(`Shard ${shard.id} launched`));

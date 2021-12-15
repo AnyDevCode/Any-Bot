@@ -9,7 +9,8 @@ module.exports = class NowPlayingMusicCommand extends Command {
       usage: 'nowplaying',
       aliases: ['np', 'current'],
       description: 'Shows the song that is currently playing',
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

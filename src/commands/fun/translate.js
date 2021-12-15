@@ -9,13 +9,14 @@ module.exports = class TranslateCommand extends Command {
       name: 'translate',
       aliases: ['trlt'],
       usage: 'translate <Input language> <Output language> <Text to translate>',
+      examples: ["translate es en Hola mundo", "translate en es Hello World", "translate ru en Hello Rusia"],
       description: 'Translate the text to the language you want',
       type: client.types.FUN
     });
   }
   async run(message, args) {
 
-    if(!args[2]) return message.channel.send(`Invalid form, example of how to use: \`${message.client.db.settings.selectPrefix.pluck().get(message.guild.id)}translate en es Hello World\` \n ${"(en = Language of the text set, es = Language to which you want to translate)"}`)
+    if(!args[2]) return this.sendErrorMessage(message, 0, `Please check the command and try again.`);
 
     try {
       translate({

@@ -9,7 +9,8 @@ module.exports = class PlayListCommand extends Command {
       usage: 'playlists',
       aliases: ['pls'],
       description: 'Shows the available playlists',
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

@@ -45,13 +45,7 @@ After installation edit the config.json
   "serverLogId": "serverLogId",
   "apiKeys": {
     "catApi": "catApiKey",
-    "googleApi": "googleApiKey",
-    "fortniteshopApi": "fnrb.co Api Key",
-    "fortniteApi": "Fortnite Traker key",
-    "geometrydash": {
-      "user": "Username",
-      "password": "Password"
-    }
+    "googleApi": "googleApiKey"
     }
 }
 ```
@@ -64,4 +58,4 @@ Make sure you have **PRESENCE INTENT** and **SERVER MEMBERS INTENT** enabled on 
 
 ## Need help?
 
-You can enter the [Any Bot Support server](https://discord.gg/2FRpkNr) or send me an MD (MDC#0001)
+You can enter the [Any Bot Support server](https://discord.gg/2FRpkNr) or send me an MD (MDC#9285)

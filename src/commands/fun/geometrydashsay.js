@@ -25,19 +25,15 @@ module.exports = class GeometryDashsayCommand extends Command {
     let moder = mod[Math.floor(mod.length * Math.random())];  
     
     
-    let pautor = message.author.username;
-
-    let autor = pautor.replace(' ', '%20')
+    let autor = message.author.username.replace(' ', '%20');
         
     let txt = args.join('%20'); 
         
     if (!txt) return message.channel.send("Do not forget to put the text you want.") 
 
     let links = [`https://gdcolon.com/tools/gdtextbox/img/${txt}?${colorize}=purple&name=${autor}&char=${capture}`, `https://gdcolon.com/tools/gdcomment/img/${txt}?name=${autor}&likes=${Math.floor(500 * Math.random())}&%=${Math.floor(100 * Math.random())}&mod=${moder}&customIcon=${autor}` ]
-
-    let preimg = links[Math.floor(links.length * Math.random())]; 
         
-    let image = preimg
+    let image = links[Math.floor(links.length * Math.random())]; 
     
     let attachment = new Discord.MessageAttachment(image, "GD.png");
     

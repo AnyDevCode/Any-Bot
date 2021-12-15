@@ -43,7 +43,7 @@ module.exports = class ServerInfoCommand extends Command {
 
     // Get roles count
     const roleCount = message.guild.roles.cache.size - 1; // Don't count @everyone
-    
+
     // Get member stats
     const members = message.guild.members.cache.array();
     const memberCount = members.length;
@@ -52,16 +52,16 @@ module.exports = class ServerInfoCommand extends Command {
     const dnd =  members.filter((m) => m.presence.status === 'dnd').length;
     const afk =  members.filter((m) => m.presence.status === 'idle').length;
     const bots = members.filter(b => b.user.bot).length;
-    
+
     // Get channel stats
     const channels = message.guild.channels.cache.array();
     const channelCount = channels.length;
-    const textChannels = 
+    const textChannels =
       channels.filter(c => c.type === 'text' && c.viewable).sort((a, b) => a.rawPosition - b.rawPosition);
     const voiceChannels = channels.filter(c => c.type === 'voice').length;
     const newsChannels = channels.filter(c => c.type === 'news').length;
     const categoryChannels = channels.filter(c => c.type === 'category').length;
-    
+
     const serverStats = stripIndent`
       Members  :: [ ${memberCount} ]
                :: ${online} Online
@@ -84,18 +84,18 @@ module.exports = class ServerInfoCommand extends Command {
       .addField('Region', region[message.guild.region], true)
       .addField(`Owner ${owner}`, message.guild.owner, true)
       .addField('Verification Level', verificationLevels[message.guild.verificationLevel], true)
-      .addField('Rules Channel', 
+      .addField('Rules Channel',
         (message.guild.rulesChannel) ? `${message.guild.rulesChannel}` : '`None`', true
       )
-      .addField('System Channel', 
+      .addField('System Channel',
         (message.guild.systemChannel) ? `${message.guild.systemChannel}` : '`None`', true
       )
-      .addField('AFK Channel', 
+      .addField('AFK Channel',
         (message.guild.afkChannel) ? `${voice} ${message.guild.afkChannel.name}` : '`None`', true
       )
-      .addField('AFK Timeout', 
-        (message.guild.afkChannel) ? 
-          `\`${moment.duration(message.guild.afkTimeout * 1000).asMinutes()} minutes\`` : '`None`', 
+      .addField('AFK Timeout',
+        (message.guild.afkChannel) ?
+          `\`${moment.duration(message.guild.afkTimeout * 1000).asMinutes()} minutes\`` : '`None`',
         true
       )
       .addField('Default Notifications', notifications[message.guild.defaultMessageNotifications], true)

@@ -14,7 +14,7 @@ module.exports = class DadJokesCommand extends Command {
   }
   async run(message, args) {
 	  require('node-fetch')('https://icanhazdadjoke.com/slack')
-		.then(res => res.json()) //recogemos los resultados en un .json
-		.then(d => message.channel.send(d.attachments[0].text)) //enviamos el primer elemento del json
+		.then(res => res.json())
+		.then(d => message.channel.send(d.attachments[0].text))
   }
 };

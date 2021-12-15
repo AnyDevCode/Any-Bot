@@ -10,7 +10,8 @@ module.exports = class RemoveMusicCommand extends Command {
       aliases: ['delete'],
       description: 'Removes a song from the queue',
 	  examples: ['remove 3', 'remove all'],
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

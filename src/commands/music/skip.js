@@ -9,7 +9,8 @@ module.exports = class QueueMusicCommand extends Command {
       usage: 'skip',
       aliases: ['voteskip'],
       description: 'Votes to skip the current song',
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

@@ -9,8 +9,8 @@ class Command {
 
   /**
    * Create new command
-   * @param {Client} client 
-   * @param {Object} options 
+   * @param {Client} client
+   * @param {Object} options
    */
   constructor(client, options) {
 
@@ -70,7 +70,7 @@ class Command {
      * @type {Array<string>}
      */
     this.examples = options.examples || null;
-    
+
     /**
      * If command can only be used by owner
      * @type {boolean}
@@ -84,16 +84,22 @@ class Command {
     this.disabled = options.disabled || false;
 
     /**
+     * If command can only be used in NSFW Channel
+     * @type {boolean}
+     */
+    this.nsfw = options.nsfw || false;
+
+    /**
      * Array of error types
      * @type {Array<string>}
      */
-    this.errorTypes = ['Invalid Argument', 'Command Failure'];
+    this.errorTypes = ['Invalid Argument', 'Command Failure', 'This is not a NSFW channel'];
   }
 
   /**
    * Runs the command
-   * @param {Message} message 
-   * @param {string[]} args 
+   * @param {Message} message
+   * @param {string[]} args
    */
   // eslint-disable-next-line no-unused-vars
   run(message, args) {
@@ -102,8 +108,8 @@ class Command {
 
   /**
    * Gets member from mention
-   * @param {Message} message 
-   * @param {string} mention 
+   * @param {Message} message
+   * @param {string} mention
    */
   getMemberFromMention(message, mention) {
     if (!mention) return;
@@ -115,8 +121,8 @@ class Command {
 
   /**
    * Gets role from mention
-   * @param {Message} message 
-   * @param {string} mention 
+   * @param {Message} message
+   * @param {string} mention
    */
   getRoleFromMention(message, mention) {
     if (!mention) return;
@@ -128,8 +134,8 @@ class Command {
 
   /**
    * Gets text channel from mention
-   * @param {Message} message 
-   * @param {string} mention 
+   * @param {Message} message
+   * @param {string} mention
    */
   getChannelFromMention(message, mention) {
     if (!mention) return;
@@ -141,8 +147,8 @@ class Command {
 
   /**
    * Helper method to check permissions
-   * @param {Message} message 
-   * @param {boolean} ownerOverride 
+   * @param {Message} message
+   * @param {boolean} ownerOverride
    */
   checkPermissions(message, ownerOverride = true) {
     if (!message.channel.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])) return false;
@@ -155,8 +161,8 @@ class Command {
   /**
    * Checks the user permissions
    * Code modified from: https://github.com/discordjs/Commando/blob/master/src/commands/base.js
-   * @param {Message} message 
-   * @param {boolean} ownerOverride 
+   * @param {Message} message
+   * @param {boolean} ownerOverride
    */
   checkUserPermissions(message, ownerOverride = true) {
     if (!this.ownerOnly && !this.userPermissions) return true;
@@ -164,7 +170,7 @@ class Command {
     if (this.ownerOnly && !this.client.isOwner(message.author)) {
       return false;
     }
-    
+
     if (message.member.hasPermission('ADMINISTRATOR')) return true;
     if (this.userPermissions) {
       const missingPermissions =
@@ -185,8 +191,8 @@ class Command {
 
   /**
    * Checks the client permissions
-   * @param {Message} message 
-   * @param {boolean} ownerOverride 
+   * @param {Message} message
+   * @param {boolean} ownerOverride
    */
   checkClientPermissions(message) {
     const missingPermissions =
@@ -203,13 +209,13 @@ class Command {
 
     } else return true;
   }
-  
+
   /**
    * Creates and sends command failure embed
    * @param {Message} message
    * @param {int} errorType
-   * @param {string} reason 
-   * @param {string} errorMessage 
+   * @param {string} reason
+   * @param {string} errorMessage
    */
   sendErrorMessage(message, errorType, reason, errorMessage = null) {
     errorType = this.errorTypes[errorType];
@@ -229,14 +235,14 @@ class Command {
   /**
    * Creates and sends mod log embed
    * @param {Message} message
-   * @param {string} reason 
+   * @param {string} reason
    * @param {Object} fields
    */
   async sendModLogMessage(message, reason, fields = {}) {
     const modLogId = message.client.db.settings.selectModLogId.pluck().get(message.guild.id);
     const modLog = message.guild.channels.cache.get(modLogId);
     if (
-      modLog && 
+      modLog &&
       modLog.viewable &&
       modLog.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])
     ) {
@@ -258,8 +264,8 @@ class Command {
   /**
    * Validates all options provided
    * Code modified from: https://github.com/discordjs/Commando/blob/master/src/commands/base.js
-   * @param {Client} client 
-   * @param {Object} options 
+   * @param {Client} client
+   * @param {Object} options
    */
   static validateOptions(client, options) {
 
@@ -287,19 +293,19 @@ class Command {
     if (options.usage && typeof options.usage !== 'string') throw new TypeError('Command usage is not a string');
 
     // Description
-    if (options.description && typeof options.description !== 'string') 
+    if (options.description && typeof options.description !== 'string')
       throw new TypeError('Command description is not a string');
-    
+
     // Type
     if (options.type && typeof options.type !== 'string') throw new TypeError('Command type is not a string');
     if (options.type && !Object.values(client.types).includes(options.type))
       throw new Error('Command type is not valid');
-    
+
     // Client permissions
     if (options.clientPermissions) {
       if (!Array.isArray(options.clientPermissions))
         throw new TypeError('Command clientPermissions is not an Array of permission key strings');
-      
+
       for (const perm of options.clientPermissions) {
         if (!permissions[perm]) throw new RangeError(`Invalid command clientPermission: ${perm}`);
       }
@@ -320,11 +326,11 @@ class Command {
       throw new TypeError('Command examples is not an Array of permission key strings');
 
     // Owner only
-    if (options.ownerOnly && typeof options.ownerOnly !== 'boolean') 
+    if (options.ownerOnly && typeof options.ownerOnly !== 'boolean')
       throw new TypeError('Command ownerOnly is not a boolean');
 
     // Disabled
-    if (options.disabled && typeof options.disabled !== 'boolean') 
+    if (options.disabled && typeof options.disabled !== 'boolean')
       throw new TypeError('Command disabled is not a boolean');
   }
 }

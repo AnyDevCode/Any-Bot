@@ -135,9 +135,9 @@ module.exports = class NotesCommand extends Command {
             .setTimestamp();
       message.channel.send(embed)
       }
-    
+
       } else return message.channel.send(
           `**How to use the notes: \`${message.client.db.settings.selectPrefix.pluck().get(message.guild.id)}notes add\`, \`${message.client.db.settings.selectPrefix.pluck().get(message.guild.id)}notes all\`, \`${message.client.db.settings.selectPrefix.pluck().get(message.guild.id)}notes edit\`, \`${message.client.db.settings.selectPrefix.pluck().get(message.guild.id)}notes delete\` ** `);
     }
-  } 
+  }
 };

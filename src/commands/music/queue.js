@@ -10,7 +10,8 @@ module.exports = class QueueMusicCommand extends Command {
       aliases: ['list'],
       description: 'Shows the current queue',
 	  examples: ['queue', 'queue 2'],
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

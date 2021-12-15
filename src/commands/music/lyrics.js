@@ -9,7 +9,8 @@ module.exports = class LyricsMusicCommand extends Command {
       usage: 'lyrics [song name]',
       description: 'Shows the lyrics to the currently-playing song',
       examples: ['lyrics', 'lyrics Show Yourself CG5'],
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

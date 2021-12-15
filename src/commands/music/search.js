@@ -10,7 +10,8 @@ module.exports = class SearchMusicCommand extends Command {
       aliases: ['ytsearch'],
       description: 'Searches Youtube for a provided query',
 	  examples: ['search Opinions CG5'],
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

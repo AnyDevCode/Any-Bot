@@ -8,7 +8,8 @@ module.exports = class QueueMusicCommand extends Command {
       name: 'shuffle',
       usage: 'shuffle',
       description: 'Shuffles songs you have added',
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

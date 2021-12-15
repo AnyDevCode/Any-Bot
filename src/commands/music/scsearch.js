@@ -9,7 +9,8 @@ module.exports = class ScsearchMusicCommand extends Command {
       usage: 'scsearch <query>',
       description: 'Searches Soundcloud for a provided query',
 	  examples: ['scsearch Pumped Up Kicks'],
-      type: client.types.MUSIC
+      type: client.types.MUSIC,
+      disabled: true
     });
   }
   async run(message) {

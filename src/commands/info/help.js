@@ -10,7 +10,7 @@ module.exports = class HelpCommand extends Command {
       aliases: ['commands', 'h'],
       usage: 'help [command | all]',
       description: oneLine`
-        Displays a list of all current commands, sorted by category. 
+        Displays a list of all current commands, sorted by category.
         Can be used in conjunction with a command for additional information.
         Will only display commands that you have permission to access unless the \`all\` parameter is given.
       `,
@@ -29,14 +29,14 @@ module.exports = class HelpCommand extends Command {
     const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
     const { INFO, FUN, COLOR, POINTS, MISC, GAMES, MOD, ADMIN, MUSIC, BACKUP, OWNER, NSFW } = message.client.types;
     const { capitalize } = message.client.utils;
-    
+
     const command = message.client.commands.get(args[0]) || message.client.aliases.get(args[0]);
     if (
-      command && 
-      (command.type != OWNER || message.client.isOwner(message.member)) && 
+      command &&
+      (command.type != OWNER || message.client.isOwner(message.member)) &&
       !disabledCommands.includes(command.name)
     ) {
-      
+
       embed // Build specific command help embed
         .setTitle(`Command: \`${command.name}\``)
         .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
@@ -96,8 +96,8 @@ module.exports = class HelpCommand extends Command {
           ${(!all && size != total) ? `**All Commands:** \`${prefix}help all\`` : ''}
         `)
         .setFooter(
-          (!all && size != total) ? 
-            'Only showing available commands.\n' + message.member.displayName : message.member.displayName, 
+          (!all && size != total) ?
+            'Only showing available commands.\n' + message.member.displayName : message.member.displayName,
           message.author.displayAvatarURL({ dynamic: true })
         )
         .setTimestamp()
@@ -106,16 +106,17 @@ module.exports = class HelpCommand extends Command {
 
       for (const type of Object.values(message.client.types)) {
         if (type === OWNER && !message.client.isOwner(message.member)) continue;
+        if (type === NSFW && !message.channel.nsfw) continue;
         if (commands[type][0])
           embed.addField(`**${emojiMap[type]} [${commands[type].length}]**`, commands[type].join(' '));
       }
 
       embed.addField(
-        '**Links**', 
+        '**Links**',
         '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8) | ' +
         '[Support Server](https://discord.gg/2FRpkNr) **'
       );
-        
+
     }
     message.channel.send(embed);
   }

@@ -1,8 +1,8 @@
 module.exports = async (client) => {
-  
+
   const activities = [
-    { name: '>help', type: 'LISTENING' }, 
-    { name: 'MDC#9285', type: 'LISTENING' }
+    { name: '>help', type: 'LISTENING' },
+    { name: 'MDC#0001', type: 'LISTENING' }
   ];
 
   // Update presence
@@ -24,13 +24,13 @@ module.exports = async (client) => {
 
     /** ------------------------------------------------------------------------------------------------
      * FIND SETTINGS
-     * ------------------------------------------------------------------------------------------------ */ 
+     * ------------------------------------------------------------------------------------------------ */
     // Find mod log
-    const modLog = guild.channels.cache.find(c => c.name.replace('-', '').replace('s', '') === 'modlog' || 
+    const modLog = guild.channels.cache.find(c => c.name.replace('-', '').replace('s', '') === 'modlog' ||
       c.name.replace('-', '').replace('s', '') === 'moderatorlog');
 
     // Find admin and mod roles
-    const adminRole = 
+    const adminRole =
       guild.roles.cache.find(r => r.name.toLowerCase() === 'admin' || r.name.toLowerCase() === 'administrator');
     const modRole = guild.roles.cache.find(r => r.name.toLowerCase() === 'mod' || r.name.toLowerCase() === 'moderator');
     const muteRole = guild.roles.cache.find(r => r.name.toLowerCase() === 'muted');
@@ -38,7 +38,7 @@ module.exports = async (client) => {
 
     /** ------------------------------------------------------------------------------------------------
      * UPDATE TABLES
-     * ------------------------------------------------------------------------------------------------ */ 
+     * ------------------------------------------------------------------------------------------------ */
     // Update settings table
     client.db.settings.insertRow.run(
       guild.id,
@@ -53,23 +53,23 @@ module.exports = async (client) => {
       muteRole ? muteRole.id : null,
       crownRole ? crownRole.id : null
     );
-    
+
     // Update users table
     guild.members.cache.forEach(member => {
       client.db.users.insertRow.run(
-        member.id, 
-        member.user.username, 
+        member.id,
+        member.user.username,
         member.user.discriminator,
-        guild.id, 
+        guild.id,
         guild.name,
         member.joinedAt.toString(),
         member.user.bot ? 1 : 0
       );
     });
-    
+
     /** ------------------------------------------------------------------------------------------------
      * CHECK DATABASE
-     * ------------------------------------------------------------------------------------------------ */ 
+     * ------------------------------------------------------------------------------------------------ */
     // If member left
     const currentMemberIds = client.db.users.selectCurrentMembers.all(guild.id).map(row => row.user_id);
     for (const id of currentMemberIds) {
@@ -87,9 +87,9 @@ module.exports = async (client) => {
 
     /** ------------------------------------------------------------------------------------------------
      * VERIFICATION
-     * ------------------------------------------------------------------------------------------------ */ 
+     * ------------------------------------------------------------------------------------------------ */
     // Fetch verification message
-    const { verification_channel_id: verificationChannelId, verification_message_id: verificationMessageId } = 
+    const { verification_channel_id: verificationChannelId, verification_message_id: verificationMessageId } =
       client.db.settings.selectVerification.get(guild.id);
     const verificationChannel = guild.channels.cache.get(verificationChannelId);
     if (verificationChannel && verificationChannel.viewable) {
@@ -102,7 +102,7 @@ module.exports = async (client) => {
 
     /** ------------------------------------------------------------------------------------------------
      * CROWN ROLE
-     * ------------------------------------------------------------------------------------------------ */ 
+     * ------------------------------------------------------------------------------------------------ */
     // Schedule crown role rotation
     client.utils.scheduleCrown(client, guild);
 

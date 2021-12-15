@@ -5,18 +5,18 @@ const AsciiTable = require('ascii-table');
 const { fail } = require('./utils/emojis.json');
 
 /**
- * Calypso's custom client
+ * Any Bot's custom client
  * @extends Discord.Client
  */
 class Client extends Discord.Client {
 
   /**
    * Create a new client
-   * @param {Object} config 
-   * @param {ClientOptions} options 
+   * @param {Object} config
+   * @param {ClientOptions} options
    */
   constructor(config, options = {}) {
-    
+
     super(options);
 
     /**
@@ -48,61 +48,61 @@ class Client extends Discord.Client {
       NSFW: 'nsfw'
     };
 
-    /** 
+    /**
      * Collection of bot commands
      * @type {Collection<string, Command>}
      */
     this.commands = new Discord.Collection();
 
-    /** 
+    /**
      * Collection of command aliases
      * @type {Collection<string, Command>}
      */
     this.aliases = new Discord.Collection();
 
-    /** 
+    /**
      * Array of trivia topics
      * @type {Array<string>}
      */
     this.topics = [];
 
-    /** 
+    /**
      * Login token
      * @type {string}
      */
     this.token = config.token;
 
-    /** 
+    /**
      * API keys
      * @type {Object}
      */
     this.apiKeys = config.apiKeys;
 
-    /** 
-     * Calypso's owner ID
+    /**
+     * Any  Bot's owner ID
      * @type {string}
      */
     this.ownerId = config.ownerId;
 
-    /** 
-     * Calypso's bug report channel ID
+    /**
+     * Any Bot's bug report channel ID
      * @type {string}
      */
     this.bugReportChannelId = config.bugReportChannelId;
 
-    /** 
-     * Calypso's feedback channel ID
+    /**
+     * Any Bot's feedback channel ID
      * @type {string}
      */
     this.feedbackChannelId = config.feedbackChannelId;
 
-    /** 
-     * Calypso's server log channel ID
+    /**
+     * Any Bot's server log channel ID
      * @type {string}
      */
     this.serverLogId = config.serverLogId;
 
-    /** 
+    /**
      * Utility functions
      * @type {Object}
      */
@@ -114,7 +114,7 @@ class Client extends Discord.Client {
 
   /**
    * Loads all available events
-   * @param {string} path 
+   * @param {string} path
    */
   loadEvents(path) {
     readdir(path, (err, files) => {
@@ -135,7 +135,7 @@ class Client extends Discord.Client {
 
   /**
    * Loads all available commands
-   * @param {string} path 
+   * @param {string} path
    */
   loadCommands(path) {
     this.logger.info('Loading commands...');
@@ -171,7 +171,7 @@ class Client extends Discord.Client {
 
   /**
    * Loads all available trivia topics
-   * @param {string} path 
+   * @param {string} path
    */
   loadTopics(path) {
     readdir(path, (err, files) => {
@@ -190,7 +190,7 @@ class Client extends Discord.Client {
 
   /**
    * Checks if user is the bot owner
-   * @param {User} user 
+   * @param {User} user
    */
   isOwner(user) {
     if (user.id === this.ownerId) return true;
@@ -201,7 +201,7 @@ class Client extends Discord.Client {
    * Creates and sends system failure embed
    * @param {Guild} guild
    * @param {string} error
-   * @param {string} errorMessage 
+   * @param {string} errorMessage
    */
   sendSystemErrorMessage(guild, error, errorMessage) {
 
@@ -210,8 +210,8 @@ class Client extends Discord.Client {
     const systemChannel = guild.channels.cache.get(systemChannelId);
 
     if ( // Check channel and permissions
-      !systemChannel || 
-      !systemChannel.viewable || 
+      !systemChannel ||
+      !systemChannel.viewable ||
       !systemChannel.permissionsFor(guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])
     ) return;
 

@@ -10,7 +10,7 @@ module.exports = async (client, messageReaction, user) => {
 
   // Verification
   if (emoji.id === verify.split(':')[2].slice(0, -1)) {
-    const { verification_role_id: verificationRoleId, verification_message_id: verificationMessageId } = 
+    const { verification_role_id: verificationRoleId, verification_message_id: verificationMessageId } =
     client.db.settings.selectVerification.get(message.guild.id);
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
 
@@ -21,7 +21,7 @@ module.exports = async (client, messageReaction, user) => {
       try {
         await member.roles.add(verificationRole);
       } catch (err) {
-        return client.sendSystemErrorMessage(member.guild, 'verification', 
+        return client.sendSystemErrorMessage(member.guild, 'verification',
           stripIndent`Unable to assign verification role,` +
           'please check the role hierarchy and ensure I have the Manage Roles permission'
           , err.message);
@@ -34,7 +34,7 @@ module.exports = async (client, messageReaction, user) => {
     const starboardChannelId = client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
     if (
-      !starboardChannel || 
+      !starboardChannel ||
       !starboardChannel.viewable ||
       !starboardChannel.permissionsFor(message.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS']) ||
       message.channel === starboardChannel
@@ -63,9 +63,34 @@ module.exports = async (client, messageReaction, user) => {
       else if (starCount > 5) emojiType = emojis[1];
       else emojiType = emojis[0];
 
+      let image = '';
+      const attachment = message.attachments.array()[0];
+      if (attachment && attachment.url) {
+        const extension = attachment.url.split('.').pop();
+        if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
+      }
+
+      // Check for url
+      if (!image && message.embeds[0] && message.embeds[0].url) {
+        const extension = message.embeds[0].url.split('.').pop();
+        if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = message.embeds[0].url;
+      }
+
+      if (!message.content && !image) return;
+
+      const embed = new MessageEmbed()
+        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true}))
+        .setDescription(message.content)
+        .addField('Original', `[Jump!](${message.url})`)
+        .setImage(image)
+        .setTimestamp()
+        .setFooter(message.id)
+        .setColor('#ffac33');
+
       const starMessage = await starboardChannel.messages.fetch(starred.id);
-      await starMessage.edit(`${emojiType} **${starCount}  |**  ${message.channel}`)
+      await starMessage.edit(`${emojiType} **${starCount}  |**  ${message.channel}`, embed)
         .catch(err => client.logger.error(err.stack));
+
 
     // New starred message
     } else {
@@ -83,7 +108,7 @@ module.exports = async (client, messageReaction, user) => {
         const extension = message.embeds[0].url.split('.').pop();
         if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = message.embeds[0].url;
       }
-      
+
       if (!message.content && !image) return;
 
       const embed = new MessageEmbed()

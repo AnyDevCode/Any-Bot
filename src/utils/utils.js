@@ -117,6 +117,20 @@ function getStatus(...args) {
 }
 
 /**
+ * Format Url
+ * @param {string} protocol
+ * @param {string} hostname
+ * @param {string} pathname 
+ */
+function formatUrl({pathname = '/', protocol = 'https:', ...props} = {}) {
+  const url = new URL('https://site.example');
+  url.protocol = protocol;
+  url.hostname = props.hostname;
+  url.pathname = pathname;
+  return url;
+}
+
+/**
  * Surrounds welcome/farewell message keywords with backticks
  * @param {string} message
  */
@@ -247,5 +261,6 @@ module.exports = {
   replaceKeywords,
   replaceCrownKeywords,
   transferCrown,
-  scheduleCrown
+  scheduleCrown,
+  formatUrl
 };

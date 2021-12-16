@@ -1,6 +1,7 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
 var tiktokScraper = require("tiktok-scraper")
+const { abbreviateNumber } = require("js-abbreviation-number");
 
 module.exports = class TikTokYoutubeCommand extends Command {
   constructor(client) {
@@ -10,7 +11,7 @@ module.exports = class TikTokYoutubeCommand extends Command {
       description: 'Tiktok Profile.',
       type: client.types.FUN,
       examples: ['tiktok mdcdev', 'tiktok @mdcdev'],
-      disabled: true
+      disabled: false
     });
   }
   async run(message, args) {
@@ -20,21 +21,28 @@ module.exports = class TikTokYoutubeCommand extends Command {
     try {
         const user = await tiktokScraper.getUserProfileInfo(username);
         const verifiedandprivateuser = `${user.user.verified ? "<a:averify:761274029231177798>" : ""} ${user.user.privateAccount ? "🔒" : ""}`
+        const { formatUrl } = message.client.utils;
+        const protocol = 'https';
+        const hostname = 'tiktok.com';
+        const pathname = '/@' + user.user.uniqueId;
+        const url = formatUrl({
+          hostname,
+          pathname, // pathname will have "/" prepended if absent
+          protocol, // protocol actually ends in ":", but this will also be fixed for you
+        });
         const embed = new MessageEmbed()
-            .setAuthor(user.user.nickname, user.user.avatarLarger)
+            .setAuthor(user.user.nickname, user.user.avatarLarger, url)
             .setTitle("Tiktok User: " + user.user.nickname + " " + verifiedandprivateuser)
             .setDescription(user.user.signature)
-            .addField("Hearts:",`${user.stats.heartCount} ❤️`, true)
-            .addField("Followers:",`${user.stats.followerCount} 🧑‍🤝‍🧑`, true)
-            .addField("Videos:",`${user.stats.videoCount} 📽️`, true)
+            .addField("Hearts:",`${abbreviateNumber(user.stats.heartCount)} ❤️`, true)
+            .addField("Followers:",`${abbreviateNumber(user.stats.followerCount)} 🧑‍🤝‍🧑`, true)
+            .addField("Videos:",`${abbreviateNumber(user.stats.videoCount)} 📽️`, true)
             .setColor(message.guild.me.displayHexColor)
-        //    .setURL("https://tiktok.com/@"+user)
             .setTimestamp();
-            message.channel.send(embed) ;
-      console.log(user)
+          
+        message.channel.send(embed) ;
     } catch (error) {
         this.sendErrorMessage(message, 0, 'Please use a valid username');
-        console.log(error)
     }
 
   }

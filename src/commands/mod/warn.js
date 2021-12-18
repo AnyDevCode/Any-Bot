@@ -11,7 +11,7 @@ module.exports = class WarnCommand extends Command {
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'KICK_MEMBERS'],
       userPermissions: ['KICK_MEMBERS'],
-      examples: ['warn @Nettles']
+      examples: ['warn @MDC']
     });
   }
   run(message, args) {
@@ -27,30 +27,27 @@ module.exports = class WarnCommand extends Command {
       return this.sendErrorMessage(message, 0, 'You cannot warn someone with an equal or higher role');
 
     const autoKick = message.client.db.settings.selectAutoKick.pluck().get(message.guild.id); // Get warn # for auto kick
+    const autoBan = message.client.db.settings.selectAutoBan.pluck().get(message.guild.id); // Get warn # for auto kick
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
-    let warns = message.client.db.users.selectWarns.pluck().get(member.id, message.guild.id) || { warns: [] };
-    if (typeof(warns) == 'string') warns = JSON.parse(warns);
-    const warning = {
-      mod: message.member.id,
-      date:  moment().format('MMM DD YYYY'),
-      reason: reason
-    };
+    const totalwarns = parseInt(message.client.db.warns.maxWarnId.pluck().get() + 1) || 1;
 
-    warns.warns.push(warning);
-    
-    message.client.db.users.updateWarns.run(JSON.stringify(warns), member.id, message.guild.id);
+    const warnscount = parseInt(message.client.db.warns.selectUserWarnsCount.pluck().get(member.id, message.guild.id) + 1) || 1;
+
+    const time = moment().format('MMM DD YYYY')
+    message.client.db.warns.createWarn.run(member.id, member.user.username, member.user.discriminator, message.guild.id, message.guild.name, message.member.id, message.member.user.username, message.member.user.discriminator, reason, time, totalwarns);
 
     const embed = new MessageEmbed()
       .setTitle('Warn Member')
       .setDescription(`${member} has been warned.`)
       .addField('Moderator', message.member, true)
       .addField('Member', member, true)
-      .addField('Warn Count', `\`${warns.warns.length}\``, true)
+      .addField('Warn Count', `\`${warnscount}\``, true)
       .addField('Reason', reason)
+      .addField('Warn ID', `\`${totalwarns}\``, true)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
@@ -58,12 +55,18 @@ module.exports = class WarnCommand extends Command {
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} warned ${member.user.tag}`);
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: member, 'Warn Count': `\`${warns.warns.length}\`` });
+    this.sendModLogMessage(message, reason, { Member: member, 'Warn Count': `\`${warnscount}\`` });
 
     // Check for auto kick
-    if (autoKick && warns.warns.length === autoKick) {
+    if (autoKick && warnscount === autoKick) {
       message.client.commands.get('kick')
         .run(message, [member.id, `Warn limit reached. Automatically kicked by ${message.guild.me}.`]);
+    }
+
+    // Check for auto ban
+    if (autoBan && warnscount === autoBan) {
+      message.client.commands.get('ban')
+        .run(message, [member.id, `Warn limit reached. Automatically banned by ${message.guild.me}.`]);
     }
   }
 };

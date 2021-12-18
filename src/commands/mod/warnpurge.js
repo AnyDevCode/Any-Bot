@@ -12,7 +12,7 @@ module.exports = class WarnPurgeCommand extends Command {
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'KICK_MEMBERS', 'MANAGE_MESSAGES'],
       userPermissions: ['KICK_MEMBERS', 'MANAGE_MESSAGES'],
-      examples: ['warnpurge @Nettles 50']
+      examples: ['warnpurge @MDC 50']
     });
   }
   async run(message, args) {
@@ -35,18 +35,12 @@ module.exports = class WarnPurgeCommand extends Command {
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
 
-    // Warn
-    let warns = message.client.db.users.selectWarns.pluck().get(member.id, message.guild.id) || { warns: [] };
-    if (typeof(warns) == 'string') warns = JSON.parse(warns);
-    const warning = {
-      mod: message.member.id,
-      date:  moment().format('MMM DD YYYY'),
-      reason: reason
-    };
+    const totalwarns = parseInt(message.client.db.warns.maxWarnId.pluck().get() + 1) || 1;
+    const warnscount = parseInt(message.client.db.warns.selectUserWarnsCount.pluck().get(member.id, message.guild.id) + 1) || 1;
+    const time = moment().format('MMM DD YYYY')
 
-    warns.warns.push(warning);
-  
-    message.client.db.users.updateWarns.run(JSON.stringify(warns), member.id, message.guild.id);
+    // Warn
+    message.client.db.warns.createWarn.run(member.id, member.user.username, member.user.discriminator, message.guild.id, message.guild.name, message.member.id, message.member.user.username, message.member.user.discriminator, reason, time, totalwarns);
 
     // Purge
     const messages = (await message.channel.messages.fetch({ limit: amount })).filter(m => m.member.id === member.id);
@@ -57,7 +51,7 @@ module.exports = class WarnPurgeCommand extends Command {
       .setDescription(`${member} has been warned, with **${messages.size}** messages purged.`)
       .addField('Moderator', message.member, true)
       .addField('Member', member, true)
-      .addField('Warn Count', `\`${warns.warns.length}\``, true)
+      .addField('Warn Count', `\`${warnscount}\``, true)
       .addField('Found Messages', `\`${messages.size}\``, true)
       .addField('Reason', reason)
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
@@ -69,14 +63,20 @@ module.exports = class WarnPurgeCommand extends Command {
     // Update mod log
     this.sendModLogMessage(message, reason, { 
       Member: member, 
-      'Warn Count': `\`${warns.warns.length}\``,
+      'Warn Count': `\`${warnscount}\``,
       'Found Messages': `\`${messages.size}\``
     });
 
     // Check for auto kick
-    if (autoKick && warns.warns.length === autoKick) {
+    if (autoKick && warnscount === autoKick) {
       message.client.commands.get('kick')
         .run(message, [member.id, `Warn limit reached. Automatically kicked by ${message.guild.me}.`]);
+    }
+
+    // Check for auto ban
+    if (autoBan && warnscount === autoBan) {
+      message.client.commands.get('ban')
+        .run(message, [member.id, `Warn limit reached. Automatically banned by ${message.guild.me}.`]);
     }
 
   }

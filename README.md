@@ -45,8 +45,15 @@ After installation edit the config.json
   "serverLogId": "serverLogId",
   "apiKeys": {
     "catApi": "catApiKey",
-    "googleApi": "googleApiKey"
+    "googleApi": "googleApiKey",
+    "fortniteshopApi": "fortniteshopApiKey",
+    "fortniteApi": "fortniteApiKey",
+    "geometrydash": {
+      "user": "Geometrydash_User",
+      "password": "Geometrydash_Pass"
     }
+  },
+  "botlist": false
 }
 ```
 After editing the config.json, start the bot with `node app` from the terminal

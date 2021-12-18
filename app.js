@@ -1,10 +1,8 @@
 const config = require("./config.json");
 const Client = require("./src/client.js");
 const { Intents } = require("discord.js");
-const { AutoPoster } = require("topgg-autoposter");
-const { connectBdlBot } = require("bdl.js");
-const bldapikey = require("./blapi.json");
 
+const botlist = config.botlist;
 global.__basedir = __dirname;
 
 // Client setup
@@ -17,8 +15,15 @@ intents.add(
   "GUILD_MESSAGES",
   "GUILD_MESSAGE_REACTIONS"
 );
-//const client = new Client(config, { ws: { intents: intents } });
-const client = new Client(config);
+const client = new Client(config, { ws: { intents: intents } });
+// const client = new Client(config);
+
+if(botlist) {
+
+  const { AutoPoster } = require("topgg-autoposter");
+  const { connectBdlBot } = require("bdl.js");
+  const bldapikey = require("./blapi.json");
+  
 
 var details = {
   users: client.users.cache.size,
@@ -54,6 +59,7 @@ postertopgg.on("posted", async (stats) => {
     await res.json()
   });
 });
+}
 
 // Initialize client
 function init() {

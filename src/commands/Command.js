@@ -93,7 +93,7 @@ class Command {
      * Array of error types
      * @type {Array<string>}
      */
-    this.errorTypes = ['Invalid Argument', 'Command Failure', 'This is not a NSFW channel'];
+    this.errorTypes = ['Invalid Argument', 'Command Failure', 'This is not a NSFW channel', 'Missing Permissions'];
   }
 
   /**

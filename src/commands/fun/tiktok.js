@@ -16,7 +16,7 @@ module.exports = class TikTokYoutubeCommand extends Command {
   }
   async run(message, args) {
 
-    const username = args.join(' ').replace(/[^a-zA-Z ]/g, "");
+    const username = args.join(' ').replace(/[^a-zA-Z0-9 ]/g, "");
 
     try {
         const user = await tiktokScraper.getUserProfileInfo(username);

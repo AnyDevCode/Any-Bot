@@ -18,7 +18,7 @@ module.exports = class PurgeCommand extends Command {
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES'],
-      examples: ['purge 20', 'purge #general 10', 'purge @Nettles 50', 'purge #general @Nettles 5']
+      examples: ['purge 20', 'purge #general 10', 'purge @MDC 50', 'purge #general @MDC 5']
     });
   }
   async run(message, args) {

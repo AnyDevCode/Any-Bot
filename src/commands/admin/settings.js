@@ -51,6 +51,7 @@ module.exports = class SettingsCommand extends Command {
     const verificationRole = message.guild.roles.cache.get(row.verification_role_id) || '`None`';
     const crownRole = message.guild.roles.cache.get(row.crown_role_id) || '`None`';
     const autoKick = (row.auto_kick) ? `After \`${row.auto_kick}\` warn(s)` : '`disabled`';
+    const autoBan = (row.auto_ban) ? `After \`${row.auto_ban}\` warn(s)` : '`disabled`';
     const messagePoints = `\`${row.message_points}\``;
     const commandPoints = `\`${row.command_points}\``;
     const voicePoints = `\`${row.voice_points}\``;
@@ -103,6 +104,7 @@ module.exports = class SettingsCommand extends Command {
           .addField('Mute Role', muteRole, true)
           .addField('Auto Role', autoRole, true)
           .addField('Auto Kick', autoKick, true)
+          .addField('Auto Ban', autoBan, true)
           .addField('Random Color', randomColor, true)
           .addField('Mod Channels', modChannels)
           .addField('Disabled Commands', disabledCommands)

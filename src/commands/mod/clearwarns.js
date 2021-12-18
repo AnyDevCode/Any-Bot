@@ -10,7 +10,7 @@ module.exports = class ClearWarnsCommand extends Command {
       description: 'Clears all the warns of the provided member.',
       type: client.types.MOD,
       userPermissions: ['KICK_MEMBERS'],
-      examples: ['clearwarns @Nettles']
+      examples: ['clearwarns @MDC']
     });
   }
   run(message, args) {
@@ -27,7 +27,7 @@ module.exports = class ClearWarnsCommand extends Command {
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
-    message.client.db.users.updateWarns.run('', member.id, message.guild.id);
+    message.client.db.warns.deleteUserWarns.run(member.id, message.guild.id);
 
     const embed = new MessageEmbed()
       .setTitle('Clear Warns')

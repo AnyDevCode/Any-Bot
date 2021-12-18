@@ -79,7 +79,7 @@ class Client extends Discord.Client {
     this.apiKeys = config.apiKeys;
 
     /**
-     * Any  Bot's owner ID
+     * Any Bot's owner ID
      * @type {string}
      */
     this.ownerId = config.ownerId;
@@ -196,6 +196,7 @@ class Client extends Discord.Client {
     if (user.id === this.ownerId) return true;
     else return false;
   }
+
 
   /**
    * Creates and sends system failure embed

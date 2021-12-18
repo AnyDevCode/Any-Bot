@@ -11,7 +11,7 @@ module.exports = class AddRoleCommand extends Command {
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'MANAGE_ROLES'],
       userPermissions: ['MANAGE_ROLES'],
-      examples: ['addrole @Nettles @Member']
+      examples: ['addrole @MDC @Member']
     });
   }
   async run(message, args) {

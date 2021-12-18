@@ -26,6 +26,7 @@ db.prepare(`
     mute_role_id TEXT,
     auto_role_id TEXT,
     auto_kick INTEGER,
+    auto_ban INTEGER,
     random_color INTEGER DEFAULT 0 NOT NULL,
     mod_channel_ids TEXT,
     disabled_commands TEXT,
@@ -72,6 +73,23 @@ db.prepare(`
   );
 `).run();
 
+// WARN TABLE
+db.prepare(`
+  CREATE TABLE IF NOT EXISTS warns (
+    user_id TEXT,
+    user_name TEXT,
+    user_discriminator TEXT,
+    guild_id TEXT,
+    guild_name TEXT,
+    date_issued TEXT,
+    reason TEXT,
+    moderator_id TEXT,
+    moderator_name TEXT,
+    moderator_discriminator TEXT,
+    warn_id TEXT PRIMARY KEY
+  );
+`).run();
+
 /** ------------------------------------------------------------------------------------------------
  * PREPARED STATEMENTS
  * ------------------------------------------------------------------------------------------------ */
@@ -104,6 +122,7 @@ const settings = {
   selectMuteRoleId: db.prepare('SELECT mute_role_id FROM settings WHERE guild_id = ?;'),
   selectAutoRoleId: db.prepare('SELECT auto_role_id FROM settings WHERE guild_id = ?;'),
   selectAutoKick: db.prepare('SELECT auto_kick FROM settings WHERE guild_id = ?;'),
+  selectAutoBan: db.prepare('SELECT auto_ban FROM settings WHERE guild_id = ?;'),
   selectRandomColor: db.prepare('SELECT random_color FROM settings WHERE guild_id = ?;'),
   selectModChannelIds: db.prepare('SELECT mod_channel_ids FROM settings WHERE guild_id = ?;'),
   selectDisabledCommands: db.prepare('SELECT disabled_commands FROM settings WHERE guild_id = ?;'),
@@ -141,6 +160,7 @@ const settings = {
   updateMuteRoleId: db.prepare('UPDATE settings SET mute_role_id = ? WHERE guild_id = ?;'),
   updateAutoRoleId: db.prepare('UPDATE settings SET auto_role_id = ? WHERE guild_id = ?;'),
   updateAutoKick: db.prepare('UPDATE settings SET auto_kick = ? WHERE guild_id = ?;'),
+  updateAutoBan: db.prepare('UPDATE settings SET auto_ban = ? WHERE guild_id = ?;'),
   updateRandomColor: db.prepare('UPDATE settings SET random_color = ? WHERE guild_id = ?;'),
   updateModChannelIds: db.prepare('UPDATE settings SET mod_channel_ids = ? WHERE guild_id = ?;'),
   updateDisabledCommands: db.prepare('UPDATE settings SET disabled_commands = ? WHERE guild_id = ?;'),
@@ -212,7 +232,57 @@ const users = {
   deleteGuild: db.prepare('DELETE FROM users WHERE guild_id = ?;')
 };
 
+//WARNS TABLE
+const warns = {
+  insertRow: db.prepare(`
+    INSERT OR IGNORE INTO warns (
+      user_id,
+      user_name,
+      user_discriminator,
+      guild_id,
+      guild_name,
+      moderator_id,
+      moderator_name,
+      moderator_discriminator,
+      reason,
+      date_issued,
+      warn_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+  `),
+
+  // Selects
+  maxWarnId: db.prepare('SELECT COUNT(*) FROM warns;'),
+  selectRow: db.prepare('SELECT * FROM warns WHERE warn_id = ?;'),
+  selectUserWarns: db.prepare('SELECT * FROM warns WHERE user_id = ? AND guild_id = ?;'),
+  selectGuildWarns: db.prepare('SELECT * FROM warns WHERE guild_id = ?;'),
+  selectUserWarnsCount: db.prepare('SELECT COUNT(*) FROM warns WHERE user_id = ? AND guild_id = ?;'),
+  selectGuildWarnsCount: db.prepare('SELECT COUNT(*) FROM warns WHERE guild_id = ?;'),
+  selectUserWarnsCountByModerator: db.prepare('SELECT COUNT(*) FROM warns WHERE user_id = ? AND guild_id = ? AND moderator_id = ?;'),
+  selectGuildWarnsCountByModerator: db.prepare('SELECT COUNT(*) FROM warns WHERE guild_id = ? AND moderator_id = ?;'),
+  selectUserIDWarn: db.prepare('SELECT user_id FROM warns WHERE warn_id = ?;'),
+  selectUsernameWarn: db.prepare('SELECT user_name FROM warns WHERE warn_id = ?;'),
+  selectDiscriminatorWarn: db.prepare('SELECT user_discriminator FROM warns WHERE warn_id = ?;'),
+  selectModeratorIDWarn: db.prepare('SELECT moderator_id FROM warns WHERE warn_id = ?;'),
+  selectModeratorUsernameWarn: db.prepare('SELECT moderator_name FROM warns WHERE warn_id = ?;'),
+  selectModeratorDiscriminatorWarn: db.prepare('SELECT moderator_discriminator FROM warns WHERE warn_id = ?;'),
+  selectReasonWarn: db.prepare('SELECT reason FROM warns WHERE warn_id = ?;'),
+  selectDateWarn: db.prepare('SELECT date_issued FROM warns WHERE warn_id = ?;'),
+  warnsByUser: db.prepare('SELECT * FROM warns WHERE user_id = ? AND guild_id = ? ORDER BY date_issued DESC;'),
+
+  
+
+  // Updates
+  updateReason: db.prepare('UPDATE warns SET reason = ? WHERE warn_id = ?;'),
+  updateModerator: db.prepare('UPDATE warns SET moderator_id = ?, moderator_name = ?, moderator_discriminator = ? WHERE warn_id = ?;'),
+  updateDateIssued: db.prepare('UPDATE warns SET date_issued = ? WHERE warn_id = ?;'),
+  deleteWarn: db.prepare('UPDATE warns SET user_id = null, user_name = null, user_discriminator = null, moderator_id = null, moderator_name = null, moderator_discriminator = null, reason = null, date_issued = null, guild_id = null, guild_name = null WHERE warn_id = ?;'),
+  createWarn: db.prepare('INSERT INTO warns (user_id, user_name, user_discriminator, guild_id, guild_name, moderator_id, moderator_name, moderator_discriminator, reason, date_issued, warn_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);'),
+  deleteUserWarns: db.prepare('UPDATE warns SET user_id = null, user_name = null, user_discriminator = null, guild_id = null, guild_name = null WHERE user_id = ? AND guild_id = ?;'),
+};
+
 module.exports = {
   settings,
-  users
+  users,
+  warns
 };
+

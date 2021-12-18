@@ -11,7 +11,7 @@ module.exports = class WarnsCommand extends Command {
       description: 'Displays a member\'s current warnings. A max of 5 warnings can be displayed at one time.',
       type: client.types.MOD,
       userPermissions: ['KICK_MEMBERS'],
-      examples: ['warns @Nettles']
+      examples: ['warns @MDC']
     });
   }
   run(message, args) {
@@ -20,9 +20,9 @@ module.exports = class WarnsCommand extends Command {
     if (!member) 
       return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
 
-    let warns = message.client.db.users.selectWarns.pluck().get(member.id, message.guild.id) || { warns: [] };
-    if (typeof(warns) == 'string') warns = JSON.parse(warns);
-    const count = warns.warns.length;
+    let warns = message.client.db.warns.warnsByUser.all(member.id, message.guild.id) || [{ }];
+    const count = warns.length;
+
 
     const embed = new MessageEmbed()
       .setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
@@ -36,18 +36,19 @@ module.exports = class WarnsCommand extends Command {
       for (let i = current; i < max; i++) {
         embed // Build warning list
           .addField('\u200b', `**Warn \`#${i + 1}\`**`)
-          .addField('Reason', warns.warns[i].reason)
+          .addField('Reason', warns[i].reason)
           .addField(
             'Moderator', 
-            message.guild.members.cache.get(warns.warns[i].mod) || '`Unable to find moderator`',
+            message.guild.members.cache.get(warns[i].moderator_id) || '`Unable to find moderator`',
             true
           )
-          .addField('Date Issued', warns.warns[i].date, true);
+          .addField('Date Issued', warns[i].date_issued, true)
+          .addField('Warn ID', `\`${parseInt(warns[i].warn_id)}\``, true);
         amount += 1;
       }
 
       return embed
-        .setTitle('Warn List ' + this.client.utils.getRange(warns.warns, current, 5))
+        .setTitle('Warn List ' + this.client.utils.getRange(warns, current, 5))
         .setDescription(`Showing \`${amount}\` of ${member}'s \`${count}\` total warns.`);
     };
 

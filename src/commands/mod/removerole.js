@@ -11,7 +11,7 @@ module.exports = class RemoveRoleCommand extends Command {
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'MANAGE_ROLES'],
       userPermissions: ['MANAGE_ROLES'],
-      examples: ['removerole @Nettles @Member']
+      examples: ['removerole @MDC @Member']
     });
   }
   async run(message, args) {

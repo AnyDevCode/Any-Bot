@@ -278,6 +278,7 @@ const warns = {
   deleteWarn: db.prepare('UPDATE warns SET user_id = null, user_name = null, user_discriminator = null, moderator_id = null, moderator_name = null, moderator_discriminator = null, reason = null, date_issued = null, guild_id = null, guild_name = null WHERE warn_id = ?;'),
   createWarn: db.prepare('INSERT INTO warns (user_id, user_name, user_discriminator, guild_id, guild_name, moderator_id, moderator_name, moderator_discriminator, reason, date_issued, warn_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);'),
   deleteUserWarns: db.prepare('UPDATE warns SET user_id = null, user_name = null, user_discriminator = null, guild_id = null, guild_name = null WHERE user_id = ? AND guild_id = ?;'),
+  updateGuildName: db.prepare('UPDATE warns SET guild_name = ? WHERE guild_id = ?;'),
 };
 
 module.exports = {

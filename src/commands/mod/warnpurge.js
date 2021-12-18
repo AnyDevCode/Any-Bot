@@ -26,7 +26,7 @@ module.exports = class WarnPurgeCommand extends Command {
       return this.sendErrorMessage(message, 0, 'You cannot warn someone with an equal or higher role');
     
     const autoKick = message.client.db.settings.selectAutoKick.pluck().get(message.guild.id); // Get warn # for auto kick
-
+    const autoBan = message.client.db.settings.selectAutoBan.pluck().get(message.guild.id); // Get warn # for auto ban
     const amount = parseInt(args[1]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
       return this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');

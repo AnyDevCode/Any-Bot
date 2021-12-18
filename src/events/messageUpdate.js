@@ -35,7 +35,7 @@ module.exports = (client, oldMessage, newMessage) => {
       messageEditLog.permissionsFor(newMessage.guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])
     ) {
 
-      if (newMessage.content.length > 1024) newMessage.content = newMessage.content.slice(0, 1020) + '...';
+      if (newMessage.content.length > 1024) newMessage.content = newMessage.content.slice(0, 1021) + '...';
       if (oldMessage.content.length > 1024) oldMessage.content = oldMessage.content.slice(0, 1021) + '...';
 
       embed
@@ -43,7 +43,7 @@ module.exports = (client, oldMessage, newMessage) => {
         .setDescription(`
           ${newMessage.member}'s **message** in ${newMessage.channel} was edited. [Jump to message!](${newMessage.url})
         `)
-        .addField('Before', oldMessage.content + ".")
+        .addField('Before', oldMessage.content || '`No content`', true)
         .addField('After', newMessage.content);
       messageEditLog.send(embed);
     }

@@ -1,7 +1,4 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
-const axios = require('axios')
 
 module.exports = class DadJokesCommand extends Command {
   constructor(client) {

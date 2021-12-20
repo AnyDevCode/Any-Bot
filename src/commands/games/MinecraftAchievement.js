@@ -1,9 +1,5 @@
 const Command = require("../Command.js");
-const { MessageEmbed } = require("discord.js");
-const Discord = require("discord.js");
 const superagent = require("superagent");
-const fetch = require("node-fetch");
-const axios = require("axios");
 
 module.exports = class MinecraftArchievementCommand extends Command {
   constructor(client) {

@@ -1,7 +1,6 @@
 const Command = require('../Command.js');
 const axios = require('axios');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
 
 module.exports = class CoronaCommand extends Command {
   constructor(client) {

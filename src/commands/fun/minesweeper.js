@@ -1,8 +1,5 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
-const axios = require('axios')
-const translate = require('node-google-translate-skidz');
 
 module.exports = class MinesweeperCommand extends Command {
   constructor(client) {

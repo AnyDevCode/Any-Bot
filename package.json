@@ -6,7 +6,7 @@
   "dependencies": {
     "@discordjs/opus": "^0.7.0",
     "ascii-table": "0.0.9",
-    "axios": "^0.21.4",
+    "axios": "^0.21.2",
     "bad-words": "^3.0.4",
     "bdl.js": "^1.0.3",
     "better-sqlite3": "^7.4.0",

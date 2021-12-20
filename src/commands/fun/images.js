@@ -1,5 +1,9 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
+var gis = require('g-i-s');
+var Filter = require('bad-words'),
+filter = new Filter();
+var customFilter = new Filter({ placeHolder: '*'});
 
 module.exports = class ImagesCommand extends Command {
   constructor(client) {
@@ -12,26 +16,42 @@ module.exports = class ImagesCommand extends Command {
   }
   async run(message, args) {
 
-    let search = args.join(" ")
+    var search = args.join(" ")
     if(!search){
         return message.channel.send('Insert the you want to search first')
     }
 
-    var gis = require('g-i-s');
-    gis(search, logResults);
+    search = customFilter.clean(search);
+
+    var options = {
+      searchTerm : search,
+      queryStringAddition: '&safe=active',
+      filterOutDomains : [
+        'google.com',
+        'youtube.com',
+        'giphy.com',
+        'imgur.com',
+        'twitter.com',
+        'facebook.com',
+        'instagram.com',
+        'pixabay.com',
+        'pinterest.com',
+        'deviantart.com'
+      ],
+    }
+
+    gis(options, logResults);
 
 
     function logResults(error, results) {
       if (error) {
-        return message.channel.send('Sorry, I didn\'t find the images, try again')
+        return this.sendErrorMessage(message, 1, 'Please try again in a few seconds');
       }
       else {
 
     var i = 0;
 
     let max = results.length - 1
-
-
 
     const embed = new MessageEmbed()
     .setTitle("Result to your search")
@@ -60,14 +80,15 @@ module.exports = class ImagesCommand extends Command {
                }
            }
            if(reaction.emoji.name === '⏹️'){
-               msg.reactions.cache.get('◀️').remove()
-               msg.reactions.cache.get('⏹️').remove()
-               msg.reactions.cache.get('▶️').remove()
-               const embedsss = new MessageEmbed()
-                   .setImage('https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png')
-                   .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
-                   .setTimestamp()
-                   msg.edit(embedsss);
+                msg.reactions.cache.get('◀️').remove()
+                msg.reactions.cache.get('⏹️').remove()
+                msg.reactions.cache.get('▶️').remove()
+                const embedsss = new MessageEmbed()
+                    .setAuthor("Google Images", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+                    .setDescription("Thanks for using Google Images")
+                    .setColor(message.guild.me.displayHexColor)
+                    .setTimestamp()
+                    msg.edit(embedsss);
            }
            if(reaction.emoji.name === '◀️'){
                if(1 != i){

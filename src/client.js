@@ -4,6 +4,7 @@ const { join, resolve } = require('path');
 const AsciiTable = require('ascii-table');
 const { fail } = require('./utils/emojis.json');
 
+
 /**
  * Any Bot's custom client
  * @extends Discord.Client
@@ -36,6 +37,7 @@ class Client extends Discord.Client {
     this.types = {
       INFO: 'info',
       FUN: 'fun',
+      ANIMALS: 'animals',
       COLOR: 'color',
       POINTS: 'points',
       MISC: 'misc',
@@ -128,6 +130,28 @@ class Client extends Discord.Client {
         super.on(eventName, event.bind(null, this));
         delete require.cache[require.resolve(resolve(__basedir, join(path, f)))]; // Clear cache
         this.logger.info(`Loading event: ${eventName}`);
+      });
+    });
+    return this;
+  }
+
+  /**
+   * Loads all music events
+   * @param {string} path
+    */
+  loadMusicEvents(path) {
+    readdir(path, (err, files) => {
+      console.log(files);
+      if (err) this.logger.error(err);
+      files = files.filter(f => f.split('.').pop() === 'js');
+      if (files.length === 0) return this.logger.warn('No music events found');
+      this.logger.info(`${files.length} music event(s) found...`);
+      files.forEach(f => {
+        const eventName = f.substring(0, f.indexOf('.'));
+        const event = require(resolve(__basedir, join(path, f)));
+        super.on(eventName, event.bind(null, this));
+        delete require.cache[require.resolve(resolve(__basedir, join(path, f)))]; // Clear cache
+        this.logger.info(`Loading music event: ${eventName}`);
       });
     });
     return this;

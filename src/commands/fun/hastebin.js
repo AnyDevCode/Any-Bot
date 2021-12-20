@@ -13,24 +13,30 @@ module.exports = class HasteBinCommand extends Command {
   }
   async run(message, args) {
 
-    let extensions = ["js", "json", "txt", "py", "md"]
+    let extensions = ["js", "json", "txt", "py", "md", "hx", "lua", "html", "css"]
 
-    if (!args[0]) return message.channel.send("You should put the extension like these:\n`"+extensions.join(', ')+"`")
+    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please specify an extension.');
 
-    if (!extensions.includes(args[0].toLowerCase())) return message.channel.send("Extension not valid")
+    if (!extensions.includes(args[0].toLowerCase())) return this.sendErrorMessage(message, 0, `The extension is not valid`, `The extension is not valid, you should put the extension like these:\n${extensions.join(', ')}`)
 
-    let content = args.slice(1).join(" ")
-    
-    if (!content) return message.channel.send("Write your text to paste in the hastebin")
+    if (!args[1]) return this.sendErrorMessage(message, 0, 'Please specify the text.');
 
-    paste(content, { extension: args[0], message: "" }).then(hastebin => {
-      message.channel.send("Url is: "+hastebin+"")
+    let text = args.slice(1).join(" ")
 
-    }).catch(e => {
-       message.channel.send("error:" + e)
+    let embed = new MessageEmbed()
+      .setTitle("Saving...")
+      .setColor(message.guild.me.displayHexColor)
+    message.channel.send(embed).then(msg => {
+      paste(text, { extension: args[0].toLowerCase(), message: "", prefix: "The link is:" }).then(url => {
+        embed.setTitle("Saved!")
+        embed.setDescription(`The link is: ${url}`)
+        embed.setColor(message.guild.me.displayHexColor)
+        msg.edit(embed)
+        console.log(url)
+      }).catch(err => {
+        this.sendErrorMessage(message, 1, "Error while saving")
+      })
     })
 
-
-
   }
-};
+}

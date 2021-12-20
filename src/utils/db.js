@@ -67,7 +67,6 @@ db.prepare(`
     bot INTEGER,
     points INTEGER NOT NULL,
     total_points INTEGER NOT NULL,
-    warns TEXT,
     current_member INTEGER NOT NULL,
     PRIMARY KEY (user_id, guild_id)
   );
@@ -211,7 +210,6 @@ const users = {
   selectLeaderboard: db.prepare('SELECT * FROM users WHERE guild_id = ? AND current_member = 1 ORDER BY points DESC;'),
   selectPoints: db.prepare('SELECT points FROM users WHERE user_id = ? AND guild_id = ?;'),
   selectTotalPoints: db.prepare('SELECT total_points FROM users WHERE user_id = ? AND guild_id = ?;'),
-  selectWarns: db.prepare('SELECT warns FROM users WHERE user_id = ? AND guild_id = ?;'),
   selectCurrentMembers: db.prepare('SELECT * FROM users WHERE guild_id = ? AND current_member = 1;'),
   selectMissingMembers: db.prepare('SELECT * FROM users WHERE guild_id = ? AND current_member = 0;'),
 
@@ -227,7 +225,6 @@ const users = {
   wipeTotalPoints: db.prepare('UPDATE users SET points = 0, total_points = 0 WHERE user_id = ? AND guild_id = ?;'),
   wipeAllPoints: db.prepare('UPDATE users SET points = 0 WHERE guild_id = ?;'),
   wipeAllTotalPoints: db.prepare('UPDATE users SET points = 0, total_points = 0 WHERE guild_id = ?;'),
-  updateWarns: db.prepare('UPDATE users SET warns = ? WHERE user_id = ? AND guild_id = ?;'),
   updateCurrentMember: db.prepare('UPDATE users SET current_member = ? WHERE user_id = ? AND guild_id = ?;'),
   deleteGuild: db.prepare('DELETE FROM users WHERE guild_id = ?;')
 };

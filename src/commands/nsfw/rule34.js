@@ -1,8 +1,6 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
 const booru = require("booru")
-const Discord = require('discord.js')
 
 module.exports = class Rule34Command extends Command {
   constructor(client) {
@@ -22,7 +20,7 @@ module.exports = class Rule34Command extends Command {
         booru.search('rule34', [tags], { limit: 1, random: true })
         .then(posts => {
        for(let post of posts) {
-       const embed = new Discord.MessageEmbed()
+       const embed = new MessageEmbed()
          .setColor(message.guild.me.displayHexColor)
          .setTitle(`Search result: ${tags}`)
          .setImage(post.fileUrl)

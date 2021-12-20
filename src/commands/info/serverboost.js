@@ -8,6 +8,15 @@ let features = {
         DISCOVERABLE: "Discoverable",
         FEATURABLE: "Featurable",
         INVITE_SPLASH: "Invite splash",
+        MEMBER_VERIFICATION_GATE_ENABLED: "Member verification gate enabled",
+        MONETIZATION_ENABLED: "Monetization enabled",
+        MORE_STICKERS: "More stickers",
+        PREVIEW_ENABLED: "Preview enabled",
+        PRIVATE_THREADS: "Private threads",
+        ROLE_ICONS: "Role icons",
+        SEVEN_DAY_THREAD_ARCHIVE: "Seven day thread archive",
+        THREE_DAY_THREAD_ARCHIVE: "Three day thread archive",
+        TICKETED_EVENTS_ENABLED: "Ticketed events enabled",
         PUBLIC: "Public",
         NEWS: "News",
         PARTNERED: "Partnered",
@@ -15,7 +24,10 @@ let features = {
         VERIFIED: "Verified",
         VIP_REGIONS: "V.I.P. Region",
         RELAY_ENABLED: "Relay enabled",
-        WELCOME_SCREEN_ENABLED: "Welcome screen enabled"
+        WELCOME_SCREEN_ENABLED: "Welcome screen enabled",
+        THREADS_ENABLED: "Threads enabled",
+        ENABLED_DISCOVERABLE_BEFORE: "Enabled discoverable before",
+        NEW_THREAD_PERMISSIONS: "New thread permissions",
     };
 
     let level = { 
@@ -38,6 +50,8 @@ module.exports = class ServerBoostCommand extends Command {
 
     var server = message.guild 
 
+    console.log(server.features)
+
     const embed = new MessageEmbed()
     .setColor(message.guild.me.displayHexColor)
     .setAuthor("Boost status on: " + server.name)
@@ -49,7 +63,7 @@ module.exports = class ServerBoostCommand extends Command {
         inline: true
     })
     .addFields({
-        name: "Members booting", value: server.premiumSubscriptionCount === 0 ? "none boosts"
+        name: "Members boosting", value: server.premiumSubscriptionCount === 0 ? "none boosts"
             : `${server.premiumSubscriptionCount} ${
             server.premiumSubscriptionCount === 1 ? "member" : "members"}`,
         inline: true

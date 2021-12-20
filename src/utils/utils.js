@@ -249,6 +249,14 @@ function scheduleCrown(client, guild) {
   }
 }
 
+/**
+ * HTML to String
+ * @param {string} html
+ */
+function htmlToString(html) {
+  return html.replace(new RegExp("&#39;", "g"), "'").replace(new RegExp("&quot;", "g"), '"').replace(new RegExp("&amp;", "g"), '&').replace(new RegExp("<br>", "g"), "\n").replace(new RegExp("<b>", "g"), "**").replace(new RegExp("</b>", "g"), "**").replace(new RegExp("<i>", "g"), "*").replace(new RegExp("</i>", "g"), "*")
+}
+
 module.exports = {
   capitalize,
   removeElement,
@@ -262,5 +270,6 @@ module.exports = {
   replaceCrownKeywords,
   transferCrown,
   scheduleCrown,
-  formatUrl
+  formatUrl,
+  htmlToString
 };

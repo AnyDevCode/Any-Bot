@@ -14,7 +14,6 @@ module.exports = class GeometryDashsayCommand extends Command {
     });
   }
   async run(message, args) {
-    message.delete()  
     
     let char = ["gatekeeper", "gatekeeper.dark", "keymaster", "keymaster.huh", "keymaster.scared", "keymaster.scream", "monster", "monster.eyes", "potbor", "potbor.annoyed", "potbor.huh", "potbor.mad", "potbor.right", "potbor.talk", "potbor.tired", "scratch", "scratch.annoyed", "scratch.huh", "scratch.mad", "scratch.right", "scratch.talk", "shopkeeper", "shopkeeper.annoyed", "spooky"]   
     let color = ["blue", "brown", "purple", "aqua", "green", "grey", "orange", "pink", "red"] 

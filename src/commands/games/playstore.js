@@ -1,6 +1,6 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-
+const play = require('google-play-scraper');
 module.exports = class PlayStoreCommand extends Command {
   constructor(client) {
     super(client, {
@@ -13,7 +13,7 @@ module.exports = class PlayStoreCommand extends Command {
     });
   }
   run(message, args) {
-     const play = require('google-play-scraper');
+    const { htmlToString } = message.client.utils;
      const app = args.join(" ")
      if(message.author.bot){
       return;
@@ -38,7 +38,7 @@ module.exports = class PlayStoreCommand extends Command {
          .addField('Rating',res.scoreText, true)
          .addField('Downloads',res.installs, true)
          .addField('Type', res.genre, true)
-         .addField('Last update',res.recentChanges)
+         .addField('Last update', htmlToString(res.recentChanges))
          .addField('Released',res.released)
          .setFooter('Developer: '+res.developer+' '+'Email: '+res.developerEmail+' '+'Web: '+res.developerWebsite+' '+'ID: ' +res.developerId)
          .setTimestamp()

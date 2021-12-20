@@ -17,65 +17,74 @@ module.exports = class MinesweeperCommand extends Command {
   }
   async run(message, args) {
 	  
-  //Cadena que da vida al buscaminsa final con los iconos ocultos
-  const choices = ["||:zero:||", "||:one:||", "||:two:||", "||:three:||", "||:four:||", "||:five:||", "||:six:||", "||:seven:||", "||:eight:||","||:bomb:||"];
-  const number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; //Valores que puede tomar una casilla
-  const bomb = 9; //El valor 9 representa el de la mina
-  let bombas =  args[0] || 20; //NUMERO DE BOMBAS - Se puede cambiar y mejorar si se quiere jugar con eso
+  const choices = ["||:zero:||", "||:one:||", "||:two:||", "||:three:||", "||:four:||", "||:five:||", "||:six:||", "||:seven:||", "||:eight:||","||:bomb:||"]; // Array of choices
+  const number = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]; // Values of the board 
+  const bomb = 9; // Value of the bomb
+  let bombas =  args[0] || 20; // Number of bombs
+
+  if (bombas > 64) return this.sendErrorMessage(message, 0, 'The maximum number of bombs is 64.');
   
-  let row = number[Math.floor(Math.random() * number.length)]; //Inicializa una posicion aleatoria
-  let column = number[Math.floor(Math.random() * number.length)]; //Inicializa una posicion aleatoria
+  let row = number[Math.floor(Math.random() * number.length)];  // Random number in the board
+  let column = number[Math.floor(Math.random() * number.length)]; // Random number in the board
   
-  var buscaminas=new Array(10); //Crea un array de 10
+  var buscaminas=new Array(10); // Array of the board
 
   for (let i = 0; i < 10; i++){
-    buscaminas[i]=new Array(10); //Hace que el array de antes sea bidimensional (un tablero)
+    buscaminas[i]=new Array(10); //Make a bidimensional array
   }
 
   for (let i = 0; i<10; i++){
     for (let j = 0; j<10 ;j++){
-      buscaminas[i][j] = 0;		//Inicializamos el tablero poniendo las casillas a cero
+      buscaminas[i][j] = 0;		//Fill the array with 0 in the two dimensions
     }
   }
-  while (bombas != 0) { // Hasta que no hayamoso colocado todas la bombas no se sale
-    while(buscaminas[row][column]==9){ //Cambias las posiciones si en ellas haya una bomba
+  while (bombas != 0) {  // While there are bombs
+    while(buscaminas[row][column]==9){ // If the cell is a bomb
         row = number[Math.floor(Math.random() * number.length)]; 
         column = number[Math.floor(Math.random() * number.length)];
     }
-    //Si encuentra una casilla sin bomba, cambia su valor por el 9 (bomba) y resta una bomba al contador
-      bombas = bombas-1;
-      buscaminas[row][column] = 9;
-      
-    //Esta parte es la mÃÂ¡s liosa, pero lo que hacen los siguientes pasos es  mirar en que posicion esta la bomba para incrementar el valor de las casillas adyacentes si no son bombas.
+    //If the cell is a bomb, the value is 9
+    bombas = bombas-1;
+    buscaminas[row][column] = 9;
+
+    // look at the position of the bomb to increase the value of the adjacent squares if they are not bombs.
     
-     let iteri = 3; //Numero de casillas por fila para iterar 
+     let iteri = 3; //Number of cells per row to iterate
 
 		for (let i = 0; i < iteri; i++) {
-			let iterj = 3; //Numero de casillas por columna por iterar (Se reinicia por cada fila)
+			let iterj = 3; //Number of cells per column to iterate
 			if (row == 0 && i == 0)
-				i++; //Si la casilla estÃÂ¡ arriba del todo, se le aumenta el valor a la i
+				i++; ///If the bomb is in the first row, the loop will start in the second row
 			if (row == 10 - 1 && i == 0)
-				iteri--; //Si la casilla esta bajo del todo, las iteraciones se decrementan
+				iteri--; //If the bomb is in the last row, the loop will end in the second last row
 			for (let j = 0; j < iterj; j++) {
 				if (column == 0 && j == 0)
-					j++; //Si la casilla estÃÂ¡ a la izquierda del todo, se le aumenta la j
+					j++; ///If the bomb is in the first column, the loop will start in the second column
 				if (column == 10 - 1 && j == 0)
-					iterj--;//Si la casilla estÃÂ¡ a la derecha del todo, se decrementan iteraciones
-				if (i != 1 || j != 1)//Si no es la casilla inicial
-					if (buscaminas[row + i - 1][column - 1 + j] != bomb) //Si no es una bomba
-						buscaminas[row + i - 1][column - 1 + j]++; //Incrementar el valor casilla
+					iterj--;//If the bomb is in the last column, the loop will end in the second last column
+				if (i != 1 || j != 1)//if the bomb is not in the first row and first column
+					if (buscaminas[row + i - 1][column - 1 + j] != bomb) //If the cell is not a bomb
+						buscaminas[row + i - 1][column - 1 + j]++; //Increase the value of the cell
 			}
 		}
       
     }
   
-   //Finalmente cambiamos los nÃÂºmeros por los emojis ocultos para crear el juego
+   //Create the board
   for (let i = 0; i<10; i++){
     for (let j = 0; j<10;j++){
         buscaminas[i][j] = choices[buscaminas[i][j]];
     }
   }
+
+
+
+  const embed = new MessageEmbed()
+  .setTitle('Minesweeper')
+  .setDescription(buscaminas.join('\n').replace(/,/g, ''))
+  .setColor(message.guild.me.displayHexColor)
+  .setTimestamp()
+  return message.channel.send(embed);
   
-  return message.channel.send(buscaminas);
   }
 };

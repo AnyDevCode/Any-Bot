@@ -1,8 +1,7 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
 const math = require("math-expression-evaluator")
-const Discord = require('discord.js')
+const { stripIndent } = require('common-tags');
 
 module.exports = class DogFactCommand extends Command {
   constructor(client) {
@@ -10,12 +9,48 @@ module.exports = class DogFactCommand extends Command {
       name: 'math',
       aliases: ['calc'],
       usage: 'math 1+1, math 2*5',
-      description: 'It shows you the result of a mathematical operation.',
+      description: stripIndent`
+      It shows you the result of a mathematical operation.
+
+      \`\`\`
+      Mathematical Operations:
+      + Addition
+      - Subtraction
+      * Multiplication
+      / Division
+      Sigma Summation
+      Pi Product
+      n Variable for Sunnation or Product
+      pi Variable for Pi
+      e Variable for Euler's Number
+      Mod Modulus
+      ^ Exponentiation
+      ! Factorial
+      C Combination
+      P Permutation
+      log Logarithm
+      ln Natural Logarithm
+      pow Power
+      root Underroot
+      sin Sine
+      cos Cosine
+      tan Tangent
+      asin Inverse Sine
+      acos Inverse Cosine
+      atan Inverse Tangent
+      sinh Hyperbolic Sine
+      cosh Hyperbolic Cosine
+      tanh Hyperbolic Tangent
+      asinh Inverse Hyperbolic Sine
+      acosh Inverse Hyperbolic Cosine
+      atanh Inverse Hyperbolic Tangent
+      \`\`\`
+      `,
       type: client.types.FUN
     });
   }
   async run(message, args) {
-    const mathembed = new Discord.MessageEmbed()
+    const mathembed = new MessageEmbed()
   
   if (!args[0]) {
     mathembed.setFooter("Please enter an `expression`");

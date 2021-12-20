@@ -26,7 +26,8 @@ module.exports = class AmazonCommand extends Command {
       .then((res) => {
         let max = res.searchResults.length - 1;
         const embed = new MessageEmbed()
-          .setTitle(res.searchResults[i].title)
+          .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
+          .setTitle(`Results for ${article}`)
           .setURL("https://amazon.com" + res.searchResults[i].productUrl)
           .addField("Name:", res.searchResults[i].title)
           .addField(
@@ -55,7 +56,6 @@ module.exports = class AmazonCommand extends Command {
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor)
           .setFooter(`Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1))
-          .setThumbnail("https://i.imgur.com/4gVj6Xf.png");
         message.channel.send(embed).then((msg) => {
           msg.react("◀️");
           msg.react("⏹️");
@@ -68,7 +68,8 @@ module.exports = class AmazonCommand extends Command {
               if (i != max) {
                 i++;
                 const embeds = new MessageEmbed()
-                  .setTitle(res.searchResults[i].title)
+                  .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
+                  .setTitle(`Results for ${article}`)
                   .setURL(
                     "https://amazon.com" + res.searchResults[i].productUrl
                   )
@@ -108,8 +109,7 @@ module.exports = class AmazonCommand extends Command {
                   .setColor(message.guild.me.displayHexColor)
                   .setFooter(
                     `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1)
-                  )
-                  .setThumbnail("https://i.imgur.com/4gVj6Xf.png");
+                  );
                 msg.edit(embeds);
               }
             }
@@ -118,11 +118,9 @@ module.exports = class AmazonCommand extends Command {
               msg.reactions.cache.get("⏹️").remove();
               msg.reactions.cache.get("▶️").remove();
               const embedsss = new MessageEmbed()
-                .setTitle("Amazon")
-                .setImage("https://i.imgur.com/4gVj6Xf.png")
-                .setFooter(
-                  `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1)
-                )
+                .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
+                .setDescription("Thanks for using the Amazon")
+                .setColor(message.guild.me.displayHexColor)
                 .setTimestamp();
               msg.edit(embedsss);
             }
@@ -130,7 +128,8 @@ module.exports = class AmazonCommand extends Command {
               if (1 != i) {
                 i--;
                 const embedss = new MessageEmbed()
-                  .setTitle(res.searchResults[i].title)
+                  .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
+                  .setTitle(`Results for ${article}`)
                   .setURL(
                     "https://amazon.com" + res.searchResults[i].productUrl
                   )
@@ -172,7 +171,6 @@ module.exports = class AmazonCommand extends Command {
                   .setFooter(
                     `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1)
                   )
-                  .setThumbnail("https://i.imgur.com/4gVj6Xf.png");
                 msg.edit(embedss);
               }
             }

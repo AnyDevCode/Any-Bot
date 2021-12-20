@@ -24,7 +24,7 @@ module.exports = class GoogleCommand extends Command {
       host : "google.com",
       qs : {
         q : search,
-        filter : 0,
+        filter : 1,
         pws : 0
       },
       num : 50
@@ -37,8 +37,9 @@ module.exports = class GoogleCommand extends Command {
     let max = links.length - 1
 
     const embed = new MessageEmbed()
+    .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
     .setTitle("Result to your search")
-    .setDescription(`[${links[i].title}](${links[i].url})`)
+    .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
     .setTimestamp()
     .setColor(message.guild.me.displayHexColor)
     .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
@@ -54,8 +55,9 @@ module.exports = class GoogleCommand extends Command {
                if(i != max){
                    i++
                    const embeds = new MessageEmbed()
+                   .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
                    .setTitle("Result to your search")
-                   .setDescription(`[${links[i].title}](${links[i].url})`)
+                   .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
                    .setTimestamp()
                    .setColor(message.guild.me.displayHexColor)
                    .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
@@ -67,17 +69,19 @@ module.exports = class GoogleCommand extends Command {
                msg.reactions.cache.get('⏹️').remove()
                msg.reactions.cache.get('▶️').remove()
                const embedsss = new MessageEmbed()
-                   .setImage('https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png')
-                   .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
+                   .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+                   .setDescription("Thanks for using Google")
+                   .setColor(message.guild.me.displayHexColor)
                    .setTimestamp()
                    msg.edit(embedsss);
            }
            if(reaction.emoji.name === '◀️'){
-               if(1 != i){
+               if(i != 0){
                i--
                const embedss = new MessageEmbed()
+               .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
                .setTitle("Result to your search")
-               .setDescription(`[${links[i].title}](${links[i].url})`)
+               .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
                .setTimestamp()
                .setColor(message.guild.me.displayHexColor)
                .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))

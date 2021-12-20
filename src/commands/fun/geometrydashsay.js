@@ -14,6 +14,8 @@ module.exports = class GeometryDashsayCommand extends Command {
     });
   }
   async run(message, args) {
+
+    const {stringToUrlEncoded} = message.client.utils;
     
     let char = ["gatekeeper", "gatekeeper.dark", "keymaster", "keymaster.huh", "keymaster.scared", "keymaster.scream", "monster", "monster.eyes", "potbor", "potbor.annoyed", "potbor.huh", "potbor.mad", "potbor.right", "potbor.talk", "potbor.tired", "scratch", "scratch.annoyed", "scratch.huh", "scratch.mad", "scratch.right", "scratch.talk", "shopkeeper", "shopkeeper.annoyed", "spooky"]   
     let color = ["blue", "brown", "purple", "aqua", "green", "grey", "orange", "pink", "red"] 
@@ -24,9 +26,9 @@ module.exports = class GeometryDashsayCommand extends Command {
     let moder = mod[Math.floor(mod.length * Math.random())];  
     
     
-    let autor = message.author.username.replace(' ', '%20');
+    let autor = stringToUrlEncoded(message.author.username)
         
-    let txt = args.join('%20'); 
+    let txt = stringToUrlEncoded(args.join(' '))
         
     if (!txt) return message.channel.send("Do not forget to put the text you want.") 
 

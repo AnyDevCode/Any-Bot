@@ -17,7 +17,7 @@ module.exports = class ChatBotCommand extends Command {
     let text = args.join(" ");
     try {
       const apiKey = message.client.apiKeys.somerandomapikey
-      const res = await fetch(`https://some-random-api.ml/chatbot?message=${text.replace(new RegExp(",", "g"), "%20").replace("ñ", "%f1").replace("Ñ", "%d1").replace("¿","").replace("¡","").replace("?","%3F")}&key=${apiKey}`);
+      const res = await fetch(`https://some-random-api.ml/chatbot?message=${stringToUrlEncoded(text)}&key=${apiKey}`);
       const answer = (await res.json());
       const embed = new MessageEmbed()
         .setTitle(':robot:  Chat Bot!  :robot:')

@@ -15,7 +15,7 @@ module.exports = class Rule34Command extends Command {
   }
   async run(message, args) {
 	  if(!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
-       const tags = args.join(" ").replace(" ", "%20")
+       const tags = stringToUrlEncoded(args.join(" "))
       if(!tags) return message.channel.send("Write something to look for in Rule 34.")
         booru.search('rule34', [tags], { limit: 1, random: true })
         .then(posts => {

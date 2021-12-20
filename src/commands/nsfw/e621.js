@@ -14,7 +14,8 @@ module.exports = class e621Command extends Command {
   }
   async run(message, args) {
 	  if(!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
-       const tags = args.join(" ").replace(" ", "%20")
+       const {stringToUrlEncoded} = message.client.utils;
+       const tags = stringToUrlEncoded(args.join(" "))
       if(!tags) return message.channel.send("Write something to look for in e621.")
         booru.search('e621', [tags], { limit: 1, random: true })
         .then(posts => {

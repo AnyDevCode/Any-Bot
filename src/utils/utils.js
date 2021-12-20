@@ -257,6 +257,18 @@ function htmlToString(html) {
   return html.replace(new RegExp("&#39;", "g"), "'").replace(new RegExp("&quot;", "g"), '"').replace(new RegExp("&amp;", "g"), '&').replace(new RegExp("<br>", "g"), "\n").replace(new RegExp("<b>", "g"), "**").replace(new RegExp("</b>", "g"), "**").replace(new RegExp("<i>", "g"), "*").replace(new RegExp("</i>", "g"), "*")
 }
 
+/**
+ * String to URL Encoded
+ * @param {string} str
+  */
+function stringToUrlEncoded(str) {
+
+  const string = encodeURIComponent(str)
+  return string;
+  
+
+}
+
 module.exports = {
   capitalize,
   removeElement,
@@ -271,5 +283,6 @@ module.exports = {
   transferCrown,
   scheduleCrown,
   formatUrl,
-  htmlToString
+  htmlToString,
+  stringToUrlEncoded
 };

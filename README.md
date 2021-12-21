@@ -35,10 +35,14 @@
 
 I am [**Any Bot**](https://top.gg/bot/733728002910715977), a multifunctional Discord bot which is a variation of [**Calypso Bot**](https://github.com/sabattle/CalypsoBot), this variation includes backup commands and some extra fun and useful commands that can be useful in any bot.
 
+<p align="center">
+
 [![Discord Bots](https://top.gg/api/widget/status/733728002910715977.svg?noavatar=true)](https://top.gg/bot/733728002910715977) 
 [![Discord Bots](https://top.gg/api/widget/servers/733728002910715977.svg?noavatar=true)](https://top.gg/bot/733728002910715977) 
 [![Discord Bots](https://top.gg/api/widget/upvotes/733728002910715977.svg?noavatar=true)](https://top.gg/bot/733728002910715977) 
 [![Discord Bots](https://top.gg/api/widget/owner/733728002910715977.svg?noavatar=true)](https://top.gg/bot/733728002910715977)
+
+</p>
 
 # Features
 

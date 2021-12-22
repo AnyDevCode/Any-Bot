@@ -9,7 +9,7 @@
     "axios": "^0.21.4",
     "bad-words": "^3.0.4",
     "bdl.js": "^1.0.3",
-    "better-sqlite3": "^7.4.0",
+    "better-sqlite3": "^7.4.5",
     "blapi": "^2.2.1",
     "booru": "^2.3.2",
     "canvas": "^2.8.0",
@@ -26,6 +26,7 @@
     "figlet": "^1.5.0",
     "fortnite": "^4.3.2",
     "g-i-s": "^2.1.6",
+    "genius-lyrics": "^4.3.5",
     "geometry-dash-api": "^2.0.0",
     "google-play-scraper": "^8.0.4",
     "hastebin-paste": "^1.3.1",
@@ -59,7 +60,8 @@
     "unofficial-amazon-search": "^2.0.4",
     "winston": "^3.2.1",
     "yaml": "^1.8.3",
-    "youtube-search": "^1.1.6"
+    "youtube-search": "^1.1.6",
+    "yt-search": "^2.10.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

@@ -269,6 +269,51 @@ function stringToUrlEncoded(str) {
 
 }
 
+async function play_song (guild, song, queue) {
+  const ytdl = require('ytdl-core');
+
+  const song_queue = queue.get(guild.id);
+
+  //If no song is left in the server queue. Leave the voice channel and delete the key and value pair from the global queue.
+  if (!song) {
+      song_queue.text_channel.send('🎶 | **Queue is now empty**');
+      song_queue.voice_channel.leave();
+      queue.delete(guild.id);
+      return;
+  }
+  if (song.type === 'attachment') {
+    song_queue.text_channel.send(`🎶 | **Now playing:** ${song.title}`);
+    song_queue.connection.play(song.url, { seek: 0, volume: song_queue.volume })
+      .on('finish', () => {
+        song_queue.songs.shift();
+        play_song(guild, song_queue.songs[0], queue);
+      })
+      } else {
+  const stream = ytdl(song.url, { filter: 'audioonly' });
+  song_queue.connection.play(stream, { seek: 0, volume: song_queue.volume })
+  .on('finish', () => {
+      song_queue.songs.shift();
+      play_song(guild, song_queue.songs[0], queue);
+  });
+  await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`)
+}}
+
+async function skip_song (message, server_queue)  {
+  if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+  if(!server_queue){
+      return message.channel.send(`There are no songs in queue 😔`);
+  }
+  server_queue.connection.dispatcher.end();
+  return message.channel.send(`Skipped **${server_queue.songs[0].title}**`); 
+}
+
+async function stop_song (message, server_queue)  {
+  if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+  server_queue.songs = [];
+  server_queue.connection.dispatcher.end();
+  return message.channel.send(`:x: Stopped the music`);
+}
+
 module.exports = {
   capitalize,
   removeElement,
@@ -284,5 +329,8 @@ module.exports = {
   scheduleCrown,
   formatUrl,
   htmlToString,
-  stringToUrlEncoded
+  stringToUrlEncoded,
+  play_song,
+  skip_song,
+  stop_song
 };

@@ -4,7 +4,7 @@ const { join, resolve } = require('path');
 const AsciiTable = require('ascii-table');
 const { fail } = require('./utils/emojis.json');
 
-
+let queue = new Map()
 /**
  * Any Bot's custom client
  * @extends Discord.Client
@@ -197,6 +197,10 @@ class Client extends Discord.Client {
   isOwner(user) {
     if (user.id === this.ownerId) return true;
     else return false;
+  }
+
+  queue(){ 
+    return queue
   }
 
 

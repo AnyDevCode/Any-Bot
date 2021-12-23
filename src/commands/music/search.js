@@ -1,7 +1,6 @@
 const Command = require('../Command.js');
 const { MessageEmbed, MessageCollector } = require('discord.js');
 const ytSearch = require('yt-search');
-const ytdl = require('ytdl-core');
 
 module.exports = class SearchMusicCommand extends Command {
   constructor(client) {
@@ -70,6 +69,9 @@ module.exports = class SearchMusicCommand extends Command {
             connection: null,
             songs: [],
             volume: 0.5,
+            playing: true,
+            loop: false,
+            channel: message.channel,
         }
         
         //Add our key and value pair into the global queue. We then use this to get our server queue.
@@ -78,8 +80,7 @@ module.exports = class SearchMusicCommand extends Command {
     
         //Establish a connection and play the song with the vide_player function.
         try {
-            const connection = await voice_channel.join();
-            queue_constructor.connection = connection;
+            queue_constructor.connection = await voice_channel.join();
             play_song(message.guild, queue_constructor.songs[0], queue);
         } catch (err) {
             queue.delete(message.guild.id);

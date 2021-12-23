@@ -75,7 +75,6 @@ module.exports = async (client) => {
     for (const id of currentMemberIds) {
       if (!guild.members.cache.has(id)) {
         client.db.users.updateCurrentMember.run(0, id, guild.id);
-        client.db.users.wipeTotalPoints.run(id, guild.id);
       }
     }
 

@@ -1,6 +1,4 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
 
 module.exports = class StopMusicCommand extends Command {
   constructor(client) {
@@ -22,7 +20,7 @@ module.exports = class StopMusicCommand extends Command {
     if (message.member.permissions.has('ADMINISTRATOR') || server_queue.songs[0].requester === message.author.id) {
       const stop_song = async (message, server_queue) => message.client.utils.stop_song(message, server_queue);
 
-      stop_song(message, server_queue);
+      stop_song(message.member, server_queue);
     } else {
       return this.sendErrorMessage(message, 1, 'You have to be the song requester to use this command.');
 

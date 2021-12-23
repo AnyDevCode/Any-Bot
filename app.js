@@ -22,23 +22,23 @@ if (botlist) {
   const { connectBdlBot } = require("bdl.js");
   const bldapikey = require("./blapi.json");
 
-  var details = {
+  const details = {
     users: client.users.cache.size,
     guilds: client.guilds.cache.size,
   };
 
-  var formBody = [];
+  let formBody = [];
 
-  for (var properly in details) {
-    var encodedKey = encodeURIComponent(properly);
-    var encodedValue = encodeURIComponent(details[properly]);
+  for (const properly in details) {
+    const encodedKey = encodeURIComponent(properly);
+    const encodedValue = encodeURIComponent(details[properly]);
     formBody.push(encodedKey + ":" + encodedValue);
   }
   formBody = formBody.join("&");
 
   const postertopgg = AutoPoster(bldapikey.topgg, client);
 
-  connectBdlBot(bldapikey.bdl, client);
+  connectBdlBot(bldapikey.bdl, client).then(r => console.log(r));
 
   postertopgg.on("posted", async (stats) => {
     console.log("Posteado en Top.gg | " + stats.serverCount + " servers");

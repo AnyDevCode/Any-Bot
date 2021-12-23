@@ -101,6 +101,9 @@ module.exports = class PlayMusicCommand extends Command {
         connection: null,
         songs: [],
         volume: 0.5,
+        playing: true,
+        loop_queue: false,
+        channel: message.channel,
     }
     
     //Add our key and value pair into the global queue. We then use this to get our server queue.
@@ -109,8 +112,7 @@ module.exports = class PlayMusicCommand extends Command {
 
     //Establish a connection and play the song with the vide_player function.
     try {
-        const connection = await voice_channel.join();
-        queue_constructor.connection = connection;
+        queue_constructor.connection = await voice_channel.join();
         play_song(message.guild, queue_constructor.songs[0], queue);
     } catch (err) {
         queue.delete(message.guild.id);

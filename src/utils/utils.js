@@ -63,8 +63,7 @@ function trimStringFromArray(arr, maxLen = 2048, joinChar = '\n') {
 function getRange(arr, current, interval) {
   const max = (arr.length > current + interval) ? current + interval : arr.length;
   current = current + 1;
-  const range = (arr.length == 1 || arr.length == current || interval == 1) ? `[${current}]` : `[${current} - ${max}]`;
-  return range;
+  return (arr.length == 1 || arr.length == current || interval == 1) ? `[${current}]` : `[${current} - ${max}]`;
 }
 
 
@@ -84,7 +83,7 @@ function getOrdinalNumeral(number) {
 /**
  * Gets the next moderation case number
  * @param {Client} client 
- * @param {Guild} guild
+ * @param {Guild}
  */
 async function getCaseNumber(client, guild, modLog) {
   
@@ -263,8 +262,7 @@ function htmlToString(html) {
   */
 function stringToUrlEncoded(str) {
 
-  const string = encodeURIComponent(str)
-  return string;
+  return encodeURIComponent(str);
   
 
 }
@@ -285,16 +283,29 @@ async function play_song (guild, song, queue) {
     song_queue.text_channel.send(`🎶 | **Now playing:** ${song.title}`);
     song_queue.connection.play(song.url, { seek: 0, volume: song_queue.volume })
       .on('finish', () => {
-        song_queue.songs.shift();
-        play_song(guild, song_queue.songs[0], queue);
+        if (song_queue.loop_queue) {
+          song_queue.songs.shift();
+          play_song(guild, song_queue.songs[0], queue);
+          song_queue.songs.push(song);
+        } else {
+          song_queue.songs.shift();
+          play_song(guild, song_queue.songs[0], queue);
+        }
       })
       } else {
   const stream = ytdl(song.url, { filter: 'audioonly' });
   song_queue.connection.play(stream, { seek: 0, volume: song_queue.volume })
   .on('finish', () => {
+    if (song_queue.loop_queue) {
       song_queue.songs.shift();
       play_song(guild, song_queue.songs[0], queue);
-  });
+      song_queue.songs.push(song);
+    } else {
+      song_queue.songs.shift();
+      play_song(guild, song_queue.songs[0], queue);
+    }
+  })
+
   await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`)
 }}
 
@@ -304,14 +315,17 @@ async function skip_song (message, server_queue)  {
       return message.channel.send(`There are no songs in queue 😔`);
   }
   server_queue.connection.dispatcher.end();
-  return message.channel.send(`Skipped **${server_queue.songs[0].title}**`); 
+  return message.channel.send(`⏭️Skipped **${server_queue.songs[0].title}**`);
 }
 
-async function stop_song (message, server_queue)  {
-  if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
+async function stop_song (member, server_queue)  {
+
+  let channel = server_queue.text_channel;
+
   server_queue.songs = [];
   server_queue.connection.dispatcher.end();
-  return message.channel.send(`:x: Stopped the music`);
+  server_queue = null;
+  return channel.send(`:x: Stopped the music`);
 }
 
 module.exports = {

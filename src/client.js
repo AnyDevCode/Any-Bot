@@ -42,6 +42,7 @@ class Client extends Discord.Client {
       POINTS: 'points',
       MISC: 'misc',
       GAMES: 'games',
+      SOCIAL: 'social',
       MOD: 'mod',
       ADMIN: 'admin',
       MUSIC: 'music',
@@ -163,7 +164,6 @@ class Client extends Discord.Client {
         } else {
           this.logger.warn(`${f} failed to load`);
           table.addRow(f, '', '', 'fail');
-          return;
         }
       });
     });
@@ -195,8 +195,7 @@ class Client extends Discord.Client {
    * @param {User} user
    */
   isOwner(user) {
-    if (user.id === this.ownerId) return true;
-    else return false;
+    return user.id === this.ownerId;
   }
 
   queue(){ 

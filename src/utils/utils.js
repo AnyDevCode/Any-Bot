@@ -63,7 +63,7 @@ function trimStringFromArray(arr, maxLen = 2048, joinChar = '\n') {
 function getRange(arr, current, interval) {
   const max = (arr.length > current + interval) ? current + interval : arr.length;
   current = current + 1;
-  return (arr.length == 1 || arr.length == current || interval == 1) ? `[${current}]` : `[${current} - ${max}]`;
+  return (arr.length === 1 || arr.length === current || interval === 1) ? `[${current}]` : `[${current} - ${max}]`;
 }
 
 
@@ -82,14 +82,15 @@ function getOrdinalNumeral(number) {
 
 /**
  * Gets the next moderation case number
- * @param {Client} client 
- * @param {Guild}
+ * @param {Client} client
+ * @param guild
+ * @param modLog
  */
 async function getCaseNumber(client, guild, modLog) {
   
   const message = (await modLog.messages.fetch({ limit: 100 })).filter(m => m.member === guild.me &&
     m.embeds[0] &&
-    m.embeds[0].type == 'rich' &&
+    m.embeds[0].type === 'rich' &&
     m.embeds[0].footer &&
     m.embeds[0].footer.text &&
     m.embeds[0].footer.text.startsWith('Case')
@@ -158,9 +159,9 @@ function replaceCrownKeywords(message) {
 
 /**
  * Transfers crown from one member to another
- * @param {Client} client 
+ * @param {Client} client
  * @param {Guild} guild
- * @param {Role} crownRole
+ * @param crownRoleId
  */
 async function transferCrown(client, guild, crownRoleId) {
 
@@ -267,6 +268,12 @@ function stringToUrlEncoded(str) {
 
 }
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 async function play_song (guild, song, queue) {
   const ytdl = require('ytdl-core');
 
@@ -344,6 +351,7 @@ module.exports = {
   formatUrl,
   htmlToString,
   stringToUrlEncoded,
+  getRandomInt,
   play_song,
   skip_song,
   stop_song

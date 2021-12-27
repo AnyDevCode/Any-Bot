@@ -3,13 +3,13 @@ const { MessageEmbed } = require('discord.js');
 var tiktokScraper = require("tiktok-scraper")
 const { abbreviateNumber } = require("js-abbreviation-number");
 
-module.exports = class TikTokYoutubeCommand extends Command {
+module.exports = class TikTokCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'tiktok',
       usage: 'tiktok <username>',
       description: 'Tiktok Profile.',
-      type: client.types.FUN,
+      type: client.types.SOCIAL,
       examples: ['tiktok mdcdev', 'tiktok @mdcdev'],
       disabled: false
     });

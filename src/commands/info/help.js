@@ -27,13 +27,13 @@ module.exports = class HelpCommand extends Command {
     const all = (args[0] === 'all') ? args[0] : '';
     const embed = new MessageEmbed();
     const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
-    const { INFO, FUN, ANIMALS, COLOR, POINTS, MISC, GAMES, MOD, ADMIN, MUSIC, BACKUP, OWNER, NSFW } = message.client.types;
+    const { INFO, FUN, ANIMALS, COLOR, POINTS, MISC, GAMES, SOCIAL, MOD, ADMIN, MUSIC, BACKUP, OWNER, NSFW } = message.client.types;
     const { capitalize } = message.client.utils;
 
     const command = message.client.commands.get(args[0]) || message.client.aliases.get(args[0]);
     if (
       command &&
-      (command.type != OWNER || message.client.isOwner(message.member)) &&
+      (command.type !== OWNER || message.client.isOwner(message.member)) &&
       !disabledCommands.includes(command.name)
     ) {
 
@@ -68,6 +68,7 @@ module.exports = class HelpCommand extends Command {
         [POINTS]: `${emojis.points} ${capitalize(POINTS)}`,
         [MISC]: `${emojis.misc} ${capitalize(MISC)}`,
         [GAMES]: `${emojis.games} ${capitalize(GAMES)}`,
+        [SOCIAL]: `${emojis.social} ${capitalize(SOCIAL)}`,
         [MOD]: `${emojis.mod} ${capitalize(MOD)}`,
         [ADMIN]: `${emojis.admin} ${capitalize(ADMIN)}`,
         [MUSIC]: `${emojis.music} ${capitalize(MUSIC)}`,
@@ -94,10 +95,10 @@ module.exports = class HelpCommand extends Command {
         .setDescription(stripIndent`
           **Prefix:** \`${prefix}\`
           **More Information:** \`${prefix}help [command]\`
-          ${(!all && size != total) ? `**All Commands:** \`${prefix}help all\`` : ''}
+          ${(!all && size !== total) ? `**All Commands:** \`${prefix}help all\`` : ''}
         `)
         .setFooter(
-          (!all && size != total) ?
+          (!all && size !== total) ?
             'Only showing available commands.\n' + message.member.displayName : message.member.displayName,
           message.author.displayAvatarURL({ dynamic: true })
         )

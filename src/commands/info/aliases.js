@@ -31,7 +31,7 @@ module.exports = class AliasesCommand extends Command {
 
     const type = (args[0]) ? args[0].toLowerCase() : '';
     const types = Object.values(message.client.types);
-    const { INFO, FUN, ANIMALS, COLOR, POINTS, MISC, GAMES, MOD, ADMIN, MUSIC, BACKUP, OWNER, NSFW } = message.client.types;
+    const { INFO, FUN, ANIMALS, COLOR, POINTS, MISC, GAMES, SOCIAL, MOD, ADMIN, MUSIC, BACKUP, OWNER, NSFW } = message.client.types;
     const { capitalize } = message.client.utils;
 
     const emojiMap = {
@@ -42,6 +42,7 @@ module.exports = class AliasesCommand extends Command {
       [POINTS]: `${emojis.points} ${capitalize(POINTS)}`,
       [MISC]: `${emojis.misc} ${capitalize(MISC)}`,
       [GAMES]: `${emojis.games} ${capitalize(GAMES)}`,
+      [SOCIAL]: `${emojis.social} ${capitalize(SOCIAL)}`,
       [MOD]: `${emojis.mod} ${capitalize(MOD)}`,
       [ADMIN]: `${emojis.admin} ${capitalize(ADMIN)}`,
       [MUSIC]: `${emojis.music} ${capitalize(MUSIC)}`,
@@ -50,7 +51,7 @@ module.exports = class AliasesCommand extends Command {
       [NSFW]: `${emojis.nsfw} ${capitalize(NSFW)}`
     };
     
-    if (args[0] && types.includes(type) && (type != OWNER || message.client.isOwner(message.member))) {
+    if (args[0] && types.includes(type) && (type !== OWNER || message.client.isOwner(message.member))) {
       
       message.client.commands.forEach(command => {
         if (command.aliases && command.type === type && !disabledCommands.includes(command.name)) 
@@ -92,6 +93,7 @@ module.exports = class AliasesCommand extends Command {
 
       for (const type of Object.values(message.client.types)) {
         if (type === OWNER && !message.client.isOwner(message.member)) continue;
+        if (type === NSFW && !message.channel.nsfw) continue;
         if (aliases[type][0]) 
           embed.addField(
             `**${emojiMap[type]}**`, `

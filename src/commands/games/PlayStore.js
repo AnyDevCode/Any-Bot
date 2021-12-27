@@ -44,7 +44,7 @@ module.exports = class PlayStoreCommand extends Command {
          .setTimestamp()
          message.channel.send(embed)
 
-     }).catch(error => {
+     }).catch(() => {
          message.channel.send('No results found for '+app)
      })
  }) 

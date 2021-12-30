@@ -16,8 +16,8 @@ module.exports = class ImagesCommand extends Command {
   }
   async run(message, args) {
 
-    var search = args.join(" ")
-    if(!search){
+      let search = args.join(" ");
+      if(!search){
         return message.channel.send('Insert the you want to search first')
     }
 

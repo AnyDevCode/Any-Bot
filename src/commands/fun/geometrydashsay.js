@@ -1,5 +1,4 @@
 const Command = require('../Command.js');
-const fetch = require('node-fetch');
 const Discord = require('discord.js');
 
 

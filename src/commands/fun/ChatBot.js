@@ -12,6 +12,7 @@ module.exports = class ChatBotCommand extends Command {
             aliases: ['chb', 'cbot'],
             usage: 'chatbot <message>',
             description: 'He answers what you tell him.',
+            cooldown: 5,
             type: client.types.FUN
         });
     }

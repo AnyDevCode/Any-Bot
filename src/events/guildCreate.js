@@ -81,6 +81,7 @@ module.exports = async (client, guild) => {
     null, // Welcome channel
     null, // Farewell channel
     null,  // Crown Channel
+    null, // XP Channel
     modLog ? modLog.id : null,
     adminRole ? adminRole.id : null,
     modRole ? modRole.id : null,

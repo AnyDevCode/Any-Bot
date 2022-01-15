@@ -14,11 +14,11 @@ module.exports = class TogglePointsCommand extends Command {
     });
   }
   run(message) {
-    let { 
-      point_tracking: pointTracking, 
-      message_points: messagePoints, 
+    let {
+      point_tracking: pointTracking,
+      message_points: messagePoints,
       command_points: commandPoints,
-      voice_points: voicePoints 
+      voice_points: voicePoints
     } = message.client.db.settings.selectPoints.get(message.guild.id);
     pointTracking = 1 - pointTracking; // Invert
     message.client.db.settings.updatePointTracking.run(pointTracking, message.guild.id);

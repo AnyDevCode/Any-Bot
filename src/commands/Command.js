@@ -48,6 +48,12 @@ class Command {
     this.description = options.description || '';
 
     /**
+     * The cooldown for the command
+     * @type {number}
+     */
+    this.cooldown = options.cooldown || 0;
+
+    /**
      * The type of command
      * @type {string}
      */
@@ -328,6 +334,14 @@ class Command {
     // Owner only
     if (options.ownerOnly && typeof options.ownerOnly !== 'boolean')
       throw new TypeError('Command ownerOnly is not a boolean');
+
+    // Cooldown
+    if (options.cooldown) {
+      if (typeof options.cooldown !== 'number')
+        throw new TypeError('Command cooldown is not a number');
+      if (options.cooldown < 0)
+        throw new RangeError('Command cooldown must be a positive number');
+    }
 
     // Disabled
     if (options.disabled && typeof options.disabled !== 'boolean')

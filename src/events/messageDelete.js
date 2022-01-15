@@ -1,7 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = (client, message) => {
-  
+
+  if (message.author.bot) return;
+
   // Check for webhook and that message is not empty
   if (message.webhookID || (!message.content && message.embeds.length === 0)) return;
   
@@ -32,8 +34,17 @@ module.exports = (client, message) => {
 
       embed
         .setDescription(`${message.member}'s **message** in ${message.channel} was deleted.`)
-        .addField('Message', message.content);
-        
+        .addField('Message', message.content)
+      .addField('Attachments', message.attachments.size > 0 ? message.attachments.map(a => a.proxyURL).join('\n') : 'None')
+      .setFooter(`Some Attachments may be deleted due to Discord API limitations.`);
+      let image = '';
+      const attachment = message.attachments.array()[0];
+      if (attachment && attachment.url) {
+        const extension = attachment.url.split('.').pop();
+        if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
+      }
+      embed.setImage(image);
+
       messageDeleteLog.send(embed);
     }
 

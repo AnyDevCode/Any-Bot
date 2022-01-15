@@ -2,7 +2,7 @@ module.exports = async (client) => {
 
   const activities = [
     { name: '>help', type: 'LISTENING' },
-    { name: 'MDC#0001', type: 'LISTENING' }
+    { name: 'for you', type: 'LISTENING' }
   ];
 
   // Update presence
@@ -46,7 +46,8 @@ module.exports = async (client) => {
       guild.systemChannelID, // Default channel
       guild.systemChannelID, // Welcome channel
       guild.systemChannelID, // Farewell channel
-      guild.systemChannelID,  // Crown Channel
+      null,  // Crown Channel
+      null,
       modLog ? modLog.id : null,
       adminRole ? adminRole.id : null,
       modRole ? modRole.id : null,

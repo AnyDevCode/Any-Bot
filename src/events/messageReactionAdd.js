@@ -8,6 +8,8 @@ module.exports = async (client, messageReaction, user) => {
 
   const { message, emoji } = messageReaction;
 
+  client.db.users.updateTotalReactions.run(message.author.id, message.guild.id);
+
   // Verification
   if (emoji.id === verify.split(':')[2].slice(0, -1)) {
     const { verification_role_id: verificationRoleId, verification_message_id: verificationMessageId } =

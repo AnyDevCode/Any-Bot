@@ -9,6 +9,22 @@ module.exports = (client, oldState, newState) => {
     client.db.settings.selectPoints.get(member.guild.id);
   if (!pointTracking || voicePoints == 0) return;
 
+  //Get xp
+  let { xp_tracking: xpTracking, voice_xp: xpPoints, xp_message_action: xp_message_action, xp_channel_id: xp_channel_id } =
+      client.db.settings.selectXP.get(member.guild.id);
+
+  let min_xp_voice = Math.floor(xpPoints - 2);
+  let max_xp_voice = Math.floor(xpPoints + 2);
+  if (min_xp_voice < 0) min_xp_voice = 0;
+
+  xpPoints = Math.floor(Math.random() * (max_xp_voice - min_xp_voice + 1)) + min_xp_voice;
+
+  if (!xpTracking) return;
+
+  const level = client.db.users.selectLevel.get(member.id, member.guild.id);
+
+  const requiredXP = 50 * Math.pow(level, 2)
+
   // Set IDs
   const oldId = oldState.channelID;
   const newId = newState.channelID;
@@ -18,6 +34,17 @@ module.exports = (client, oldState, newState) => {
   else if ((!oldId || oldId === afkId) && newId && newId !== afkId) { // Joining channel that is not AFK
     member.interval = setInterval(() => {
       client.db.users.updatePoints.run({points: voicePoints}, member.id, member.guild.id);
+      client.db.users.updateTotalVoice.run({total_voice: 1}, member.id, member.guild.id);
+      client.db.users.updateXP.run({xp: xpPoints}, member.id, member.guild.id);
+      if (client.db.users.selectXP.get(member.id, member.guild.id) >= requiredXP) {
+        client.db.users.updateLevel.run({level: level + 1}, member.id, member.guild.id);
+        if (xp_message_action && xp_channel_id) {
+          const xpChannel = member.guild.channels.cache.get(xp_channel_id);
+          if (xpChannel) {
+            xpChannel.send(`${member} has leveled up to level ${level + 1}!`);
+          }
+        }
+      }
     }, 60000);
   } else if (oldId && (oldId !== afkId && !newId || newId === afkId)) { // Leaving voice chat or joining AFK
     // If bot is in the same channel as the user, bot leaves the channel

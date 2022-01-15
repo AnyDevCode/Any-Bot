@@ -8,6 +8,7 @@ module.exports = class CountryCommand extends Command {
             name: 'country',
             usage: 'country [country]',
             description: 'Get information about a country.',
+            cooldown: 500,
             type: client.types.FUN
         });
     }

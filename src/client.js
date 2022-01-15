@@ -40,6 +40,7 @@ class Client extends Discord.Client {
       ANIMALS: 'animals',
       COLOR: 'color',
       POINTS: 'points',
+      LEVELS: 'levels',
       MISC: 'misc',
       GAMES: 'games',
       SOCIAL: 'social',
@@ -62,6 +63,12 @@ class Client extends Discord.Client {
      * @type {Collection<string, Command>}
      */
     this.aliases = new Discord.Collection();
+
+    /**
+     * Collection of command cooldowns
+     * @type {Collection<string, number>}
+     */
+    this.cooldowns = new Discord.Collection();
 
     /**
      * Array of trivia topics
@@ -143,7 +150,7 @@ class Client extends Discord.Client {
   loadCommands(path) {
     this.logger.info('Loading commands...');
     let table = new AsciiTable('Commands');
-    table.setHeading('File', 'Aliases', 'Type', 'Status');
+    table.setHeading('File', 'Aliases',"Cooldown", 'Type', 'Status');
     readdirSync(path).filter( f => !f.endsWith('.js')).forEach( dir => {
       const commands = readdirSync(resolve(__basedir, join(path, dir))).filter(f => f.endsWith('js'));
       commands.forEach(f => {
@@ -160,7 +167,15 @@ class Client extends Discord.Client {
             });
             aliases = command.aliases.join(', ');
           }
-          table.addRow(f, aliases, command.type, 'pass');
+          // Map command cooldowns
+          let cooldowns = '';
+          if (command.cooldowns) {
+            command.cooldowns.forEach(cooldown => {
+              this.cooldowns.set(cooldown, command);
+            });
+            cooldowns = command.cooldowns.join(', ');
+          }
+          table.addRow(f, aliases, cooldowns, command.type, 'pass');
         } else {
           this.logger.warn(`${f} failed to load`);
           table.addRow(f, '', '', 'fail');

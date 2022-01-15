@@ -36,6 +36,11 @@ module.exports = class SettingsCommand extends Command {
     const welcomeChannel = message.guild.channels.cache.get(row.welcome_channel_id) || '`None`';
     const farewellChannel = message.guild.channels.cache.get(row.farewell_channel_id) || '`None`';
     const crownChannel = message.guild.channels.cache.get(row.crown_channel_id) || '`None`';
+    const xpChannel = message.guild.channels.cache.get(row.xp_channel_id) || '`None`';
+    const xpChannelAction = row.xp_message_action;
+    const XPStatus = message.client.utils.getStatus(
+        xpChannelAction
+    );
     let modChannels = [];
     if (row.mod_channel_ids) {
       for (const channel of row.mod_channel_ids.split(' ')) {
@@ -55,6 +60,21 @@ module.exports = class SettingsCommand extends Command {
     const messagePoints = `\`${row.message_points}\``;
     const commandPoints = `\`${row.command_points}\``;
     const voicePoints = `\`${row.voice_points}\``;
+    let minimum_xp_message_raw = Math.floor(row.message_xp - 2);
+    if (minimum_xp_message_raw < 0) minimum_xp_message_raw = 0;
+    let maximum_xp_message_raw = Math.floor(row.message_xp + 2);
+    let minimum_xp_command_raw = Math.floor(row.command_xp - 2);
+    if (minimum_xp_command_raw < 0) minimum_xp_command_raw = 0;
+    let maximum_xp_command_raw = Math.floor(row.command_xp + 2);
+    let minimum_xp_voice_raw = Math.floor(row.voice_xp - 2);
+    if (minimum_xp_voice_raw < 0) minimum_xp_voice_raw = 0;
+    let maximum_xp_voice_raw = Math.floor(row.voice_xp + 2);
+
+    const messageXP = `\`Minimum: ${minimum_xp_message_raw}\` - \`Maximum: ${maximum_xp_message_raw}\``
+    const commandXP = `\`Minimum: ${minimum_xp_command_raw}\` - \`Maximum: ${maximum_xp_command_raw}\``
+    const voiceXP = `\`Minimum: ${minimum_xp_voice_raw}\` - \`Maximum: ${maximum_xp_voice_raw}\``
+
+
     let verificationMessage = (row.verification_message) ? replaceKeywords(row.verification_message) : '`None`';
     let welcomeMessage = (row.welcome_message) ? replaceKeywords(row.welcome_message) : '`None`';
     let farewellMessage = (row.farewell_message) ? replaceKeywords(row.farewell_message ) : '`None`';
@@ -72,6 +92,7 @@ module.exports = class SettingsCommand extends Command {
     const welcomeStatus = `\`${message.client.utils.getStatus(row.welcome_message && row.welcome_channel_id)}\``;
     const farewellStatus = `\`${message.client.utils.getStatus(row.farewell_message && row.farewell_channel_id)}\``;
     const pointsStatus = `\`${message.client.utils.getStatus(row.point_tracking)}\``;
+    const xpStatus = `\`${message.client.utils.getStatus(row.xp_tracking)}\``;
     const crownStatus = `\`${message.client.utils.getStatus(row.crown_role_id && row.crown_schedule)}\``;
     
     // Trim messages to 1024 characters
@@ -161,6 +182,19 @@ module.exports = class SettingsCommand extends Command {
           .addField('Voice Points', voicePoints, true)
           .addField('Status', pointsStatus)
         );
+      case 'x':
+      case 'xp':
+      case 'rank':
+      case 'ranks':
+        return message.channel.send(embed
+          .setTitle('Settings: `Ranks`')
+          .addField('Channel', xpChannel)
+            .addField("Send message to channel", `\`${XPStatus}\``)
+            .addField("Message XP", messageXP)
+            .addField("Command XP", commandXP)
+            .addField("Voice XP", voiceXP)
+            .addField("Status", xpStatus)
+        );
       case 'c':
       case 'crown':
         embed
@@ -190,6 +224,7 @@ module.exports = class SettingsCommand extends Command {
       .addField('Welcomes', '`2` settings', true)
       .addField('Farewells', '`2` settings', true)
       .addField('Points', '`3` settings', true)
+      .addField('XP', '`3` settings', true)
       .addField('Crown', '`4` settings', true);
 
     message.channel.send(embed);

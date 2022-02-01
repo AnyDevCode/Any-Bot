@@ -2,8 +2,7 @@ name: "pre-release"
 
 on:
   push:
-    branches:
-      - "master"
+    branches: [ main ]
 
 jobs:
   pre-release:

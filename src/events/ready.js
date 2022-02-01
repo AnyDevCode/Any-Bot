@@ -1,7 +1,7 @@
 module.exports = async (client) => {
 
   const activities = [
-    { name: '>help', type: 'LISTENING' },
+    { name: 'ab.help', type: 'LISTENING' },
     { name: 'for you', type: 'LISTENING' }
   ];
 

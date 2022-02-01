@@ -22,7 +22,7 @@ module.exports = class ThouArtCommand extends Command {
       message.guild.members.cache.get(args[0]) || 
       message.member;
     try {
-      const res = await fetch('http://quandyfactory.com/insult/json/');
+      const res = await fetch('https://quandyfactory.com/insult/json/');
       let insult = (await res.json()).insult;
       insult = insult.charAt(0).toLowerCase() + insult.slice(1);
       const embed = new MessageEmbed()

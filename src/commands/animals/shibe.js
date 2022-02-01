@@ -13,7 +13,7 @@ module.exports = class ShibeCommand extends Command {
   }
   async run(message) {
     try {
-      const res = await fetch('http://shibe.online/api/shibes');
+      const res = await fetch('https://shibe.online/api/shibes');
       const img = (await res.json())[0];
       const embed = new MessageEmbed()
         .setTitle('🐶  Woof!  🐶')

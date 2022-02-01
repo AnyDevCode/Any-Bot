@@ -58,7 +58,7 @@ module.exports = class DogFactCommand extends Command {
   }
   let resultado;
   try {
-    resultado = math.eval(args.join(" ")); // El Args toma el calculo
+    resultado = math.eval(args.join(" ")); // Make operation with args
   } catch (e) {
     resultado = "Error: Invalid Entry"; // Cuando es incorrecta
   }

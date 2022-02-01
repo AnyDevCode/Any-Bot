@@ -13,12 +13,10 @@ module.exports = class EvalCommand extends Command {
   }
   async run(message, args) {
     const embed = new MessageEmbed()
-      .setTitle('Shutdown...')
-      .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
-      .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);() => {
-
-      }
+        .setTitle('Shutdown...')
+        .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+        .setTimestamp()
+        .setColor(message.guild.me.displayHexColor);
       await message.channel.send(embed);
       process.exit(0)
   }

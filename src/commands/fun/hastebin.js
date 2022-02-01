@@ -27,13 +27,13 @@ module.exports = class HasteBinCommand extends Command {
       .setTitle("Saving...")
       .setColor(message.guild.me.displayHexColor)
     message.channel.send(embed).then(msg => {
-      paste(text, { extension: args[0].toLowerCase(), message: "", prefix: "The link is:" }).then(url => {
+      paste(text, {extension: args[0].toLowerCase(), message: "", prefix: "The link is:"}).then(url => {
         embed.setTitle("Saved!")
         embed.setDescription(`The link is: ${url}`)
         embed.setColor(message.guild.me.displayHexColor)
         msg.edit(embed)
         console.log(url)
-      }).catch(err => {
+      }).catch(() => {
         this.sendErrorMessage(message, 1, "Error while saving")
       })
     })

@@ -1,6 +1,5 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-const { success, fail } = require('../../utils/emojis.json');
 const { oneLine } = require('common-tags');
 
 module.exports = class ToggleXPChannelCommand extends Command {

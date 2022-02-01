@@ -17,7 +17,7 @@ module.exports = class AstronomyPictureCommand extends Command {
     }
 
     // Command Code:
-    async run(message, args) {
+    async run(message) {
         // Get the Api Key:
         const apiKey = message.client.apiKeys.nasaapi
         // Get the Astronomy Picture of the Day:

@@ -1,11 +1,11 @@
 const { MessageEmbed } = require('discord.js');
 const { oneLine } = require('common-tags');
 
-module.exports = (client, message) => {
+module.exports = async (client, message) => {
 
   if (message.channel.type === 'dm' || !message.channel.viewable || message.author.bot) return;
 
-  //Check if message has a image attachment
+  //Check if message has image attachment
   const attachment = message.attachments.array()[0];
   if (attachment && attachment.url) {
     const extension = attachment.url.split('.').pop();
@@ -16,15 +16,21 @@ module.exports = (client, message) => {
 
   // Get disabled commands
   let disabledCommands = client.db.settings.selectDisabledCommands.pluck().get(message.guild.id) || [];
-  if (typeof(disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
-  
+  if (typeof (disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
+
   // Get points
-  const { point_tracking: pointTracking, message_points: messagePoints, command_points: commandPoints } = 
-    client.db.settings.selectPoints.get(message.guild.id);
+  const {point_tracking: pointTracking, message_points: messagePoints, command_points: commandPoints} =
+      client.db.settings.selectPoints.get(message.guild.id);
 
   //Get XP
-  let { xp_tracking: xpTracking, message_xp: xpMessages, command_xp: xpCommands, voice_xp: xpVoice, xp_message_action: xp_message_action, xp_channel_id: xp_channel_id } =
-    client.db.settings.selectXP.get(message.guild.id);
+  let {
+    xp_tracking: xpTracking,
+    message_xp: xpMessages,
+    command_xp: xpCommands,
+    xp_message_action: xp_message_action,
+    xp_channel_id: xp_channel_id
+  } =
+      client.db.settings.selectXP.get(message.guild.id);
 
   let min_Messages_xp = Math.floor(xpMessages - 2)
   if (min_Messages_xp < 0) min_Messages_xp = 0;
@@ -79,9 +85,9 @@ module.exports = (client, message) => {
           const time = `${hours}:${minutes}:${seconds}`;
           const timeLeft = `${hours}:${minutes}:${seconds}`;
           const timeLeftEmbed = new MessageEmbed()
-            .setColor(message.guild.me.displayHexColor)
-            .setTitle('Command Cooldown')
-            .setDescription(oneLine`
+              .setColor(message.guild.me.displayHexColor)
+              .setTitle('Command Cooldown')
+              .setDescription(oneLine`
               You must wait ${timeLeft} before using this command again.
             `);
           return message.channel.send(timeLeftEmbed);
@@ -91,18 +97,18 @@ module.exports = (client, message) => {
       // Check if mod channel
       if (modChannelIds.includes(message.channel.id)) {
         if (
-          command.type != client.types.MOD || (command.type == client.types.MOD && 
-          message.channel.permissionsFor(message.author).missing(command.userPermissions) != 0)
+            command.type !== client.types.MOD || (command.type === client.types.MOD &&
+                message.channel.permissionsFor(message.author).missing(command.userPermissions) !== 0)
         ) {
           // Update points with messagePoints value
           if (pointTracking)
-            client.db.users.updatePoints.run({ points: messagePoints }, message.author.id, message.guild.id);
+            client.db.users.updatePoints.run({points: messagePoints}, message.author.id, message.guild.id);
           if (xpTracking) {
-            client.db.users.updateXP.run({ xp: xpMessages }, message.author.id, message.guild.id);
+            client.db.users.updateXP.run({xp: xpMessages}, message.author.id, message.guild.id);
             client.db.users.updateTotalMessages.run(message.author.id, message.guild.id);
-            }
+          }
           if (client.db.users.selectXP.get(message.author.id, message.guild.id) >= requiredXP) {
-            client.db.users.updateLevel.run({ level: level + 1 }, message.author.id, message.guild.id);
+            client.db.users.updateLevel.run({level: level + 1}, message.author.id, message.guild.id);
             if (xp_message_action && xp_channel_id) {
               const xpChannel = message.guild.channels.cache.get(xp_channel_id);
               if (xpChannel) {
@@ -126,16 +132,19 @@ module.exports = (client, message) => {
           client.db.users.updateTotalCommands.run(message.author.id, message.guild.id);
         }
         if (client.db.users.selectXP.get(message.author.id, message.guild.id) >= requiredXP){
-          client.db.users.updateLevel.run({ level: level + 1 }, message.author.id, message.guild.id);
-            if (xp_message_action && xp_channel_id) {
-              const xpChannel = message.guild.channels.cache.get(xp_channel_id);
-              if (xpChannel) {
-                xpChannel.send(`${message.author} has leveled up to level ${level + 1}!`);
-              }
+          client.db.users.updateLevel.run({level: level + 1}, message.author.id, message.guild.id);
+          if (xp_message_action && xp_channel_id) {
+            const xpChannel = message.guild.channels.cache.get(xp_channel_id);
+            if (xpChannel) {
+              xpChannel.send(`${message.author} has leveled up to level ${level + 1}!`);
             }
+          }
         }
 
         message.command = true; // Add flag for messageUpdate event
+        // Make a typing indicator for 2 seconds
+        message.channel.startTyping()
+        await new Promise(resolve => setTimeout(resolve, 500)).then(async () => await message.channel.stopTyping());
         return command.run(message, args); // Run command
       }
     } else if ( 
@@ -144,18 +153,18 @@ module.exports = (client, message) => {
       !modChannelIds.includes(message.channel.id)
     ) {
       const embed = new MessageEmbed()
-        .setTitle('Hi, I\'m Any Bot. Need help?')
-        .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
-        .setDescription(`You can see everything I can do by using the \`${prefix}help\` command.`)
-        .addField('Invite Me', oneLine`
+          .setTitle('Hi, I\'m Any Bot. Need help?')
+          .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+          .setDescription(`You can see everything I can do by using the \`${prefix}help\` command.`)
+          .addField('Invite Me', oneLine`
           You can add me to your server by clicking 
           [here](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599)!
         `)
-        .addField('Support', oneLine`
+          .addField('Support', oneLine`
           If you have questions, suggestions, or found a bug, please join the 
           [Any Bot Support Server](https://discord.gg/2FRpkNr)!
         `)
-        .setColor(message.guild.me.displayHexColor);
+          .setColor(message.guild.me.displayHexColor);
       message.channel.send(embed);
     }
   }

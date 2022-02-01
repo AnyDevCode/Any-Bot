@@ -94,10 +94,6 @@ module.exports = async (client, member) => {
   // Update users table
   client.db.users.insertRow.run(
     member.id, 
-    member.user.username, 
-    member.user.discriminator,
-    member.guild.id, 
-    member.guild.name,
     member.joinedAt.toString(),
     member.user.bot ? 1 : 0
   );

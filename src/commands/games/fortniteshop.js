@@ -1,5 +1,4 @@
 const Command = require("../Command.js");
-const { MessageEmbed } = require("discord.js");
 const Discord = require("discord.js");
 const swiftcord = require("swiftcord");
 module.exports = class FortniteShopCommand extends Command {
@@ -11,7 +10,8 @@ module.exports = class FortniteShopCommand extends Command {
       type: client.types.GAMES,
     });
   }
-  async run(message, args) {
+
+  async run(message) {
     const apiKey = message.client.apiKeys.fortniteshopApi;
     const canva = new swiftcord.Canvas();
     const image = await canva.Fortnite().setKey(apiKey).toAttachment();

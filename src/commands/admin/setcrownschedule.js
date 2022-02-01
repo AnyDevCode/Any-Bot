@@ -22,10 +22,10 @@ module.exports = class SetCrownScheduleCommand extends Command {
         │    └─────────────── hour (0 - 23)
         └──────────────────── minute (0 - 59)\`\`\`
         If you wish to use multiple values for any of the categories, please separate them with \`,\`.` +
-        ' Step syntax is also supported, for example: `0 */1 * * *` (every hour). ' +
-        'For the day of the week, both 0 and 7 may represent Sunday. ' +
-        'If you need additional help building your cron, please check out this website: <https://crontab.guru/#>. ' + 
-        `Enter no schedule to clear the current \`crown schedule\`.
+          ' Step syntax is also supported, for example: `0 */1 * * *` (every hour). ' +
+          'For the day of the week, both 0 and 7 may represent Sunday. ' +
+          'If you need additional help to build your cron, please check out this website: <https://crontab.guru/#>. ' +
+          `Enter no schedule to clear the current \`crown schedule\`.
         A \`crown role\` must also be set to enable role rotation.
         **Please Note:** To prevent potential Discord API abuse, minutes and seconds will always be set to \`0\`.`,
       type: client.types.ADMIN,
@@ -70,7 +70,7 @@ module.exports = class SetCrownScheduleCommand extends Command {
       
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
       
       return message.channel.send(embed
         .spliceFields(2, 0, { name: 'Schedule', value: `\`${oldCrownSchedule || 'None'}\` ➔ \`None\``, inline: true })
@@ -87,11 +87,11 @@ module.exports = class SetCrownScheduleCommand extends Command {
 
     // Set minutes and seconds to 0
     const cron = crownSchedule.split(' ');
-    if (cron[0] != '0') {
+    if (cron[0] !== '0') {
       description = description + `\n**Note:** Minutes were changed from \`${cron[0]}\` to \`0\`.`;
       cron[0] = '0';
     }
-    if (cron.length === 6 && cron[5] != '0') {
+    if (cron.length === 6 && cron[5] !== '0') {
       if (description.includes('\n'))
         description = description.slice(0, -1) + `, and seconds were changed from \`${cron[5]}\` to \`0\`.`;
       else description = description + `\n**Note:** Seconds were changed from \`${cron[5]}\` to \`0\`.`;
@@ -108,7 +108,7 @@ module.exports = class SetCrownScheduleCommand extends Command {
 
     // Update status
     const status =  message.client.utils.getStatus(crownRole, crownSchedule);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.channel.send(embed
       .spliceFields(2, 0, { 

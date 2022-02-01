@@ -1,7 +1,7 @@
 # Written by ThePhoenixGuy, sinsterpyro, and Nettles
 # Original file from: https://github.com/Cog-Creators/Red-DiscordBot/blob/V3/develop/redbot/cogs/trivia/data/lists/overwatch.yaml
 questions:
-- question: Omnics and humans live as equals in Numbani. True/False?
+  - question: Omnics and humans live as equals in Numbani. True/False?
   answers:
   - 'True'
 - question: During the ARG which company's CEO did the hero want to "take down"?
@@ -231,66 +231,66 @@ questions:
 - question: On what map is the attacking team tasked with escorting an EMP device?
   answers:
   - King's Row
-- question: On which map was this screenshot taken? http://i.imgur.com/2qrMC16.jpg
+- question: On which map was this screenshot taken? https://i.imgur.com/2qrMC16.jpg
   answers:
-  - Volskaya Industries
-  - Volskaya
-- question: On which map was this screenshot taken? http://i.imgur.com/3WKgUfA.jpg
-  answers:
-  - Hollywood
-- question: On which map was this screenshot taken? http://i.imgur.com/5bXsDP1.jpg
-  answers:
-  - Lijiang Tower
-- question: On which map was this screenshot taken? http://i.imgur.com/G7xpRlQ.jpg
-  answers:
-  - Hollywood
-- question: On which map was this screenshot taken? http://i.imgur.com/KXLulKa.jpg
-  answers:
-  - Oasis
-- question: On which map was this screenshot taken? http://i.imgur.com/NMQDM7y.jpg
-  answers:
-  - Hanamura
-- question: On which map was this screenshot taken? http://i.imgur.com/VFDOLXR.jpg
-  answers:
-  - Dorado
-- question: On which map was this screenshot taken? http://i.imgur.com/XLgLEdh.jpg
-  answers:
-  - King's Row
-- question: On which map was this screenshot taken? http://i.imgur.com/Yk8vqgn.jpg
-  answers:
-  - Hollywood
-- question: On which map was this screenshot taken? http://i.imgur.com/YlMy2iE.jpg
-  answers:
-  - Lijiang Tower
-- question: On which map was this screenshot taken? http://i.imgur.com/ZyVeLTU.jpg
-  answers:
-  - Lijiang Tower
-- question: On which map was this screenshot taken? http://i.imgur.com/cNjKeE3.jpg
-  answers:
-  - Oasis
-- question: On which map was this screenshot taken? http://i.imgur.com/d02tYI5.jpg
-  answers:
-  - Dorado
-- question: On which map was this screenshot taken? http://i.imgur.com/fbW965j.jpg
-  answers:
-  - Hanamura
-- question: On which map was this screenshot taken? http://i.imgur.com/h8zqtSf.jpg
-  answers:
-  - Oasis
-- question: On which map was this screenshot taken? http://i.imgur.com/qgyW1LF.jpg
-  answers:
-  - Volskaya Industries
-  - Volskaya
-- question: On which map was this screenshot taken? http://i.imgur.com/uMcjqeW.jpg
-  answers:
-  - Hollywood
-- question: On which map was this screenshot taken? http://i.imgur.com/vxqkKQ0.jpg
-  answers:
-  - King's Row
-- question: On which map was this screenshot taken? http://i.imgur.com/xuO8PDw.jpg
-  answers:
-  - Volskaya Industries
-  - Volskaya
+    - Volskaya Industries
+    - Volskaya
+  - question: On which map was this screenshot taken? https://i.imgur.com/3WKgUfA.jpg
+    answers:
+      - Hollywood
+  - question: On which map was this screenshot taken? https://i.imgur.com/5bXsDP1.jpg
+    answers:
+      - Lijiang Tower
+  - question: On which map was this screenshot taken? https://i.imgur.com/G7xpRlQ.jpg
+    answers:
+      - Hollywood
+  - question: On which map was this screenshot taken? https://i.imgur.com/KXLulKa.jpg
+    answers:
+      - Oasis
+  - question: On which map was this screenshot taken? https://i.imgur.com/NMQDM7y.jpg
+    answers:
+      - Hanamura
+  - question: On which map was this screenshot taken? https://i.imgur.com/VFDOLXR.jpg
+    answers:
+      - Dorado
+  - question: On which map was this screenshot taken? https://i.imgur.com/XLgLEdh.jpg
+    answers:
+      - King's Row
+  - question: On which map was this screenshot taken? https://i.imgur.com/Yk8vqgn.jpg
+    answers:
+      - Hollywood
+  - question: On which map was this screenshot taken? https://i.imgur.com/YlMy2iE.jpg
+    answers:
+      - Lijiang Tower
+  - question: On which map was this screenshot taken? https://i.imgur.com/ZyVeLTU.jpg
+    answers:
+      - Lijiang Tower
+  - question: On which map was this screenshot taken? https://i.imgur.com/cNjKeE3.jpg
+    answers:
+      - Oasis
+  - question: On which map was this screenshot taken? https://i.imgur.com/d02tYI5.jpg
+    answers:
+      - Dorado
+  - question: On which map was this screenshot taken? https://i.imgur.com/fbW965j.jpg
+    answers:
+      - Hanamura
+  - question: On which map was this screenshot taken? https://i.imgur.com/h8zqtSf.jpg
+    answers:
+      - Oasis
+  - question: On which map was this screenshot taken? https://i.imgur.com/qgyW1LF.jpg
+    answers:
+      - Volskaya Industries
+      - Volskaya
+  - question: On which map was this screenshot taken? https://i.imgur.com/uMcjqeW.jpg
+    answers:
+      - Hollywood
+  - question: On which map was this screenshot taken? https://i.imgur.com/vxqkKQ0.jpg
+    answers:
+      - King's Row
+  - question: On which map was this screenshot taken? https://i.imgur.com/xuO8PDw.jpg
+    answers:
+      - Volskaya Industries
+      - Volskaya
 - question: Orignally when Overwatch was released players could choose to stack multiples of any hero on any team,it was later limited to 1 of each hero per team, and an arcade mode where heros tacking was again possble was added, what is this mode called?
   answers:
   - No Limits

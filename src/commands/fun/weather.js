@@ -16,7 +16,7 @@ module.exports = class WeatherCommand extends Command {
         const {stringToUrlEncoded} = message.client.utils
         const apiKey = message.client.apiKeys.openweathermap
         const location = stringToUrlEncoded(args.join(' '));
-        const url = `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`;
         await axios.get(url).then(async res => {
             const data = res.data;
             const embed = new MessageEmbed()
@@ -28,7 +28,7 @@ module.exports = class WeatherCommand extends Command {
                 .addField('Wind Speed', `${data.wind.speed} m/s`, true)
                 .addField('Wind Direction', `${data.wind.deg}°`, true)
                 .addField('Pressure', `${data.main.pressure} hPa`, true)
-                .setThumbnail(`http://openweathermap.org/img/w/${data.weather[0].icon}.png`)
+                .setThumbnail(`https://openweathermap.org/img/w/${data.weather[0].icon}.png`)
                 .setTimestamp()
                 .setFooter(message.member.displayName, message.author.displayAvatarURL());
             message.channel.send(embed);

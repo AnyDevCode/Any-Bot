@@ -1,19 +1,18 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-var gis = require('g-i-s');
-var Filter = require('bad-words'),
-filter = new Filter();
-var customFilter = new Filter({ placeHolder: '*'});
+const {MessageEmbed} = require('discord.js');
+const gis = require('g-i-s');
+const Filter = require('bad-words');
+const customFilter = new Filter({placeHolder: '*'});
 
 module.exports = class ImagesCommand extends Command {
-  constructor(client) {
-    super(client, {
-      name: 'images',
-      usage: 'images <search>',
-      description: 'Find an image in Google.',
-      type: client.types.FUN
-    });
-  }
+    constructor(client) {
+        super(client, {
+            name: 'images',
+            usage: 'images <search>',
+            description: 'Find an image in Google.',
+            type: client.types.FUN
+        });
+    }
   async run(message, args) {
 
       let search = args.join(" ");
@@ -64,11 +63,11 @@ module.exports = class ImagesCommand extends Command {
        msg.react('⏹️')
        msg.react('▶️')
        msg.awaitReactions((reaction,user) => {
-           if(message.author.id != user.id){
+           if(message.author.id !== user.id){
                return;
            }
            if(reaction.emoji.name === '▶️'){
-               if(i != max){
+               if(i !== max){
                    i++
                    const embeds = new MessageEmbed()
                    .setTitle("Result to your search")
@@ -91,7 +90,7 @@ module.exports = class ImagesCommand extends Command {
                     msg.edit(embedsss);
            }
            if(reaction.emoji.name === '◀️'){
-               if(1 != i){
+               if(1 !== i){
                i--
                const embedss = new MessageEmbed()
                .setTitle("Result to your search")

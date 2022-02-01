@@ -1,6 +1,7 @@
+// noinspection GrazieInspection
+
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+require('node-fetch');
 const translate = require('node-google-translate-skidz');
 
 module.exports = class TranslateCommand extends Command {
@@ -14,6 +15,7 @@ module.exports = class TranslateCommand extends Command {
       type: client.types.FUN
     });
   }
+
   async run(message, args) {
 
     if(!args[2]) return this.sendErrorMessage(message, 0, `Please check the command and try again.`);
@@ -23,7 +25,7 @@ module.exports = class TranslateCommand extends Command {
         text: args.slice(2).join(" "),
         source: args[0], // Este es la fuente, es decir el idioma que queremos pasar a el idioma puesto en target, ya saben con codigo i18n.
         target: args[1] // El idioma en i18n al que queremos traducir
-       }, function(result) {
+      }, function(result) {
         message.channel.send(result.translation) // Hacemos esto, corremos el codigo y ya sabran que devuelve para utilizarlo a su necesidad. ;)
       });
     } catch (err) {

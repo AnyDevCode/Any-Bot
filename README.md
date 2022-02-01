@@ -46,7 +46,7 @@ I am [**Any Bot**](https://top.gg/bot/733728002910715977), a multifunctional Dis
 
 # Features
 
-Currently the Bot has more than 150 commands and 13 categories with which you have a variety of useful and fun commands.
+The Bot has more than 150 commands and 13 categories with which you have a variety of useful and fun commands.
 
 - Categories:
   - **Info [26]**
@@ -77,33 +77,16 @@ After cloning, run an
 npm install
 ```
 After installation edit the config.json
+
 ```json
-{
-  "token": "Bot_Token",
-  "ownerId": "You_Owner_Id",
-  "bugReportChannelId": "bugReportChannelId",
-  "feedbackChannelId": "feedbackChannelId",
-  "serverLogId": "serverLogId",
-  "apiKeys": {
-    "catApi": "catApiKey", //https://thecatapi.com/
-    "googleApi": "googleApiKey", //https://console.cloud.google.com/
-    "fortniteshopApi": "fortniteshopApiKey",//https://fnbr.co/
-    "fortniteApi": "fortniteApiKey", //https://fortnitetracker.com/
-    "geometrydash": {
-      "user": "Geometrydash_User", //Name of the user
-      "password": "Geometrydash_Pass" //Password of the user
-    },
-    "somerandomapikey": "Somerandomapikey", //http://some-random-api.ml/
-  },
-  "botlist": false
-}
+https://
 ```
 After editing the config.json, start the bot with `node app` from the terminal
 ```
 node app
 ```
 
-Optional you can start the bot with `node shards` if you bot is in more than one hundred servers.
+Optional you can start the bot with `node shards` if your bot is in more than one hundred servers.
 ```
 node shard
 ```

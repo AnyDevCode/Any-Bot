@@ -32,7 +32,7 @@ module.exports = class GeometryDashCommand extends Command {
     const embed = new MessageEmbed()
       .setAuthor(
         "Geometry Dash",
-        "http://2.bp.blogspot.com/-Wl1AS-zKl0s/VZVcSDOSckI/AAAAAAAAAJ8/WAFNDi4o_Hc/s1600/GeometryDash.png"
+        "https://2.bp.blogspot.com/-Wl1AS-zKl0s/VZVcSDOSckI/AAAAAAAAAJ8/WAFNDi4o_Hc/s1600/GeometryDash.png"
       )
       .setTitle(user.nick)
       .setColor(message.guild.me.displayHexColor)

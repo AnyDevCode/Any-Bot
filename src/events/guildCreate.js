@@ -93,10 +93,6 @@ module.exports = async (client, guild) => {
   guild.members.cache.forEach(member => {
     client.db.users.insertRow.run(
       member.id, 
-      member.user.username, 
-      member.user.discriminator,
-      guild.id, 
-      guild.name,
       member.joinedAt.toString(),
       member.bot ? 1 : 0
     );

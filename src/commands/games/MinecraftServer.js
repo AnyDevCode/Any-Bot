@@ -21,7 +21,7 @@ module.exports = class MinecraftServerCommand extends Command {
         0,
         "Please enter an IP of a Minecraft server."
       );
-    var port = args[1];
+    let port = args[1];
     if (!port) {
       port = `25565`;
     }
@@ -47,19 +47,19 @@ module.exports = class MinecraftServerCommand extends Command {
             .addField(
               "Online Players",
               response.onlinePlayers + "/" + response.maxPlayers,
-              true
+                true
             )
-            .setImage(motd)
-            .setThumbnail(
-              "https://cdn.glitch.com/402b9099-0636-457a-8ffb-faf65c857490%2F1.png?v=1585792839856"
-            )
-            .setColor(message.guild.me.displayHexColor);
+              .setImage(motd)
+              .setThumbnail(
+                  "https://cdn.glitch.com/402b9099-0636-457a-8ffb-faf65c857490%2F1.png?v=1585792839856"
+              )
+              .setColor(message.guild.me.displayHexColor);
 
           message.channel.send(Embed);
         })
-        .catch((error) => {
-          message.channel.send("I can't find that server.");
-        });
+          .catch(() => {
+            message.channel.send("I can't find that server.");
+          });
     });
   }
 };

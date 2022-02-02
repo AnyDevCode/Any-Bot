@@ -20,7 +20,6 @@ module.exports = class PlayMusicCommand extends Command {
 
 
       const play_song = async (guild, song, queue) => message.client.utils.play_song(guild, song, queue);
-      const stop_song = async (message, queue) => message.client.utils.stop_song(message, queue);
       const update_server_queue = async (message, server_queue, queue) => message.client.utils.update_server_queue(message, server_queue, queue);
       const force_stop_song = async (message, song_queue, queue) => message.client.utils.force_stop_song(message, song_queue, queue);
 
@@ -40,7 +39,10 @@ module.exports = class PlayMusicCommand extends Command {
               await update_server_queue(message, server_queue, queue);
               //Kick users the user of voice channel
               await force_stop_song(message, server_queue);
-              return message.channel.send(`Please, try the command again.`);
+              // await 1 seconds
+              await new Promise(resolve => setTimeout(resolve, 1000));
+              //Execute the command
+              return await message.client.commands.get('play').run(message, args);
           }
       }
 

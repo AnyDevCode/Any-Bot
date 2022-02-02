@@ -1,7 +1,7 @@
 module.exports = async (client) => {
 
   const activities = [
-    { name: 'ab.help', type: 'LISTENING' },
+    { name: `ab.help`, type: "LISTENING"},
     { name: 'for you', type: 'LISTENING' }
   ];
 
@@ -10,11 +10,43 @@ module.exports = async (client) => {
 
   let activity = 1;
 
+  let active_music = false;
+  //Update every 1 minute
+  setInterval(() => {
+    let queue = client.queue();
+
+    //Check if the queue is empty
+    if(queue.size === 0) {
+      //If it is, set the activity to the first one
+      active_music = false
+    }
+
+    //If the queue is not empty
+    if(queue.size > 0) {
+      //Set the activity to the first one
+      active_music = true
+    }
+
+    //If the music is active, choose a random music of a random queue
+    if(active_music) {
+      let random_queue = Math.floor(Math.random() * queue.size)
+      if (random_queue === 0) {
+        random_queue = 1
+      }
+      //Map to an array
+      let queue_array = Array.from(queue)
+
+      activities[4] = { name: queue_array[random_queue - 1][1].songs[0].title, type: 'LISTENING' }
+    } else {
+      activities.splice(4, 1)
+    }
+  }, 60000)
+
   // Update activity every 30 seconds
   setInterval(() => {
     activities[2] = { name: `${client.guilds.cache.size} servers`, type: 'WATCHING' }; // Update server count
     activities[3] = { name: `${client.users.cache.size} users`, type: 'WATCHING' }; // Update user count
-    if (activity > 3) activity = 0;
+    if (activity > activities.length) activity = 0;
     client.user.setActivity(activities[activity]);
     activity++;
   }, 30000);

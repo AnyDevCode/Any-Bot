@@ -11,7 +11,7 @@ module.exports = class aivoiceCommand extends Command {
     constructor(client) {
         super(client, {
             name: "aivoice",
-            aliases: ["aiv", "ai-voice", "ai-v", "iaiv", "iai-voice", "iai-v", "iaivoice"],
+            aliases: ["aiv", "ai-voice", "ai-v", "iaiv", "iai-voice", "iai-v", "iavoice"],
             usage: "iavoice [voice] [text]",
             description: "Make a ia make a voice",
             type: client.types.FUN,

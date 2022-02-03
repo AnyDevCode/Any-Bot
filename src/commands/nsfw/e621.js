@@ -26,6 +26,8 @@ module.exports = class e621Command extends Command {
          .setImage(post.fileUrl)
     message.channel.send({ embed })
  }
- }).catch(e => message.channel.send("error "+e))
+ }).catch(() => {
+            message.channel.send("No results found.")
+        })
   }
 };

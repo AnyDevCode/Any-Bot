@@ -23,6 +23,7 @@ module.exports = class HackCommand extends Command {
 
         let random = Math.floor(Math.random() * data.length);
 
+        /*
         let first_name = data[random].first_name;
         let last_name = data[random].last_name;
         let email = data[random].email;
@@ -33,6 +34,8 @@ module.exports = class HackCommand extends Command {
         let country = data[random].country;
         let phone = data[random].phone;
         let city = data[random].city;
+         */
+        let { first_name, last_name, email, password, gender, ip_address, mac_address, country, phone, city } = data[random]
         let street_address = data[random].street_address;
         let credit_card = data[random].credit_card || "DELETED";
         let credit_card_type = data[random].credit_card_type || "DELETED";

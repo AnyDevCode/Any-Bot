@@ -1,6 +1,6 @@
 {
   "name": "any-bot",
-  "version": "1.2.0-dev",
+  "version": "1.2.1-dev",
   "description": "A fully customizable bot built with discord.js",
   "main": "app.js",
   "dependencies": {

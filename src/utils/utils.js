@@ -361,7 +361,7 @@ async function force_stop_song(message, server_queue) {
 
   let wait_message = await message.channel.send(`🎶 |  Please wait while I configure me to play music for you.`);
   //Start the dispatcher
-  server_queue.connection.play("https://cdn.discordapp.com/attachments/779357531532689438/937797992746995743/1_Segundo_de_absoluto_Silencio._-1.mp4", {volume: server_queue.volume})
+  server_queue.connection.play("https://cdn.discordapp.com/attachments/779357531532689438/938449326475182150/El_video_mas_corto_del_mundo_0_segundos____The_shortest_video_in_the_world_.mp4", {volume: server_queue.volume})
       .on('finish', () => {
         wait_message.delete();
         song_queue_2.voice_channel.leave();

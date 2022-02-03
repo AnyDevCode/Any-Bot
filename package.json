@@ -1,6 +1,6 @@
 {
   "name": "any-bot",
-  "version": "1.2.0",
+  "version": "1.2.1-dev",
   "description": "A fully customizable bot built with discord.js",
   "main": "app.js",
   "dependencies": {
@@ -21,6 +21,7 @@
     "discord-backup": "2.2.5",
     "discord-canvas": "1.4.1",
     "discord-player": "5.2.0",
+    "discord-slash-commands-v12": "^7.9.8",
     "discord-utilities-js": "0.3.1",
     "discord.js": "12.3.1",
     "express": "4.17.1",
@@ -56,6 +57,7 @@
     "request": "2.88.2",
     "serp": "2.1.0",
     "simple-get": "^4.0.1",
+    "slash-commands": "^1.5.0",
     "soundcloud-downloader": "1.0.0",
     "superagent": "6.1.0",
     "swiftcord": "2.1.5",
@@ -67,10 +69,10 @@
     "yaml": "1.8.3",
     "youtube-search": "1.1.6",
     "yt-search": "2.10.2",
-    "ytdl-core": "4.10.0"
+    "ytdl-core": "^4.10.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.15"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

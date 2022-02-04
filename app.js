@@ -1,7 +1,6 @@
 const config = require("./config.json");
 const Client = require("./src/client.js");
 const {Intents} = require("discord.js");
-
 const botlist = config.botlist;
 global.__basedir = __dirname;
 
@@ -15,8 +14,7 @@ intents.add(
     "GUILD_MESSAGES",
     "GUILD_MESSAGE_REACTIONS"
 );
-const client = new Client(config, {ws: {intents: intents}});
-
+const client = new Client(config, {ws: {intents}});
 // Initialize client
 function init() {
     client.loadEvents("./src/events");
@@ -34,4 +32,8 @@ if (botlist) {
         }
     );
 }
+
+const { index } = require("./src/utils/dashboard.js");
+index(client);
+
 process.on("unhandledRejection", (err) => client.logger.error(err));

@@ -12,7 +12,7 @@ module.exports = class PlayMusicCommand extends Command {
       description: 'Plays music from youtube',
       examples: ['play lofi music', 'play https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
       userPermissions: ['CONNECT', 'SPEAK'],
-      type: client.types.FUN 
+      type: client.types.MUSIC,
     });
   }
   async run(message, args) {
@@ -42,7 +42,7 @@ module.exports = class PlayMusicCommand extends Command {
               // await 1 seconds
               await new Promise(resolve => setTimeout(resolve, 1000));
               //Execute the command
-              return await message.client.commands.get('play').run(message, args);
+              return message.client.commands.get('play').run(message, args);
           }
       }
 

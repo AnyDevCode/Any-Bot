@@ -21,7 +21,7 @@ module.exports = class SoloTriviaCommand extends Command {
   }
   run(message, args) {
     const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
-    let topic = args[0];
+    let topic = args[0].toLowerCase();
     if (!topic) { // Pick a random topic if none given
       topic = message.client.topics[Math.floor(Math.random() * message.client.topics.length)];
     } else if (!message.client.topics.includes(topic))
@@ -53,7 +53,7 @@ module.exports = class SoloTriviaCommand extends Command {
     let winner;
     const collector = new MessageCollector(message.channel, msg => {
       if (!msg.author.bot && msg.author == message.author) return true;
-    }, { time: 15000 }); // Wait 15 seconds
+    }, { time: 30000 }); // Wait 30 seconds
     collector.on('collect', msg => {
       if (answers.includes(msg.content.trim().toLowerCase().replace(/\.|'|-|\s/g, ''))) {
         winner = msg.author;

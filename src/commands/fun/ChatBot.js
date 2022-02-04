@@ -48,7 +48,7 @@ module.exports = class ChatBotCommand extends Command {
             message.channel.send(embed);
         } catch (err) {
             // Send the error message:
-            this.sendErrorMessage(message, 1, "I'm sorry, I can't answer that right now. Please try again later.");
+            message.client.sendErrorMessage(message, 1, "I'm sorry, I can't answer that right now. Please try again later.");
         }
     }
 };

@@ -63,37 +63,6 @@ module.exports = async (client, message) => {
     const cmd = args.shift().toLowerCase();
     let command = client.commands.get(cmd) || client.aliases.get(cmd); // If command not found, check aliases
     if (command && !disabledCommands.includes(command.name)) {
-
-      // Check cooldown and formate date
-      const cooldown = client.cooldowns.get(command.name);
-      let hours = 0;
-      let minutes = 0;
-      let seconds = 0;
-
-      if (cooldown) {
-        const now = Date.now();
-        const cooldownDate = new Date(now + cooldown);
-        hours = cooldownDate.getHours();
-        minutes = cooldownDate.getMinutes();
-        seconds = cooldownDate.getSeconds();
-
-        if (hours < 10) hours = `0${hours}`;
-        if (minutes < 10) minutes = `0${minutes}`;
-        if (seconds < 10) seconds = `0${seconds}`;
-
-        if (now < cooldown) {
-          const time = `${hours}:${minutes}:${seconds}`;
-          const timeLeft = `${hours}:${minutes}:${seconds}`;
-          const timeLeftEmbed = new MessageEmbed()
-              .setColor(message.guild.me.displayHexColor)
-              .setTitle('Command Cooldown')
-              .setDescription(oneLine`
-              You must wait ${timeLeft} before using this command again.
-            `);
-          return message.channel.send(timeLeftEmbed);
-        }
-      }
-
       // Check if mod channel
       if (modChannelIds.includes(message.channel.id)) {
         if (
@@ -153,16 +122,16 @@ module.exports = async (client, message) => {
       !modChannelIds.includes(message.channel.id)
     ) {
       const embed = new MessageEmbed()
-          .setTitle('Hi, I\'m Any Bot. Need help?')
-          .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+          .setTitle(`Hi, I\'m ${message.guild.me.displayName}! Need help?`)
+          .setThumbnail(client.user.displayAvatarURL())
           .setDescription(`You can see everything I can do by using the \`${prefix}help\` command.`)
           .addField('Invite Me', oneLine`
           You can add me to your server by clicking 
-          [here](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599)!
+          [here](https://discordapp.com/oauth2/authorize?client_id=${message.guild.me.id}&scope=applications.commands%20bot&permissions=8)
         `)
           .addField('Support', oneLine`
           If you have questions, suggestions, or found a bug, please join the 
-          [Any Bot Support Server](https://discord.gg/2FRpkNr)!
+          [${message.guild.me.displayName} Support Server](${message.client.supportServerInvite})
         `)
           .setColor(message.guild.me.displayHexColor);
       message.channel.send(embed);

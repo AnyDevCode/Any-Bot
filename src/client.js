@@ -31,6 +31,11 @@ class Client extends Discord.Client {
         this.db = require('./utils/db.js');
 
         /**
+         * Create mongoose
+         */
+        this.mongodb = require('./utils/mongodb.js');
+
+        /**
          * All possible command types
          * @type {Object}
          */

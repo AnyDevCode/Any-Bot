@@ -1,9 +1,15 @@
 const config = require("./config.json");
 const Client = require("./src/client.js");
 const {Intents} = require("discord.js");
+const {index} = require("./src/utils/dashboard.js");
 const botlist = config.botlist;
 global.__basedir = __dirname;
-
+/*
+const Discord = require('discord.js');
+const klient = new Discord.Client();
+const slash = require('discord-slash-commands-v12');
+slash(klient);
+*/
 // Client setup
 const intents = new Intents();
 intents.add(
@@ -33,7 +39,11 @@ if (botlist) {
     );
 }
 
-const { index } = require("./src/utils/dashboard.js");
-index(client);
+
+if(!(client.shard)) {
+    const { index } = require("./src/utils/dashboard.js");
+    index(client);
+}
+
 
 process.on("unhandledRejection", (err) => client.logger.error(err));

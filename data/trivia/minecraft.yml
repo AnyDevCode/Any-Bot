@@ -1,0 +1,186 @@
+# Some questions from: https://www.mantelligence.com/minecraft-trivia/
+questions:
+- question: What is the release date of Minecraft?
+  answers:
+    - "18 November 2011"
+    - "11/18/2011"
+    - "11/18/11"
+    - "18 Nov 2011"
+    - "November 18, 2011"
+    - "11 18 2011"
+    - "11-18-2011"
+- question: What is the name of Minecraft Java Edition 1.8 Update? https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9b/The_Bountiful_Update.png/revision/latest/scale-to-width-down/280?cb=20210228131702
+  answers:
+    - Bountiful Update
+    - Bountiful
+    - "Bountiful Update 1.8"
+- question: Who is the creator of Minecraft?
+  answers:
+    - Notch
+    - Markus Persson
+- question: In which version of Minecraft Java Edition were the shields added?
+  answers:
+    - "1.9"
+    - "Minecraft 1.9"
+    - "Version 1.9"
+    - "V 1.9"
+- question: In which version of Minecraft Bedrock Edition were the shields added?
+  answers:
+    - "1.10"
+    - "Minecraft 1.10"
+    - "Version 1.10"
+    - "V 1.10"
+- question: What is the first alpha version of Minecraft Java?
+  answers:
+    - "old-alpha rd-132211"
+    - "rd-132211"
+    - "V rd-132211"
+- question: What other name is given to Minecraft Bedrock Edition?
+  answers:
+    - Pocket Edition
+    - Pocket
+- question: What is the first version of Minecraft Bedrock (Pocket) Edition?
+  answers:
+    - "0.1.1"
+    - "V 0.1.1"
+- question: What is the release date of Minecraft Pocket Edition?
+  answers:
+    - "16 August 2011"
+    - "08/16/2011"
+    - "08/16/11"
+    - "16 Aug 2011"
+    - "August 16, 2011"
+    - "08 16 2011"
+    - "08-16-2011"
+- question: What is the first boss in Minecraft Java Edition?
+  answers:
+    - Wither
+    - Wither Boss
+- question: What is the first boss in Minecraft Bedrock Edition?
+  answers:
+    - Wither
+    - Wither Boss
+- question: In which dimension does the Ender Dragon spawn?
+  answers:
+    - The End
+    - End
+    - Ender
+- question: What is the original color of the bed?
+  answers:
+    - Red
+    - Red Bed
+- question: Which what tag name do mobs turn upside down?
+  answers:
+    - Dinnerbone
+    - Grumm
+- question: Which what tag name do sheeps a rainbow color?
+  answers:
+    - "jeb_"
+- question: What Game Inspired Notch To Start Making Minecraft?
+  answers:
+    - Infiniminer
+- question: What Is The Full Name Of Notch?
+    - Markus Persson
+    - Markus A. Persson
+- question: What is the main objective of Minecraft?
+  answers:
+    - Kill the Ender Dragon
+    - Kill the Dragon
+    - Kill Ender Dragon
+    - Kill Dragon
+- question: "Who is the 'Feared Player' in Minecraft?"
+  answers:
+    - Herobrine
+- question: Which Is The Most Important Block Type In Minecraft And Is Used To Make Everything Else?
+  answers:
+    - Wood
+    - Wood Block
+- question: What is the name of the other dimension to which you can travel by building a portal?
+  answers:
+    - The Nether
+    - Nether
+    - Nether Dimension
+- question: "What Was The Founder's First 'Working Name' For Minecraft?"
+  answers:
+    - Cave Gam
+- question: How Far Away Can You Be From A Ghast For It To See You?
+  answers:
+    - "100 blocks"
+    - "100 blocks away"
+    - "100 blocks away from you"
+    - "100 blocks from you"
+- question: What Does The Creeper Mob Drop After It Is Killed?
+  answers:
+    - Gunpowder
+- question: Which Character In Minecraft Drops Bones And Arrows?
+  answers:
+    - Skeleton
+    - Skeleton Archer
+    - Skeleton Warrior
+- question: How Much Wool Is Required To Build A Bed?
+  answers:
+    - "3"
+    - "3 blocks"
+    - "3 blocks of wool"
+    - "3 blocks of wool required"
+- question: Which Item Is Dropped By Slimes?
+  answers:
+    - Slimeball
+    - Slime
+- question: "What Color Is The Default Skin's Shirt?"
+  answers:
+    - Blue
+    - Blue Shirt
+- question: What Will Happen If You Stare At A Enderman?
+  answers:
+    - Attack You
+    - It will attack you
+    - Attack
+- question: What Is The Maximum Amount Of Beacons In The World?
+  answers:
+    - No limit
+    - Unlimited
+    - Infinite
+- question: "Which Was The First Enemy Introduced To ‘Minecraft’?"
+  answers:
+    - Zombie
+- question: "Which Mobs Scare The Creeper In \"Minecraft\"?"
+  answers:
+    - Ocelot
+    - Cat
+- question: "In A Full Set, How Many Pieces Of Armor Are There?"
+  answers:
+    - "4"
+    - "4 pieces"
+    - "4 pieces of armor"
+    - "4 pieces of armor required"
+- question: Tell me one of the three items required to get an active conduit
+  answers:
+    - Heart of the Sea
+    - Nautilus Shell
+    - Prismarine
+- question: "Name The Country Were Notch The Founder Of \"MineCraft\" Was Originally Born?"
+  answers:
+    - Sweden
+- question: Which Version Added The Dark Dimension Known As The End?
+  answers:
+    - "1.0.0"
+    - "V 1.0.0"
+    - "Version 1.0.0"
+- question: "How Do You Earn The Achievement Titled \"The End\"?"
+  answers:
+    - Enter the exit portal
+    - Enter the exit portal in the End
+    - Enter the exit portal in the End Dimension
+- question: What Food Is Found At The End?
+  answers:
+    - Chorus
+    - Chorus Fruit
+- question: During The Pretty Scary Update Which Hostile Mob Was Added?
+  answers:
+    - Witch
+- question: Can You Revive The Ender Dragon?
+  answers:
+    - "Yes"
+    - "Yes, you can"
+    - "Yes, you can revive the Ender Dragon"

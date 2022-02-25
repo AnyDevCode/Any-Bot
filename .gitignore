@@ -89,7 +89,11 @@ lerna-debug.log
 Thumbs.db
 /.github/
 src/commands/backup/backups
-data/
+data/db.sqlite-wal
+data/db.sqlite-shm
+data/db.sqlite
+data/notes.json
+data/backups
 logs/
 blapi.json
 config.json

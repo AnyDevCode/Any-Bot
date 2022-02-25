@@ -82,7 +82,7 @@ module.exports = class AliasesCommand extends Command {
       const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
 
       embed
-        .setTitle('Any Bot\'s Alias Types')
+        .setTitle(`${message.client.user.username}\'s Alias Types`)
         .setDescription(stripIndent`
           **Prefix:** \`${prefix}\`
           **More Information:** \`${prefix}aliases [command type]\`
@@ -103,9 +103,9 @@ module.exports = class AliasesCommand extends Command {
       }
 
       embed.addField(
-        '**Links**', 
-        '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599) | ' +
-        '[Support Server](https://discord.gg/2FRpkNr) **'
+          '**Links**',
+          `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
+          `[Support Server](${message.client.supportServerInvite}) **`
       );
 
     }

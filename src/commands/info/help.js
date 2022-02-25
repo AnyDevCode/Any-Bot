@@ -67,10 +67,17 @@ module.exports = class HelpCommand extends Command {
 
         let isModule = false;
 
-        if (args[0]) {
-            for (let i = 0; i < modules.length; i++) {
-                if (modules[i].includes(args[0].toLowerCase())) {
-                    isModule = true;
+        if (args[0]){
+            if (args[0].toLowerCase() === "module") {
+                if (args[1]) {
+                    //Check if module exists
+                    if (modules.includes(args[1].toLowerCase())) {
+                        isModule = true;
+                    } else {
+                        return message.reply(`Module \`${args[1]}\` does not exist.`);
+                    }
+                } else {
+                    return message.reply("Please specify a module.");
                 }
             }
         }
@@ -113,7 +120,7 @@ module.exports = class HelpCommand extends Command {
 
         } else if (isModule) {
             embed
-                .setTitle(`Commands: \`${args[0].toLowerCase()}\``)
+                .setTitle(`Commands: \`${args[1].toLowerCase()}\``)
                 .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
                 .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
                 .setTimestamp()
@@ -121,7 +128,7 @@ module.exports = class HelpCommand extends Command {
             for (let i = 0; i < modules.length; i++) {
                 let isNsfw = false;
                 let isOwner = false;
-                if (modules[i].includes(args[0].toLowerCase())) {
+                if (modules[i].includes(args[1].toLowerCase())) {
                     embed.setDescription(message.client.commands.filter(c => c.type === modules[i]).map(c => {
                             if ((c.type === NSFW && !message.channel.nsfw)){
                               isNsfw = true;
@@ -188,7 +195,7 @@ module.exports = class HelpCommand extends Command {
             const size = message.client.commands.size - commands[OWNER].length;
 
             embed // Build help embed
-                .setTitle('Any Bot\'s Seccions')
+                .setTitle(`${message.client.user.username}\'s Seccions`)
                 .setDescription(stripIndent`
           **Prefix:** \`${prefix}\`
           **More Information for a command:** \`${prefix}help [command]\`
@@ -201,20 +208,20 @@ module.exports = class HelpCommand extends Command {
                     message.author.displayAvatarURL({dynamic: true})
                 )
                 .setTimestamp()
-                .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+                .setThumbnail(message.client.user.displayAvatarURL({dynamic: true, size: 1024}))
                 .setColor(message.guild.me.displayHexColor);
 
             for (const type of Object.values(message.client.types)) {
                 if (type === OWNER && !message.client.isOwner(message.member)) continue;
                 if (type === NSFW && !message.channel.nsfw) continue;
                 if (commands[type][0])
-                    embed.addField(`**${emojiMap[type]} [${commands[type].length}]**`, `\`\`\`${prefix}help ${sectionsMap[type].toLowerCase()}\`\`\``, true);
+                    embed.addField(`**${emojiMap[type]} [${commands[type].length}]**`, `\`\`\`${prefix}help module ${sectionsMap[type].toLowerCase()}\`\`\``, true);
             }
 
             embed.addField(
                 '**Links**',
-                '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8) | ' +
-                '[Support Server](https://discord.gg/2FRpkNr) **'
+                `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
+                `[Support Server](${message.client.supportServerInvite}) **`
             );
 
         }

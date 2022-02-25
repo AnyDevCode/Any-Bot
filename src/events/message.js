@@ -113,7 +113,7 @@ module.exports = async (client, message) => {
         message.command = true; // Add flag for messageUpdate event
         // Make a typing indicator for 2 seconds
         message.channel.startTyping()
-        await new Promise(resolve => setTimeout(resolve, 500)).then(async () => await message.channel.stopTyping());
+        await new Promise(resolve => setTimeout(resolve, 100)).then(async () => await message.channel.stopTyping());
         return command.run(message, args); // Run command
       }
     } else if ( 

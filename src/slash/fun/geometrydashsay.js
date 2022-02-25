@@ -11,37 +11,6 @@ module.exports = class GeometryDashSaySlash extends Slash {
         .setDescription("Say something in Geometry Dash")
         .addSubcommand((subcommand) =>
           subcommand
-            .setName("comment")
-            .setDescription("Make a comment on a user or a Geometry Dash")
-            .addStringOption((option) =>
-              option
-                .setName("text")
-                .setDescription("The text of the comment")
-                .setRequired(true)
-            )
-            .addNumberOption((option) =>
-              option
-                .setName("likes")
-                .setDescription("The number of likes the comment has")
-                .setRequired(false)
-            )
-            .addStringOption((option) =>
-              option
-                .setName("mod")
-                .setDescription("Type of moderator")
-                .setRequired(false)
-                .addChoice("Moderator", "mod")
-                .addChoice("Elder", "elder")
-            )
-            .addStringOption((option) =>
-              option
-                .setName("user")
-                .setDescription("The user to comment on")
-                .setRequired(false)
-            )
-        )
-        .addSubcommand((subcommand) =>
-          subcommand
             .setName("monster")
             .setDescription("Make a monster message in Geometry Dash")
             .addStringOption((option) =>
@@ -107,21 +76,6 @@ module.exports = class GeometryDashSaySlash extends Slash {
     await interaction.deferReply();
 
     switch (type_message) {
-      case "comment": {
-        let username = options.getString("user") || interaction.user.username;
-        username = stringToUrlEncoded(username);
-        let text = options.getString("text");
-        const likes =
-          options.getNumber("likes") || Math.floor(Math.random() * 1000);
-        const mod = options.getString("mod") || "mod";
-
-        text = stringToUrlEncoded(text);
-
-        let link = `https://gdcolon.com/tools/gdcomment/img/${text}?name=${username}&likes=${likes}&mod=${mod}`;
-
-        let attachment = new MessageAttachment(link, "comment.png");
-        return interaction.editReply({ files: [attachment] });
-      }
       case "monster": {
         let monster = options.getString("monster") || "Gatekeeper";
         let text = options.getString("text");

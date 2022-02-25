@@ -18,7 +18,7 @@ module.exports = class AvatarCommand extends Command {
       message.member;
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Avatar`)
-      .setImage(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
+      .setImage(member.user.displayAvatarURL({ dynamic: true, size: 2048 }))
       .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
       .setTimestamp()
       .setColor(member.displayHexColor);

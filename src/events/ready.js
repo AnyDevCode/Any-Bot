@@ -71,20 +71,37 @@ module.exports = async (client) => {
     /** ------------------------------------------------------------------------------------------------
      * UPDATE TABLES
      * ------------------------------------------------------------------------------------------------ */
+    // Check database
+    const data = await client.mongodb.settings.selectRow(guild.id);
     // Update settings table
-    client.db.settings.insertRow.run(
+    await client.db.settings.insertRow.run(
       guild.id,
       guild.name,
-      guild.systemChannelID, // Default channel
-      guild.systemChannelID, // Welcome channel
-      guild.systemChannelID, // Farewell channel
-      null,  // Crown Channel
-      null,
-      modLog ? modLog.id : null,
-      adminRole ? adminRole.id : null,
-      modRole ? modRole.id : null,
-      muteRole ? muteRole.id : null,
-      crownRole ? crownRole.id : null
+      data.systemChannelID || guild.systemChannelID, // Default channel
+      data.welcomeChannelID || guild.systemChannelID, // Welcome channel
+      data.farewellChannelID  || guild.systemChannelID, // Farewell channel
+      data.crownChannelID || null,  // Crown Channel
+      data.xpChannelID || null, //XP Channel
+      data.modLogID || (modLog ? modLog.id : null),
+      data.adminRoleID || (adminRole ? adminRole.id : null),
+      data.modRoleID || (modRole ? modRole.id : null),
+      data.mutedRoleID || (muteRole ? muteRole.id : null),
+      data.crownRoleID || (crownRole ? crownRole.id : null)
+    );
+
+    await client.mongodb.settings.insertRow(
+      guild.id,
+      guild.name,
+      data.systemChannelID || guild.systemChannelID, // Default channel
+      data.welcomeChannelID || guild.systemChannelID, // Welcome channel
+      data.farewellChannelID  || guild.systemChannelID, // Farewell channel
+      data.crownChannelID || null,  // Crown Channel
+      data.xpChannelID || null, //XP Channel
+      data.modLogID || (modLog ? modLog.id : null),
+      data.adminRoleID || (adminRole ? adminRole.id : null),
+      data.modRoleID || (modRole ? modRole.id : null),
+      data.mutedRoleID || (muteRole ? muteRole.id : null),
+      data.crownRoleID || (crownRole ? crownRole.id : null)
     );
 
     // Update users table
@@ -104,10 +121,12 @@ module.exports = async (client) => {
      * CHECK DATABASE
      * ------------------------------------------------------------------------------------------------ */
     // If member left
-    const currentMemberIds = client.db.users.selectCurrentMembers.all(guild.id).map(row => row.user_id);
-    for (const id of currentMemberIds) {
-      if (!guild.members.cache.has(id)) {
-        client.db.users.updateCurrentMember.run(0, id, guild.id);
+    if(!client.shard){
+      const currentMemberIds = client.db.users.selectCurrentMembers.all(guild.id).map(row => row.user_id);
+      for (const id of currentMemberIds) {
+        if (!guild.members.cache.has(id)) {
+          client.db.users.updateCurrentMember.run(0, id, guild.id);
+        }
       }
     }
 
@@ -141,14 +160,16 @@ module.exports = async (client) => {
   }
 
   // Remove left guilds
-  const dbGuilds = client.db.settings.selectGuilds.all();
-  const guilds = client.guilds.cache.array();
-  const leftGuilds = dbGuilds.filter(g1 => !guilds.some(g2 => g1.guild_id === g2.id));
-  for (const guild of leftGuilds) {
-    client.db.settings.deleteGuild.run(guild.guild_id);
-    client.db.users.deleteGuild.run(guild.guild_id);
+  if(!client.shard){
+    const dbGuilds = await client.mongodb.settings.selectGuilds();
+    const guilds = client.guilds.cache.array();
+    const leftGuilds = dbGuilds.filter(g1 => !guilds.some(g2 => g1.guildID === g2.id));
+    for (const guild of leftGuilds) {
+      await client.mongodb.settings.deleteGuild(guild.guildID);
+      client.db.users.deleteGuild.run(guild.guild_id);
 
-    client.logger.info(`Any Bot has left ${guild.guild_name}`);
+      client.logger.info(`Any Bot has left ${guild.guild_name}`);
+    }
   }
 
   client.logger.info('Any Bot is now online');

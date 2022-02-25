@@ -89,6 +89,21 @@ module.exports = async (client, guild) => {
     crownRole ? crownRole.id : null
   );
 
+  await client.mongodb.settings.insertRow(
+    guild.id,
+    guild.name,
+    guild.systemChannelID, // Default channel
+    null, // Welcome channel
+    null, // Farewell channel
+    null,  // Crown Channel
+    null, // XP Channel
+    modLog ? modLog.id : null,
+    adminRole ? adminRole.id : null,
+    modRole ? modRole.id : null,
+    muteRole ? muteRole.id : null,
+    crownRole ? crownRole.id : null
+  );
+
   // Update users table
   guild.members.cache.forEach(member => {
     client.db.users.insertRow.run(

@@ -129,17 +129,17 @@ module.exports = {
             name: message.author.tag,
             iconURL: message.author.displayAvatarURL({ dynamic: true }),
           })
-          .setDescription(message.embeds[0].description)
-          .setURL(message.embeds[0].url)
-          .setColor(message.embeds[0].color)
+          .setDescription(message.embeds[0].description || "None")
+          .setURL(message.embeds[0].url || "");
+          .setColor(message.embeds[0].color || "#000000")
           .setAuthor({
-            name: message.embeds[0].author.name,
-            iconURL: message.embeds[0].author.iconURL,
+            name: message.embeds[0].author ? message.embeds[0].author.name : "",
+            iconURL: message.embeds[0].author ? message.embeds[0].author.iconURL : "",
           })
           .setImage(message.embeds[0].image ? message.embeds[0].image.url : "")
           .setFooter({
-            text: message.embeds[0].footer.text,
-            iconURL: message.embeds[0].footer.iconURL,
+            text: message.embeds[0].footer ? message.embeds[0].footer.text : "",
+            iconURL: message.embeds[0].footer ? message.embeds[0].footer.iconURL : "",
           })
           .setTimestamp();
 

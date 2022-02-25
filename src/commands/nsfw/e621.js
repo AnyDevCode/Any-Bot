@@ -16,14 +16,17 @@ module.exports = class e621Command extends Command {
     async run(message, args) {
         if (!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
         const {stringToUrlEncoded} = message.client.utils;
-        const tags = stringToUrlEncoded(args.join(" "))
+        const tags = []
+        for (let i = 0; i < args.length; i++) {
+            tags[i] = stringToUrlEncoded(args[i]);
+        }
         if (!tags) return message.channel.send("Write something to look for in e621.")
-        booru.search('e621', [tags], {limit: 1, random: true})
+        booru.search('e621', tags, {limit: 1, random: true})
             .then(posts => {
                 for (let post of posts) {
                     const embed = new MessageEmbed()
                         .setColor(message.guild.me.displayHexColor)
-                        .setTitle(`Search result: ${tags}`)
+                        .setTitle(`Search result: ${tags.join(' ')}`)
                         .setImage(post.fileUrl)
                     message.channel.send({embed})
                 }

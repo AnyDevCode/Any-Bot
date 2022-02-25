@@ -1,7 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 
-module.exports = (client, oldMessage, newMessage) => {
-
+module.exports = {
+    name: "messageUpdate",
+    async execute(oldMessage, newMessage, commands, client) {
+        
   if (newMessage.webhookID) return; // Check for webhook
   if (newMessage.author.bot) return;
   // Detect edited commands
@@ -14,7 +16,7 @@ module.exports = (client, oldMessage, newMessage) => {
   }
 
   const embed = new MessageEmbed()
-    .setAuthor(`${newMessage.author.tag}`, newMessage.author.displayAvatarURL({ dynamic: true }))
+    .setAuthor({name: `${newMessage.author.tag}`, iconURL: newMessage.author.displayAvatarURL({ dynamic: true })})
     .setTimestamp()
     .setColor(newMessage.guild.me.displayHexColor);
 
@@ -45,7 +47,7 @@ module.exports = (client, oldMessage, newMessage) => {
         `)
         .addField('Before', oldMessage.content || '`No content`', true)
         .addField('After', newMessage.content);
-      messageEditLog.send(embed);
+      messageEditLog.send({embeds: [embed]});
     }
   }
 
@@ -65,7 +67,8 @@ module.exports = (client, oldMessage, newMessage) => {
         embed.setDescription(`${newMessage.member}'s **message embeds** in ${newMessage.channel} were deleted.`);
       else
         embed.setDescription(`${newMessage.member}'s **message embed** in ${newMessage.channel} was deleted.`);
-      messageDeleteLog.send(embed);
+      messageDeleteLog.send({embeds: [embed]});
     }
   }
-};
+}
+}

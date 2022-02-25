@@ -33,12 +33,15 @@ module.exports = class NicknameCommand extends Command {
         const embed = new MessageEmbed()
           .setTitle('Change Nickname')
           .setDescription(`${message.member}'s nickname was successfully updated.`)
-          .addField('Member', message.member, true)
-          .addField('Nickname', nicknameStatus, true)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .addField('Member', `${message.member}`, true)
+          .addField('Nickname', `${nicknameStatus}`, true)
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed);
+        message.channel.send({embeds:[embed]});
 
       } catch (err) {
         message.client.logger.error(err.stack);

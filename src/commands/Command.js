@@ -108,7 +108,7 @@ class Command {
    * @param {string[]} args
    */
   // eslint-disable-next-line no-unused-vars
-  run(message, args) {
+  run(message, args, client, player) {
     throw new Error(`The ${this.name} command has no run() method`);
   }
 
@@ -177,18 +177,18 @@ class Command {
       return false;
     }
 
-    if (message.member.hasPermission('ADMINISTRATOR')) return true;
+    if (message.member.permissions.has('ADMINISTRATOR')) return true;
     if (this.userPermissions) {
       const missingPermissions =
         message.channel.permissionsFor(message.author).missing(this.userPermissions).map(p => permissions[p]);
       if (missingPermissions.length !== 0) {
         const embed = new MessageEmbed()
-          .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
+          .setAuthor({name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
           .setTitle(`${fail} Missing User Permissions: \`${this.name}\``)
           .setDescription(`\`\`\`diff\n${missingPermissions.map(p => `- ${p}`).join('\n')}\`\`\``)
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
         return false;
       }
     }
@@ -205,12 +205,12 @@ class Command {
       message.channel.permissionsFor(message.guild.me).missing(this.clientPermissions).map(p => permissions[p]);
     if (missingPermissions.length !== 0) {
       const embed = new MessageEmbed()
-        .setAuthor(`${this.client.user.tag}`, message.client.user.displayAvatarURL({ dynamic: true }))
+        .setAuthor({name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
         .setTitle(`${fail} Missing Bot Permissions: \`${this.name}\``)
         .setDescription(`\`\`\`diff\n${missingPermissions.map(p => `- ${p}`).join('\n')}\`\`\``)
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send(embed);
+      message.channel.send({embeds: [embed]});
       return false;
 
     } else return true;
@@ -227,7 +227,7 @@ class Command {
     errorType = this.errorTypes[errorType];
     const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
     const embed = new MessageEmbed()
-      .setAuthor(`${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true }))
+      .setAuthor({name: `${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTitle(`${fail} Error: \`${this.name}\``)
       .setDescription(`\`\`\`diff\n- ${errorType}\n+ ${reason}\`\`\``)
       .addField('Usage', `\`${prefix}${this.usage}\``)
@@ -235,7 +235,7 @@ class Command {
       .setColor(message.guild.me.displayHexColor);
     if (this.examples) embed.addField('Examples', this.examples.map(e => `\`${prefix}${e}\``).join('\n'));
     if (errorMessage) embed.addField('Error Message', `\`\`\`${errorMessage}\`\`\``);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]})
   }
 
   /**
@@ -255,15 +255,15 @@ class Command {
       const caseNumber = await message.client.utils.getCaseNumber(message.client, message.guild, modLog);
       const embed = new MessageEmbed()
         .setTitle(`Action: \`${message.client.utils.capitalize(this.name)}\``)
-        .addField('Moderator', message.member, true)
-        .setFooter(`Case #${caseNumber}`)
+        .addField('Moderator', `${message.member}`, true)
+        .setFooter({text: `Case #${caseNumber}`})
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
       for (const field in fields) {
-        embed.addField(field, fields[field], true);
+        embed.addField(`${field}`, `${fields[field]}`, true);
       }
-      embed.addField('Reason', reason);
-      modLog.send(embed).catch(err => message.client.logger.error(err.stack));
+      embed.addField('Reason', `${reason}`);
+      modLog.send({embeds: [embed]}).catch(err => message.client.logger.error(err.stack));
     }
   }
 

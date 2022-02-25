@@ -25,22 +25,22 @@ module.exports = class SetModLogCommand extends Command {
       .setTitle('Settings: `Logging`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`mod log\` was successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateModLogId.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Mod Log', `${oldModLog} ➔ \`None\``));
+      return message.channel.send({embeds:[embed.addField('Mod Log', `${oldModLog} ➔ \`None\``)]});
     }
 
     const modLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!modLog || modLog.type != 'text' || !modLog.viewable) 
+    if (!modLog || modLog.type != 'GUILD_TEXT' || !modLog.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
     message.client.db.settings.updateModLogId.run(modLog.id, message.guild.id);
-    message.channel.send(embed.addField('Mod Log', `${oldModLog} ➔ ${modLog}`));
+    message.channel.send({embeds:[embed.addField('Mod Log', `${oldModLog} ➔ ${modLog}`)]});
   }
 };

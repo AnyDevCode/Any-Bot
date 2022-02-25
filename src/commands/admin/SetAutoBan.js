@@ -37,18 +37,18 @@ module.exports = class SetAutoBanCommand extends Command {
             .setTitle('Settings: `System`')
             .setThumbnail(message.guild.iconURL({dynamic: true}))
             .setDescription(`\`Auto ban\` was successfully updated. ${success}`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+            .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({dynamic: true})})
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
 
         // Clear if no args provided
         if (args.length === 0 || amount === 0) {
             message.client.db.settings.updateAutoBan.run(null, message.guild.id);
-            return message.channel.send(embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`disabled\``));
+            return message.channel.send({embeds: [embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`disabled\``)]});
         }
 
         // Update warn count:
         message.client.db.settings.updateAutoBan.run(amount, message.guild.id);
-        return message.channel.send(embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`${toString(amount)}\``));
+        return message.channel.send({embeds: [embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`${amount}\``)]});
     }
 };

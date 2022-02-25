@@ -44,7 +44,7 @@ let badges1 = {
   VERIFIED_BOT: verified_bot,
 };
 
-module.exports = class ServerInfoCommand extends Command {
+module.exports = class UserInfoCommand extends Command {
   constructor(client) {
     super(client, {
       name: "userinfo",
@@ -55,12 +55,17 @@ module.exports = class ServerInfoCommand extends Command {
       type: client.types.INFO,
     });
   }
-  run(message) {
-    const member = message.mentions.members.first() || message.member;
-
+  run(message, args) {
+    const member =
+      this.getMemberFromMention(message, args[0]) ||
+      message.guild.members.cache.get(args[0]) ||
+      message.member;
     const embed = new MessageEmbed()
       .setColor(message.guild.me.displayHexColor)
-      .setAuthor(member.user.tag, member.user.displayAvatarURL())
+      .setAuthor({
+        name: member.user.tag,
+        iconURL: member.user.displayAvatarURL({ dynamic: true }),
+      })
       .setTitle(`${member.user.username}'s Info`)
       .setThumbnail(
         member.user.displayAvatarURL({ format: "png", dynamic: true })
@@ -83,16 +88,22 @@ module.exports = class ServerInfoCommand extends Command {
           .map((r) => r)
           .join(", ") || "None"
       )
-      .addField("Status", status[member.user.presence.status])
+      .addField(
+        "Status",
+        member.presence.status ? status[member.presence.status] : "Offline",
+        true
+      )
       .addField("Bot", member.user.bot ? "Yes" : "No", true)
       .addField(
         "Badges",
-        member.user.flags.toArray().length
-          ? member.user.flags
-              .toArray()
-              .map((badge) => badges1[badge])
-              .join(" ")
-          : "None",
+        (member.user.flags
+          ? member.user.flags.toArray().length
+            ? member.user.flags
+                .toArray()
+                .map((badge) => badges1[badge])
+                .join(" ")
+            : "None"
+          : "None"),
         true
       )
       .addField(
@@ -103,11 +114,11 @@ module.exports = class ServerInfoCommand extends Command {
       .setThumbnail(
         member.user.displayAvatarURL({ format: "png", dynamic: true })
       )
-      .setFooter(
-        message.member.displayName,
-        message.author.displayAvatarURL({ format: "png", dynamic: true })
-      )
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp();
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
   }
 };

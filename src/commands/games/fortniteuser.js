@@ -44,6 +44,6 @@ module.exports = class FortniteUserCommand extends Command {
       "FortniteStats.png"
     );
 
-    message.channel.send(attachment);
+    message.channel.send({files: [attachment]});
   }
 };

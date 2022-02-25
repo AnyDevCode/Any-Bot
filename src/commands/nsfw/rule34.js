@@ -1,5 +1,5 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const booru = require("booru")
 
 module.exports = class Rule34Command extends Command {
@@ -14,17 +14,29 @@ module.exports = class Rule34Command extends Command {
     });
   }
   async run(message, args) {
-	  if(!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
-       const tags = stringToUrlEncoded(args.join(" "))
+      if(!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
+      const {stringToUrlEncoded} = message.client.utils;
+      const tags = []
+      for (let i = 0; i < args.length; i++) {
+          tags[i] = stringToUrlEncoded(args[i]);
+      }
       if(!tags) return message.channel.send("Write something to look for in Rule 34.")
-        booru.search('rule34', [tags], { limit: 1, random: true })
+        booru.search('rule34', tags, { limit: 1, random: true })
         .then(posts => {
        for(let post of posts) {
        const embed = new MessageEmbed()
          .setColor(message.guild.me.displayHexColor)
-         .setTitle(`Search result: ${tags}`)
+         .setTitle(`Search result: ${tags.join(' ')}`)
          .setImage(post.fileUrl)
-    message.channel.send({ embed })
+        const linkrow = new MessageActionRow()
+          .addComponents(
+            new MessageButton()
+            .setLabel("Direct link")
+            .setStyle("LINK")
+            .setEmoji("🔗")
+            .setURL("https://rule34.xxx/index.php?page=post&s=view&id=" + post.id)
+          )
+        message.channel.send({embeds: [embed], components: [linkrow]})
  }
  }).catch(() => {
    message.channel.send("No results found.")

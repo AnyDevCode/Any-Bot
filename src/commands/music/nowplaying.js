@@ -1,6 +1,5 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 module.exports = class NowPlayingMusicCommand extends Command {
   constructor(client) {
@@ -12,24 +11,42 @@ module.exports = class NowPlayingMusicCommand extends Command {
       type: client.types.MUSIC,
     });
   }
-  async run(message) {
-    let queue = message.client.queue();
+  async run(message, args, client, player) {
 
-    const server_queue = queue.get(message.guild.id);
+    const queue = player.getQueue(message.guild.id);
+    if(!queue || !queue.playing) return message.reply(`❌ | There is nothing playing.`);
 
-    if (!message.member.voice.channel) return message.channel.send('You need to be in a channel to execute this command!');
-    if(!server_queue){
-        return message.channel.send(`There are no songs in queue 😔`);
-    }
-    let embed = new MessageEmbed()
-    .setColor(message.guild.me.displayHexColor)
-    .setTitle(`Now playing: ${server_queue.songs[0].title}`)
-    .setDescription(`[${server_queue.songs[0].title}](${server_queue.songs[0].url})`)
-    .addField('Requested by', `<@!${server_queue.songs[0].requester}>`)
-    .addField('Duration', `${server_queue.songs[0].duration}`)
-    .setImage(server_queue.songs[0].thumbnail)
-    .setTimestamp()
-    .setFooter(`${message.guild.name}`, message.guild.iconURL({ dynamic: true }));
-    return message.channel.send(embed);
+    const progress = queue.createProgressBar();
+    const perc = queue.getPlayerTimestamp();
+
+    const embed = new MessageEmbed()
+      .setColor(message.guild.me.displayHexColor)
+      .setAuthor({
+        name: `${message.guild.name} Music`,
+        iconURL: message.guild.iconURL({ dynamic: true }),
+      })
+      .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress == 'Infinity' ? 'Live' : perc.progress + '%'}\`)`)
+      .addField(
+        "\u200b",
+        progress.replace(/ 0:00/g, ' ◉ LIVE')
+      )
+      .setFooter({
+        text: `${message.guild.name}`,
+        iconURL: message.guild.iconURL({ dynamic: true }),
+      })
+      .setTimestamp();
+
+      const linkrow = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel('Link')
+        .setURL(queue.current.url)
+        .setEmoji('🔗')
+        .setStyle('LINK')
+      );
+
+      return message.reply({ embeds: [embed], components: [linkrow] });
+
+
     }
   };

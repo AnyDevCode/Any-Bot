@@ -1,6 +1,6 @@
 const Command = require('../Command.js');
 const {MessageEmbed} = require('discord.js');
-const data = require('../../../data/fake_data.json');
+const data = require(__basedir + '/data/fake_data.json');
 
 module.exports = class HackCommand extends Command {
     constructor(client) {
@@ -23,50 +23,45 @@ module.exports = class HackCommand extends Command {
 
         let random = Math.floor(Math.random() * data.length);
 
-        /*
-        let first_name = data[random].first_name;
-        let last_name = data[random].last_name;
-        let email = data[random].email;
-        let password = data[random].password;
-        let gender = data[random].gender;
-        let ip_address = data[random].ip_address;
-        let mac_address = data[random].mac_address;
-        let country = data[random].country;
-        let phone = data[random].phone;
-        let city = data[random].city;
-         */
-        let { first_name, last_name, email, password, gender, ip_address, mac_address, country, phone, city } = data[random]
-        let street_address = data[random].street_address;
+        let { first_name, last_name, email, password, gender, ip_address, mac_address, country, phone, city, street_address, domain } = data[random]
         let credit_card = data[random].credit_card || "DELETED";
         let credit_card_type = data[random].credit_card_type || "DELETED";
         let credit_card_expiration = data[random].credit_card_expiration || "DELETED - DELETED";
         let credit_card_cvv = data[random].credit_card_cvv || "DELETED";
         let bitcoin_address = data[random].bitcoin_address || "DELETED";
         let ethereum_address = data[random].ethereum_address || "DELETED";
-        let domain = data[random].domain;
 
         let credit_card_expiration_year = credit_card_expiration.split('-')[0];
         let credit_card_expiration_month = credit_card_expiration.split('-')[1];
 
         let embed = new MessageEmbed()
             .setColor(message.guild.me.displayHexColor)
-            .setAuthor(`${message.member.displayName} hacked ${member.displayName}`, message.author.displayAvatarURL())
+            .setAuthor({
+                name: `${message.member.displayName} hacked ${member.displayName}`,
+                iconURL: message.author.displayAvatarURL()
+            })
             .setDescription("Looking for Data...")
 
-        let msg = await message.channel.send(embed);
+        let msg = await message.channel.send({embeds: [embed]});
 
         let embed2 = new MessageEmbed()
             .setColor(message.guild.me.displayHexColor)
-            .setAuthor(`${message.member.displayName} hacked ${member.displayName}`, message.author.displayAvatarURL())
+            .setAuthor({
+                name: `${message.member.displayName} hacked ${member.displayName}`,
+                iconURL: message.author.displayAvatarURL()
+            })            
             .setDescription(`Decrypting Data...`)
 
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        await msg.edit(embed2);
+        await msg.edit({embeds: [embed2]});
 
         let final_embed = new MessageEmbed()
             .setColor(message.guild.me.displayHexColor)
-            .setAuthor(`Hacked ${member.user.tag}`, member.user.displayAvatarURL())
+            .setAuthor({
+                name: `Hacked ${member.user.tag}`,
+                iconURL: message.author.displayAvatarURL()
+            })     
             .setThumbnail(member.user.displayAvatarURL())
             .addField('First Name', first_name, true)
             .addField('Last Name', last_name, true)
@@ -89,7 +84,7 @@ module.exports = class HackCommand extends Command {
 
         await new Promise(resolve => setTimeout(resolve, 4000));
 
-        await msg.edit(final_embed);
+        await msg.edit({embeds: [final_embed]});
 
     }
 }

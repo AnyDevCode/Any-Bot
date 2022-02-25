@@ -108,41 +108,43 @@ module.exports = class SettingsCommand extends Command {
     if (setting.endsWith('setting')) setting = setting.slice(0, -7);
     const embed = new MessageEmbed()
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
     switch (setting) {
       case 's':
       case 'sys':
       case 'system':
-        return message.channel.send(embed
-          .setTitle('Settings: `System`')
-          .addField('Prefix', prefix, true)
-          .addField('System Channel', systemChannel, true)
-          .addField('Starboard Channel', starboardChannel, true)
-          .addField('Admin Role', adminRole, true)
-          .addField('Mod Role', modRole, true)
-          .addField('Mute Role', muteRole, true)
-          .addField('Auto Role', autoRole, true)
-          .addField('Auto Kick', autoKick, true)
-          .addField('Auto Ban', autoBan, true)
-          .addField('Random Color', randomColor, true)
-          .addField('Mod Channels', modChannels)
-          .addField('Disabled Commands', disabledCommands)
-        );
+        embed
+        .setTitle('Settings: `System`')
+        .addField('Prefix', prefix, true)
+        .addField('System Channel', systemChannel ? `${systemChannel}` : '`None`', true)
+        .addField('Starboard Channel', starboardChannel  ? `${starboardChannel}` : '`None`', true)
+        .addField('Admin Role', adminRole  ? `${adminRole}` : '`None`', true)
+        .addField('Mod Role', modRole  ? `${modRole}` : '`None`', true)
+        .addField('Mute Role', muteRole  ? `${muteRole}` : '`None`', true)
+        .addField('Auto Role', autoRole  ? `${autoRole}` : '`None`', true)
+        .addField('Auto Kick', autoKick  ? `${autoKick}` : '`None`', true)
+        .addField('Auto Ban', autoBan  ? `${autoBan}` : '`None`', true)
+        .addField('Random Color', randomColor  ? `${randomColor}` : '`None`', true)
+        .addField('Mod Channels', modChannels  ? `${modChannels}` : '`None`')
+        .addField('Disabled Commands', disabledCommands  ? `${disabledCommands}` : '`None`')
+        return message.channel.send({embeds:[embed]});
       case 'l':
       case 'log':
       case 'logs':
       case 'logging':
-        return message.channel.send(embed
-          .setTitle('Settings: `Logging`')
-          .addField('Mod Log', modLog, true)
-          .addField('Member Log', memberLog, true)
-          .addField('Nickname Log', nicknameLog, true)
-          .addField('Role Log', roleLog, true)
-          .addField('Message Edit Log', messageEditLog, true)
-          .addField('Message Delete Log', messageDeleteLog, true)
-        );
+        embed
+        .setTitle('Settings: `Logging`')
+        .addField('Mod Log', modLog ? `${modLog}` : '`None`', true)
+        .addField('Member Log', memberLog ? `${memberLog}` : '`None`', true)
+        .addField('Nickname Log', nicknameLog ? `${nicknameLog}` : '`None`', true)
+        .addField('Role Log', roleLog ? `${roleLog}` : '`None`', true)
+        .addField('Message Edit Log', messageEditLog ? `${messageEditLog}` : '`None`', true)
+        .addField('Message Delete Log', messageDeleteLog ? `${messageDeleteLog}` : '`None`', true)
+        return message.channel.send({
+          embeds:[embed]
+        });
       case 'v':
       case 'ver':
       case 'verif':
@@ -153,7 +155,7 @@ module.exports = class SettingsCommand extends Command {
           .addField('Channel', verificationChannel, true)
           .addField('Status', verificationStatus, true)
           .addField('Message', verificationMessage);
-        return message.channel.send(embed);
+        return message.channel.send({embeds: [embed]});
       case 'w':
       case 'welcome':
       case 'welcomes':
@@ -162,7 +164,7 @@ module.exports = class SettingsCommand extends Command {
           .addField('Channel', welcomeChannel, true)
           .addField('Status', welcomeStatus, true)
           .addField('Message', welcomeMessage);
-        return message.channel.send(embed);
+        return message.channel.send({embeds: [embed]});
       case 'f':
       case 'farewell':
       case 'farewells':
@@ -171,22 +173,25 @@ module.exports = class SettingsCommand extends Command {
           .addField('Channel', farewellChannel, true)
           .addField('Status', farewellStatus, true)
           .addField('Message', farewellMessage);
-        return message.channel.send(embed);
+        return message.channel.send({embeds: [embed]});
       case 'p':
       case 'point':
       case 'points':
-        return message.channel.send(embed
+        embed
           .setTitle('Settings: `Points`')
           .addField('Message Points', messagePoints, true)
           .addField('Command Points', commandPoints, true)
           .addField('Voice Points', voicePoints, true)
           .addField('Status', pointsStatus)
+        return message.channel.send({embeds:[
+          embed
+        ]}
         );
       case 'x':
       case 'xp':
       case 'rank':
       case 'ranks':
-        return message.channel.send(embed
+        embed
           .setTitle('Settings: `Ranks`')
           .addField('Channel', xpChannel)
             .addField("Send message to channel", `\`${XPStatus}\``)
@@ -194,6 +199,10 @@ module.exports = class SettingsCommand extends Command {
             .addField("Command XP", commandXP)
             .addField("Voice XP", voiceXP)
             .addField("Status", xpStatus)
+        return message.channel.send(
+          {embeds:[
+            embed
+          ]}
         );
       case 'c':
       case 'crown':
@@ -204,7 +213,7 @@ module.exports = class SettingsCommand extends Command {
           .addField('Schedule', crownSchedule, true)
           .addField('Status', crownStatus)
           .addField('Message', crownMessage);
-        return message.channel.send(embed);
+        return message.channel.send({embeds: [embed]});
     }
     if (setting)
       return this.sendErrorMessage(message, 0, stripIndent`
@@ -227,6 +236,6 @@ module.exports = class SettingsCommand extends Command {
       .addField('XP', '`3` settings', true)
       .addField('Crown', '`4` settings', true);
 
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

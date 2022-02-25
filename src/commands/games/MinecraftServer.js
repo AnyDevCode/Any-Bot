@@ -28,6 +28,8 @@ module.exports = class MinecraftServerCommand extends Command {
 
     let pingURL = `https://api.minetools.eu/ping/${args[0]}`;
 
+    try{
+
     request(pingURL, function (err, resp, body) {
       if (err) return console.log(err.message);
       body = JSON.parse(body);
@@ -37,16 +39,17 @@ module.exports = class MinecraftServerCommand extends Command {
       let motd = `http://status.mclive.eu/MinecraftServer/${args[0]}/${port}/banner.png`;
 
       util
-        .status(`${args[0]}`, { port: parseInt(port) })
+        .status(`${args[0]}`, { port: parseInt(port)
+        })
         .then((response) => {
           const Embed = new MessageEmbed()
             .setTitle("Server Status")
-            .addField("Server IP", response.host, true)
-            .addField("Server Version", response.version, true)
+            .addField("Server IP", `${response.host}`, true)
+            .addField("Server Version", `${response.version}`, true)
             .addField("Latency", `${body.latency.toFixed(2)} ms`, true)
             .addField(
               "Online Players",
-              response.onlinePlayers + "/" + response.maxPlayers,
+              `${response.onlinePlayers}` + "/" + `${response.maxPlayers}`,
                 true
             )
               .setImage(motd)
@@ -55,11 +58,16 @@ module.exports = class MinecraftServerCommand extends Command {
               )
               .setColor(message.guild.me.displayHexColor);
 
-          message.channel.send(Embed);
+          message.channel.send({embeds: [Embed]});
         })
           .catch(() => {
-            message.channel.send("I can't find that server.");
+            message.channel.send({
+              content: "I can't find that server."
+            });
           });
     });
+  } catch (e) {
+    this.sendErrorMessage(message, 0, "Server not found.");
+  }
   }
 };

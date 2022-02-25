@@ -38,8 +38,10 @@ module.exports = class LeaderboardCommand extends Command {
     const embed = new MessageEmbed()
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setFooter(
-        `${message.member.displayName}'s position: ${position + 1}`,  
-        message.author.displayAvatarURL({ dynamic: true })
+        {
+          text: `${message.member.displayName}'s position: ${position + 1}`,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        }
       )
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
@@ -47,10 +49,10 @@ module.exports = class LeaderboardCommand extends Command {
 
     if (members.length <= max) {
       const range = (members.length == 1) ? '[1]' : `[1 - ${members.length}]`;
-      message.channel.send(embed
+      message.channel.send({embeds:[embed
         .setTitle(`Points Leaderboard ${range}`)
         .setDescription(members.join('\n'))
-      );
+      ]});
 
     // Reaction Menu
     } else {
@@ -58,10 +60,10 @@ module.exports = class LeaderboardCommand extends Command {
       embed
         .setTitle('Points Leaderboard')
         .setThumbnail(message.guild.iconURL({ dynamic: true }))
-        .setFooter(
-          'Expires after two minutes.\n' + `${message.member.displayName}'s position: ${position + 1}`,  
-          message.author.displayAvatarURL({ dynamic: true })
-        );
+        .setFooter({
+          text: 'Expires after two minutes.\n' + `${message.member.displayName}'s position: ${position + 1}`,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
       
       new ReactionMenu(message.client, message.channel, message.member, embed, members, max);
 

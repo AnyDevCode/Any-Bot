@@ -20,9 +20,9 @@ module.exports = class TopicsCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Trivia Topics')
       .setDescription(`${topics.join(' ')}\n\nType \`${prefix}trivia [topic]\` to choose one.`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})       
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

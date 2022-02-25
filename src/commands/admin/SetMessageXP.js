@@ -56,9 +56,9 @@ module.exports = class SetMessageXPCommand extends Command {
       .addField('Command XP', `\`Minimum: ${minimum_xp_command}\` - \`Maximum: ${maximum_xp_command}\``)
       .addField('Voice XP', `\`Minimum: ${minimum_xp_voice}\` - \`Maximum: ${maximum_xp_voice}\``)
       .addField('Status', status)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds : [embed]});
   }
 };

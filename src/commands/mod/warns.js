@@ -25,8 +25,16 @@ module.exports = class WarnsCommand extends Command {
 
 
     const embed = new MessageEmbed()
-      .setAuthor(member.user.tag, member.user.displayAvatarURL({ dynamic: true }))
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setAuthor(
+        {
+          name: member.user.tag,
+          iconURL: member.user.displayAvatarURL({ dynamic: true }),
+        }
+      )
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
     
@@ -36,13 +44,13 @@ module.exports = class WarnsCommand extends Command {
       for (let i = current; i < max; i++) {
         embed // Build warning list
           .addField('\u200b', `**Warn \`#${i + 1}\`**`)
-          .addField('Reason', warns[i].reason)
+          .addField('Reason', `${warns[i].reason}`)
           .addField(
             'Moderator', 
-            message.guild.members.cache.get(warns[i].moderator_id) || '`Unable to find moderator`',
+            `${message.guild.members.cache.get(warns[i].moderator_id)}` || '`Unable to find moderator`',
             true
           )
-          .addField('Date Issued', warns[i].date_issued, true)
+          .addField('Date Issued', `${warns[i].date_issued}`, true)
           .addField('Warn ID', `\`${parseInt(warns[i].warn_id)}\``, true);
         amount += 1;
       }
@@ -52,17 +60,18 @@ module.exports = class WarnsCommand extends Command {
         .setDescription(`Showing \`${amount}\` of ${member}'s \`${count}\` total warns.`);
     };
 
-    if (count == 0) message.channel.send(embed
+    if (count == 0) message.channel.send({embeds:[embed
       .setTitle('Warn List [0]')
       .setDescription(`${member} currently has no warns.`)
-    );
-    else if (count < 5) message.channel.send(buildEmbed(0, embed));
+    ]});
+    else if (count < 5) message.channel.send({embeds:[buildEmbed(0, embed)]});
     else {
 
       let n = 0;
-      const json = embed.setFooter(
-        'Expires after three minutes.\n' + message.member.displayName, 
-        message.author.displayAvatarURL({ dynamic: true })
+      const json = embed.setFooter({
+        text: 'Expires after three minutes.\n' + message.member.displayName, 
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      }
       ).toJSON();
       
       const first = () => {

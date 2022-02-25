@@ -65,7 +65,10 @@ module.exports = class AliasesCommand extends Command {
           `**${emojiMap[type]} [${aliases[type].reduce((a, b) => a + b.split(' ').slice(1).length, 0)}]**`, 
           aliases[type].join('\n')
         )
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
 
@@ -82,12 +85,15 @@ module.exports = class AliasesCommand extends Command {
       const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
 
       embed
-        .setTitle('Any Bot\'s Alias Types')
+        .setTitle(`${message.client.user.username}\'s Alias Types`)
         .setDescription(stripIndent`
           **Prefix:** \`${prefix}\`
           **More Information:** \`${prefix}aliases [command type]\`
         `)
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })        
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
 
@@ -103,13 +109,13 @@ module.exports = class AliasesCommand extends Command {
       }
 
       embed.addField(
-        '**Links**', 
-        '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=403008599) | ' +
-        '[Support Server](https://discord.gg/2FRpkNr) **'
+          '**Links**',
+          `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
+          `[Support Server](${message.client.supportServerInvite}) **`
       );
 
     }
 
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

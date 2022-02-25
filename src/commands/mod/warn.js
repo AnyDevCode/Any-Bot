@@ -17,8 +17,6 @@ module.exports = class WarnCommand extends Command {
   run(message, args) {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
-    if(message.guild.id === "739811956638220298") 
-	  return this.sendErrorMessage(message, 0, '⚠️ You cannot use moderation commands on this server.');
     if (!member) 
       return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member === message.member) 
@@ -43,15 +41,18 @@ module.exports = class WarnCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Warn Member')
       .setDescription(`${member} has been warned.`)
-      .addField('Moderator', message.member, true)
-      .addField('Member', member, true)
+      .addField('Moderator', `${message.member}`, true)
+      .addField('Member', `${member}`, true)
       .addField('Warn Count', `\`${warnscount}\``, true)
       .addField('Reason', reason)
       .addField('Warn ID', `\`${totalwarns}\``, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} warned ${member.user.tag}`);
     
     // Update mod log

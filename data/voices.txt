@@ -6,7 +6,6 @@
 21-savage
 2pac
 2pac-arpa
-2pac-chill
 2pac-speaking
 3kliksphilip
 4th-doctor
@@ -190,7 +189,6 @@ blutarch
 bmo
 bob-2000
 bob-barker
-bob-esponja-sp
 bob-late90s
 bob-ross
 bob-veggietales
@@ -256,6 +254,7 @@ caitlin-cooke
 cake-core
 cake_bfb
 callmecarson
+callum-adams
 camila-noceda
 camille_lol
 cammy
@@ -298,6 +297,7 @@ chapolin-br
 charles-calvin
 charles-nelson-riley
 charlie-brown
+charlie-brown-snoopys-classiks-on-toys
 charlie-ice-scream
 charlie-o'donnell
 charmy-bee-ab
@@ -337,7 +337,6 @@ chuck-e-cheese-1977
 chuckie-finster
 chucky-nft
 chum-world-clown
-chun-li
 chun-li
 church
 cindy-vortex
@@ -434,6 +433,8 @@ dashiegames
 dave-gahan
 david-bazookie
 david-byrne
+david-cross
+david-holt
 david-seville
 david-spade
 daxter
@@ -459,7 +460,6 @@ didi-pickles
 diego
 diesel10
 dima
-dimitri
 dingodile-fredtatasciore
 dio
 dio-jp
@@ -479,6 +479,7 @@ doctor-breen
 doctorcapek
 dog-catdog
 dogen-boole
+dolly-dalmatian
 dolph-starbeam
 donald-duck
 donald-duck-normal
@@ -514,13 +515,14 @@ dr-phil
 dr-richard-keller
 dr-rosenberg
 dr-scratchansniff
+dr-wakeman
 draco
 dracula-ht
 drake
-drake-la
 dream-clay
 drew-pickles
 drive-thru-whale
+droid
 duhhh-cringe-guy
 duke-nukem
 dumb-liono
@@ -661,6 +663,7 @@ forza-gps
 forza-rebecca
 four
 fox-mccloud
+foxy
 fozzie-bear
 francis-l4d
 frank-welker
@@ -780,6 +783,7 @@ hank-hill
 hans-moleman
 hans-volter
 harley-quinn
+harold
 hawkodile
 heavy
 heffer-wolfe
@@ -849,18 +853,21 @@ jack
 jack-black
 jack-in-the-box
 jack-kelso
+jack-o-chica
 jack-skellington
 jacksepticeye
 jacksfilms
 jacksucksatlife
 jaden-yuki
 jaiden-animations
+jak
 jake-the-dog
 james-earl-jones
 james-hetfield
 james-hetfield-ajfa
 james-may
 james-taylor
+james-thomastank
 jane-ninjala
 jankman
 jasper
@@ -874,6 +881,7 @@ jebus
 jeff-gb
 jeff-manning
 jeffy-sml
+jellybean
 jeremy-clarkson
 jericho-fallout
 jerma985
@@ -902,6 +910,7 @@ jimmy-hopkins
 jimmy-neutron
 jimmy-vulmer
 jk-simmons
+jobjob
 joe-buck
 joe-chin
 joe-quimby
@@ -931,6 +940,7 @@ joker-joaquin-phoenix
 jolyne-cujoh
 jon-arbuckle-th
 jonathan-kepler
+jones
 jonny-2x4
 jorgen-von-strangle
 joseph-oda
@@ -1007,6 +1017,7 @@ klug
 knockout
 knuckles
 knuckles-sa1
+knuckles-sa2
 knuckles-tw
 knux-sonicsong182
 ko
@@ -1047,6 +1058,7 @@ lavenza
 laverne
 layton
 le-frog
+leafyishere
 leah
 left4dead-louis
 legoshi
@@ -1107,6 +1119,7 @@ lucas-from-lucas-video-company
 lucas-simms
 lucy-loud
 lucy-van-pelt
+lucy-van-pelt-snoopys-classiks-on-toys
 ludacris
 ludwig-von-drake
 luigi
@@ -1123,6 +1136,7 @@ luther
 luz-noceda
 lynn-sr
 mabel-pines
+mac
 madame-blueberry
 madame-blueberry-90s
 maddie-flour
@@ -1146,6 +1160,7 @@ mandark
 mandril-shrike
 mandy
 mangg-exploring-series
+mangle
 manny
 mao-mao
 map
@@ -1158,10 +1173,10 @@ mario-bsi
 mario-fundamentals
 mario-fuwa
 mario-golf-announcer
+mario-is-missing
 mario-smw
 mario-sports-mix
 mario-sunshine
-marioismissing
 mark-elliott
 mark-erickson
 mark-zuckerberg
@@ -1334,6 +1349,7 @@ nick-valentine
 nick-wilde
 nicole-watterson
 niko-bellic
+nikocado-avocado
 nilered
 nimbus
 nina
@@ -1552,6 +1568,7 @@ rene-dupree
 resort-owner
 rev-lovejoy
 reverend-hedges
+revolver-ocelot
 rex
 rex-earl-boen
 rey-mysterio
@@ -1588,6 +1605,7 @@ rockfferburt
 rocko-wallaby
 rocko-wallaby-aott
 rocky-cocoa
+rocky-rhodes
 rod-icescream
 roddy-st-james
 roger-daltrey
@@ -1613,6 +1631,7 @@ roz
 rudolph
 ruff-ruffman
 rulue
+rumpelstiltskin
 runt
 runt-of-the-litter
 ryder-wilson
@@ -1657,6 +1676,7 @@ scratch
 scratchy
 scrubs
 seahawk
+sean-murray
 season-two-donkey-kong
 sebastian-castellanos
 security-guard
@@ -1900,7 +1920,6 @@ tony-hawk
 tony-the-tiger
 too-tall
 top-cat
-toretto-la
 tots-tv-tom
 toucan-sam
 toxin_tractor
@@ -1923,7 +1942,6 @@ tutorial-unit
 tutter
 tweety-joe-alaskey
 twilight-sparkle
-twizgumcookie
 two
 twou-snow
 tyler-dinky-doo
@@ -1931,6 +1949,7 @@ tyler-perry
 tyler-the-creator
 tyrannosaurus-alan
 uka-uka
+ulrich-stern
 ultorpa
 ultron
 uni

@@ -9,26 +9,22 @@ module.exports = class VolumeMusicCommand extends Command {
         description: 'Changes the volume of the music player.',
         examples: ['volume 50', 'volume 10'],
         type: client.types.MUSIC,
-
       });
   }
-  async run (message, args) {
-      let queue = message.client.queue()
-      let serverQueue = queue.get(message.guild.id)
+  async run (message, args, client, player) {
+    const queue = player.getQueue(message.guild.id);
+    if(!queue || !queue.playing) return message.reply(`❌ | There is nothing playing.`);
+    if (!args[0]) return message.reply(`🔊 | The current volume is ${queue.volume}%`);
+    if(isNaN(args[0])) return message.reply('❌ | Please provide a valid number');
+    let volume = parseInt(args[0]);
 
-      if (!serverQueue) return this.sendErrorMessage(message, 1, 'There is nothing playing.');
-      if (!args[0]) {
-          return message.channel.send(`🔊 The current volume is: **${serverQueue.volume * 100}%**`)
-      }
+    if (args[0] > 200 || args[0] < 0) return message.reply('❌ | Please specify a volume between 0 and 200');
+    
+    const success = await queue.setVolume(volume);
+    return message.reply({
+      content: success ? `🔊 | The volume has been set to ${volume}%` : `🔊 | Failed to set the volume`,
+    }
+    );
 
-      let volume = parseInt(args[0])
-      if (isNaN(volume)) return this.sendErrorMessage(message, 0, 'Please specify a valid volume.');
-      // Volume must be between or equal to 1 and 200
-      if (volume < 1 || volume > 200) return this.sendErrorMessage(message, 0, 'Please specify a value between 1 and 200.');
-
-      serverQueue.volume = volume
-      serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 100)
-
-      return message.channel.send(`🔊 Volume set to **${volume}%**`)
   }
   }

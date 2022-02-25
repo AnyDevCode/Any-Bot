@@ -29,7 +29,7 @@ module.exports = class PurgeBotCommand extends Command {
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type != 'text' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
@@ -58,19 +58,24 @@ module.exports = class PurgeBotCommand extends Command {
 
     if (messages.size === 0) { // No messages found
 
-      message.channel.send(
-        new MessageEmbed()
-          .setTitle('Purgebot')
-          .setDescription(`
-            Unable to find any bot messages or commands. 
-            This message will be deleted after \`10 seconds\`.
-          `)
-          .addField('Channel', channel, true)
-          .addField('Found Messages', `\`${messages.size}\``, true)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
-          .setTimestamp()
-          .setColor(message.guild.me.displayHexColor)
-      ).then(msg => msg.delete({ timeout: 10000 })).catch(err => message.client.logger.error(err.stack));
+      message.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setTitle('Purgebot')
+            .setDescription(`
+              Unable to find any bot messages or commands. 
+              This message will be deleted after \`10 seconds\`.
+            `)
+            .addField('Channel', `${channel}`, true)
+            .addField('Found Messages', `\`${messages.size}\``, true)
+            .setFooter({
+              text: message.member.displayName,
+              iconURL: message.author.displayAvatarURL({ dynamic: true }),
+            })
+            .setTimestamp()
+            .setColor(message.guild.me.displayHexColor)
+        ]
+      }).then(msg => msg.delete({ timeout: 10000 })).catch(err => message.client.logger.error(err.stack));
 
     } else { // Purge messages
       
@@ -81,14 +86,17 @@ module.exports = class PurgeBotCommand extends Command {
             Successfully deleted **${msgs.size}** message(s). 
             This message will be deleted after \`10 seconds\`.
           `)
-          .addField('Channel', channel, true)
+          .addField('Channel', `${channel}`, true)
           .addField('Found Messages', `\`${msgs.size}\``, true)
           .addField('Reason', reason)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
 
-        message.channel.send(embed).then(msg => msg.delete({ timeout: 10000 }))
+        message.channel.send({embeds:[embed]}).then(msg => msg.delete({ timeout: 10000 }))
           .catch(err => message.client.logger.error(err.stack));
       });
     }

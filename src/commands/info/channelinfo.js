@@ -5,11 +5,11 @@ const { voice } = require('../../utils/emojis.json');
 const { oneLine, stripIndent } = require('common-tags');
 const channelTypes = {
   dm: 'DM',
-  text: 'Text',
-  voice: 'Voice',
-  category: 'Category',
-  news: 'News',
-  store: 'Store'
+  GUILD_TEXT: 'Text',
+  GUILD_VOICE: 'Voice',
+  GUILD_CATEGORY: 'Category',
+  GUILD_NEWS: 'News',
+  GUILD_STORE: 'Store'
 };
 
 module.exports = class ChannelInfoCommand extends Command {
@@ -34,35 +34,38 @@ module.exports = class ChannelInfoCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Channel Information')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .addField('Channel', channel, true)
+      .addField('Channel', `${channel}`, true)
       .addField('ID', `\`${channel.id}\``, true)
       .addField('Type', `\`${channelTypes[channel.type]}\``, true)
       .addField('Members', `\`${channel.members.size}\``, true)
-      .addField('Bots', `\`${channel.members.array().filter(b => b.user.bot).length}\``, true)
+      .addField('Bots', `\`${Array.from(channel.members.values()).filter(b => b.user.bot).length}\``, true)
       .addField('Created On', `\`${moment(channel.createdAt).format('MMM DD YYYY')}\``, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    if (channel.type === 'text') {
+    if (channel.type === 'GUILD_TEXT') {
       embed // Text embed
         .spliceFields(3, 0, { name: 'Rate Limit', value: `\`${channel.rateLimitPerUser}\``, inline: true })
         .spliceFields(6, 0, { name: 'NSFW', value: `\`${channel.nsfw}\``, inline: true });
-    } else if (channel.type === 'news') {
+    } else if (channel.type === 'GUILD_NEWS') {
       embed // News embed
         .spliceFields(6, 0, { name: 'NSFW', value: `\`${channel.nsfw}\``, inline: true });
-    } else if (channel.type === 'voice') {
+    } else if (channel.type === 'GUILD_VOICE') {
       embed // Voice embed
         .spliceFields(0, 1, { name: 'Channel', value: `${voice} ${channel.name}`, inline: true })
         .spliceFields(5, 0, { name: 'User Limit', value: `\`${channel.userLimit}\``, inline: true })
         .spliceFields(6, 0, { name: 'Full', value: `\`${channel.full}\``, inline: true });
-      const members = channel.members.array();
+      const members = Array.from(channel.members.values())
       if (members.length > 0) 
-        embed.addField('Members Joined', message.client.utils.trimArray(channel.members.array()).join(' '));
+        embed.addField('Members Joined', message.client.utils.trimArray(Array.from(channel.members.values())).join(' '));
     } else return this.sendErrorMessage(message, 0, stripIndent`
       Please enter mention a valid text or announcement channel` +
       ' or provide a valid text, announcement, or voice channel ID'
     );
     if (channel.topic) embed.addField('Topic', channel.topic);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

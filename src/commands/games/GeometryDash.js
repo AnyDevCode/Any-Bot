@@ -30,28 +30,30 @@ module.exports = class GeometryDashCommand extends Command {
 
     if (!user) return this.sendErrorMessage(message, 0, "User not found.");
     const embed = new MessageEmbed()
-      .setAuthor(
-        "Geometry Dash",
-        "https://2.bp.blogspot.com/-Wl1AS-zKl0s/VZVcSDOSckI/AAAAAAAAAJ8/WAFNDi4o_Hc/s1600/GeometryDash.png"
-      )
+      .setAuthor({
+        name: "Geometry Dash",
+        iconURL: "https://2.bp.blogspot.com/-Wl1AS-zKl0s/VZVcSDOSckI/AAAAAAAAAJ8/WAFNDi4o_Hc/s1600/GeometryDash.png"
+      })
       .setTitle(user.nick)
       .setColor(message.guild.me.displayHexColor)
-      .addField("<:stars:782318695790673931> | Stars", user.stars, true)
-      .addField("<:coins:782316329935699968> | Coins", user.coins, true)
+      .addField("<:stars:782318695790673931> | Stars", `${user.stars}`, true)
+      .addField("<:coins:782316329935699968> | Coins", `${user.coins}`, true)
       .addField(
         "<:user_coins:782317393668997150> | User Coins",
-        user.userCoins,
+        `${user.userCoins}`,
         true
       )
-      .addField("<:diamond:782319420206088274> | Diamonds", user.diamonds, true)
+      .addField("<:diamond:782319420206088274> | Diamonds", `${user.diamonds}`, true)
       .addField(
         "<:creator_points:782320177889935410> | Creator Points",
-        user.creatorPoints,
+        `${user.creatorPoints}`,
         true
       )
-      .addField("<:demons:782320733367566337> | Demons", user.demons, true)
-      .setFooter("Top: " + (user.top || "Not at the top"))
+      .addField("<:demons:782320733367566337> | Demons", `${user.demons}`, true)
+      .setFooter({
+        text: "Top: " + (`${user.top}` || "Not at the top")
+      })
       .setTimestamp();
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

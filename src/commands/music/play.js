@@ -1,183 +1,100 @@
-const Command = require('../Command.js');
-const ytdl = require('ytdl-core');
-const ytSearch = require('yt-search');
-
+const Command = require("../Command.js");
+const { QueryType } = require('discord-player');
 
 module.exports = class PlayMusicCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'play', 
-      usage: 'play lofi music',
-      aliases: ['pl'],
-      description: 'Plays music from youtube',
-      examples: ['play lofi music', 'play https://www.youtube.com/watch?v=dQw4w9WgXcQ'],
-      userPermissions: ['CONNECT', 'SPEAK'],
-      type: client.types.FUN 
+      name: "play",
+      usage: "play lofi music",
+      aliases: ["pl"],
+      description: "Plays music from youtube",
+      examples: [
+        "play lofi music",
+        "play https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      ],
+      userPermissions: ["CONNECT", "SPEAK"],
+      type: client.types.MUSIC,
     });
   }
-  async run(message, args) {
-      let queue = message.client.queue();
+  async run(message, args, client, player) {
+    const { channel } = message.member.voice;
+    if (!channel)
+      return message.reply(
+        ":x: | I'm sorry but you need to be in a voice channel to play music!"
+      );
+    if (
+      message.guild.me.voice.channelId &&
+      channel.id !== message.guild.me.voice.channelId
+    )
+      return message.reply(
+        ":x: | I'm sorry but you need to be in the same voice channel as the bot to play music!"
+      );
 
+    const query = args.join(" ") || message.attachments.first().url;
+    // //If query have the word "playlist"
+    // if (query.includes("playlist") || query.includes("list")) {
+    //   return this.sendErrorMessage(
+    //     message,
+    //     0,
+    //     ":x: | I'm sorry but you cannot play playlists!"
+    //   );
+    // }
+    if (!query) return message.reply("Please provide a search term");
 
-      const play_song = async (guild, song, queue) => message.client.utils.play_song(guild, song, queue);
-      const update_server_queue = async (message, server_queue, queue) => message.client.utils.update_server_queue(message, server_queue, queue);
-      const force_stop_song = async (message, song_queue, queue) => message.client.utils.force_stop_song(message, song_queue, queue);
+    const searchResult = await player
+      .search(query, {
+        requestedBy: message.author,
+        searchEngine: QueryType.AUTO,
+      })
+      .catch(() => {
+        return this.sendErrorMessage(
+          message,
+          0,
+          ":x: | I'm sorry but I could not find any results for that search term!"
+        );
+      });
+    if (!searchResult || !searchResult.tracks.length)
+      return  message.reply({ content: "No results were found!" });
 
+    const queue = player.createQueue(message.guild, {
+      ytdlOptions: {
+        filter: "audioonly",
+        highWaterMark: 1 << 30,
+        dlChunkSize: 0,
+      },
+      metadata: {
+        channel: message.channel,
+      },
+    });
 
-      let voice_channel = message.member.voice.channel;
-
-      // Error if not have attachment or args
-
-      if (!message.attachments.size && !args[0]) return this.sendErrorMessage(message, 0, 'You must provide a link or search term.');
-
-      // Check if bot is in a voice channel
-      //Check if the bot is in a voice channel
-      if (typeof (message.guild.voice) != "undefined") {
-          if ((typeof (message.guild.voice.channelID) == "object") && queue.get(message.guild.id)) {
-              let server_queue = queue.get(message.guild.id);
-              server_queue.connection = await message.member.voice.channel.join();
-              await update_server_queue(message, server_queue, queue);
-              //Kick users the user of voice channel
-              await force_stop_song(message, server_queue);
-              // await 1 seconds
-              await new Promise(resolve => setTimeout(resolve, 1000));
-              //Execute the command
-              return await message.client.commands.get('play').run(message, args);
-          }
+    try {
+      //If the bot is not in a voice channel
+      if (!queue.connection) await queue.connect(message.member.voice.channel);
+      if (!message.guild.me.voice.channel) {
+        await message.guild.me.voice.channel.join();
+        await player.deleteQueue(message.guild.id);
+        //Reexecute the command
+        return this.run(message, args, client, player);
       }
+    } catch {
+      await player.deleteQueue(message.guild.id);
+      return await message.reply({
+        content: "Could not join your voice channel!",
+      });
+    }
 
+    const track = await player
+      .search(query, {
+        requestedBy: message.user,
+      })
+      .then((x) => x.tracks[0]);
+    if (!track)
+      return await message.reply({
+        content: `❌ | Track **${query}** not found!`,
+      });
 
-      //Checking for the voicechannel and permissions (you can add more permissions if you like).
-      if (!message.member.voice.channel) return this.sendErrorMessage(message, 1, 'You must be in a voice channel to play music.');
-
-
-      //This is our server queue. We are getting this server queue from the global queue.
-      const server_queue = queue.get(message.guild.id);
-
-      let song = {};
-
-      if (message.attachments.size) {
-          song.url = message.attachments.first().url;
-          song.title = message.attachments.first().name;
-          song.type = 'attachment';
-          song.requester = message.author.id;
-          song.duration = 'Unknown';
-          song.thumbnail = 'https://media.discordapp.net/attachments/779357529859686441/923005881250091008/Any_Bot_404.png?width=480&height=480';
-      } else {
-
-          if (args[0].includes('youtube.com') || args[0].includes('youtu.be')) {
-              if (ytdl.validateURL(args[0])) {
-                  const song_info = await ytdl.getInfo(args[0]);
-                  let timestamp = parseInt(song_info.videoDetails.lengthSeconds);
-                  let minutes = Math.floor(timestamp / 60);
-                  let seconds = timestamp - minutes * 60;
-                  let duration = `${minutes}:${seconds}`;
-                  song = {
-                      title: song_info.videoDetails.title,
-                      url: song_info.videoDetails.video_url,
-                      type: 'youtube',
-                      requester: message.author.id,
-                      duration: duration,
-                      thumbnail: song_info.videoDetails.thumbnails[0].url
-                  };
-              } else {
-                  //If there was no link, we use keywords to search for a video. Set the song object to have two keys. Title and URl.
-                  const video_finder = async (query) => {
-                      const video_result = await ytSearch(query);
-                      return (video_result.videos.length > 1) ? video_result.videos[0] : null;
-                  }
-
-                  const video = await video_finder(args.join(' '));
-                  if (video) {
-                      song = {
-                          title: video.title,
-                          url: video.url,
-                          type: 'youtube',
-                          requester: message.author.id,
-                          duration: video.duration.timestamp,
-                          thumbnail: video.thumbnail
-                      };
-                  } else {
-                      message.channel.send('Error finding video.');
-                  }
-              }
-
-          } else if (args[0].includes('discordapp.com/attachments') && args[0].includes('mp3' || 'wav' || 'flac' || 'ogg' || 'opus' || 'aac' || 'm4a' || 'mp4' || 'webm')) {
-              song = {
-                  url: args[0],
-                  title: args[0].split('/').pop(),
-                  type: 'attachment',
-                  requester: message.author.id,
-                  duration: 'Unknown',
-                  thumbnail: 'https://media.discordapp.net/attachments/779357529859686441/923005881250091008/Any_Bot_404.png?width=480&height=480'
-              };
-          } else {
-              if (args[0].includes('.mp3') || args[0].includes('.wav') || args[0].includes('.flac') || args[0].includes('.ogg') || args[0].includes('.opus') || args[0].includes('.aac') || args[0].includes('.m4a') || args[0].includes('.mp4') || args[0].includes('.webm')) {
-                  song = {
-                      url: args[0],
-                      title: args[0].split('/').pop(),
-                      type: 'attachment',
-                      requester: message.author.id,
-                      duration: 'Unknown',
-                      thumbnail: 'https://media.discordapp.net/attachments/779357529859686441/923005881250091008/Any_Bot_404.png?width=480&height=480'
-                  };
-              } else {
-                  const video_finder = async (query) => {
-                      const video_result = await ytSearch(query);
-                      return (video_result.videos.length > 1) ? video_result.videos[0] : null;
-                  }
-
-                  const video = await video_finder(args.join(' '));
-                  if (video) {
-                      song = {
-                          title: video.title,
-                          url: video.url,
-                          type: 'youtube',
-                          requester: message.author.id,
-                          duration: video.duration.timestamp,
-                          thumbnail: video.thumbnail
-                      };
-                  } else {
-                      this.sendErrorMessage(message, 0, 'Error finding video.');
-                  }
-              }
-          }
-
-          //If the first argument is a link. Set the song object to have two keys. Title and URl.
-
-
-      }
-      //If the server queue does not exist (which doesn't for the first video queued) then create a constructor to be added to our global queue.
-      if (!server_queue) {
-
-          const queue_constructor = {
-              voice_channel: voice_channel,
-              text_channel: message.channel,
-              connection: null,
-              songs: [],
-              volume: 0.5,
-              playing: true,
-              loop_queue: false,
-              channel: message.channel,
-          }
-
-          //Add our key and value pair into the global queue. We then use this to get our server queue.
-          queue.set(message.guild.id, queue_constructor);
-          queue_constructor.songs.push(song);
-
-          //Establish a connection and play the song with the vide_player function.
-          try {
-              queue_constructor.connection = await voice_channel.join();
-              play_song(message.guild, queue_constructor.songs[0], queue);
-          } catch (err) {
-              queue.delete(message.guild.id);
-              this.sendErrorMessage(message, 1, 'There was an error connecting!');
-              throw err;
-          }
-      } else {
-          server_queue.songs.push(song);
-          return message.channel.send(`👍 **${song.title}** added to queue!`);
-      }
+      await message.reply({ content: `⏱ | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...` });
+      searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+      if (!queue.playing) await queue.play();
   }
-
-}
+};

@@ -25,9 +25,12 @@ module.exports = class WipeAllPointsCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Wipe All Points')
       .setDescription(`Successfully wiped **${guild.name}**'s points.`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   } 
 };

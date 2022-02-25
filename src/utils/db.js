@@ -52,7 +52,6 @@ db.prepare(`
     message_xp INTEGER DEFAULT 1 NOT NULL,
     command_xp INTEGER DEFAULT 1 NOT NULL,
     voice_xp INTEGER DEFAULT 1 NOT NULL,
-    xp_channel_id TEXT,
     xp_message_action INTEGER DEFAULT 0 NOT NULL,
     xp_channel_id TEXT,
     crown_role_id TEXT,

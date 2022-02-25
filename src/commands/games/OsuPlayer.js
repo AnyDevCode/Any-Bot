@@ -58,12 +58,16 @@ module.exports = class OsuPlayerCommand extends Command {
 
         const embed = new MessageEmbed()
             .setColor(message.guild.me.displayColor)
-            .setAuthor(`osu! Player: ${player.username}`, "https://i.imgur.com/qKkE2qH.png", `https://osu.ppy.sh/users/${player.user_id}`)
+            .setAuthor({
+                name: `osu! Player: ${player.username}`,
+                iconURL: "https://i.imgur.com/qKkE2qH.png",
+                url: `https://osu.ppy.sh/users/${player.user_id}`,
+            })
             .setThumbnail(`https://a.ppy.sh/${player.user_id}`)
-            .addField("Level", Math.round(player.level), true)
+            .addField("Level", `${Math.round(player.level)}`, true)
             .addField("PP", abbreviateNumber(player.pp_raw), true)
             .addField("Rank", abbreviateNumber(player.pp_rank), true)
-            .addField("Accuracy", Math.round(player.accuracy) + "%", true)
+            .addField("Accuracy", `${Math.round(player.accuracy)}` + "%", true)
             .addField("Play Count", abbreviateNumber(player.playcount), true)
             .addField("Total Score", abbreviateNumber(player.ranked_score), true)
             .addField("Total Hits", abbreviateNumber(parseInt(player.count300) + parseInt(player.count100) + parseInt(player.count50)), true)
@@ -73,6 +77,6 @@ module.exports = class OsuPlayerCommand extends Command {
             .addField("Country", player.country, true)
             .addField("Join Date", player.join_date, true)
             .addField("Play Time", seconds_to_time(player.total_seconds_played), true)
-        return message.channel.send(embed);
+        return message.channel.send({embeds: [embed]});
     }
 };

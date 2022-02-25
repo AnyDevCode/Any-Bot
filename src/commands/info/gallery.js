@@ -30,10 +30,11 @@ module.exports = class GalleryCommand extends Command {
       .setTitle('Art Gallery')
       .setDescription(art_message[n])
       .setImage(art[n])
-      .setFooter(
-        'Expires after three minutes.\n' + message.member.displayName,
-        message.author.displayAvatarURL({ dynamic: true })
-      )
+      .setFooter({
+        text: 'Expires after three minutes.\n' + message.member.displayName,  
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
+
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
     const json = embed.toJSON();

@@ -32,14 +32,17 @@ module.exports = class ClearWarnsCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Clear Warns')
       .setDescription(`${member}'s warns have been successfully cleared.`)
-      .addField('Moderator', message.member, true)
-      .addField('Member', member, true)
+      .addField('Moderator', `${message.member}`, true)
+      .addField('Member', `${member}`, true)
       .addField('Warn Count', '`0`', true)
       .addField('Reason', reason)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
     message.client.logger.info(oneLine`
       ${message.guild.name}: ${message.author.tag} cleared ${member.user.tag}'s warns
     `);

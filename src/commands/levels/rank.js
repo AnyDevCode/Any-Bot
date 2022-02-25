@@ -161,6 +161,6 @@ module.exports = class RankCommand extends Command {
 
     let attachment = new MessageAttachment(image.toBuffer(), "rank.png");
 
-    return message.channel.send(attachment);
+    return message.channel.send({files: [attachment]});
   }
 };

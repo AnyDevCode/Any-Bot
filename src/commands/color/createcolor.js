@@ -26,11 +26,10 @@ module.exports = class CreateColorCommand extends Command {
     if (!hex.startsWith('#')) hex = '#' + hex;
     try {
       const role = await message.guild.roles.create({
-        data: {
           name: colorName,
           color: hex,
-          permissions: []
-        }
+          permissions: [],
+          reason: `Created new color role ${colorName}`
       });
       const embed = new MessageEmbed()
         .setTitle('Create Color')
@@ -38,10 +37,13 @@ module.exports = class CreateColorCommand extends Command {
         .setDescription(`Successfully created the ${role} color.`)
         .addField('Hex', `\`${hex}\``, true)
         .addField('Color Name', `\`${colorName.slice(1, colorName.length)}\``, true)
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: "Expires after two minutes.\n" + message.member.displayName,
+          icon_url: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setTimestamp()
         .setColor(hex);
-      message.channel.send(embed);
+      message.channel.send({embeds: [embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
       this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);

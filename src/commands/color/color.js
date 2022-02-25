@@ -21,8 +21,8 @@ module.exports = class ColorCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Color Change')
       .setThumbnail(message.member.user.displayAvatarURL({ dynamic: true }))
-      .addField('Member', message.member, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('Member', `${message.member}`, true)
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp();
     const colors = message.guild.roles.cache.filter(c => c.name.startsWith('#'));
     const colorName = args.join('').toLowerCase();
@@ -57,7 +57,7 @@ module.exports = class ColorCommand extends Command {
       try {
         await message.member.roles.remove(colors);
         await message.member.roles.add(color);
-        message.channel.send(embed.addField('Color', `${oldColor} ➔ ${color}`, true).setColor(color.hexColor));
+        message.channel.send({embeds:[embed.addField('Color', `${oldColor} ➔ ${color}`, true).setColor(color.hexColor)]});
       } catch (err) {
         message.client.logger.error(err.stack);
         this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);

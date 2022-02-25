@@ -15,9 +15,9 @@ module.exports = class CrownCommand extends Command {
     const { crown_role_id: crownRoleId, crown_schedule: crownSchedule } = 
       message.client.db.settings.selectCrown.get(message.guild.id);
     const crownRole = message.guild.roles.cache.get(crownRoleId) || '`None`';
-    const crowned = message.guild.members.cache.filter(m => {
+    const crowned = Array.from(message.guild.members.cache.filter(m => {
       if (m.roles.cache.find(r => r === crownRole)) return true;
-    }).array();
+    }).values());
 
     let description = message.client.utils.trimStringFromArray(crowned);
     if (crowned.length === 0) description = 'No one has the crown!';
@@ -25,11 +25,14 @@ module.exports = class CrownCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle(':crown:  Crowned Members  :crown:')
       .setDescription(description)
-      .addField('Crown Role', crownRole)
+      .addField('Crown Role', `${crownRole}`)
       .addField('Crown Schedule', `\`${crownSchedule || 'None'}\``)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

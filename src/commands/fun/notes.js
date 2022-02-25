@@ -3,7 +3,7 @@ const { oneLine, stripIndent } = require('common-tags');
 const MeowDB = require("meowdb");
 const { MessageEmbed } = require('discord.js');
 const notes = new MeowDB({
-  dir: __dirname,
+  dir: __basedir + "/data",
   name: "notes"
 });
 
@@ -37,9 +37,12 @@ module.exports = class NotesCommand extends Command {
             .setTitle("Notes:")
             .setDescription(`You have successfully added a note.`)
             .setColor(message.guild.me.displayHexColor)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+            .setFooter({
+              text: message.member.displayName,
+              icon_url: message.author.displayAvatarURL({ dynamic: true })
+            })
             .setTimestamp();
-          return message.channel.send(embed);
+          return message.channel.send({embeds:[embed]});
         }
       } else {
         notes.create(message.author.id, [args.slice(1).join(" ")]);
@@ -48,9 +51,12 @@ module.exports = class NotesCommand extends Command {
             .setTitle("Notes:")
             .setDescription(`You have successfully added a note.`)
             .setColor(message.guild.me.displayHexColor)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+            .setFooter({
+              text: message.member.displayName,
+              icon_url: message.author.displayAvatarURL({ dynamic: true })
+            })
             .setTimestamp();
-          return message.channel.send(embed);
+          return message.channel.send({embeds:[embed]});
         }
       }
     } else if (args[0] === "delete") {
@@ -64,9 +70,12 @@ module.exports = class NotesCommand extends Command {
             .setTitle("Notes:")
             .setDescription(`You have successfully deleted all notes.`)
             .setColor(message.guild.me.displayHexColor)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+            .setFooter({
+              text: message.member.displayName,
+              icon_url: message.author.displayAvatarURL({ dynamic: true })
+            })
             .setTimestamp();
-          return message.channel.send(embed);
+          return message.channel.send({embeds:[embed]});
         } else {
           const arr = notes.get(message.author.id);
           let o = parseInt(args[1]);
@@ -80,9 +89,12 @@ module.exports = class NotesCommand extends Command {
               .setTitle("Notes:")
               .setDescription(`You have successfully deleted a note.`)
               .setColor(message.guild.me.displayHexColor)
-              .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+              .setFooter({
+                text: message.member.displayName,
+                icon_url: message.author.displayAvatarURL({ dynamic: true })
+              })
               .setTimestamp();
-            return message.channel.send(embed);
+            return message.channel.send({embeds:[embed]});
           }
         }
       } else return this.sendErrorMessage(message, 1, "You don't have any notes.");
@@ -106,9 +118,12 @@ module.exports = class NotesCommand extends Command {
               .setTitle("Notes:")
               .setDescription(`You have successfully edited a note.`)
               .setColor(message.guild.me.displayHexColor)
-              .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+              .setFooter({
+                text: message.member.displayName,
+                icon_url: message.author.displayAvatarURL({ dynamic: true })
+              })
               .setTimestamp();
-            return message.channel.send(embed);
+            return message.channel.send({embeds:[embed]});
           }
         }
       } else return this.sendErrorMessage(message, 1, "You don't have any notes.");
@@ -129,11 +144,13 @@ module.exports = class NotesCommand extends Command {
             .setDescription(`**${text}**`)
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp();
-      message.channel.send(embed)
+      message.channel.send({embeds:[embed]});
       }
 
       } else return message.channel.send(
-          `**How to use the notes: \`${prefix}notes add\`, \`${prefix}notes all\`, \`${prefix}notes edit [ID] [Message]\`, \`${prefix}notes delete [all/ID]\` ** `);
+          {
+            content: `**How to use the notes: \`${prefix}notes add\`, \`${prefix}notes all\`, \`${prefix}notes edit [ID] [Message]\`, \`${prefix}notes delete [all/ID]\` ** `
+          });
     }
   }
 };

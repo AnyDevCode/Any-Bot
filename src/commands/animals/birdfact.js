@@ -1,5 +1,5 @@
 const Command = require("../Command.js");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const { birdfact } = require("discord-utilities-js");
 
 module.exports = class BirdFactCommand extends Command {
@@ -15,23 +15,35 @@ module.exports = class BirdFactCommand extends Command {
   async run(message) {
     try {
       const fact = await birdfact();
+      if (typeof fact === "undefined") return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
       const embed = new MessageEmbed()
         .setTitle("🐦  Bird Fact!  🐦")
         .setDescription(fact)
-        .setFooter(
-          message.member.displayName,
-          message.author.displayAvatarURL({ dynamic: true })
-        )
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })    
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send(embed);
+
+        const row = new MessageActionRow()
+            .addComponents(
+              new MessageButton()
+              .setLabel("Another bird fact")
+              .setStyle("PRIMARY")
+              .setEmoji("🐦")
+              .setCustomId("bird-fact")
+            )
+
+        
+      message.channel.send({embeds: [embed], components: [row]});
     } catch (err) {
       message.client.logger.error(err.stack);
       this.sendErrorMessage(
         message,
         1,
         "Please try again in a few seconds",
-        err.message
+        "The Api is down"
       );
     }
   }

@@ -31,12 +31,12 @@ module.exports = class GeometryDashsayCommand extends Command {
         
     if (!txt) return message.channel.send("Do not forget to put the text you want.") 
 
-    let links = [`https://gdcolon.com/tools/gdtextbox/img/${txt}?${colorize}=purple&name=${autor}&char=${capture}`, `https://gdcolon.com/tools/gdcomment/img/${txt}?name=${autor}&likes=${Math.floor(500 * Math.random())}&%=${Math.floor(100 * Math.random())}&mod=${moder}&customIcon=${autor}` ]
+    let links = [`https://gdcolon.com/tools/gdtextbox/img/${txt}?color=${colorize}&name=${autor}&char=${capture}`, `https://gdcolon.com/tools/gdcomment/img/${txt}?name=${autor}&likes=${Math.floor(500 * Math.random())}&%=${Math.floor(100 * Math.random())}&mod=${moder}&customIcon=${autor}` ]
         
     let image = links[Math.floor(links.length * Math.random())]; 
     
     let attachment = new Discord.MessageAttachment(image, "GD.png");
     
-    message.channel.send(attachment) 
+    message.channel.send({files: [attachment]}) 
   }
 };

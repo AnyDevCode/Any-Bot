@@ -22,7 +22,7 @@ module.exports = class ReactionMenu {
     '▶️': this.next.bind(this), 
     '⏩': this.last.bind(this), 
     '⏹️': this.stop.bind(this)
-  }, timeout = 120000) {
+  }, timeout = 120000, extra) {
 
     /**
      * The Any Bot Client
@@ -47,6 +47,12 @@ module.exports = class ReactionMenu {
      * @type {MessageEmbed}
      */
     this.embed = embed;
+
+    /**
+     * The extra passed to the Reaction Menu
+     * @type {Array}
+     */
+    this.extra = extra
 
     /**
      * JSON from the embed
@@ -97,12 +103,15 @@ module.exports = class ReactionMenu {
     this.timeout = timeout;
 
     const first = new MessageEmbed(this.json);
-    const description = (this.arr) ? this.arr.slice(this.current, this.interval) : null;
+    let description = (this.arr) ? this.arr.slice(this.current, this.interval) : null;
+    description = (description) ? description.join('\n') : null;
     if (description) first
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
       .setDescription(description);
 
-    this.channel.send(first).then(message => {
+      if(this.extra) {
+        this.channel.send({embeds:[first], components:[this.extra.row]}).then(message => {
+
 
       /**
        * The menu message
@@ -110,17 +119,37 @@ module.exports = class ReactionMenu {
      */
       this.message = message;
 
-      this.addReactions();
-      this.createCollector();
+      (async () => {
+        await this.addReactions();
+        this.createCollector();
+      })();
     });
+  } else {
+
+    this.channel.send({embeds:[first]}).then(message => {
+
+
+      /**
+       * The menu message
+       * @type {Message}
+     */
+      this.message = message;
+
+      (async () => {
+        await this.addReactions();
+        await this.createCollector();
+      })();
+    });
+
   }
+}
 
   /**
    * Adds reactions to the message
    */
   async addReactions() {
     for (const emoji of this.emojis) {
-      await this.message.react(emoji);
+      await this.message.react({ name: emoji });
     }
   }
 
@@ -139,7 +168,7 @@ module.exports = class ReactionMenu {
     collector.on('collect', async reaction => {
       let newPage =  this.reactions[reaction.emoji.name] || this.reactions[reaction.emoji.id];
       if (typeof newPage === 'function') newPage = newPage();
-      if (newPage) await this.message.edit(newPage);
+      if (newPage) await this.message.edit({embeds: [newPage]})
       await reaction.users.remove(this.memberId);
     }); 
 
@@ -159,7 +188,7 @@ module.exports = class ReactionMenu {
     this.current = 0;
     return new MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
-      .setDescription(this.arr.slice(this.current, this.current + this.interval));
+      .setDescription((this.arr.slice(this.current, this.current + this.interval)).join('\n'));
   }
 
   /**
@@ -171,7 +200,7 @@ module.exports = class ReactionMenu {
     if (this.current < 0) this.current = 0;
     return new MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
-      .setDescription(this.arr.slice(this.current, this.current + this.interval));
+      .setDescription((this.arr.slice(this.current, this.current + this.interval)).join('\n'));
   }
 
   /**
@@ -185,7 +214,7 @@ module.exports = class ReactionMenu {
     const max = (this.current + this.interval >= this.max) ? this.max : this.current + this.interval;
     return new MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
-      .setDescription(this.arr.slice(this.current, max));
+      .setDescription((this.arr.slice(this.current, max)).join('\n'));
   }
 
   /**
@@ -198,7 +227,7 @@ module.exports = class ReactionMenu {
     if (this.current === this.max) this.current -= this.interval;
     return new MessageEmbed(this.json)
       .setTitle(this.embed.title + ' ' + this.client.utils.getRange(this.arr, this.current, this.interval))
-      .setDescription(this.arr.slice(this.current, this.max));
+      .setDescription((this.arr.slice(this.current, this.max)).join('\n'));
   }
 
   /**

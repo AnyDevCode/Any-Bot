@@ -35,20 +35,20 @@ module.exports = class SetModChannelsCommand extends Command {
       .setTitle('Settings: `System`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`mod channels\` were successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateModChannelIds.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Mod Channels', `${oldModChannels} ➔ \`None\``));
+      return message.channel.send({embeds: [embed.addField('Mod Channels', `${oldModChannels} ➔ \`None\``)]});
     }
 
     let channels = [];
     for (const arg of args) {
       const channel = this.getChannelFromMention(message, arg) || message.guild.channels.cache.get(arg);
-      if (channel && channel.type === 'text' && channel.viewable) channels.push(channel);
+      if (channel && channel.type === 'GUILD_TEXT' && channel.viewable) channels.push(channel);
       else return this.sendErrorMessage(message, 0, stripIndent`
         Please mention only accessible text channels or provide only valid text channel IDs
       `);
@@ -56,6 +56,6 @@ module.exports = class SetModChannelsCommand extends Command {
     channels = [...new Set(channels)];
     const channelIds = channels.map(c => c.id).join(' '); // Only keep unique IDs
     message.client.db.settings.updateModChannelIds.run(channelIds, message.guild.id);
-    message.channel.send(embed.addField('Mod Channels', `${oldModChannels} ➔ ${trimArray(channels).join(' ')}`));
+    message.channel.send({embeds: [embed.addField('Mod Channels', `${oldModChannels} ➔ ${trimArray(channels).join(' ')}`)]});
   }
 };

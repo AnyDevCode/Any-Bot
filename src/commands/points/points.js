@@ -20,11 +20,14 @@ module.exports = class PointsCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Points`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
-      .addField('Member', message.member, true)
+      .addField('Member', `${message.member}`, true)
       .addField('Points', `\`${points}\``, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(member.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

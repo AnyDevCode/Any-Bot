@@ -1,6 +1,7 @@
 const Command = require('../Command.js');
 const axios = require('axios');
-const {MessageEmbed} = require('discord.js');
+const {MessageEmbed, MessageActionRow, MessageButton} = require('discord.js');
+const { abbreviateNumber } = require("js-abbreviation-number");
 
 module.exports = class CountryCommand extends Command {
     constructor(client) {
@@ -24,13 +25,16 @@ module.exports = class CountryCommand extends Command {
             let data = res.data[0];
             let embed = new MessageEmbed()
                 .setColor(message.guild.me.displayHexColor)
-                .setAuthor(data.name.common, data.flags.png)
+                .setAuthor({
+                    name: data.name.common,
+                    iconURL: data.flags.png
+                })
                 .setThumbnail(data.flags.png)
-                .addField('Capital', data.capital, true)
+                .addField('Capital', data.capital[0], true)
                 .addField('Region', data.region, true)
                 .addField('Subregion', data.subregion, true)
-                .addField('Population', data.population, true)
-                .addField('Area', `${data.area} km²`, true)
+                .addField('Population', `${abbreviateNumber(data.population)}`, true)
+                .addField('Area', `${abbreviateNumber(data.area)} km²`, true)
                 .addField('Timezone', data.timezones[0], true)
                 .addField('Calling Code', `${data.idd.root}${(data.idd.suffixes[0] ? data.idd.suffixes[0] : '')}`, true)
                 .addField('Numeric Code', data.ccn3, true)
@@ -39,11 +43,19 @@ module.exports = class CountryCommand extends Command {
                 .addField('Alpha 3 Code', data.cca3, true)
                 .addField('Alt Spellings', data.altSpellings.join(', '), true)
                 .addField('Borders', data.borders.join(', '), true)
-                .addField('Latitude', data.latlng[0], true)
-                .addField('Longitude', data.latlng[1], true)
+                .addField('Latitude', `${data.latlng[0]}`, true)
+                .addField('Longitude', `${data.latlng[1]}`, true)
                 .addField('Demonym', data.demonyms.eng.m, true)
-                .addField('Google Maps', `[Click Here](${data.maps.googleMaps})`, true)
-            return message.channel.send(embed);
+
+        const linkrow = new MessageActionRow()
+            .addComponents(
+              new MessageButton()
+                .setURL(data.maps.googleMaps)
+                .setLabel("Google Maps")
+                .setStyle("LINK")
+                .setEmoji("🗺"),
+            )
+            return message.channel.send({embeds: [embed], components: [linkrow]})
         }).catch(() => {
             return this.sendErrorMessage(message, 1, 'Could not find that country.');
         });

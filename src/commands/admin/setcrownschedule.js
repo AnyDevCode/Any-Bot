@@ -54,10 +54,10 @@ module.exports = class SetCrownScheduleCommand extends Command {
       .setTitle('Settings: `Crown`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
-      .addField('Role', crownRole || '`None`', true)
-      .addField('Channel', crownChannel || '`None`', true)
+      .addField('Role', crownRole ? `<@&${crownRole.id}>` : '`None`', true)
+      .addField('Channel', crownChannel ? `<#${crownChannel.id}>` : '`None`', true)
       .addField('Message', message.client.utils.replaceCrownKeywords(crownMessage) || '`None`')
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
@@ -72,10 +72,10 @@ module.exports = class SetCrownScheduleCommand extends Command {
       const status = 'disabled';
       const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
       
-      return message.channel.send(embed
+      return message.channel.send({embeds: [embed
         .spliceFields(2, 0, { name: 'Schedule', value: `\`${oldCrownSchedule || 'None'}\` ➔ \`None\``, inline: true })
         .spliceFields(3, 0, { name: 'Status', value: statusUpdate })
-      );
+      ]});
     }
 
     let crownSchedule = message.content.slice(message.content.indexOf(args[0]), message.content.length);
@@ -110,13 +110,13 @@ module.exports = class SetCrownScheduleCommand extends Command {
     const status =  message.client.utils.getStatus(crownRole, crownSchedule);
     const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
-    message.channel.send(embed
+    message.channel.send({embeds:[embed
       .spliceFields(2, 0, { 
         name: 'Schedule', 
         value: `\`${oldCrownSchedule || 'None'}\` ➔ \`${crownSchedule}\``, 
         inline: true 
       })
       .spliceFields(3, 0, { name: 'Status', value: statusUpdate })
-    );
+    ]});
   }
 };

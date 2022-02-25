@@ -33,7 +33,10 @@ module.exports = class AstronomyPictureCommand extends Command {
                 .setURL(res.data.hdurl)
                 .setDescription(res.data.explanation)
                 .setTimestamp()
-                .setFooter(`Picture obtained from NASA`, "https://th.bing.com/th/id/R.2dc26db54c900a62823c43ada37aef21?rik=M7s8OgqyGQQ92A&riu=http%3a%2f%2fwww.panoramaaudiovisual.com%2fen%2fwp-content%2fuploads%2f2016%2f02%2fNASA-Tv.jpg&ehk=VOIBszxNG0BRcksK%2fASlnx%2flFDbYje9PdznIEDBBfeo%3d&risl=&pid=ImgRaw&r=0");
+                .setFooter({
+                    text: `Picture obtained from NASA`,
+                    iconURL: "https://th.bing.com/th/id/R.2dc26db54c900a62823c43ada37aef21?rik=M7s8OgqyGQQ92A&riu=http%3a%2f%2fwww.panoramaaudiovisual.com%2fen%2fwp-content%2fuploads%2f2016%2f02%2fNASA-Tv.jpg&ehk=VOIBszxNG0BRcksK%2fASlnx%2flFDbYje9PdznIEDBBfeo%3d&risl=&pid=ImgRaw&r=0"
+                })
             if (res.data.media_type === 'image') {
                 embed.setImage(res.data.url);
 
@@ -46,10 +49,10 @@ module.exports = class AstronomyPictureCommand extends Command {
             // Create the Embed:
 
             // Send the Embed:
-            return message.channel.send(embed);
+            return message.channel.send({embeds: [embed]});
         }).catch(err => {
             // If the Request Failed:
-            return message.channel.send(`Oh no, an error occurred: \`${err.message}\`. Try again later!`);
+            return message.channel.send({content: `Oh no, an error occurred: \`${err.message}\`. Try again later!`});
         });
     }
 };

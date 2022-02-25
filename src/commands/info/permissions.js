@@ -23,7 +23,7 @@ module.exports = class PermissionsCommand extends Command {
       message.member;
 
     // Get member permissions
-    const memberPermissions = member.permissions.toArray();
+    const memberPermissions = member.permissions.toArray()
     const finalPermissions = [];
     for (const permission in permissions) {
       if (memberPermissions.includes(permission)) finalPermissions.push(`+ ${permissions[permission]}`);
@@ -34,9 +34,12 @@ module.exports = class PermissionsCommand extends Command {
       .setTitle(`${member.displayName}'s Permissions`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setDescription(`\`\`\`diff\n${finalPermissions.join('\n')}\`\`\``)
-      .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(member.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

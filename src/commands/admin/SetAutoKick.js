@@ -37,18 +37,18 @@ module.exports = class SetAutoKickCommand extends Command {
             .setTitle('Settings: `System`')
             .setThumbnail(message.guild.iconURL({dynamic: true}))
             .setDescription(`\`Auto kick\` was successfully updated. ${success}`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+            .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({dynamic: true})})
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
 
         // Clear if no args provided
         if (args.length === 0 || amount === 0) {
             message.client.db.settings.updateAutoKick.run(null, message.guild.id);
-            return message.channel.send(embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`disabled\``));
+            return message.channel.send({embeds: [embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`disabled\``)]});
         }
 
         // Update warn count:
         message.client.db.settings.updateAutoKick.run(amount, message.guild.id);
-        return message.channel.send(embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`${toString(amount)}\``));
+        return message.channel.send({embeds: [embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`${amount}\``)]});
     }
 };

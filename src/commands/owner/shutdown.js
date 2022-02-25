@@ -14,10 +14,16 @@ module.exports = class EvalCommand extends Command {
   async run(message, args) {
     const embed = new MessageEmbed()
         .setTitle('Shutdown...')
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      await message.channel.send(embed);
-      process.exit(0)
+      await message.channel.send({embeds: [embed]});
+      //Ejecute the "under_construction" js file
+      const under_construction = require(__basedir + '/data/under_contruction.js');
+      message.client.destroy();
+      await under_construction.run();
   }
 };

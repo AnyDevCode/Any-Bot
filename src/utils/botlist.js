@@ -5,6 +5,7 @@ async function botlist(client){
     const {AutoPoster} = require("topgg-autoposter");
     const {connectBdlBot} = require("bdl.js");
     const bldapikey = require(path.join(__dirname, '../../blapi.json'))
+    const fetch = require('node-fetch');
 
     //Every 5 minutes, update the botlist
     setInterval(async () => {
@@ -12,7 +13,7 @@ async function botlist(client){
 
             const details = {
                 users: client.users.cache.size,
-                guilds: client.guilds.cache.size,
+                guilds: client.guilds.cache.size
             };
 
             let formBody = [];
@@ -29,19 +30,24 @@ async function botlist(client){
             connectBdlBot(bldapikey.bdl, client).then(r => console.log(r));
 
             postertopgg.on("posted", async (stats) => {
-                console.log("Posteado en Top.gg | " + stats.serverCount + " servers");
+                console.log("Post in Top.gg | " + stats.serverCount + " servers");
                 await fetch(
                     "https://discordbotlist.com/api/v1/bots/733728002910715977/stats",
                     {
                         method: "POST",
                         headers: {
                             authorization: bldapikey.discordbotlist,
-                            "content-type": "application/x-www-form-urlencoded",
+                            "content-type": "application/json"
                         },
-                        body: formBody,
+                        body: JSON.stringify({
+                            voice_connections: client.voiceConnections ? client.voiceConnections.size : 0,
+                            guilds: client.guilds.cache.size,
+                            users: client.users.cache.size,
+                            shard_id: client.shard ? client.shard.id : 0,
+                        })
                     }
                 ).then(async (res) => {
-                    await res.json();
+                    console.log("Post en DiscordBotList | " + res.status);
                 });
             });
 

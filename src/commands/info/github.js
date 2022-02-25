@@ -1,5 +1,5 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 
 module.exports = class GitHubCommand extends Command {
@@ -15,19 +15,41 @@ module.exports = class GitHubCommand extends Command {
   run(message) {
     const embed = new MessageEmbed()
       .setTitle('GitHub Link')
-      .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+      .setThumbnail(message.client.user.displayAvatarURL({dynamic: true, size: 1024}))
       .setDescription(`
         Click [here](https://github.com/sabattle/CalypsoBot) to go to the original repository from which Any Bot was created (Calypso Bot)!
         Click [here](https://github.com/MDCYT/Any-Bot) to go to the Any Bot repository!
         Please support me by starring ⭐ the repo, and feel free to comment about issues or suggestions!
       `)
       .addField('Other Links',
-        '**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8) | ' +
-        '[Support Server](https://discord.gg/2FRpkNr)**'
+          `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
+        `[Support Server](${message.client.supportServerInvite})**`
       )
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+
+    const linkrow = new MessageActionRow()
+    .addComponents(
+      new MessageButton()
+        .setLabel("Github")
+        .setStyle("LINK")
+        .setURL("https://github.com/MDCYT/Any-Bot")
+        .setEmoji("⭐"),
+      new MessageButton()
+        .setLabel("Invite Me")
+        .setStyle("LINK")
+        .setURL(`https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8`)
+        .setEmoji("🔗"),
+      new MessageButton()
+        .setLabel("Support Server")
+        .setStyle("LINK")
+        .setURL(message.client.supportServerInvite)
+        .setEmoji("🛡")
+    );
+    message.channel.send({embeds:[embed], components: [linkrow]});
   }
 };

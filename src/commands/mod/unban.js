@@ -18,7 +18,7 @@ module.exports = class UnbanCommand extends Command {
   async run(message, args) {
     const id = args[0];
     if (!rgx.test(id)) return this.sendErrorMessage(message, 0, 'Please provide a valid user ID');
-    const bannedUsers = await message.guild.fetchBans();
+    const bannedUsers = await message.guild.bans.fetch()
     const user = bannedUsers.get(id).user;
     if (!user) return this.sendErrorMessage(message, 0, 'Unable to find user, please check the provided ID');
 
@@ -30,14 +30,17 @@ module.exports = class UnbanCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Unban Member')
       .setDescription(`${user.tag} was successfully unbanned.`)
-      .addField('Moderator', message.member, true)
-      .addField('Member', user.tag, true)
+      .addField('Moderator',`${message.member}`, true)
+      .addField('Member', `${user.tag}`, true)
       .addField('Reason', reason)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} unbanned ${user.tag}`);
     
     // Update mod log

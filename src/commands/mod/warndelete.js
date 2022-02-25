@@ -51,14 +51,17 @@ module.exports = class WarnCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Delete Warn Member')
       .setDescription(`${member} has had a warn deleted.`)
-      .addField('Moderator', message.member, true)
-      .addField('Member', member, true)
+      .addField('Moderator', `${message.member}`, true)
+      .addField('Member', `${member}`, true)
       .addField('Warn Count', `\`${warnscount}\``, true)
       .addField('Reason', reason)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} unwarned ${member.user.tag}`);
     
     // Update mod log

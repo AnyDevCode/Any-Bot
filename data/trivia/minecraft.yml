@@ -75,7 +75,7 @@ questions:
     - Grumm
 - question: Which what tag name do sheeps a rainbow color?
   answers:
-    - jeb_
+    - "jeb_"
 - question: What Game Inspired Notch To Start Making Minecraft?
   answers:
     - Infiniminer
@@ -88,7 +88,7 @@ questions:
     - Kill the Dragon
     - Kill Ender Dragon
     - Kill Dragon
-- question: "Who is the \"Feared Player\" in Minecraft?"
+- question: "Who is the 'Feared Player' in Minecraft?"
   answers:
     - Herobrine
 - question: Which Is The Most Important Block Type In Minecraft And Is Used To Make Everything Else?
@@ -105,10 +105,10 @@ questions:
     - Cave Gam
 - question: How Far Away Can You Be From A Ghast For It To See You?
   answers:
-    - 100 blocks
-    - 100 blocks away
-    - 100 blocks away from you
-    - 100 blocks from you
+    - "100 blocks"
+    - "100 blocks away"
+    - "100 blocks away from you"
+    - "100 blocks from you"
 - question: What Does The Creeper Mob Drop After It Is Killed?
   answers:
     - Gunpowder
@@ -119,10 +119,10 @@ questions:
     - Skeleton Warrior
 - question: How Much Wool Is Required To Build A Bed?
   answers:
-    - 3
-    - 3 blocks
-    - 3 blocks of wool
-    - 3 blocks of wool required
+    - "3"
+    - "3 blocks"
+    - "3 blocks of wool"
+    - "3 blocks of wool required"
 - question: Which Item Is Dropped By Slimes?
   answers:
     - Slimeball
@@ -148,12 +148,12 @@ questions:
   answers:
     - Ocelot
     - Cat
-- question: In A Full Set, How Many Pieces Of Armor Are There?
+- question: "In A Full Set, How Many Pieces Of Armor Are There?"
   answers:
-    - 4
-    - 4 pieces
-    - 4 pieces of armor
-    - 4 pieces of armor required
+    - "4"
+    - "4 pieces"
+    - "4 pieces of armor"
+    - "4 pieces of armor required"
 - question: Tell me one of the three items required to get an active conduit
   answers:
     - Heart of the Sea
@@ -164,9 +164,9 @@ questions:
     - Sweden
 - question: Which Version Added The Dark Dimension Known As The End?
   answers:
-    - 1.0.0
-    - V 1.0.0
-    - Version 1.0.0
+    - "1.0.0"
+    - "V 1.0.0"
+    - "Version 1.0.0"
 - question: "How Do You Earn The Achievement Titled \"The End\"?"
   answers:
     - Enter the exit portal
@@ -181,6 +181,6 @@ questions:
     - Witch
 - question: Can You Revive The Ender Dragon?
   answers:
-    - Yes
-    - Yes, you can
-    - Yes, you can revive the Ender Dragon
+    - "Yes"
+    - "Yes, you can"
+    - "Yes, you can revive the Ender Dragon"

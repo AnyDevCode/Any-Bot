@@ -1,29 +1,52 @@
-const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
+const Command = require("../Command.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = class QueueMusicCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'queue',
-      usage: 'queue [pagenum]',
-      aliases: ['list'],
-      description: 'Shows the current queue',
-	  examples: ['queue', 'queue 2'],
-      type: client.types.MUSIC
+      name: "queue",
+      usage: "queue <page>",
+      aliases: ["list"],
+      description: "Shows the current queue",
+      examples: ["queue", "queue 2"],
+      type: client.types.MUSIC,
     });
   }
-  async run(message) {
-    let queue = message.client.queue();
-
-    const server_queue = queue.get(message.guild.id);
-    if (!server_queue) return this.sendErrorMessage(message, 1, 'There is nothing playing.');
-    if (!message.member.voice.channel) return this.sendErrorMessage(message, 1, 'You have to be in a voice channel to use this command.');
-    if (message.member.voice.channel !== message.guild.me.voice.channel) return this.sendErrorMessage(message, 1, 'You have to be in the same voice channel as the bot to use this command.');
+  async run(message, args, client, player) {
+    const queue = player.getQueue(message.guild.id);
+    if (!queue || !queue.playing)
+      return message.reply(`❌ | There is nothing playing.`);
+    const page = parseInt(args[0]) || 1;
+    const pageStart = 10 * (page - 1);
+    const pageEnd = pageStart + 10;
+    const currentTrack = queue.current;
+    const tracks = queue.tracks.slice(pageStart, pageEnd).map((m, i) => {
+      return `${i + pageStart + 1}. **${m.title}** ([link](${m.url}))`;
+    });
 
     const embed = new MessageEmbed()
-      .setAuthor(`${message.guild.name} Music Queue`, message.guild.iconURL())
-      .setDescription(`${server_queue.songs.map(song => `[${song.title}](${song.url})`).join('\n')}`)
-      .setColor(message.guild.me.displayHexColor);
-    return message.channel.send(embed);
+      .setColor(message.guild.me.displayHexColor)
+      .setAuthor({
+        name: `${message.guild.name} Music Queue`,
+        iconURL: message.guild.iconURL({ dynamic: true }),
+      })
+      .setDescription(
+        `${tracks.join("\n")}${
+          queue.tracks.length > pageEnd
+            ? `\n...${queue.tracks.length - pageEnd} more track(s)`
+            : ""
+        }`
+      )
+      .addField(
+        "Now Plating",
+        `🎶 | **${currentTrack.title}** ([link](${currentTrack.url}))`
+      )
+
+      .setFooter({
+        text: `${message.guild.name}`,
+        iconURL: message.guild.iconURL({ dynamic: true }),
+      })
+      .setTimestamp();
+    return message.reply({ embeds: [embed] });
   }
-  };
+};

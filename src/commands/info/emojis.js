@@ -19,19 +19,22 @@ module.exports = class EmojisCommand extends Command {
 
     const embed = new MessageEmbed()
       .setTitle(`Emoji List [${message.guild.emojis.cache.size}]`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     const interval = 25;
-    if (emojis.length === 0) message.channel.send(embed.setDescription('No emojis found. 😢'));
+    if (emojis.length === 0) message.channel.send({embeds:[embed.setDescription('No emojis found. 😢')]});
     else if (emojis.length <= interval) {
       const range = (emojis.length == 1) ? '[1]' : `[1 - ${emojis.length}]`;
-      message.channel.send(embed
+      message.channel.send({embeds:[embed
         .setTitle(`Emoji List ${range}`)
-        .setDescription(emojis.join('\n'))
+        .setDescription(`${emojis.join('\n')}`)
         .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      );
+     ]} );
     
     // Reaction Menu
     } else {
@@ -39,10 +42,10 @@ module.exports = class EmojisCommand extends Command {
       embed
         .setTitle('Emoji List')
         .setThumbnail(message.guild.iconURL({ dynamic: true }))
-        .setFooter(
-          'Expires after two minutes.\n' + message.member.displayName,  
-          message.author.displayAvatarURL({ dynamic: true })
-        );
+        .setFooter({
+          text: 'Expires after two minutes.\n' + message.member.displayName,  
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
 
       new ReactionMenu(message.client, message.channel, message.member, embed, emojis, interval);
     }

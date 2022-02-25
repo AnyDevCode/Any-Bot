@@ -27,9 +27,12 @@ module.exports = class PointPerCommand extends Command {
       .setTitle('Points Per Action')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`\`\`\`asciidoc\n${pointsPer}\`\`\``)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

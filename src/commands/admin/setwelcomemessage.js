@@ -36,8 +36,8 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       .setTitle('Settings: `Welcomes`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`welcome message\` was successfully updated. ${success}`)
-      .addField('Channel', welcomeChannel || '`None`', true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('Channel', welcomeChannel ? `${welcomeChannel}` : '`None`', true)
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
@@ -48,10 +48,10 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       const status = 'disabled';
       const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
 
-      return message.channel.send(embed
+      return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
         .addField('Message', '`None`')
-      );
+      ]});
     }
     
     let welcomeMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
@@ -62,9 +62,9 @@ module.exports = class SetWelcomeMessageCommand extends Command {
     const status =  message.client.utils.getStatus(welcomeChannel, welcomeMessage);
     const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
-    message.channel.send(embed
+    message.channel.send({embeds:[embed
       .addField('Status', statusUpdate, true)
       .addField('Message', message.client.utils.replaceKeywords(welcomeMessage))
-    );
+    ]});
   }
 };

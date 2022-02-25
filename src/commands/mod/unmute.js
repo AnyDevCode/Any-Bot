@@ -33,17 +33,20 @@ module.exports = class UnmuteCommand extends Command {
       return this.sendErrorMessage(message, 0, 'Provided member is not muted');
     
     // Unmute member
-    message.client.clearTimeout(member.timeout);
+    message.client.clearTimeout_(member.timeout);
     try {
       await member.roles.remove(muteRole);
       const embed = new MessageEmbed()
         .setTitle('Unmute Member')
         .setDescription(`${member} has been unmuted.`)
-        .addField('Reason', reason)
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .addField('Reason', `${reason}`)
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send(embed);
+      message.channel.send({embeds:[embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
       return this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);

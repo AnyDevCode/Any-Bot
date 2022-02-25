@@ -1,10 +1,11 @@
-const { MessageEmbed } = require('discord.js');
 const { verify } = require('../utils/emojis.json');
 const { stripIndent } = require('common-tags');
+const { MessageEmbed } = require('discord.js');
 
-module.exports = async (client, messageReaction, user) => {
-
-  if (client.user === user) return;
+module.exports = {
+    name: "messageReactionAdd",
+    async execute(messageReaction, user, commands, client) {
+        if (client.user === user) return;
 
   const { message, emoji } = messageReaction;
 
@@ -66,7 +67,7 @@ module.exports = async (client, messageReaction, user) => {
       else emojiType = emojis[0];
 
       let image = '';
-      const attachment = message.attachments.array()[0];
+      const attachment = Array.from(starred.attachments.values())[0];
       if (attachment && attachment.url) {
         const extension = attachment.url.split('.').pop();
         if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
@@ -81,7 +82,7 @@ module.exports = async (client, messageReaction, user) => {
       if (!message.content && !image) return;
 
       const embed = new MessageEmbed()
-        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true}))
+        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true})})
         .setDescription(message.content)
         .addField('Original', `[Jump!](${message.url})`)
         .setImage(image)
@@ -90,7 +91,7 @@ module.exports = async (client, messageReaction, user) => {
         .setColor('#ffac33');
 
       const starMessage = await starboardChannel.messages.fetch(starred.id);
-      await starMessage.edit(`${emojiType} **${starCount}  |**  ${message.channel}`, embed)
+      await starMessage.edit({content: `${emojiType} **${starCount}  |**  ${message.channel}`, embeds: [embed]})
         .catch(err => client.logger.error(err.stack));
 
 
@@ -99,7 +100,7 @@ module.exports = async (client, messageReaction, user) => {
 
       // Check for attachment image
       let image = '';
-      const attachment = message.attachments.array()[0];
+      const attachment = Array.from(message.attachments.values())[0];
       if (attachment && attachment.url) {
         const extension = attachment.url.split('.').pop();
         if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
@@ -114,14 +115,16 @@ module.exports = async (client, messageReaction, user) => {
       if (!message.content && !image) return;
 
       const embed = new MessageEmbed()
-        .setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true}))
+        .setAuthor({name: message.author.tag, iconURL: message.author.displayAvatarURL({ dynamic: true})})
         .setDescription(message.content)
         .addField('Original', `[Jump!](${message.url})`)
         .setImage(image)
         .setTimestamp()
         .setFooter(message.id)
         .setColor('#ffac33');
-      await starboardChannel.send(`⭐ **1  |**  ${message.channel}`, embed);
+      await starboardChannel.send({content: `⭐ **1  |**  ${message.channel}`, embeds: [embed]});
     }
   }
-};
+    },
+  };
+  

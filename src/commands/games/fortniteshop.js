@@ -17,6 +17,13 @@ module.exports = class FortniteShopCommand extends Command {
     const image = await canva.Fortnite().setKey(apiKey).toAttachment();
     let attachment = new Discord.MessageAttachment(image, "shop.png");
 
-    return message.channel.send(attachment);
+    const embed = new Discord.MessageEmbed()
+      .setTitle("Fortnite Shop")
+      .setImage('attachment://shop.png')
+      .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+
+    message.channel.send({ embeds: [embed], files: [attachment] });
   }
 };

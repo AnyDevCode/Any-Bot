@@ -65,7 +65,10 @@ module.exports = class AliasesCommand extends Command {
           `**${emojiMap[type]} [${aliases[type].reduce((a, b) => a + b.split(' ').slice(1).length, 0)}]**`, 
           aliases[type].join('\n')
         )
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
 
@@ -87,7 +90,10 @@ module.exports = class AliasesCommand extends Command {
           **Prefix:** \`${prefix}\`
           **More Information:** \`${prefix}aliases [command type]\`
         `)
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })        
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
 
@@ -110,6 +116,6 @@ module.exports = class AliasesCommand extends Command {
 
     }
 
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

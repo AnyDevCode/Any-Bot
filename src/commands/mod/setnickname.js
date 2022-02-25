@@ -62,14 +62,17 @@ module.exports = class SetNicknameCommand extends Command {
         const embed = new MessageEmbed()
           .setTitle('Set Nickname')
           .setDescription(`${member}'s nickname was successfully updated.`)
-          .addField('Moderator', message.member, true)
-          .addField('Member', member, true)
-          .addField('Nickname', nicknameStatus, true)
+          .addField('Moderator', `${message.member}`, true)
+          .addField('Member', `${member}`, true)
+          .addField('Nickname', `${nicknameStatus}`, true)
           .addField('Reason', reason)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
 
         // Update mod log
         this.sendModLogMessage(message, reason, { Member: member, Nickname: nicknameStatus });

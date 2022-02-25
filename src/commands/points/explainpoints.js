@@ -72,13 +72,16 @@ module.exports = class ExplainPointsCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Points and Crown')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .addField('Earning Points', earningPoints)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('Earning Points', `${earningPoints}`)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    if (checkingPoints) embed.addField('Checking Points', checkingPoints);
-    if (leaderboard) embed.addField('The Leaderboard', leaderboard);
-    embed.addField('The Crown', crown);
-    message.channel.send(embed);
+    if (checkingPoints) embed.addField('Checking Points', `${checkingPoints}`);
+    if (leaderboard) embed.addField('The Leaderboard', `${leaderboard}`);
+    embed.addField('The Crown', `${crown}`);
+    message.channel.send({embeds: [embed]});
   }
 };

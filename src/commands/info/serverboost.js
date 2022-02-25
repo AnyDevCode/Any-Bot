@@ -31,10 +31,10 @@ let features = {
     };
 
     let level = { 
-        0: "None",
-        1: "Level 1",
-        2: "Level 2",
-        3: "Level 3"
+        "NONE": "None",
+        "TIER_1": "Level 1",
+        "TIER_2": "Level 2",
+        "TIER_3": "Level 3"
     };
 
 module.exports = class ServerBoostCommand extends Command {
@@ -50,20 +50,20 @@ module.exports = class ServerBoostCommand extends Command {
 
     var server = message.guild 
 
-    console.log(server.features)
-
     const embed = new MessageEmbed()
     .setColor(message.guild.me.displayHexColor)
-    .setAuthor("Boost status on: " + server.name)
+    .setAuthor({
+        name: "Boost status on: " + `${server.name}`
+    })
     .setThumbnail(!server.splashURL({ size: 2048, format: "jpg" })
         ? server.iconURL({ size: 2048, format: "jpg" })
         : server.splashURL({ size: 2048, format: "jpg" }))
     .addFields({
-        name: "Level of Boost", value: level[server.premiumTier],
+        name: "Level of Boost", value: `${level[server.premiumTier]}`,
         inline: true
     })
     .addFields({
-        name: "Members boosting", value: server.premiumSubscriptionCount === 0 ? "none boosts"
+        name: "Members boosting", value: server.premiumSubscriptionCount === 0 ? "None boosts"
             : `${server.premiumSubscriptionCount} ${
             server.premiumSubscriptionCount === 1 ? "member" : "members"}`,
         inline: true
@@ -76,6 +76,6 @@ module.exports = class ServerBoostCommand extends Command {
         , inline: false
     })
     .setImage(server.bannerURL({ size: 2048, format: "jpg" }));
-message.channel.send(embed);
+message.channel.send({embeds: [embed]});
   }
 };

@@ -20,7 +20,7 @@ module.exports = class aivoiceCommand extends Command {
 
     // Command Code:
     async run(message, args) {
-        let voices = fs.readFileSync(`./src/commands/fun/voices.txt`, "utf8");
+        let voices = fs.readFileSync(__basedir + "/data/voices.txt", "utf8");
         let voice_list = voices.split("\n");
         //Put 100 voices per page
         let pages = Math.ceil(voice_list.length / 25) + 1;
@@ -32,10 +32,8 @@ module.exports = class aivoiceCommand extends Command {
         const embed = new MessageEmbed()
             .setTitle('🎤  Voice By IA  🎤')
             .setDescription("Welcome to the voice list.\n\n" + "Use the reactions below to navigate the list.\n\n" + `Use \`${prefix}aivoice [voice] [text]\` to make a voice.` + "\n\n" + "Use the emoji below to navigate the list.")
-            .setFooter(`Page ${page} of ${pages}`)
             .setFooter(
-                'Expires after ten minutes.\n' + message.member.displayName,
-                message.author.displayAvatarURL({dynamic: true})
+                {text: 'Expires after ten minutes.\n' + message.member.displayName, iconURL: message.author.displayAvatarURL()}
             )
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
@@ -52,7 +50,7 @@ module.exports = class aivoiceCommand extends Command {
             voice_list_page = voice_list.slice(n, n + 25);
             voice_list_page_string = voice_list_page.join("\n");
             embed.setDescription(voice_list_page_string);
-            embed.setFooter(`Page ${page} of ${pages}`);
+            embed.setFooter({text: `Page ${page} of ${pages}`});
         }
         const json = embed.toJSON();
         const previous = () => {
@@ -64,7 +62,7 @@ module.exports = class aivoiceCommand extends Command {
             if (page === 0) {
                 return new MessageEmbed(json)
                     .setDescription("Welcome to the voice list.\n\n" + "Use the reactions below to navigate the list.\n\n" + `Use \`${prefix}aivoice [voice] [text]\` to make a voice.` + "\n\n" + "Use the emoji below to navigate the list.")
-                    .setFooter(`Page ${page} of ${pages}`)
+                    .setFooter({text: `Page ${page} of ${pages}`})
             }
             if (page < 0) {
                 page = pages;
@@ -72,12 +70,12 @@ module.exports = class aivoiceCommand extends Command {
                 voice_list_page = voice_list.slice(n, n + 25);
                 voice_list_page_string = voice_list_page.join("\n");
                 return new MessageEmbed(json)
-                    .setFooter(`Page ${page} of ${pages}`)
+                    .setFooter({text: `Page ${page} of ${pages}`})
             }
 
             return new MessageEmbed(json)
                 .setDescription(voice_list_page_string)
-                .setFooter(`Page ${page} of ${pages}`)
+                .setFooter({text: `Page ${page} of ${pages}`})
         };
         const next = () => {
             n += 25;
@@ -91,11 +89,11 @@ module.exports = class aivoiceCommand extends Command {
                 voice_list_page_string = voice_list_page.join("\n");
                 return new MessageEmbed(json)
                     .setDescription("Welcome to the voice list.\n\n" + "Use the reactions below to navigate the list.\n\n" + `Use \`${prefix}aivoice [voice] [text]\` to make a voice.` + "\n\n" + "Use the emoji below to navigate the list.")
-                    .setFooter(`Page ${page} of ${pages}`)
+                    .setFooter({text: `Page ${page} of ${pages}`})
             }
             return new MessageEmbed(json)
                 .setDescription(voice_list_page_string)
-                .setFooter(`Page ${page} of ${pages}`)
+                .setFooter({text: `Page ${page} of ${pages}`})
         };
 
         const reactions = {

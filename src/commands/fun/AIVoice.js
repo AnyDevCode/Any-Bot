@@ -36,8 +36,8 @@ module.exports = class aivoiceCommand extends Command {
         }
 
         // Check if the voice is in the voices.txt file:
-        if (fs.existsSync(`./src/commands/fun/voices.txt`)) {
-            let voices = fs.readFileSync(`./src/commands/fun/voices.txt`, "utf8");
+        if (fs.existsSync(__basedir + "/data/voices.txt")) {
+            let voices = fs.readFileSync(__basedir + "/data/voices.txt", "utf8");
             if (!voices.includes(voice)) {
                 return this.sendErrorMessage(message, 0, "That voice is not supported");
             }
@@ -78,11 +78,10 @@ module.exports = class aivoiceCommand extends Command {
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp()
             .setFooter(
-                message.member.displayName,
-                message.author.displayAvatarURL({dynamic: true})
+                {text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })}
             );
 
-        let wait_message = await message.channel.send(embed);
+        let wait_message = await message.channel.send({embeds: [embed]});
 
         time_wait = time_wait * 1000;
 
@@ -96,14 +95,14 @@ module.exports = class aivoiceCommand extends Command {
                         time_wait_loop / 1000
                     } seconds, ia will make a voice for you.`
                 );
-                await wait_message.edit(embed);
+                await wait_message.edit({embeds: [embed]});
                 time_wait_loop -= 5000;
             }
             if (time_wait_loop <= 0) {
                 await embed.setDescription(
                     `Right now your voice will be made, please wait.`
                 );
-                await wait_message.edit(embed);
+                await wait_message.edit({embeds: [embed]});
                 // Clear the interval
                 clearInterval(interval_time);
             }
@@ -127,7 +126,7 @@ module.exports = class aivoiceCommand extends Command {
                 if (!uuid) {
                     clearInterval(interval_time);
                     return message.channel.send(
-                        "There was an error generating the voice, please try again later."
+                        {content: "There was an error generating the voice, please try again later."}
                     );
                 }
             })
@@ -137,11 +136,11 @@ module.exports = class aivoiceCommand extends Command {
                 // If the error is a status code 400, the voice is not supported
                 if (error.response.status === 400) {
                     return message.channel.send(
-                        `${message.author.username}, the voice you requested is not supported.`
+                        {content: `${message.author.username}, the voice you requested is not supported.`}
                     );
                 } else {
                     return message.channel.send(
-                        `${message.author.username}, there was an error, please try again later.`
+                       {content:  `${message.author.username}, there was an error, please try again later.`}
                     );
                 }
             });
@@ -172,14 +171,14 @@ module.exports = class aivoiceCommand extends Command {
                                 charge_mp3();
                             } else {
                                 return message.channel.send(
-                                    `${message.author.username}, there was an error, please try again later.`
+                                    { content: `${message.author.username}, there was an error, please try again later.`}
                                 );
                             }
                         } else {
                             // Make a Discord attachment
                             const attachment = new MessageAttachment(voice_mp3);
                             // Send the attachment
-                            message.reply(attachment);
+                            message.reply({ files: [attachment] });
                             //Stop the loop
                             clearInterval(interval_time);
                             //Delete the message
@@ -192,7 +191,7 @@ module.exports = class aivoiceCommand extends Command {
                             charge_mp3();
                         } else {
                             message.channel.send(
-                                `${message.author.username}, there was an error, please try again later.`
+                                { content: `${message.author.username}, there was an error, please try again later.`}
                             );
                         }
                     }
@@ -202,13 +201,13 @@ module.exports = class aivoiceCommand extends Command {
                     await embed.setDescription(
                         `An error occured, retrying in 10 seconds. ${attemps} / 3`
                     );
-                    await wait_message.edit(embed);
+                    await wait_message.edit({embeds: [embed]});
                     charge_mp3();
                     if (attemps >= 3) {
                         clearInterval(interval_time);
                         wait_message.delete();
                         return message.channel.send(
-                            `${message.author.username}, there was an error, please try again later.`
+                            { content: `${message.author.username}, there was an error, please try again later.`}
                         );
                     }
                 });

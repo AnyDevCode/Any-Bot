@@ -55,9 +55,9 @@ module.exports = class SetCommandPointsCommand extends Command {
         .addField('Command XP', `\`Minimum: ${old_minimum}\` - \`Maximum: ${old_maximum}\` ➔ \`Minimum: ${new_minimum}\` - \`Maximum: ${new_maximum}\``)
         .addField('Voice XP', `\`Minimum: ${minimum_voice_xp}\` - \`Maximum: ${maximum_voice_xp}\``)
         .addField('Status', status)
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

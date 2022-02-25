@@ -34,9 +34,9 @@ module.exports = class RoleInfoCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle('Role Information')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .addField('Role', role, true)
+      .addField('Role', `${role}`, true)
       .addField('Role ID', `\`${role.id}\``, true)
-      .addField('Position', position, true)
+      .addField('Position', `${position}`, true)
       .addField('Mentionable', `\`${role.mentionable}\``, true)
       .addField('Bot Role', `\`${role.managed}\``, true)
       .addField('Color', `\`${role.hexColor.toUpperCase()}\``, true)
@@ -44,9 +44,12 @@ module.exports = class RoleInfoCommand extends Command {
       .addField('Hoisted', `\`${role.hoist}\``, true)
       .addField('Created On', `\`${moment(role.createdAt).format('MMM DD YYYY')}\``, true)
       .addField('Permissions', `\`\`\`diff\n${finalPermissions.join('\n')}\`\`\``)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(role.hexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

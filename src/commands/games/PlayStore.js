@@ -40,12 +40,18 @@ module.exports = class PlayStoreCommand extends Command {
          .addField('Type', res.genre, true)
          .addField('Last update', htmlToString(res.recentChanges))
          .addField('Released',res.released)
-         .setFooter('Developer: '+res.developer+' '+'Email: '+res.developerEmail+' '+'Web: '+res.developerWebsite+' '+'ID: ' +res.developerId)
+         .setFooter(
+           {
+             text: 'Developer: '+res.developer+' '+'Email: '+res.developerEmail+' '+'Web: '+res.developerWebsite+' '+'ID: ' +res.developerId
+           }
+         )
          .setTimestamp()
-         message.channel.send(embed)
+         message.channel.send({embeds: [embed]});
 
      }).catch(() => {
-         message.channel.send('No results found for '+app)
+         message.channel.send({
+           content: 'No results found for '+app
+         })
      })
  }) 
   }

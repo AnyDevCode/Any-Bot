@@ -15,9 +15,12 @@ module.exports = class ServerIconCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle(`${message.guild.name}'s Icon`)
       .setImage(message.guild.iconURL({ dynamic: true, size: 2048 }))
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

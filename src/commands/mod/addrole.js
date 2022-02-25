@@ -21,7 +21,6 @@ module.exports = class AddRoleCommand extends Command {
       return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member.roles.highest.position >= message.member.roles.highest.position)
       return this.sendErrorMessage(message, 0, 'You cannot add a role to someone with an equal or higher role');
-
     const role = this.getRoleFromMention(message, args[1]) || message.guild.roles.cache.get(args[1]);
     
     let reason = args.slice(2).join(' ');
@@ -40,14 +39,17 @@ module.exports = class AddRoleCommand extends Command {
         const embed = new MessageEmbed()
           .setTitle('Add Role')
           .setDescription(`${role} was successfully added to ${member}.`)
-          .addField('Moderator', message.member, true)
-          .addField('Member', member, true)
-          .addField('Role', role, true)
+          .addField('Moderator', `${message.member}`, true)
+          .addField('Member', `${member}`, true)
+          .addField('Role', `${role}`, true)
           .addField('Reason', reason)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed);
+        message.channel.send({embeds:[embed]});
 
         // Update mod log
         this.sendModLogMessage(message, reason, { Member: member, Role: role });

@@ -23,7 +23,7 @@ module.exports = class CoronaCommand extends Command {
             response = await axios.get(url)
             corona = response.data
         } catch (error) {
-            return message.channel.send(`***${text}*** does not exist, or there is no data on the selected country.`)
+            return message.channel.send({content: `***${text}*** does not exist, or there is no data on the selected country.`})
         }
 
         const embed = new MessageEmbed()
@@ -77,6 +77,6 @@ module.exports = class CoronaCommand extends Command {
                     inline: true
                 })
 
-        await message.channel.send(embed)
+        await message.channel.send({embeds:[embed]})
     }
   }

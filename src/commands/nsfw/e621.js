@@ -1,5 +1,5 @@
 const Command = require('../Command.js');
-const {MessageEmbed} = require('discord.js');
+const {MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 const booru = require("booru")
 
 module.exports = class e621Command extends Command {
@@ -28,7 +28,15 @@ module.exports = class e621Command extends Command {
                         .setColor(message.guild.me.displayHexColor)
                         .setTitle(`Search result: ${tags.join(' ')}`)
                         .setImage(post.fileUrl)
-                    message.channel.send({embed})
+                    const linkrow = new MessageActionRow()
+                        .addComponents(
+                            new MessageButton()
+                            .setLabel("Direct link")
+                            .setStyle("LINK")
+                            .setEmoji("🔗")
+                            .setURL("https://e621.net/post/show/" + post.id)
+                        )
+                    message.channel.send({embeds: [embed], components: [linkrow]})
                 }
             }).catch(() => {
             message.channel.send("No results found.")

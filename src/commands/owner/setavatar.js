@@ -23,9 +23,12 @@ module.exports = class SetAvatarCommand extends Command {
         .setTitle('Avatar Set')
         .setDescription(`Avatar set to the image attached.`)
         .setColor(message.guild.me.displayHexColor)
-        .setFooter(`${message.author.tag}`, message.author.displayAvatarURL())
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setImage(attachment.url);
-      message.channel.send(embed);
+      message.channel.send({embeds: [embed]});
     }).catch(() => {
       this.sendErrorMessage(message, 1, 'Failed to set avatar.');
     });

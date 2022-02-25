@@ -47,31 +47,33 @@ module.exports = class RanksCommand extends Command {
 
     const embed = new MessageEmbed()
         .setThumbnail(message.guild.iconURL({dynamic: true}))
-        .setFooter(
-            `${message.member.displayName}'s position: ${position + 1}`,
-            message.author.displayAvatarURL({dynamic: true})
-        )
+        .setFooter({
+          text: `${message.member.displayName}'s position: ${position + 1}`,
+          iconURL: message.author.displayAvatarURL({dynamic: true}),
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
 
     if (members.length <= max) {
       const range = members.length === 1 ? "[1]" : `[1 - ${members.length}]`;
       message.channel.send(
-          embed
+          {
+            embeds:[embed
               .setTitle(`XP Leaderboard ${range}`)
               .setDescription(members.join("\n"))
-      );
+      ]
+          });
 
       // Reaction Menu
     } else {
       embed
           .setTitle("XP Leaderboard")
           .setThumbnail(message.guild.iconURL({dynamic: true}))
-          .setFooter(
-              "Expires after two minutes.\n" +
-              `${message.member.displayName}'s position: ${position + 1}`,
-              message.author.displayAvatarURL({dynamic: true})
-          );
+          .setFooter({
+            text: "Expires after two minutes.\n" +
+            `${message.member.displayName}'s position: ${position + 1}`,
+            iconURL: message.author.displayAvatarURL({dynamic: true}),
+          });
 
       new ReactionMenu(
           message.client,

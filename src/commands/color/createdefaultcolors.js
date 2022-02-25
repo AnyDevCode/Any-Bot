@@ -25,7 +25,7 @@ module.exports = class CreateDefaultColorsCommand extends Command {
       .setTitle('Create Default Colors')
       .setDescription('Creating colors...')
       .setColor(message.guild.me.displayHexColor);
-    const msg = await message.channel.send(embed);
+    const msg = await message.channel.send({embeds: [embed]});
 
     // Create default colors
     let position = 1;
@@ -35,12 +35,11 @@ module.exports = class CreateDefaultColorsCommand extends Command {
       if (!message.guild.roles.cache.find(r => r.name === key)) {
         try {
           const role = await message.guild.roles.create({
-            data: {
               name: key,
               color: value,
               position: position,
-              permissions: []
-            }
+              permissions: [],
+              reason: `Created default colors`
           });
           colorList.push(role);
           position++; // Increment position to create roles in order
@@ -54,9 +53,9 @@ module.exports = class CreateDefaultColorsCommand extends Command {
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`Created \`${len - fails}\` of  \`${len}\` default colors.`)
       .addField('Colors Created', (colorList.length > 0) ? colorList.reverse().join(' ') : '`None`')
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    msg.edit(embed);
+    msg.edit({embeds: [embed]});
   }
 };

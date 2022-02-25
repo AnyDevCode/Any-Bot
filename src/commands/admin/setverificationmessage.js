@@ -41,10 +41,12 @@ module.exports = class SetVerificationMessageCommand extends Command {
       .setTitle('Settings: `Verification`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`verification message\` was successfully updated. ${success}`)
-      .addField('Role', verificationRole || '`None`', true)
-      .addField('Channel', verificationChannel || '`None`', true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
-      .setTimestamp()
+      .addField('Role', verificationRole ? `${verificationRole}` : '`None`', true)
+      .addField('Channel', verificationChannel ? `${verificationChannel}` : '`None`', true)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })      .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     if (!args[0]) {
@@ -63,10 +65,10 @@ module.exports = class SetVerificationMessageCommand extends Command {
       const status = 'disabled';
       const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
 
-      return message.channel.send(embed
+      return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
         .addField('Message', '`None`')
-      );
+      ]});
     }
     
     let verificationMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
@@ -77,10 +79,10 @@ module.exports = class SetVerificationMessageCommand extends Command {
     const status =  message.client.utils.getStatus(verificationRole && verificationChannel && verificationMessage);
     const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
-    message.channel.send(embed
+    message.channel.send({embeds: [embed
       .addField('Status', statusUpdate, true)
       .addField('Message', verificationMessage)
-    );
+    ]});
 
     // Update verification
     if (status === 'enabled') {
@@ -88,12 +90,18 @@ module.exports = class SetVerificationMessageCommand extends Command {
         try {
           await verificationChannel.messages.fetch(verificationMessageId);
         } catch (err) { // Message was deleted
-          message.client.logger.error(err);
+          // Create new message
+          const newVerificationMessage = await verificationChannel.send(verificationMessage);
+          message.client.db.settings.updateVerificationMessageId.run(newVerificationMessage.id, message.guild.id);
         }
-        const msg = await verificationChannel.send(new MessageEmbed()
+        const msg = await verificationChannel.send({
+          embeds: [
+            new MessageEmbed()
           .setDescription(verificationMessage)
           .setColor(message.guild.me.displayHexColor)
-        );
+        
+          ]
+        });
         await msg.react(verify.split(':')[2].slice(0, -1));
         message.client.db.settings.updateVerificationMessageId.run(msg.id, message.guild.id);
       } else {

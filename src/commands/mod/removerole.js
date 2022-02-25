@@ -40,14 +40,17 @@ module.exports = class RemoveRoleCommand extends Command {
         const embed = new MessageEmbed()
           .setTitle('Remove Role')
           .setDescription(`${role} was successfully removed from ${member}.`)
-          .addField('Moderator', message.member, true)
-          .addField('Member', member, true)
-          .addField('Role', role, true)
+          .addField('Moderator', `${message.member}`, true)
+          .addField('Member', `${member}`, true)
+          .addField('Role', `${role}`, true)
           .addField('Reason', reason)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send(embed);
+        message.channel.send({embeds:[embed]});
 
         // Update mod log
         this.sendModLogMessage(message, reason, { Member: member, Role: role });

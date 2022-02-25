@@ -44,12 +44,12 @@ module.exports = class SoloTriviaCommand extends Command {
       .setTitle('Solo Trivia')
       .addField('Topic', `\`${topic}\``)
       .addField('Question', `${question}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})       
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
     const url = question.match(/\bhttps?:\/\/\S+/gi);
     if (url) questionEmbed.setImage(url[0]);
-    message.channel.send(questionEmbed);
+    message.channel.send({embeds:[questionEmbed]});
     let winner;
     const collector = new MessageCollector(message.channel, msg => {
       if (!msg.author.bot && msg.author == message.author) return true;
@@ -63,14 +63,16 @@ module.exports = class SoloTriviaCommand extends Command {
     collector.on('end', () => {
       const answerEmbed = new MessageEmbed()
         .setTitle('Solo Trivia')
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})       
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
       if (winner) 
-        message.channel.send(answerEmbed.setDescription(`Congratulations ${winner}, you gave the correct answer!`));
-      else message.channel.send(answerEmbed
-        .setDescription(`Sorry ${message.member}, time's up! Better luck next time.`)
-        .addField('Correct Answers', origAnswers.join('\n'))
+        message.channel.send({embeds:[answerEmbed.setDescription(`Congratulations ${winner}, you gave the correct answer!`)]});
+      else message.channel.send({
+        embeds:[answerEmbed
+          .setDescription(`Sorry ${message.member}, time's up! Better luck next time.`)
+          .addField('Correct Answers', origAnswers.join('\n'))]
+      }
       );
     });
   }

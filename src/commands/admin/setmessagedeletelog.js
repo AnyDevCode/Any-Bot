@@ -25,22 +25,22 @@ module.exports = class SetMessageDeleteLogCommand extends Command {
       .setTitle('Settings: `Logging`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`message delete log\` was successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: `${message.member.displayName}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateMessageDeleteLogId.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ \`None\``));
+      return message.channel.send({embed: [embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ \`None\``)]});
     }
 
     const messageDeleteLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!messageDeleteLog || messageDeleteLog.type != 'text' || !messageDeleteLog.viewable) 
+    if (!messageDeleteLog || messageDeleteLog.type != 'GUILD_TEXT' || !messageDeleteLog.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
     message.client.db.settings.updateMessageDeleteLogId.run(messageDeleteLog.id, message.guild.id);
-    message.channel.send(embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ ${messageDeleteLog}`));
+    message.channel.send({embeds: [embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ ${messageDeleteLog}`)]});
   }
 };

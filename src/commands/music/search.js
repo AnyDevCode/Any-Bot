@@ -11,6 +11,7 @@ module.exports = class SearchMusicCommand extends Command {
             description: 'Searches Youtube for a provided query',
             examples: ['search Opinions CG5'],
             type: client.types.MUSIC,
+            disabled: true,
         });
     }
 

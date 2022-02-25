@@ -1,11 +1,16 @@
-module.exports = (client, oldGuild, newGuild) => {
+module.exports = {
+  name: "guildUpdate",
+  async execute(oldGuild, newGuild, commands, client) {
   
-  if (oldGuild.name == newGuild.name) return;
+    if (oldGuild.name == newGuild.name) return;
   
-  // Update DB with new name
-  client.db.settings.updateGuildName.run(newGuild.name, oldGuild.id);
-  client.db.users.updateGuildName.run(newGuild.name, oldGuild.id);
-  client.db.warns.updateGuildName.run(newGuild.name, oldGuild.id);
+    // Update DB with new name
+    client.db.settings.updateGuildName.run(newGuild.name, oldGuild.id);
+    client.db.users.updateGuildName.run(newGuild.name, oldGuild.id);
+    client.db.warns.updateGuildName.run(newGuild.name, oldGuild.id);
+  
+    client.logger.info(`${oldGuild.name} server name changed to ${newGuild.name}`);
+  
 
-  client.logger.info(`${oldGuild.name} server name changed to ${newGuild.name}`);
+  },
 };

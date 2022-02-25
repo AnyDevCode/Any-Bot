@@ -17,7 +17,7 @@ module.exports = class ToggleXPChannelCommand extends Command {
       examples: ['togglexpchannel']
     });
   }
-  run(message, args) {
+  run(message) {
 
     let {
       xp_channel_id: xpChannelID,
@@ -35,10 +35,13 @@ module.exports = class ToggleXPChannelCommand extends Command {
       .setDescription(`Status: \`${status}\``)
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setColor(message.guild.me.displayHexColor)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })  
       .setTimestamp();
 
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
 
   }
 };

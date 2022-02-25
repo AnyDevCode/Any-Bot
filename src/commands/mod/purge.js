@@ -22,15 +22,13 @@ module.exports = class PurgeCommand extends Command {
     });
   }
   async run(message, args) {
-    if(message.guild.id === "739811956638220298") 
-		return this.sendErrorMessage(message, 0, '⚠️ You cannot use moderation commands on this server.');
     let channel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (channel) {
       args.shift();
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type != 'text' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
@@ -61,20 +59,23 @@ module.exports = class PurgeCommand extends Command {
 
     if (messages.size === 0) { // No messages found
 
-      message.channel.send(
+      message.channel.send({embeds:[
         new MessageEmbed()
           .setTitle('Purge')
           .setDescription(`
             Unable to find any messages from ${member}. 
             This message will be deleted after \`10 seconds\`.
           `)
-          .addField('Channel', channel, true)
-          .addField('Member', member )
+          .addField('Channel', `${channel}`, true)
+          .addField('Member', `${member}` )
           .addField('Found Messages', `\`${messages.size}\``, true)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor)
-      ).then(msg => msg.delete({ timeout: 10000 })).catch(err => message.client.logger.error(err.stack));
+      ]}).then(msg => msg.delete({ timeout: 10000 })).catch(err => message.client.logger.error(err.stack));
 
     } else { // Purge messages
 
@@ -85,20 +86,23 @@ module.exports = class PurgeCommand extends Command {
             Successfully deleted **${messages.size}** message(s). 
             This message will be deleted after \`10 seconds\`.
           `)
-          .addField('Channel', channel, true)
+          .addField('Channel', `${channel}`, true)
           .addField('Message Count', `\`${messages.size}\``, true)
-          .addField('Reason', reason)
-          .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+          .addField('Reason', `${reason}`)
+          .setFooter({
+            text: message.member.displayName,
+            iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          })
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
   
         if (member) {
           embed
             .spliceFields(1, 1, { name: 'Found Messages', value:  `\`${messages.size}\``, inline: true})
-            .spliceFields(1, 0, { name: 'Member', value: member, inline: true});
+            .spliceFields(1, 0, { name: 'Member', value: `${member}`, inline: true});
         }
 
-        message.channel.send(embed).then(msg => msg.delete({ timeout: 10000 }))
+        message.channel.send({embeds:[embed]}).then(msg => msg.delete({ timeout: 10000 }))
           .catch(err => message.client.logger.error(err.stack));
       });
     }

@@ -1,5 +1,5 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js');
 
 
 module.exports = class GitHubCommand extends Command {
@@ -25,9 +25,31 @@ module.exports = class GitHubCommand extends Command {
           `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
         `[Support Server](${message.client.supportServerInvite})**`
       )
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+
+    const linkrow = new MessageActionRow()
+    .addComponents(
+      new MessageButton()
+        .setLabel("Github")
+        .setStyle("LINK")
+        .setURL("https://github.com/MDCYT/Any-Bot")
+        .setEmoji("⭐"),
+      new MessageButton()
+        .setLabel("Invite Me")
+        .setStyle("LINK")
+        .setURL(`https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8`)
+        .setEmoji("🔗"),
+      new MessageButton()
+        .setLabel("Support Server")
+        .setStyle("LINK")
+        .setURL(message.client.supportServerInvite)
+        .setEmoji("🛡")
+    );
+    message.channel.send({embeds:[embed], components: [linkrow]});
   }
 };

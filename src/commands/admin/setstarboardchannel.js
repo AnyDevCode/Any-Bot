@@ -25,20 +25,20 @@ module.exports = class SetStarboardChannelCommand extends Command {
       .setTitle('Settings: `Starboard`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`starboard channel\` was successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateStarboardChannelId.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ \`None\``));
+      return message.channel.send({embeds:[embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ \`None\``)]});
     }
 
     const starboardChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (
       !starboardChannel || 
-      (starboardChannel.type != 'text' && starboardChannel.type != 'news') || 
+      (starboardChannel.type != 'GUILD_TEXT' && starboardChannel.type != 'GUILD_NEWS') || 
       !starboardChannel.viewable
     ) {
       return this.sendErrorMessage(message, 0, stripIndent`
@@ -46,6 +46,6 @@ module.exports = class SetStarboardChannelCommand extends Command {
       `);
     }
     message.client.db.settings.updateStarboardChannelId.run(starboardChannel.id, message.guild.id);
-    message.channel.send(embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ ${starboardChannel}`));
+    message.channel.send({embeds:[embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ ${starboardChannel}`)]});
   }
 };

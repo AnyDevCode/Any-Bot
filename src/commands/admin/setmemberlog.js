@@ -25,22 +25,22 @@ module.exports = class SetMemberLogCommand extends Command {
       .setTitle('Settings: `Logging`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`member log\` was successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateMemberLogId.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Member Log', `${oldMemberLog} ➔ \`None\``));
+      return message.channel.send({embeds:[embed.addField('Member Log', `${oldMemberLog} ➔ \`None\``)]});
     }
 
     const memberLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!memberLog || memberLog.type != 'text' || !memberLog.viewable) 
+    if (!memberLog || memberLog.type != 'GUILD_TEXT' || !memberLog.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
     message.client.db.settings.updateMemberLogId.run(memberLog.id, message.guild.id);
-    message.channel.send(embed.addField('Member Log', `${oldMemberLog} ➔ ${memberLog}`));
+    message.channel.send({embeds:[embed.addField('Member Log', `${oldMemberLog} ➔ ${memberLog}`)]});
   }
 };

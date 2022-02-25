@@ -19,9 +19,12 @@ module.exports = class AvatarCommand extends Command {
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Avatar`)
       .setImage(member.user.displayAvatarURL({ dynamic: true, size: 2048 }))
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })  
       .setTimestamp()
       .setColor(member.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

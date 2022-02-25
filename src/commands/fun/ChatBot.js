@@ -31,10 +31,13 @@ module.exports = class ChatBotCommand extends Command {
                 const embed = new MessageEmbed()
                     .setTitle(':robot:  Chat Bot!  :robot:')
                     .setDescription(response)
-                    .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+                    .setFooter({
+                        text: message.member.displayName,
+                        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+                    })
                     .setTimestamp()
                     .setColor(message.guild.me.displayHexColor);
-                return message.channel.send(embed);
+                return message.channel.send({embeds: [embed]});
             }).catch(() => {
             // Send the error message:
             this.sendErrorMessage(message, 1, "I'm sorry, I can't answer that right now. Please try again later.");

@@ -3,6 +3,7 @@ const {MessageEmbed} = require("discord.js");
 const {
     searchAmazon,
 } = require("unofficial-amazon-search");
+const ReactionMenu = require('../ReactionMenu.js');
 // Command Require:
 const Command = require("../Command.js");
 
@@ -20,189 +21,124 @@ module.exports = class AmazonCommand extends Command {
     // Command Code:
     async run(message, args) {
 
-        // Embed Function:
-        function AmazonEmbed(i, res) {
-            return new MessageEmbed()
-                .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
-                .setTitle(`Results for ${article}`)
-                .setURL("https://amazon.com" + res.searchResults[i].productUrl)
-                .addField("Name:", res.searchResults[i].title)
-                .addField(
-                    "Stars:",
-                    res.searchResults[i].rating.score +
-                    "/" +
-                    res.searchResults[i].rating.outOf,
-                    true
-                );
-        }
-
         // Article:
         let article = args.join(" ");
 
         // If no article:
         if (!article) {
-            return message.channel.send(
+            return message.channel.send({content: 
                 "Insert the product you want to search first"
-            );
+            });
         }
 
         // Search:
         let i = 0;
-        searchAmazon(article)
-            .then((res) => {
-                // All Results:
-                let max = res.searchResults.length - 1;
-                // First Result:
-                const First_Embed = AmazonEmbed(i, res);
-                // If no price:
-                if (typeof res.searchResults[i].prices[0] == "undefined") {
-                    First_Embed.addField("Price:", "Free", true);
-                } else {
-                    // If priced:
-                    First_Embed.addField(
-                        "Price:",
-                        `$ ${res.searchResults[i].prices[0].price}`,
-                        true
-                    );
-                    // If not defined type:
-                    if (typeof res.searchResults[i].prices[0].label == "object") {
-                        First_Embed.addField("For:", "Physical Object or Digital Object", true);
-                    } else {
-                        // If defined type:
-                        First_Embed.addField("For:", res.searchResults[i].prices[0].label, true);
-                    }
-                }
-                // Add decoration to embed:
-                First_Embed
-                    .setImage(res.searchResults[i].imageUrl)
-                    .setTimestamp()
-                    .setColor(message.guild.me.displayHexColor)
-                    .setFooter(`Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1))
-                // Send First Embed and await for reaction:
-                message.channel.send(First_Embed).then((msg) => {
-                    // Reaction Filter:
-                    msg.react("◀️");
-                    msg.react("⏹️");
-                    msg.react("▶️");
-                    msg.awaitReactions((reaction, user) => {
-                        // Check if user reacted is the same as the author:
-                        if (message.author.id !== user.id) {
-                            return;
-                        }
-                        // Check if reaction is arrow to go:
-                        if (reaction.emoji.name === "▶️") {
-                            // If not last page:
-                            if (i !== max) {
-                                // Increment i:
-                                i++;
-                                // New Embed:
-                                const Next_Embed = AmazonEmbed(i, res)
-                                // If no price:
-                                if (typeof res.searchResults[i].prices[0] == "undefined") {
-                                    Next_Embed.addField("Price:", "Free", true);
-                                } else {
-                                    // If priced:
-                                    Next_Embed.addField(
-                                        "Price:",
-                                        `$ ${res.searchResults[i].prices[0].price}`,
-                                        true
-                                    );
-                                    // If not defined type:
-                                    if (typeof res.searchResults[i].prices[0].label == "object") {
-                                        Next_Embed.addField(
-                                            "For:",
-                                            "Physical Object or Digital Object",
-                                            true
-                                        );
-                                    } else {
-                                        // If defined type:
-                                        Next_Embed.addField(
-                                            "For:",
-                                            res.searchResults[i].prices[0].label,
-                                            true
-                                        );
-                                    }
-                                }
-                                // Add decoration to embed:
-                                Next_Embed
-                                    .setImage(res.searchResults[i].imageUrl)
-                                    .setTimestamp()
-                                    .setColor(message.guild.me.displayHexColor)
-                                    .setFooter(
-                                        `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1)
-                                    );
-                                // Edit message:
-                                msg.edit(Next_Embed);
-                            }
-                        }
-                        // Check if reaction is stop:
-                        if (reaction.emoji.name === "⏹️") {
-                            // Delete reaction:
-                            msg.reactions.cache.get("◀️").remove();
-                            msg.reactions.cache.get("⏹️").remove();
-                            msg.reactions.cache.get("▶️").remove();
-                            // Create a Goodbye Embed:
-                            const Finish_Embed = new MessageEmbed()
-                                .setAuthor("Amazon", "https://clipartcraft.com/images/amazon-logo-transparent-circle.png")
-                                .setDescription("Thanks for using the Amazon")
-                                .setColor(message.guild.me.displayHexColor)
-                                .setTimestamp();
-                            // Edit embed to Goodbye embed:
-                            msg.edit(Finish_Embed);
-                        }
-                        // Check if reaction is arrow to go back:
-                        if (reaction.emoji.name === "◀️") {
-                            // If not first page:
-                            if (1 !== i) {
-                                // Decrement i:
-                                i--;
-                                // New Embed:
-                                const Previous_Embed = AmazonEmbed(i, res)
-                                // If no price:
-                                if (typeof res.searchResults[i].prices[0] == "undefined") {
-                                    Previous_Embed.addField("Price:", "Free", true);
-                                } else {
-                                    // If priced:
-                                    Previous_Embed.addField(
-                                        "Price:",
-                                        `$ ${res.searchResults[i].prices[0].price}`,
-                                        true
-                                    );
-                                    // If not defined type:
-                                    if (typeof res.searchResults[i].prices[0].label == "object") {
-                                        Previous_Embed.addField(
-                                            "For:",
-                                            "Physical Object or Digital Object",
-                                            true
-                                        );
-                                    } else {
-                                        // If defined type:
-                                        Previous_Embed.addField(
-                                            "For:",
-                                            res.searchResults[i].prices[0].label,
-                                            true
-                                        );
-                                    }
-                                }
-                                // Add decoration to embed:
-                                Previous_Embed
-                                    .setImage(res.searchResults[i].imageUrl)
-                                    .setTimestamp()
-                                    .setColor(message.guild.me.displayHexColor)
-                                    .setFooter(
-                                        `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1)
-                                    )
-                                // Edit message:
-                                msg.edit(Previous_Embed);
-                            }
-                        }
+
+        //Fucntion obtains the results from the Amazon API
+        async function search(article) {
+            let results = [];
+
+            await searchAmazon(article).then(res => {
+                // If no results:
+                if (!res.searchResults.length) {
+                    return message.channel.send({
+                        content: "No results found"
                     });
-                });
-            })
-            // If error:
-            .catch(() => {
-                // Send error message:
-                message.channel.send("Sorry, I didn't find the product, try again");
+                }
+
+                // If there are results, put them in an array:
+                // Loop through the results:
+                for (let integrer = 0; integrer < res.searchResults.length; integrer++) {
+                    // Put the results in an array:
+                    results.push(res.searchResults[integrer]);
+                }
+
+
             });
+
+            return results;
+        }
+
+        // Res let:
+        const response = await search(article);
+
+        //Max results:
+        let max = response.length;
+
+
+        // First Embed:
+        const embed = new MessageEmbed()
+                .setAuthor({name: "Amazon", icon_url: "https://clipartcraft.com/images/amazon-logo-transparent-circle.png"})
+                .setTitle(`Results for ${article} (Link)`)
+                .setURL("https://amazon.com" + response[0].productUrl)
+                .setDescription(`**Name:** \n**${response[0].title}**\n\n**Stars:** \n**${response[0].rating.score}/${response[0].rating.outOf}**`)
+                .setFooter({
+                    text: "Page 1 of " + max,
+                })
+                .setColor(message.guild.me.displayHexColor)
+                .setImage(response[0].imageUrl)
+
+
+        const json = embed.toJSON();
+
+        const previous = () => {
+            if (i > 0) {
+                i--;
+                return new MessageEmbed(json)
+                .setTitle(`Results for ${article} (Link)`)
+                    .setURL("https://amazon.com" + response[i].productUrl)
+                    .setDescription(`**Name:** \n**${response[i].title}**\n\n**Stars:** \n**${response[i].rating.score}/${response[i].rating.outOf}**`)
+                    .setFooter({
+                        text: "Page " + (i + 1) + " of " + max,
+                    })
+                    .setColor(message.guild.me.displayHexColor)
+                    .setTimestamp()
+                    .setFooter(
+                        {text: "Page " + (i + 1) + " of " + max, icon_url: message.author.displayAvatarURL({ dynamic: true })}
+                    )
+                    .setImage(response[i].imageUrl)
+        };
     }
-};
+
+        const next = () => {
+            if (i < max - 1) {
+                i++;
+                const embed = new MessageEmbed(json)
+                .setTitle(`Results for ${article} (Link)`)
+                    .setURL("https://amazon.com" + response[i].productUrl)
+                    .setDescription(`**Name:** \n**${response[i].title}**\n\n**Stars:** \n**${response[i].rating.score}/${response[i].rating.outOf}**`)                    
+                    .setFooter({
+                        text: "Page " + (i + 1) + " of " + max,
+                    })
+                    .setColor(message.guild.me.displayHexColor)
+                    .setTimestamp()
+                    .setFooter(
+                        {text: "Page " + (i + 1) + " of " + max, icon_url: message.author.displayAvatarURL({ dynamic: true })}
+                    )
+                    .setImage(response[i].imageUrl)
+
+                    return embed
+
+            };
+        };
+
+        const reactions = {
+            '◀️': previous,
+            '⏹️': null,
+            '▶️': next,
+        };
+
+        const menu = new ReactionMenu(
+            message.client,
+            message.channel,
+            message.member,
+            embed,
+            null,
+            null,
+            reactions,
+            600000
+        );
+
+        menu.reactions['⏹️'] = menu.stop.bind(menu);
+        }
+    };

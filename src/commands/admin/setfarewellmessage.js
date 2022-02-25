@@ -36,8 +36,8 @@ module.exports = class SetFarewellMessageCommand extends Command {
       .setTitle('Settings: `Farewells`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`farewell message\` was successfully updated. ${success}`)
-      .addField('Channel', farewellChannel || '`None`', true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('Channel', farewellChannel ? `<#${farewellChannel.id}>` : '`None`', true)
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
@@ -48,10 +48,10 @@ module.exports = class SetFarewellMessageCommand extends Command {
       const status = 'disabled';
       const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
 
-      return message.channel.send(embed
+      return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
         .addField('Message', '`None`')
-      );
+      ]});
     }
     
     let farewellMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
@@ -62,9 +62,9 @@ module.exports = class SetFarewellMessageCommand extends Command {
     const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
     const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
     
-    message.channel.send(embed
+    message.channel.send({embeds:[embed
       .addField('Status', statusUpdate, true)
       .addField('Message', message.client.utils.replaceKeywords(farewellMessage))
-    );
+    ]});
   }
 };

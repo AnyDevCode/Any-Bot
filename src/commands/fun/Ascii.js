@@ -18,10 +18,12 @@ module.exports = class AsciiCommand extends Command {
     // Command Code:
     run(message, args) {
         // Check if it has args:
-        if (!args[0]) return message.reply("You must enter the text first")
+        if (!args[0]) return message.reply({content:"You must enter the text first"})
         // Check if args not are longer than 15 characters:
-        if (args.join(" ") > 15) message.reply("Text cannot contain more than 15 Characters")
+        if (args.join(" ") > 15) message.reply({content: "Text cannot contain more than 15 Characters"})
         // Create the ascii:
-        figlet(args.join(" "), (err, data) => message.channel.send("```" + data + "```"))
+        figlet(args.join(" "), (err, data) => message.channel.send({
+            content: "```" + data + "```"
+        }))
     }
 };

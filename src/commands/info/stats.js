@@ -37,7 +37,7 @@ module.exports = class StatsCommand extends Command {
       RAM Usage :: ${(usedMemMb / 1024).toFixed(2)} GB 
     `;
     const embed = new MessageEmbed()
-      .setTitle("Any Bot's Statistics")
+      .setTitle(`${message.client.user.username}'s Statistics`)
       .addField(
         "Commands",
         `\`${message.client.commands.size}\` commands`,
@@ -51,17 +51,16 @@ module.exports = class StatsCommand extends Command {
       )
       .addField("Client", `\`\`\`asciidoc\n${clientStats}\`\`\``)
       .addField("Server", `\`\`\`asciidoc\n${serverStats}\`\`\``)
-      .addField(
-        "Links",
-        "**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=733728002910715977&scope=bot&permissions=8) | " +
-          "[Support Server](https://discord.gg/2FRpkNr) **"
+      .addField('Links',
+          `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
+        `[Support Server](${message.client.supportServerInvite})**`
       )
-      .setFooter(
-        message.member.displayName,
-        message.author.displayAvatarURL({ dynamic: true })
-      )
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

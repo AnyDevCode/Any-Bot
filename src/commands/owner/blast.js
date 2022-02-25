@@ -25,12 +25,12 @@ module.exports = class BlastCommand extends Command {
         systemChannel.permissionsFor(guild.me).has(['SEND_MESSAGES', 'EMBED_LINKS'])
       ) {
         const embed = new MessageEmbed()
-          .setTitle('Any Bot System Message')
-          .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+          .setTitle(`${message.client.user.username} System Message`)
+          .setThumbnail(message.client.user.displayAvatarURL({ dynamic: true }))
           .setDescription(msg)
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        systemChannel.send(embed);
+        systemChannel.send({embeds:[embed]});
       } else guilds.push(guild.name);
     });
   
@@ -41,10 +41,13 @@ module.exports = class BlastCommand extends Command {
       const embed = new MessageEmbed()
         .setTitle('Blast Failures')
         .setDescription(description)
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send(embed);
+      message.channel.send({embeds:[embed]});
     }
   } 
 };

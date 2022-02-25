@@ -18,13 +18,16 @@ module.exports = class ShibeCommand extends Command {
       const embed = new MessageEmbed()
         .setTitle('🐶  Woof!  🐶')
         .setImage(img)
-        .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send(embed);
+      message.channel.send({embeds: [embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
+      this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
     }
   }
 };

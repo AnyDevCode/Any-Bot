@@ -40,25 +40,25 @@ module.exports = class SetCrownMessageCommand extends Command {
       .setTitle('Settings: `Crown`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`crown message\` was successfully updated. ${success}`)
-      .addField('Role', crownRole || '`None`', true)
-      .addField('Channel', crownChannel || '`None`', true)
+      .addField('Role', crownRole ? `<@&${crownRole.id}>` : '`None`', true)
+      .addField('Channel', crownChannel ? `<#${crownChannel.id}>` : '`None`', true)
       .addField('Schedule', `\`${(crownSchedule) ? crownSchedule : 'None'}\``, true)
       .addField('Status', `\`${status}\``)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear message
     if (!args[0]) {
       message.client.db.settings.updateCrownMessage.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Message', '`None`')
+      return message.channel.send({embeds: [embed.addField('Message', '`None`')]}
       );
     }
 
     let crownMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
     message.client.db.settings.updateCrownMessage.run(crownMessage, message.guild.id);
     if (crownMessage.length > 1024) crownMessage = crownMessage.slice(0, 1021) + '...';
-    message.channel.send(embed.addField('Message', message.client.utils.replaceCrownKeywords(crownMessage))
-    );
+    message.channel.send({embeds:[embed.addField('Message', message.client.utils.replaceCrownKeywords(crownMessage))]
+    });
   }
 };

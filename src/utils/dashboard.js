@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-let port = process.env.PORT || Math.floor(Math.random() * (65535 - 1024) + 1024);
+let port = process.env.PORT || 80
 
 async function index(client){
   app.get('/api/all', (req, res) => {
@@ -20,10 +20,19 @@ async function index(client){
         icon: guild.iconURL,
         members: {
           count: guild.memberCount,
-          online: guild.members.cache.filter(member => member.presence.status === 'online').size,
-          idle: guild.members.cache.filter(member => member.presence.status === 'idle').size,
-          dnd: guild.members.cache.filter(member => member.presence.status === 'dnd').size,
-          offline: guild.members.cache.filter(member => member.presence.status === 'offline').size,
+          online: guild.members.cache.filter((member) => {
+            if(member.presence) return member.presence.status === 'online';
+            else return false;
+          }).size,
+          idle: guild.members.cache.filter((m) => {
+            if(m.presence) return m.presence.status === 'idle';
+            else return false;
+          }).size,
+          dnd: guild.members.cache.filter((m) => {
+            if(m.presence) return m.presence.status === 'dnd';
+            else return false;
+          }).size,
+          offline: guild.members.cache.filter((m) => m.presence === null).size,
           list: guild.members.cache.map(member => member.user.tag)
         },
         channels: guild.channels.size,
@@ -77,12 +86,12 @@ async function index(client){
       channels: {
         count: client.channels.cache.size,
         types:{
-          text: client.channels.cache.filter(c => c.type === 'text').size,
-          voice: client.channels.cache.filter(c => c.type === 'voice').size,
-          categories: client.channels.cache.filter(c => c.type === 'category').size,
-          dms: client.channels.cache.filter(c => c.type === 'dm').size,
-          news: client.channels.cache.filter(c => c.type === 'news').size,
-          store: client.channels.cache.filter(c => c.type === 'store').size,
+          text: client.channels.cache.filter(c => c.type === 'GUILD_TEXT').size,
+          voice: client.channels.cache.filter(c => c.type === 'GUILD_VOICE').size,
+          categories: client.channels.cache.filter(c => c.type === 'GUILD_CATEGORY').size,
+          dms: client.channels.cache.filter(c => c.type === 'DM').size,
+          news: client.channels.cache.filter(c => c.type === 'GUILD_NEWS').size,
+          store: client.channels.cache.filter(c => c.type === 'GUILD_STORE').size,
           unknown: client.channels.cache.filter(c => c.type === 'unknown').size
         },
         list: channels

@@ -37,12 +37,15 @@ module.exports = class GivePointsCommand extends Command {
       .setTitle(`${member.displayName}'s Points`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
       .setDescription(description)
-      .addField('From', message.member, true)
-      .addField('To', member, true)
+      .addField('From', `${message.member}`, true)
+      .addField('To', `${member}`, true)
       .addField('Points', `\`${oldPoints}\` ➔ \`${amount + oldPoints}\``, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(member.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

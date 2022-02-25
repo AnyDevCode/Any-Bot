@@ -30,8 +30,8 @@ module.exports = class WeatherCommand extends Command {
                 .addField('Pressure', `${data.main.pressure} hPa`, true)
                 .setThumbnail(`https://openweathermap.org/img/w/${data.weather[0].icon}.png`)
                 .setTimestamp()
-                .setFooter(message.member.displayName, message.author.displayAvatarURL());
-            message.channel.send(embed);
+                .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})       
+                message.channel.send({embeds:[embed]});
         }).catch(() => {
             message.reply(`I couldn't find that location.`);
         });

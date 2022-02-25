@@ -53,8 +53,10 @@ module.exports = class DogFactCommand extends Command {
     const mathembed = new MessageEmbed()
   
   if (!args[0]) {
-    mathembed.setFooter("Please enter an `expression`");
-    return await message.channel.send(mathembed); // Devuelve un mensaje si es que ejecuta el comando sin nada
+    mathembed.setFooter({
+      text: "Please enter an `mathematical expression` to calculate."
+    });
+    return await message.channel.send({embeds:[mathembed]}); // Devuelve un mensaje si es que ejecuta el comando sin nada
   }
   let resultado;
   try {
@@ -66,6 +68,6 @@ module.exports = class DogFactCommand extends Command {
   .setColor(message.guild.me.displayHexColor)
   .setTitle("📊 Calculator")
   .addField("Output:", `\`\`\`js\n${resultado}\`\`\``, false);
-  await message.channel.send(mathembed);
+  await message.channel.send({embeds: [mathembed]});
   }
 };

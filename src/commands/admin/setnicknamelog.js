@@ -25,22 +25,22 @@ module.exports = class SetNicknameLogCommand extends Command {
       .setTitle('Settings: `Logging`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`nickname log\` was successfully updated. ${success}`)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
     // Clear if no args provided
     if (args.length === 0) {
       message.client.db.settings.updateNicknameLogId.run(null, message.guild.id);
-      return message.channel.send(embed.addField('Nickname Log', `${oldNicknameLog} ➔ \`None\``));
+      return message.channel.send({embeds:[embed.addField('Nickname Log', `${oldNicknameLog} ➔ \`None\``)]});
     }
 
     const nicknameLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!nicknameLog || nicknameLog.type != 'text' || !nicknameLog.viewable) 
+    if (!nicknameLog || nicknameLog.type != 'GUILD_TEXT' || !nicknameLog.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
     message.client.db.settings.updateNicknameLogId.run(nicknameLog.id, message.guild.id);
-    message.channel.send(embed.addField('Nickname Log', `${oldNicknameLog} ➔ ${nicknameLog}`));
+    message.channel.send({embeds:[embed.addField('Nickname Log', `${oldNicknameLog} ➔ ${nicknameLog}`)]});
   }
 };

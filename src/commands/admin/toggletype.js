@@ -39,7 +39,7 @@ module.exports = class ToggleTypeCommand extends Command {
 
     // Map types
     const types = Object.values(message.client.types);
-    const commands = message.client.commands.array().filter(c => c.type === type);
+    const commands = Array.from(message.client.commands.values()).filter(c => c.type === type);
     const { capitalize } = message.client.utils;
 
     // Disable type
@@ -69,9 +69,12 @@ module.exports = class ToggleTypeCommand extends Command {
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(description)
       .addField('Disabled Commands', disabledCommands, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })  
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds: [embed]});
   }
 };

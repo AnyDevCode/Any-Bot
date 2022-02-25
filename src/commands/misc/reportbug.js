@@ -28,27 +28,33 @@ module.exports = class ReportBugCommand extends Command {
       .setTitle('Bug Report')
       .setThumbnail(reportChannel.guild.iconURL({ dynamic: true }))
       .setDescription(report) 
-      .addField('User', message.member, true)
-      .addField('Server', message.guild.name, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('User', `${message.member}`, true)
+      .addField('Server', `${message.guild.name}`, true)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    reportChannel.send(reportEmbed);
+    reportChannel.send({embeds:[reportEmbed]});
 
     // Send response
     if (report.length > 1024) report = report.slice(0, 1021) + '...';
     const embed = new MessageEmbed()
       .setTitle('Bug Report')
-      .setThumbnail('https://cdn.glitch.com/5bfb504c-974f-4460-ab6e-066acc7e4fa6%2Fezgif.com-gif-to-apng.png?v=1595260265531')
+      .setThumbnail(message.client.user.displayAvatarURL({ dynamic: true }))
       .setDescription(oneLine`
         Successfully sent bug report!
-        Please join the [Any Bot Support Server](https://discord.gg/2FRpkNr) to further discuss your issue.
+        Please join the [${message.client.user.username} Support Server](${message.client.supportServerInvite}) to further discuss your issue.
       `) 
-      .addField('Member', message.member, true)
-      .addField('Message', report)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .addField('Member', `${message.member}`, true)
+      .addField('Message', `${report}`)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

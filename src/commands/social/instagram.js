@@ -32,11 +32,14 @@ module.exports = class InstragramCommand extends Command {
                 .addField('Bio', userData.biography ? userData.biography : 'None')
                 .addField('External Links', `[Website](${userData.external_url}) `)
                 .setTimestamp()
-                .setFooter(message.member ? message.member.displayName : '',  message.member ? message.member.user.displayAvatarURL() : null);
-            return message.channel.send(embed);
+                .setFooter({
+                    text: message.member.displayName,
+                    iconURL: message.author.displayAvatarURL({ dynamic: true })
+                  })
+            return message.reply({embeds: [embed]});
         } catch (err) {
             this.client.logger.error(err.stack);
-            return message.channel.send(`I couldn't find that user.`);
+            return message.reply(`I couldn't find that user.`);
         }
     }
 };

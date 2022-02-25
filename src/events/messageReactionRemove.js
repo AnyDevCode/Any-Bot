@@ -1,6 +1,11 @@
-module.exports = async (client, messageReaction, user) => {
+const { verify } = require('../utils/emojis.json');
+const { stripIndent } = require('common-tags');
+const { MessageEmbed } = require('discord.js');
 
-  if (client.user === user) return;
+module.exports = {
+    name: "messageReactionRemove",
+    async execute(messageReaction, user, commands, client) {
+      if (client.user === user) return;
 
   const { message, emoji } = messageReaction;
 
@@ -43,10 +48,12 @@ module.exports = async (client, messageReaction, user) => {
       else emojiType = emojis[0];
 
       const starMessage = await starboardChannel.messages.fetch(starred.id);
-      await starMessage.edit(`${emojiType} **${starCount}  |**  ${message.channel}`);
+      await starMessage.edit({content: `${emojiType} **${starCount}  |**  ${message.channel}`});
 
       if (starCount == 0)
         await starMessage.delete().catch(err => client.logger.error(err.stack));
     }
-  }
-};
+  } 
+    },
+  };
+  

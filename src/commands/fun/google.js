@@ -13,12 +13,12 @@ module.exports = class GoogleCommand extends Command {
   }
   async run(message, args) {
 
-
-
     let search = args.join(" ")
     if(!search){
         return message.channel.send('Insert the you want to search first')
     }
+
+    const msg = await message.channel.send({content: 'Searching...'});
 
     var options = {
       host : "google.com",
@@ -37,13 +37,18 @@ module.exports = class GoogleCommand extends Command {
     let max = links.length - 1
 
     const embed = new MessageEmbed()
-    .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+    .setAuthor({
+      name: "Google",
+      iconURL: "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png"
+    })
     .setTitle("Result to your search")
     .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
     .setTimestamp()
     .setColor(message.guild.me.displayHexColor)
-    .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
-    message.channel.send(embed).then(msg =>{
+    .setFooter({
+      text: `Page : `+parseInt(i + 1)+`/`+parseInt(max + 1)
+    })
+    msg.edit({content:"Done", embeds:[embed]}).then(msg =>{
        msg.react('◀️')
        msg.react('⏹️')
        msg.react('▶️')
@@ -55,13 +60,18 @@ module.exports = class GoogleCommand extends Command {
                if(i != max){
                    i++
                    const embeds = new MessageEmbed()
-                   .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+                   .setAuthor({
+                     name: "Google",
+                      iconURL: "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png"
+                    })
                    .setTitle("Result to your search")
                    .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
                    .setTimestamp()
                    .setColor(message.guild.me.displayHexColor)
-                   .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
-                   msg.edit(embeds)
+                   .setFooter({
+                     text: "Page : " + parseInt(i + 1) + "/" + parseInt(max + 1),
+                   })
+                   msg.edit({embeds:[embeds]})
                }
            }
            if(reaction.emoji.name === '⏹️'){
@@ -69,23 +79,31 @@ module.exports = class GoogleCommand extends Command {
                msg.reactions.cache.get('⏹️').remove()
                msg.reactions.cache.get('▶️').remove()
                const embedsss = new MessageEmbed()
-                   .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+                    .setAuthor({
+                      name: "Google",
+                      iconURL: "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png"
+                    })
                    .setDescription("Thanks for using Google")
                    .setColor(message.guild.me.displayHexColor)
                    .setTimestamp()
-                   msg.edit(embedsss);
+                   msg.edit({embeds:[embedsss]});
            }
            if(reaction.emoji.name === '◀️'){
                if(i != 0){
                i--
                const embedss = new MessageEmbed()
-               .setAuthor("Google", "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png")
+               .setAuthor({
+                  name: "Google",
+                  iconURL: "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png"
+                })
                .setTitle("Result to your search")
                .setDescription(`[${links[i].title}](https://google.com${links[i].url})`)
                .setTimestamp()
                .setColor(message.guild.me.displayHexColor)
-               .setFooter(`Page : `+parseInt(i + 1)+`/`+parseInt(max + 1))
-               msg.edit(embedss)
+               .setFooter({
+                 name: `Page : `+parseInt(i + 1)+`/`+parseInt(max + 1)
+               })
+               msg.edit({embeds:[embedss]})
            }
        }
        })

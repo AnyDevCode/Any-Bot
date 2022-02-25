@@ -81,7 +81,7 @@ module.exports = class MinesweeperCommand extends Command {
   .setDescription(buscaminas.join('\n').replace(/,/g, ''))
   .setColor(message.guild.me.displayHexColor)
   .setTimestamp()
-  return message.channel.send(embed);
+  return message.channel.send({embeds: [embed]});
   
   }
 };

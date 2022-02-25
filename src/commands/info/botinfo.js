@@ -1,5 +1,5 @@
 const Command = require('../Command.js');
-const { MessageEmbed, version } = require('discord.js');
+const { MessageEmbed, version, MessageActionRow, MessageButton } = require('discord.js');
 const pkg = require(__basedir + '/package.json');
 const { owner } = require('../../utils/emojis.json');
 const { oneLine, stripIndent } = require('common-tags');
@@ -28,7 +28,7 @@ module.exports = class BotInfoCommand extends Command {
     const embed = new MessageEmbed()
         .setTitle(`${message.client.user.username}\'s Bot Information`)
         .setDescription(oneLine`
-        Any Bot is a Discord bot that comes from a variation of another open source and fully customizable bot that is constantly growing.
+        ${message.client.user.username}\'s is a Discord bot that comes from a variation of another open source and fully customizable bot that is constantly growing.
         She comes packaged with a variety of commands and 
         a multitude of settings that can be tailored to your server's specific needs. 
         Her codebase also serves as a base framework to easily create Discord bots of all kinds.
@@ -43,9 +43,27 @@ module.exports = class BotInfoCommand extends Command {
             `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
             `[Support Server](${message.client.supportServerInvite}) **`
         )
-        .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+        .setFooter({
+          text: message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true })
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+
+    const linkrow = new MessageActionRow()
+    .addComponents(
+      new MessageButton()
+      .setLabel('Invite Me')
+      .setStyle('LINK')
+      .setURL(`https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8`)
+      .setEmoji('🔗'),
+      new MessageButton()
+      .setLabel('Support Server')
+      .setStyle('LINK')
+      .setURL(message.client.supportServerInvite)
+      .setEmoji('🛠️')
+    );
+
+    message.channel.send({embeds: [embed], components: [linkrow]})
   }
 };

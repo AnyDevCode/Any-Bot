@@ -1,30 +1,25 @@
-const config = require("./config.json");
+require("dotenv").config();
 const Client = require("./src/client.js");
-const {Intents} = require("discord.js");
+const config = require("./config.json");
+const { Player } = require('discord-player');
 const {index} = require("./src/utils/dashboard.js");
 const botlist = config.botlist;
 global.__basedir = __dirname;
-/*
-const Discord = require('discord.js');
-const klient = new Discord.Client();
-const slash = require('discord-slash-commands-v12');
-slash(klient);
-*/
-// Client setup
-const intents = new Intents();
-intents.add(
-    "GUILD_PRESENCES",
-    "GUILD_MEMBERS",
-    "GUILDS",
-    "GUILD_VOICE_STATES",
-    "GUILD_MESSAGES",
-    "GUILD_MESSAGE_REACTIONS"
-);
-const client = new Client(config, {ws: {intents}});
+
+const client = new Client(config, {
+    intents: 8191,
+    allowedMentions: { parse: ['users', 'roles'], repliedUser: true }
+});
+
+client.player = new Player(client);
+const player = client.player;
+
 // Initialize client
 function init() {
-    client.loadEvents("./src/events");
     client.loadCommands("./src/commands");
+    client.loadSlashCommands("./src/slash")
+    client.loadEvents("./src/events", client, player);
+    client.loadMusicEvents("./src/music", player);
     client.loadTopics("./data/trivia");
     client.login(client.token);
 }

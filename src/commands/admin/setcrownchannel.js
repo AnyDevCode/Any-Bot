@@ -39,11 +39,11 @@ module.exports = class SetCrownChannelCommand extends Command {
       .setTitle('Settings: `Crown`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
       .setDescription(`The \`crown role\` was successfully updated. ${success}`)
-      .addField('Role', crownRole || '`None`', true)
+      .addField('Role', crownRole ? `<@&${crownRole.id}>` : '`None`', true)
       .addField('Schedule', `\`${(crownSchedule) ? crownSchedule : 'None'}\``, true)
       .addField('Status', `\`${status}\``)
       .addField('Message', message.client.utils.replaceCrownKeywords(crownMessage) || '`None`')
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
@@ -58,16 +58,16 @@ module.exports = class SetCrownChannelCommand extends Command {
     }
 
     const crownChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!crownChannel || (crownChannel.type != 'text' && crownChannel.type != 'news') || !crownChannel.viewable) 
+    if (!crownChannel || (crownChannel.type != 'GUILD_TEXT' && crownChannel.type != 'GUILD_NEWS') || !crownChannel.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
     message.client.db.settings.updateCrownChannelId.run(crownChannel.id, message.guild.id);
-    message.channel.send(embed.spliceFields(1, 0, { 
+    message.channel.send({embeds: [embed.spliceFields(1, 0, { 
       name: 'Channel', 
       value: `${oldCrownChannel} ➔ ${crownChannel}`, 
       inline: true 
-    }));
+    })]});
   }
 };

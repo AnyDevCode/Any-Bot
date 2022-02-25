@@ -21,11 +21,14 @@ module.exports = class FindIdCommand extends Command {
     const id = target.id;
     const embed = new MessageEmbed()
       .setTitle('Find ID')
-      .addField('Target', target, true)
+      .addField('Target', `${target}`, true)
       .addField('ID', `\`${id}\``, true)
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({ dynamic: true })
+      })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    message.channel.send(embed);
+    message.channel.send({embeds:[embed]});
   }
 };

@@ -1,3 +1,6 @@
-module.exports = (client, info) => {
-  client.logger.warn(info);
+module.exports = {
+  name: "warn",
+  execute(info, commands, client) {
+    client.logger.warn(info);
+  },
 };

@@ -26,7 +26,7 @@ module.exports = class TranslateCommand extends Command {
         source: args[0], // Este es la fuente, es decir el idioma que queremos pasar a el idioma puesto en target, ya saben con codigo i18n.
         target: args[1] // El idioma en i18n al que queremos traducir
       }, function(result) {
-        message.channel.send(result.translation) // Hacemos esto, corremos el codigo y ya sabran que devuelve para utilizarlo a su necesidad. ;)
+        message.channel.send({content: result.translation}) // Hacemos esto, corremos el codigo y ya sabran que devuelve para utilizarlo a su necesidad. ;)
       });
     } catch (err) {
       message.client.logger.error(err);

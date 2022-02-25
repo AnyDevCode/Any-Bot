@@ -35,7 +35,7 @@ module.exports = class SetFarewellChannelCommand extends Command {
       .setDescription(`The \`farewell channel\` was successfully updated. ${success}`)
       .addField('Message', message.client.utils.replaceKeywords(farewellMessage) || '`None`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .setFooter(message.member.displayName,  message.author.displayAvatarURL({ dynamic: true }))
+      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
@@ -47,14 +47,14 @@ module.exports = class SetFarewellChannelCommand extends Command {
       const status = 'disabled';
       const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
       
-      return message.channel.send(embed
+      return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Channel', value: `${oldFarewellChannel} ➔ \`None\``, inline: true })
         .spliceFields(1, 0, { name: 'Status', value: statusUpdate, inline: true })
-      );
+      ]});
     }
 
     const farewellChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!farewellChannel || (farewellChannel.type != 'text' && farewellChannel.type != 'news') || !farewellChannel.viewable) 
+    if (!farewellChannel || (farewellChannel.type != 'GUILD_TEXT' && farewellChannel.type != 'GUILD_NEWS') || !farewellChannel.viewable) 
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
@@ -64,9 +64,9 @@ module.exports = class SetFarewellChannelCommand extends Command {
     const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.client.db.settings.updateFarewellChannelId.run(farewellChannel.id, message.guild.id);
-    message.channel.send(embed
+    message.channel.send({embeds:[embed
       .spliceFields(0, 0, { name: 'Channel', value: `${oldFarewellChannel} ➔ ${farewellChannel}`, inline: true})
       .spliceFields(1, 0, { name: 'Status', value: statusUpdate, inline: true})
-    );
+    ]});
   }
 };

@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.listen(3000, () => {
-  console.log("Server in port 3000");
-});
+let port = process.env.PORT || Math.floor(Math.random() * (65535 - 1024) + 1024);
 
 async function index(client){
   app.get('/api/all', (req, res) => {
@@ -103,6 +101,10 @@ async function index(client){
     res.status(200).json(data);
   });
 }
+
+app.listen(port, () => {
+  console.log("Server in port " + port);
+});
 
 module.exports = {
   index

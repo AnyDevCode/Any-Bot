@@ -140,7 +140,7 @@ class Client extends Discord.Client {
      * Any Bot's Version
      * @type {string}
      */
-    let version = require("../../../discord-v13/package.json").version;
+    let version = require(__basedir + "/package.json").version;
     this.version = version;
 
     /**

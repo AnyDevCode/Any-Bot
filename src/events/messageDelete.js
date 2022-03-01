@@ -3,6 +3,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
   name: "messageDelete",
   execute(message, commands, client) {
+    console.log(`Message deleted in ${message.channel.name}`);
     if (message.author.bot) return;
 
     // Check for webhook and that message is not empty

@@ -130,7 +130,7 @@ module.exports = {
             iconURL: message.author.displayAvatarURL({ dynamic: true }),
           })
           .setDescription(message.embeds[0].description || "None")
-          .setURL(message.embeds[0].url || "");
+          .setURL(message.embeds[0].url || "")
           .setColor(message.embeds[0].color || "#000000")
           .setAuthor({
             name: message.embeds[0].author ? message.embeds[0].author.name : "",

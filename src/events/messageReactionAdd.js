@@ -17,7 +17,7 @@ module.exports = {
     client.db.settings.selectVerification.get(message.guild.id);
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
 
-    if (!verificationRole || message.id != verificationMessageId) return;
+    if (!verificationRole || message.id !== verificationMessageId) return;
 
     const member = message.guild.members.cache.get(user.id);
     if (!member.roles.cache.has(verificationRole)) {
@@ -33,7 +33,7 @@ module.exports = {
   }
 
   // Starboard
-  if (emoji.name === '⭐' && message.author != user) {
+  if (emoji.name === '⭐' && message.author !== user) {
     const starboardChannelId = client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
     if (
@@ -50,7 +50,7 @@ module.exports = {
         return m.content.startsWith(e) &&
           m.embeds[0] &&
           m.embeds[0].footer &&
-          m.embeds[0].footer.text == message.id;
+          m.embeds[0].footer.text === message.id;
       });
     });
 

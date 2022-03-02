@@ -45,7 +45,7 @@ module.exports = class SetFarewellChannelCommand extends Command {
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
       
       return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Channel', value: `${oldFarewellChannel} ➔ \`None\``, inline: true })
@@ -54,14 +54,14 @@ module.exports = class SetFarewellChannelCommand extends Command {
     }
 
     const farewellChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!farewellChannel || (farewellChannel.type != 'GUILD_TEXT' && farewellChannel.type != 'GUILD_NEWS') || !farewellChannel.viewable) 
+    if (!farewellChannel || (farewellChannel.type !== 'GUILD_TEXT' && farewellChannel.type !== 'GUILD_NEWS') || !farewellChannel.viewable)
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
     // Update status
     const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.client.db.settings.updateFarewellChannelId.run(farewellChannel.id, message.guild.id);
     message.channel.send({embeds:[embed

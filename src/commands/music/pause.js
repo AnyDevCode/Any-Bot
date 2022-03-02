@@ -15,7 +15,7 @@ module.exports = class PauseMusicCommand extends Command {
       return message.reply(`❌ | There is nothing playing.`);
 
     const paused = queue.setPaused(true);
-    message.reply({
+    await message.reply({
       content: paused ? "⏸ | Paused!" : "❌ | Something went wrong!",
     });
   }

@@ -1,7 +1,7 @@
 const Command = require("../Command.js");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const paste = require("hastebin-paste");
-var shortUrl = require("node-url-shortener");
+const shortUrl = require("node-url-shortener");
 
 module.exports = class HasteBinCommand extends Command {
   constructor(client) {

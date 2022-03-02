@@ -187,13 +187,13 @@ module.exports = class HelpCommand extends Command {
         if (isNsfw)
           embed.setDescription(
             `**${capitalize(
-              args[0].toLowerCase()
+              args[1].toLowerCase()
             )}** is a NSFW module. You can only use it in NSFW channels.`
           );
         if (isOwner)
           embed.setDescription(
             `**${capitalize(
-              args[0].toLowerCase()
+              args[1].toLowerCase()
             )}** is an owner module. You can't use it.`
           );
       }

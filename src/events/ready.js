@@ -75,7 +75,7 @@ module.exports = {
       version: "10",
     }).setToken(process.env.TOKEN);
 
-    (async () => {
+    await (async () => {
       try {
         if (process.env.ENV === "production") {
           await rest.put(Routes.applicationCommands(CLIENT_ID), {
@@ -84,11 +84,12 @@ module.exports = {
           client.logger.info("Global slash commands updated!");
         } else {
           await rest.put(
-            Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
-            {
-              body: slashes,
-            }
-          );
+          Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
+              {
+                body: slashes,
+              }
+        )
+          ;
           client.logger.info("Guild slash commands updated!");
         }
       } catch (e) {

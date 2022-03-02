@@ -20,7 +20,7 @@ module.exports = class VolumeMusicCommand extends Command {
 
     if (args[0] > 200 || args[0] < 0) return message.reply('❌ | Please specify a volume between 0 and 200');
     
-    const success = await queue.setVolume(volume);
+    const success = queue.setVolume(volume);
     return message.reply({
       content: success ? `🔊 | The volume has been set to ${volume}%` : `🔊 | Failed to set the volume`,
     }

@@ -45,8 +45,8 @@ module.exports = class ColorCommand extends Command {
     if (role && colors.get(role.id)) color = role;
     if (!color) {
       color = colors.find(c => {
-        return colorName == c.name.slice(1).toLowerCase().replace(/\s/g, '') || 
-          colorName == c.name.toLowerCase().replace(/\s/g, '');
+        return colorName === c.name.slice(1).toLowerCase().replace(/\s/g, '') ||
+          colorName === c.name.toLowerCase().replace(/\s/g, '');
       });
     }
     // Color does not exist

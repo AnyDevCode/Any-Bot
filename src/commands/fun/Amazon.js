@@ -97,7 +97,7 @@ module.exports = class AmazonCommand extends Command {
                         {text: "Page " + (i + 1) + " of " + max, icon_url: message.author.displayAvatarURL({ dynamic: true })}
                     )
                     .setImage(response[i].imageUrl)
-        };
+        }
     }
 
         const next = () => {
@@ -119,7 +119,7 @@ module.exports = class AmazonCommand extends Command {
 
                     return embed
 
-            };
+            }
         };
 
         const reactions = {

@@ -48,9 +48,9 @@ module.exports = class ServerBoostCommand extends Command {
   }
   run(message) {
 
-    var server = message.guild 
+      const server = message.guild;
 
-    const embed = new MessageEmbed()
+      const embed = new MessageEmbed()
     .setColor(message.guild.me.displayHexColor)
     .setAuthor({
         name: "Boost status on: " + `${server.name}`

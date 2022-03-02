@@ -44,6 +44,6 @@ module.exports = class UnbanCommand extends Command {
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} unbanned ${user.tag}`);
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: user.tag });
+    await this.sendModLogMessage(message, reason, {Member: user.tag});
   }
 };

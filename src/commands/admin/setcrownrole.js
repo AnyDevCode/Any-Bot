@@ -16,6 +16,7 @@ module.exports = class SetCrownRoleCommand extends Command {
       `,
       type: client.types.ADMIN,
       userPermissions: ['MANAGE_GUILD'],
+      clientPermissions: ['MANAGE_ROLES'],
       examples: ['setcrownrole @Crowned']
     });
   }
@@ -55,7 +56,7 @@ module.exports = class SetCrownRoleCommand extends Command {
       
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
       return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Role', value: `${oldCrownRole} ➔ \`None\``, inline: true })
@@ -70,7 +71,7 @@ module.exports = class SetCrownRoleCommand extends Command {
 
     // Update status
     const status =  message.client.utils.getStatus(crownRole, crownSchedule);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.channel.send({embeds:[embed
       .spliceFields(0, 0, { name: 'Role', value: `${oldCrownRole} ➔ ${crownRole}`, inline: true })

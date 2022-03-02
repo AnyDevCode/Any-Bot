@@ -160,7 +160,7 @@ module.exports = class FiltersMusicCommand extends Command {
     for (const filter of filters_list) {
       embed.addField(filter.name, filter.usage);
     }
-    message.reply({embeds: [embed]});
+    await await message.reply({embeds: [embed]});
   }
 
 }

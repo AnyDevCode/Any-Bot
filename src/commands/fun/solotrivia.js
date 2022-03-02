@@ -52,7 +52,7 @@ module.exports = class SoloTriviaCommand extends Command {
     message.channel.send({embeds:[questionEmbed]});
     let winner;
     const collector = new MessageCollector(message.channel, msg => {
-      if (!msg.author.bot && msg.author == message.author) return true;
+      if (!msg.author.bot && msg.author === message.author) return true;
     }, { time: 30000 }); // Wait 30 seconds
     collector.on('collect', msg => {
       if (answers.includes(msg.content.trim().toLowerCase().replace(/\.|'|-|\s/g, ''))) {

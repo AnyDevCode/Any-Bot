@@ -24,7 +24,7 @@ module.exports = class TogglePointsCommand extends Command {
     message.client.db.settings.updatePointTracking.run(pointTracking, message.guild.id);
 
     let description, status;
-    if (pointTracking == 1) {
+    if (pointTracking === 1) {
       status = '`disabled`	🡪 `enabled`';
       description = `\`Points\` have been successfully **enabled**. ${success}`;
     } else {

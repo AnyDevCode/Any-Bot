@@ -37,7 +37,7 @@ module.exports = {
     const newId = newState.channelID;
     const afkId = member.guild.afkChannelID;
 
-    if (oldId === newId) return;
+    if (oldId === newId) return
     else if ((!oldId || oldId === afkId) && newId && newId !== afkId) {
       // Joining channel that is not AFK
       member.interval = setInterval(() => {
@@ -105,7 +105,7 @@ module.exports = {
           const stop_song = async (message, server_queue) =>
             client.utils.stop_song(message, server_queue);
 
-          stop_song(member, server_queue);
+          await stop_song(member, server_queue);
           member.guild.me.voice.channel.leave();
         }
       }

@@ -38,7 +38,7 @@ module.exports = class aivoiceCommand extends Command {
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
         //If args, go to page:
-        if (isNaN(args[0]) == false) {
+        if (isNaN(args[0]) === false) {
             page = parseInt(args[0]);
             if (page > pages) {
                 page = pages;

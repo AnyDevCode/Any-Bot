@@ -53,7 +53,7 @@ module.exports = class RemoveRoleCommand extends Command {
         message.channel.send({embeds:[embed]});
 
         // Update mod log
-        this.sendModLogMessage(message, reason, { Member: member, Role: role });
+        await this.sendModLogMessage(message, reason, {Member: member, Role: role});
 
       } catch (err) {
         message.client.logger.error(err.stack);

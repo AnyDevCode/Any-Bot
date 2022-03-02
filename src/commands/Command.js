@@ -106,6 +106,8 @@ class Command {
    * Runs the command
    * @param {Message} message
    * @param {string[]} args
+   * @param client
+   * @param player
    */
   // eslint-disable-next-line no-unused-vars
   run(message, args, client, player) {
@@ -198,7 +200,6 @@ class Command {
   /**
    * Checks the client permissions
    * @param {Message} message
-   * @param {boolean} ownerOverride
    */
   checkClientPermissions(message) {
     const missingPermissions =
@@ -219,9 +220,9 @@ class Command {
   /**
    * Creates and sends command failure embed
    * @param {Message} message
-   * @param {int} errorType
+   * @param {string} errorType
    * @param {string} reason
-   * @param {string} errorMessage
+   * @param {null} errorMessage
    */
   sendErrorMessage(message, errorType, reason, errorMessage = null) {
     errorType = this.errorTypes[errorType];

@@ -1,15 +1,16 @@
-const fetch = require("node-fetch");
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const wait = require("util").promisify(setTimeout);
 module.exports = {
   name: "interactionCreate",
   async execute(interaction) {
     if (!interaction.isSelectMenu()) return;
-    if(interaction.customId == "help-menu") {
-      interaction.message.client.commands.get("help").run(interaction.message, ["-m",interaction.values[0]]);
-      interaction.update({
-        components: []
-      });
+    interaction.message.author = interaction.user;
+    const menu = interaction.client.menus.get(interaction.customId);
+    if (!menu) return;
+    try {
+      await menu.run(interaction);
+    } catch (e) {
+      if (e) console.log(e);
+
+      interaction.client.emit("error", e);
     }
   },
 };

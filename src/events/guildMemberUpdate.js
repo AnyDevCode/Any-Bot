@@ -9,7 +9,7 @@ module.exports = {
         .setColor(oldMember.guild.me.displayHexColor);
     
       // Nickname change
-      if (oldMember.nickname != newMember.nickname) {
+      if (oldMember.nickname !== newMember.nickname) {
         // Get nickname log
         const nicknameLogId = client.db.settings.selectNicknameLogId.pluck().get(oldMember.guild.id);
         const nicknameLog = oldMember.guild.channels.cache.get(nicknameLogId);

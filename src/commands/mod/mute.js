@@ -81,6 +81,6 @@ module.exports = class MuteCommand extends Command {
     }, time);
 
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: member, Time: `\`${ms(time)}\`` });
+    await this.sendModLogMessage(message, reason, {Member: member, Time: `\`${ms(time)}\``});
   }
 };

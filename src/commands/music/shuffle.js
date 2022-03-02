@@ -14,7 +14,7 @@ module.exports = class QueueMusicCommand extends Command {
     if (!queue || !queue.playing)
       return message.reply(`❌ | There is nothing playing.`);
 
-    await queue.shuffle();
+    queue.shuffle();
 
     return message.reply("🔀 | Songs have been shuffled!");
   }

@@ -24,7 +24,7 @@ module.exports = class ToggleCommandCommand extends Command {
     const { ADMIN, OWNER } = message.client.types;
 
     const command = message.client.commands.get(args[0]) || message.client.aliases.get(args[0]);
-    if (!command || (command && command.type == OWNER)) 
+    if (!command || (command && command.type === OWNER))
       return this.sendErrorMessage(message, 0, 'Please provide a valid command');
 
     const { capitalize } = message.client.utils;

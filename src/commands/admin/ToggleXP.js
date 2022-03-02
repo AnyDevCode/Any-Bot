@@ -21,7 +21,7 @@ module.exports = class TogglePointsCommand extends Command {
     message.client.db.settings.updateXPTracking.run(xpTracking, message.guild.id);
 
     let description, status;
-    if (xpTracking == 1) {
+    if (xpTracking === 1) {
       status = '`disabled`	🡪 `enabled`';
       description = `\`XP\` have been successfully **enabled**. ${success}`;
     } else {

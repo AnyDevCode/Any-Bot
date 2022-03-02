@@ -46,7 +46,7 @@ module.exports = class SetFarewellMessageCommand extends Command {
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
       return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
@@ -60,7 +60,7 @@ module.exports = class SetFarewellMessageCommand extends Command {
 
     // Update status
     const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
     
     message.channel.send({embeds:[embed
       .addField('Status', statusUpdate, true)

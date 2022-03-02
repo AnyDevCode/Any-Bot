@@ -25,7 +25,7 @@ module.exports = class NowPlayingMusicCommand extends Command {
         name: `${message.guild.name} Music`,
         iconURL: message.guild.iconURL({ dynamic: true }),
       })
-      .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress == 'Infinity' ? 'Live' : perc.progress + '%'}\`)`)
+      .setDescription(`🎶 | **${queue.current.title}**! (\`${perc.progress === 'Infinity' ? 'Live' : perc.progress + '%'}\`)`)
       .addField(
         "\u200b",
         progress.replace(/ 0:00/g, ' ◉ LIVE')

@@ -16,7 +16,7 @@ module.exports = class SetVerificationRoleCommand extends Command {
         and a \`verification message\` must be set to enable server verification.
       `,
       type: client.types.ADMIN,
-      clientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADD_REACTIONS"],
+      clientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADD_REACTIONS", "MANAGE_ROLES"],
       userPermissions: ["MANAGE_GUILD"],
       examples: ["setverificationrole @Verified"],
     });
@@ -88,7 +88,7 @@ module.exports = class SetVerificationRoleCommand extends Command {
       // Update status
       const status = "disabled";
       const statusUpdate =
-        oldStatus != status
+        oldStatus !== status
           ? `\`${oldStatus}\` ➔ \`${status}\``
           : `\`${oldStatus}\``;
 
@@ -129,7 +129,7 @@ module.exports = class SetVerificationRoleCommand extends Command {
       verificationRole && verificationChannel && verificationMessage
     );
     const statusUpdate =
-      oldStatus != status
+      oldStatus !== status
         ? `\`${oldStatus}\` ➔ \`${status}\``
         : `\`${oldStatus}\``;
 

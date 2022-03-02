@@ -17,7 +17,7 @@ function capitalize(string) {
  * @param {*} value
  */
 function removeElement(arr, value) {
-  var index = arr.indexOf(value);
+  const index = arr.indexOf(value);
   if (index > -1) {
     arr.splice(index, 1);
   }
@@ -70,7 +70,7 @@ function getRange(arr, current, interval) {
 
 /**
  * Gets the ordinal numeral of a number
- * @param {int} number
+ * @param {string} number
  */
 function getOrdinalNumeral(number) {
   number = number.toString();

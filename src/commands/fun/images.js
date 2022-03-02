@@ -23,7 +23,7 @@ module.exports = class ImagesCommand extends Command {
 
     search = customFilter.clean(search);
 
-    var options = {
+    const options = {
       searchTerm: search,
       queryStringAddition: "&safe=active",
       filterOutDomains: [
@@ -50,7 +50,7 @@ module.exports = class ImagesCommand extends Command {
           "Please try again in a few seconds"
         );
       } else {
-        var i = 0;
+        let i = 0;
 
         let max = results.length - 1;
 

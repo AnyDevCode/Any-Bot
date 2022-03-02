@@ -37,7 +37,7 @@ module.exports = class SetSystemChannelCommand extends Command {
     }
 
     const systemChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!systemChannel || (systemChannel.type != 'GUILD_TEXT' && systemChannel.type != 'GUILD_NEWS') || !systemChannel.viewable)
+    if (!systemChannel || (systemChannel.type !== 'GUILD_TEXT' && systemChannel.type !== 'GUILD_NEWS') || !systemChannel.viewable)
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);

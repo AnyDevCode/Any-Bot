@@ -31,7 +31,7 @@ module.exports = class LyricsMusicCommand extends Command {
         }
         if(embeds.length > 5) {
           //Sends first 5 embeds
-          const first_embed = 0
+          let first_embed = 0
           for(let i = 0; i < 5; i++) {
             if(i % 4 === 0) {
               let newEmbedList = embeds.slice(first_embed, first_embed + 5);

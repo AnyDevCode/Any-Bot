@@ -52,6 +52,6 @@ module.exports = class SoftBanCommand extends Command {
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} softbanned ${member.user.tag}`);
         
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: member});
+    await this.sendModLogMessage(message, reason, {Member: member});
   }
 };

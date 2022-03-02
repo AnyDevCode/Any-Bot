@@ -80,7 +80,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
       // Update status
       const status = "disabled";
       const statusUpdate =
-        oldStatus != status
+        oldStatus !== status
           ? `\`${oldStatus}\` ➔ \`${status}\``
           : `\`${oldStatus}\``;
 
@@ -104,7 +104,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
       message.guild.channels.cache.get(args[0]);
     if (
       !verificationChannel ||
-      verificationChannel.type != "GUILD_TEXT" ||
+      verificationChannel.type !== "GUILD_TEXT" ||
       !verificationChannel.viewable
     )
       return this.sendErrorMessage(
@@ -120,7 +120,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
       verificationRole && verificationChannel && verificationMessage
     );
     const statusUpdate =
-      oldStatus != status
+      oldStatus !== status
         ? `\`${oldStatus}\` ➔ \`${status}\``
         : `\`${oldStatus}\``;
 

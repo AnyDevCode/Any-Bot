@@ -168,7 +168,7 @@ module.exports = class aivoiceCommand extends Command {
                             if (attemps < 5) {
                                 await new Promise((resolve) => setTimeout(resolve, 3000));
                                 attemps++;
-                                charge_mp3();
+                                await await charge_mp3();
                             } else {
                                 return message.channel.send(
                                     { content: `${message.author.username}, there was an error, please try again later.`}
@@ -178,7 +178,7 @@ module.exports = class aivoiceCommand extends Command {
                             // Make a Discord attachment
                             const attachment = new MessageAttachment(voice_mp3);
                             // Send the attachment
-                            message.reply({ files: [attachment] });
+                            await await message.reply({files: [attachment]});
                             //Stop the loop
                             clearInterval(interval_time);
                             //Delete the message
@@ -188,7 +188,7 @@ module.exports = class aivoiceCommand extends Command {
                         console.log(error);
                         attemps++;
                         if (attemps <= 10) {
-                            charge_mp3();
+                            await await charge_mp3();
                         } else {
                             message.channel.send(
                                 { content: `${message.author.username}, there was an error, please try again later.`}
@@ -202,7 +202,7 @@ module.exports = class aivoiceCommand extends Command {
                         `An error occured, retrying in 10 seconds. ${attemps} / 3`
                     );
                     await wait_message.edit({embeds: [embed]});
-                    charge_mp3();
+                    await await charge_mp3();
                     if (attemps >= 3) {
                         clearInterval(interval_time);
                         wait_message.delete();
@@ -213,6 +213,6 @@ module.exports = class aivoiceCommand extends Command {
                 });
         }
 
-        charge_mp3();
+        await await charge_mp3();
     }
 };

@@ -50,7 +50,10 @@ module.exports = class EightBallCommand extends Command {
             .setTitle('🎱  The Magic 8-Ball  🎱')
             .addField('Question', question)
             .addField('Answer', `${answers[Math.floor(Math.random() * answers.length)]}`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+            .setFooter({
+                text: `${this.client.credentials.name} | Question by ${message.member.displayName}`,
+                iconURL: message.author.displayAvatarURL({dynamic: true})
+            })
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
         message.channel.send({embeds: [embed]});

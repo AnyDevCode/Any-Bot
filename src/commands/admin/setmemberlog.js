@@ -36,7 +36,7 @@ module.exports = class SetMemberLogCommand extends Command {
     }
 
     const memberLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!memberLog || memberLog.type != 'GUILD_TEXT' || !memberLog.viewable) 
+    if (!memberLog || memberLog.type !== 'GUILD_TEXT' || !memberLog.viewable)
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);

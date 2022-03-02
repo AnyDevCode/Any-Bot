@@ -16,8 +16,8 @@ module.exports = class StatsCommand extends Command {
   }
   async run(message) {
     const d = moment.duration(message.client.uptime);
-    const days = d.days() == 1 ? `${d.days()} day` : `${d.days()} days`;
-    const hours = d.hours() == 1 ? `${d.hours()} hour` : `${d.hours()} hours`;
+    const days = d.days() === 1 ? `${d.days()} day` : `${d.days()} days`;
+    const hours = d.hours() === 1 ? `${d.hours()} hour` : `${d.hours()} hours`;
     const clientStats = stripIndent`
       Servers   :: ${message.client.guilds.cache.size}
       Users     :: ${message.client.users.cache.size}
@@ -26,8 +26,8 @@ module.exports = class StatsCommand extends Command {
       Uptime    :: ${days} and ${hours}
     `;
     const { totalMemMb, usedMemMb } = await mem.info();
-    var osname = await os.oos();
-    if (osname == "not supported") osname = "Unknown";
+    let osname = await os.oos();
+    if (osname === "not supported") osname = "Unknown";
     const serverStats = stripIndent`
       OS        :: ${osname}
       CPU       :: ${cpu.model()}

@@ -34,7 +34,7 @@ module.exports = class ColorsCommand extends Command {
     if (colors.length === 0)
       message.channel.send(embed.setDescription("No colors found."));
     else if (colors.length <= interval) {
-      const range = colors.length == 1 ? "[1]" : `[1 - ${colors.length}]`;
+      const range = colors.length === 1 ? "[1]" : `[1 - ${colors.length}]`;
       message.channel.send({
         embeds: [
           embed

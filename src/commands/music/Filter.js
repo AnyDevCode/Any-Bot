@@ -80,7 +80,7 @@ module.exports = class FilterMusicCommand extends Command {
 
       newFilters[filter] = false;
 
-      queue.setFilters(newFilters);
+      await await queue.setFilters(newFilters);
       return message.reply(`❌ | Removed filter ${filter}`)
     } else {
       //Add filter
@@ -94,7 +94,7 @@ module.exports = class FilterMusicCommand extends Command {
       //Insert the new filter to Filters object, example: {'vaporwave': true, 'bassboost': true} 
       newFilters[filter] = true;
 
-      queue.setFilters(newFilters)
+      await await queue.setFilters(newFilters)
       return message.reply(`🎶 | Added filter ${filter}`)
     }
 

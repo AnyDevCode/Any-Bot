@@ -29,7 +29,7 @@ module.exports = class PurgeBotCommand extends Command {
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
@@ -102,6 +102,6 @@ module.exports = class PurgeBotCommand extends Command {
     }
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Channel: channel, 'Found Messages': `\`${messages.size}\`` });
+    await this.sendModLogMessage(message, reason, {Channel: channel, 'Found Messages': `\`${messages.size}\``});
   }
 };

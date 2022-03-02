@@ -50,7 +50,7 @@ module.exports = class LoopMusicCommand extends Command {
             return message.reply({ embeds: [embed] });
             
         }
-        const success = await queue.setRepeatMode(options.find(o => o.name.toLowerCase() === args[0].toLowerCase()).value);
+        const success = queue.setRepeatMode(options.find(o => o.name.toLowerCase() === args[0].toLowerCase()).value);
         return message.reply({
             content: success ? `🔁 | The loop mode has been set to ${options.find(o => o.value === queue.repeatMode).name}` : `🔁 | Failed to set the loop mode`,
         }

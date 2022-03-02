@@ -1,9 +1,8 @@
 module.exports = {
     name: "interactionCreate",
     async execute (interaction) {
-        if (interaction.isButton()) return;
-        if (interaction.isSelectMenu()) return;
         if(!interaction.isCommand) return
+        if(interaction.isContextMenu() || interaction.isButton() || interaction.isSelectMenu()) return
 
         const command = interaction.client.slashes.get(interaction.commandName);
     
@@ -17,6 +16,7 @@ module.exports = {
         try {
             await command.run(interaction);
         } catch(e) {
+            if(e.message.includes("unknown type: 5")) return
             if(e) console.log(e);
     
             await interaction.reply({

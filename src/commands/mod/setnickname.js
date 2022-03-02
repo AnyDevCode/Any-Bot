@@ -24,7 +24,7 @@ module.exports = class SetNicknameCommand extends Command {
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
       return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
-    if (member.roles.highest.position >= message.member.roles.highest.position && member != message.member)
+    if (member.roles.highest.position >= message.member.roles.highest.position && member !== message.member)
       return this.sendErrorMessage(message, 0, stripIndent`
         You cannot change the nickname of someone with an equal or higher role
       `);
@@ -75,7 +75,7 @@ module.exports = class SetNicknameCommand extends Command {
         message.channel.send({embeds: [embed]});
 
         // Update mod log
-        this.sendModLogMessage(message, reason, { Member: member, Nickname: nicknameStatus });
+        await this.sendModLogMessage(message, reason, {Member: member, Nickname: nicknameStatus});
 
       } catch (err) {
         message.client.logger.error(err.stack);

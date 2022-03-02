@@ -37,7 +37,7 @@ module.exports = class SetXPChannelCommand extends Command {
     // Update status
     const status = message.client.utils.getStatus(xpChannel);
     const statusUpdate =
-      oldStatus != status
+      oldStatus !== status
         ? `\`${oldStatus}\` ➔ \`${status}\``
         : `\`${oldStatus}\``;
 
@@ -52,7 +52,7 @@ module.exports = class SetXPChannelCommand extends Command {
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
-    if (!xpChannel || xpChannel.type != "GUILD_TEXT" || !xpChannel.viewable) {
+    if (!xpChannel || xpChannel.type !== "GUILD_TEXT" || !xpChannel.viewable) {
       message.client.db.settings.updateXPChannelId.run(null, message.guild.id);
 
       return message.channel.send({

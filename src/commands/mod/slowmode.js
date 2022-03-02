@@ -34,7 +34,7 @@ module.exports = class SlowmodeCommand extends Command {
     else time = (ms(args[index]) / 1000).toFixed(0);
 
     // Check type and viewable
-    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
       
@@ -84,6 +84,6 @@ module.exports = class SlowmodeCommand extends Command {
     }
 
     // Update mod log
-    this.sendModLogMessage(message, reason, { Channel: channel, Rate: `\`${rate}\`` });
+    await this.sendModLogMessage(message, reason, {Channel: channel, Rate: `\`${rate}\``});
   }
 };

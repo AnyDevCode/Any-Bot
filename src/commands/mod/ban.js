@@ -47,6 +47,6 @@ module.exports = class BanCommand extends Command {
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} banned ${member.user.tag}`);
         
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: member});
+    await await this.sendModLogMessage(message, reason, {Member: member});
   }
 };

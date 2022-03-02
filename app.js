@@ -2,14 +2,16 @@ require("dotenv").config();
 const Client = require("./src/client.js");
 const config = require("./config.json");
 const { Player } = require('discord-player');
-const {index} = require("./src/utils/dashboard.js");
 const botlist = config.botlist;
+const discordModals = require('discord-modals')
 global.__basedir = __dirname;
 
 const client = new Client(config, {
     intents: 8191,
     allowedMentions: { parse: ['users', 'roles'], repliedUser: true }
 });
+
+discordModals(client);
 
 client.player = new Player(client);
 const player = client.player;
@@ -18,10 +20,16 @@ const player = client.player;
 function init() {
     client.loadCommands("./src/commands");
     client.loadSlashCommands("./src/slash")
+    client.loadButtons("./src/buttons");
+    client.loadSelectMenus("./src/selectmenus");
+    client.loadContextMenus("./src/contextmenus");
+    client.loadModals("./src/modals");
     client.loadEvents("./src/events", client, player);
     client.loadMusicEvents("./src/music", player);
     client.loadTopics("./data/trivia");
-    client.login(client.token);
+    client.login(client.token).then(() =>
+        console.log(`Logged in as ${client.user.tag}`)
+    ).catch(e => console.log(e));
 }
 
 init();
@@ -37,7 +45,9 @@ if (botlist) {
 
 if(!(client.shard)) {
     const { index } = require("./src/utils/dashboard.js");
-    index(client);
+    index(client).then(() => {
+        client.logger.info("Dashboard initialized!");
+    });
 }
 
 

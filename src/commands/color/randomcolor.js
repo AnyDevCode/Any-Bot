@@ -28,9 +28,9 @@ module.exports = class RandomColorCommand extends Command {
       message.member.roles.color : '`None`';
 
       function checkColor(oldcolor, newcolor) {
-        if (oldcolor.name == newcolor.name) {
+        if (oldcolor.name === newcolor.name) {
           color = colors[Math.floor(Math.random() * colors.length)];
-          if(oldcolor.name == color.name) {
+          if(oldcolor.name === color.name) {
             checkColor(oldcolor, color);
           }
         }

@@ -37,7 +37,7 @@ module.exports = class AdminsCommand extends Command {
     const interval = 25;
     if (admins.length === 0) message.channel.send(embed.setDescription('No admins found.'));
     else if (admins.length <= interval) {
-      const range = (admins.length == 1) ? '[1]' : `[1 - ${admins.length}]`;
+      const range = (admins.length === 1) ? '[1]' : `[1 - ${admins.length}]`;
       message.channel.send({embeds:[embed
         .setTitle(`Admin List ${range}`)
         .setDescription(admins.join('\n'))

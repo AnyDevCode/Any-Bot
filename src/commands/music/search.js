@@ -30,9 +30,15 @@ module.exports = class SearchMusicCommand extends Command {
         if (!video_result) return this.sendErrorMessage(message, 1, 'No results found for that query.');
 
         let embed = new MessageEmbed()
-            .setAuthor(`${message.guild.name} Music Search`, message.guild.iconURL())
+            .setAuthor({
+                name: `${message.guild.name} Music Search`,
+                iconURL: message.guild.iconURL()
+            })
             .setColor(message.guild.me.displayHexColor)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({
+                text: `Requested by ${message.author.tag}`,
+                iconURL: message.author.displayAvatarURL()
+            })
 
         let description = '';
         for (let i = 0; i < video_result.videos.length; i++) {
@@ -83,7 +89,7 @@ module.exports = class SearchMusicCommand extends Command {
                 //Establish a connection and play the song with the vide_player function.
                 try {
                     queue_constructor.connection = await voice_channel.join();
-                    play_song(message.guild, queue_constructor.songs[0], queue);
+                    await play_song(message.guild, queue_constructor.songs[0], queue);
                 } catch (err) {
                     queue.delete(message.guild.id);
                     this.sendErrorMessage(message, 1, 'There was an error connecting!');

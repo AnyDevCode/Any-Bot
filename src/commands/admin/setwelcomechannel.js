@@ -46,7 +46,7 @@ module.exports = class SetWelcomeChannelCommand extends Command {
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
       
       return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Channel', value: `${oldWelcomeChannel} ➔ \`None\``, inline: true })
@@ -55,14 +55,14 @@ module.exports = class SetWelcomeChannelCommand extends Command {
     }
 
     const welcomeChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!welcomeChannel || (welcomeChannel.type != 'GUILD_TEXT' && welcomeChannel.type != 'GUILD_NEWS') || !welcomeChannel.viewable)
+    if (!welcomeChannel || (welcomeChannel.type !== 'GUILD_TEXT' && welcomeChannel.type !== 'GUILD_NEWS') || !welcomeChannel.viewable)
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
     // Update status
     const status =  message.client.utils.getStatus(welcomeChannel, welcomeMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.client.db.settings.updateWelcomeChannelId.run(welcomeChannel.id, message.guild.id);
     message.channel.send({embeds: [embed

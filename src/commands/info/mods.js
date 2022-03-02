@@ -37,7 +37,7 @@ module.exports = class ModsCommand extends Command {
     const interval = 25;
     if (mods.length === 0) message.channel.send({embeds:[embed.setDescription('No mods found.')]});
     else if (mods.length <= interval) {
-      const range = (mods.length == 1) ? '[1]' : `[1 - ${mods.length}]`;
+      const range = (mods.length === 1) ? '[1]' : `[1 - ${mods.length}]`;
       message.channel.send({embeds:[embed
         .setTitle(`Mod List ${range}`)
         .setDescription(mods.join('\n'))

@@ -18,6 +18,7 @@ module.exports = class SetAutoBanCommand extends Command {
       `,
             type: client.types.ADMIN,
             userPermissions: ['MANAGE_GUILD'],
+            clientPermissions: ['BAN_MEMBERS'],
             examples: ['setautoban 3']
         });
     }

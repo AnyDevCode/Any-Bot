@@ -2,7 +2,7 @@ module.exports = {
   name: "guildUpdate",
   async execute(oldGuild, newGuild, commands, client) {
   
-    if (oldGuild.name == newGuild.name) return;
+    if (oldGuild.name === newGuild.name) return;
   
     // Update DB with new name
     client.db.settings.updateGuildName.run(newGuild.name, oldGuild.id);

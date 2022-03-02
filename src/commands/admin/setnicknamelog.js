@@ -36,7 +36,7 @@ module.exports = class SetNicknameLogCommand extends Command {
     }
 
     const nicknameLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!nicknameLog || nicknameLog.type != 'GUILD_TEXT' || !nicknameLog.viewable) 
+    if (!nicknameLog || nicknameLog.type !== 'GUILD_TEXT' || !nicknameLog.viewable)
       return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);

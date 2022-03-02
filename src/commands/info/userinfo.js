@@ -21,7 +21,7 @@ const status = {
 };
 
 function formatDate(template, date) {
-  var specs = "YYYY:MM:DD:HH:mm:ss".split(":");
+  const specs = "YYYY:MM:DD:HH:mm:ss".split(":");
   date = new Date(date || Date.now() - new Date().getTimezoneOffset() * 6e4);
   return date
     .toISOString()

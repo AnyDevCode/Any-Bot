@@ -38,7 +38,7 @@ module.exports = class SetStarboardChannelCommand extends Command {
     const starboardChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (
       !starboardChannel || 
-      (starboardChannel.type != 'GUILD_TEXT' && starboardChannel.type != 'GUILD_NEWS') || 
+      (starboardChannel.type !== 'GUILD_TEXT' && starboardChannel.type !== 'GUILD_NEWS') ||
       !starboardChannel.viewable
     ) {
       return this.sendErrorMessage(message, 0, stripIndent`

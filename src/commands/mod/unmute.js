@@ -53,6 +53,6 @@ module.exports = class UnmuteCommand extends Command {
     }
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: member });
+    await this.sendModLogMessage(message, reason, {Member: member});
   }
 };

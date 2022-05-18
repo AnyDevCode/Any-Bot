@@ -19,8 +19,8 @@ module.exports = class SetSystemChannelCommand extends Command {
       examples: ['setsystemchannel #general']
     });
   }
-  run(message, args) {
-    const systemChannelId = message.client.db.settings.selectSystemChannelId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const systemChannelId = await message.client.mongodb.settings.selectSystemChannelId(message.guild.id);
     const oldSystemChannel = message.guild.channels.cache.get(systemChannelId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `System`')
@@ -32,16 +32,16 @@ module.exports = class SetSystemChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateSystemChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateSystemChannelId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('System Channel', `${oldSystemChannel} ➔ \`None\``)]});
     }
 
     const systemChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!systemChannel || (systemChannel.type !== 'GUILD_TEXT' && systemChannel.type !== 'GUILD_NEWS') || !systemChannel.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
-    message.client.db.settings.updateSystemChannelId.run(systemChannel.id, message.guild.id);
+    await message.client.mongodb.settings.updateSystemChannelId(systemChannel.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('System Channel', `${oldSystemChannel} ➔ ${systemChannel}`)]});
   }
 };

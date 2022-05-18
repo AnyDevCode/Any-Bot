@@ -25,8 +25,8 @@ module.exports = class EmojifyCommand extends Command {
       examples: ['emojify hello world']
     });
   }
-  run(message, args) {
-    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message to emojify');
+  async run(message, args) {
+    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a message to emojify');
     let msg = message.content.slice(message.content.indexOf(args[0]), message.content.length);
     msg = msg.split('').map(c => {
       if (c === ' ') return c;

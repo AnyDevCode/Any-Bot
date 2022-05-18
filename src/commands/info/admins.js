@@ -12,10 +12,10 @@ module.exports = class AdminsCommand extends Command {
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ADD_REACTIONS']
     });
   }
-  run(message) {
+  async run(message) {
     
     // Get admin role
-    const adminRoleId = message.client.db.settings.selectAdminRoleId.pluck().get(message.guild.id);
+    const adminRoleId = await message.client.mongodb.settings.selectAdminRoleId(message.guild.id);
     const adminRole = message.guild.roles.cache.get(adminRoleId) || '`None`';
 
     const admins = Array.from(message.guild.members.cache.filter(m => {

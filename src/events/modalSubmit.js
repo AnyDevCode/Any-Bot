@@ -10,8 +10,7 @@ module.exports = {
       await Modal.run(modal);
     } catch(e) {
       if(e.message.includes("unknown type: 5")) return
-      if(e) console.log(e);
-
+      
       await Modal.reply({
         content: "An error occured while executing that command!",
         ephemeral: true

@@ -19,13 +19,13 @@ module.exports = class SoloTriviaCommand extends Command {
       examples: ['solotrivia sports']
     });
   }
-  run(message, args) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+  async run(message, args) {
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     let topic = args[0].toLowerCase();
     if (!topic) { // Pick a random topic if none given
       topic = message.client.topics[Math.floor(Math.random() * message.client.topics.length)];
     } else if (!message.client.topics.includes(topic))
-      return this.sendErrorMessage(message, 0, `Please provide a valid topic, use ${prefix}topics for a list`);
+      return await this.sendErrorMessage(message, 0, `Please provide a valid topic, use ${prefix}topics for a list`);
     
     // Get question and answers
     const path = __basedir + '/data/trivia/' + topic + '.yml';

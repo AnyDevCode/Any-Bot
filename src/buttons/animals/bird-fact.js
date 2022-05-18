@@ -13,7 +13,7 @@ module.exports = class BirdFactButton extends Button {
 
       const fact = await birdfact();
       if (typeof fact === "undefined")
-          return this.sendErrorMessage(
+          return await this.sendErrorMessage(
               message,
               1,
               "Please try again in a few seconds",

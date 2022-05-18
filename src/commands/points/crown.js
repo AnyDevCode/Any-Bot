@@ -11,9 +11,9 @@ module.exports = class CrownCommand extends Command {
       type: client.types.POINTS
     });
   }
-  run(message) {
-    const { crown_role_id: crownRoleId, crown_schedule: crownSchedule } = 
-      message.client.db.settings.selectCrown.get(message.guild.id);
+  async run(message) {
+    const { crownRoleID: crownRoleId, crownSchedule: crownSchedule } = 
+      await message.client.mongodb.settings.selectCrown(message.guild.id);
     const crownRole = message.guild.roles.cache.get(crownRoleId) || '`None`';
     const crowned = Array.from(message.guild.members.cache.filter(m => {
       if (m.roles.cache.find(r => r === crownRole)) return true;

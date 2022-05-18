@@ -16,13 +16,13 @@ module.exports = class NicknameCommand extends Command {
   }
   async run(message, args) {
 
-    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a nickname');
+    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a nickname');
     const nickname = message.content.slice(message.content.indexOf(args[0]), message.content.length);
 
     if (nickname.length > 32) {
-      return this.sendErrorMessage(message, 0, 'Please ensure the nickname is no larger than 32 characters');
+      return await this.sendErrorMessage(message, 0, 'Please ensure the nickname is no larger than 32 characters');
     } else if (message.member === message.guild.owner) {
-      return this.sendErrorMessage(message, 1, 'Unable to change the nickname of server owner');
+      return await this.sendErrorMessage(message, 1, 'Unable to change the nickname of server owner');
     } else {
       try {
 
@@ -45,7 +45,7 @@ module.exports = class NicknameCommand extends Command {
 
       } catch (err) {
         message.client.logger.error(err.stack);
-        this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
+        await this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
       }
     }  
   }

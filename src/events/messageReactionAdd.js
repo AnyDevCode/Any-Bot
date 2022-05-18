@@ -9,12 +9,12 @@ module.exports = {
 
   const { message, emoji } = messageReaction;
 
-  client.db.users.updateTotalReactions.run(message.author.id, message.guild.id);
-
   // Verification
   if (emoji.id === verify.split(':')[2].slice(0, -1)) {
-    const { verification_role_id: verificationRoleId, verification_message_id: verificationMessageId } =
-    client.db.settings.selectVerification.get(message.guild.id);
+    const { verificationRoleID: verificationRoleId, verificationMessageID: verificationMessageId } =
+    await client.mongodb.settings.selectRow(message.guild.id);
+    console.log(verificationRoleId, verificationMessageId)
+
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
 
     if (!verificationRole || message.id !== verificationMessageId) return;
@@ -24,7 +24,7 @@ module.exports = {
       try {
         await member.roles.add(verificationRole);
       } catch (err) {
-        return client.sendSystemErrorMessage(member.guild, 'verification',
+        return await client.sendSystemErrorMessage(member.guild, 'verification',
           stripIndent`Unable to assign verification role,` +
           'please check the role hierarchy and ensure I have the Manage Roles permission'
           , err.message);
@@ -33,8 +33,8 @@ module.exports = {
   }
 
   // Starboard
-  if (emoji.name === '⭐' && message.author !== user) {
-    const starboardChannelId = client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
+  if (emoji.name === '⭐' && (message.author !== user)) {
+    const starboardChannelId = await client.mongodb.settings.selectStarboardChannelId(message.guild.id);
     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
     if (
       !starboardChannel ||
@@ -67,7 +67,7 @@ module.exports = {
       else emojiType = emojis[0];
 
       let image = '';
-      const attachment = Array.from(starred.attachments.values())[0];
+      const attachment = starred.embeds[0].image;
       if (attachment && attachment.url) {
         const extension = attachment.url.split('.').pop();
         if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
@@ -87,7 +87,10 @@ module.exports = {
         .addField('Original', `[Jump!](${message.url})`)
         .setImage(image)
         .setTimestamp()
-        .setFooter(message.id)
+        .setFooter({
+          text: `${message.id}`,
+          iconURL: message.author.displayAvatarURL({ dynamic: true})
+        })
         .setColor('#ffac33');
 
       const starMessage = await starboardChannel.messages.fetch(starred.id);
@@ -120,7 +123,10 @@ module.exports = {
         .addField('Original', `[Jump!](${message.url})`)
         .setImage(image)
         .setTimestamp()
-        .setFooter(message.id)
+        .setFooter({
+          text: message.id,
+          icon_url: message.author.displayAvatarURL({ dynamic: true})
+        })
         .setColor('#ffac33');
       await starboardChannel.send({content: `⭐ **1  |**  ${message.channel}`, embeds: [embed]});
     }

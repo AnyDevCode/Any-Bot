@@ -17,83 +17,83 @@ module.exports = class SettingsCommand extends Command {
       examples: ['settings System']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
     const { trimArray, replaceKeywords, replaceCrownKeywords } = message.client.utils;
 
     // Set values
-    const row = message.client.db.settings.selectRow.get(message.guild.id);
+    const row = await message.client.mongodb.settings.selectRow(message.guild.id);
     const prefix = `\`${row.prefix}\``;
-    const systemChannel = message.guild.channels.cache.get(row.system_channel_id) || '`None`';
-    const starboardChannel = message.guild.channels.cache.get(row.starboard_channel_id) || '`None`';
-    const modLog = message.guild.channels.cache.get(row.mod_log_id) || '`None`';
-    const memberLog = message.guild.channels.cache.get(row.member_log_id) || '`None`';
-    const nicknameLog = message.guild.channels.cache.get(row.nickname_log_id) || '`None`';
-    const roleLog = message.guild.channels.cache.get(row.role_log_id) || '`None`';
-    const messageEditLog = message.guild.channels.cache.get(row.message_edit_log_id) || '`None`';
-    const messageDeleteLog = message.guild.channels.cache.get(row.message_delete_log_id) || '`None`';
-    const verificationChannel = message.guild.channels.cache.get(row.verification_channel_id) || '`None`';
-    const welcomeChannel = message.guild.channels.cache.get(row.welcome_channel_id) || '`None`';
-    const farewellChannel = message.guild.channels.cache.get(row.farewell_channel_id) || '`None`';
-    const crownChannel = message.guild.channels.cache.get(row.crown_channel_id) || '`None`';
-    const xpChannel = message.guild.channels.cache.get(row.xp_channel_id) || '`None`';
-    const xpChannelAction = row.xp_message_action;
+    const systemChannel = message.guild.channels.cache.get(row.systemChannelID) || '`None`';
+    const starboardChannel = message.guild.channels.cache.get(row.starboardChannelID) || '`None`';
+    const modLog = message.guild.channels.cache.get(row.modLogID) || '`None`';
+    const memberLog = message.guild.channels.cache.get(row.memberLogID) || '`None`';
+    const nicknameLog = message.guild.channels.cache.get(row.nicknameLogID) || '`None`';
+    const roleLog = message.guild.channels.cache.get(row.roleLogID) || '`None`';
+    const messageEditLog = message.guild.channels.cache.get(row.messageEditLogID) || '`None`';
+    const messageDeleteLog = message.guild.channels.cache.get(row.messageDeleteLogID) || '`None`';
+    const verificationChannel = message.guild.channels.cache.get(row.verificationChannelID) || '`None`';
+    const welcomeChannel = (message.guild.channels.cache.get(row.welcomeChannelID)) ? `<#${(message.guild.channels.cache.get(row.welcomeChannelID)).id}>` : '`None`'  || '`None`';
+    const farewellChannel = (message.guild.channels.cache.get(row.farewellChannelID)) ? `<#${(message.guild.channels.cache.get(row.farewellChannelID)).id}>` : '`None`' || '`None`';
+    const crownChannel = message.guild.channels.cache.get(row.crownChannelID) || '`None`';
+    const xpChannel = message.guild.channels.cache.get(row.xpChannelID) || '`None`';
+    const xpChannelAction = row.xpMessageAction;
     const XPStatus = message.client.utils.getStatus(
         xpChannelAction
     );
     let modChannels = [];
-    if (row.mod_channel_ids) {
-      for (const channel of row.mod_channel_ids.split(' ')) {
+    if (row.modChannelIDs) {
+      for (const channel of row.modChannelIDs.split(' ')) {
         modChannels.push(message.guild.channels.cache.get(channel));
       }
       modChannels = trimArray(modChannels).join(' ');
     }
     if (modChannels.length === 0) modChannels = '`None`';
-    const adminRole = message.guild.roles.cache.get(row.admin_role_id) || '`None`';
-    const modRole = message.guild.roles.cache.get(row.mod_role_id) || '`None`';
-    const muteRole = message.guild.roles.cache.get(row.mute_role_id) || '`None`';
-    const autoRole = message.guild.roles.cache.get(row.auto_role_id) || '`None`';
-    const verificationRole = message.guild.roles.cache.get(row.verification_role_id) || '`None`';
-    const crownRole = message.guild.roles.cache.get(row.crown_role_id) || '`None`';
-    const autoKick = (row.auto_kick) ? `After \`${row.auto_kick}\` warn(s)` : '`disabled`';
-    const autoBan = (row.auto_ban) ? `After \`${row.auto_ban}\` warn(s)` : '`disabled`';
-    const messagePoints = `\`${row.message_points}\``;
-    const commandPoints = `\`${row.command_points}\``;
-    const voicePoints = `\`${row.voice_points}\``;
-    let minimum_xp_message_raw = Math.floor(row.message_xp - 2);
+    const adminRole = message.guild.roles.cache.get(row.adminRoleID) || '`None`';
+    const modRole = message.guild.roles.cache.get(row.modRoleID) || '`None`';
+    const muteRole = message.guild.roles.cache.get(row.mutedRoleID) || '`None`';
+    const autoRole = message.guild.roles.cache.get(row.autoRoleID) || '`None`';
+    const verificationRole = message.guild.roles.cache.get(row.verificationRoleID) || '`None`';
+    const crownRole = (message.guild.roles.cache.get(row.crownRoleID) ? `${message.guild.roles.cache.get(row.crownRoleID)}` : '`None`' ) || '`None`';
+    const autoKick = (row.autoKick) ? `After \`${row.autoKick}\` warn(s)` : '`disabled`';
+    const autoBan = (row.autoBan) ? `After \`${row.autoBan}\` warn(s)` : '`disabled`';
+    const messagePoints = `\`${row.messagePoints}\``;
+    const commandPoints = `\`${row.commandPoints}\``;
+    const voicePoints = `\`${row.voicePoints}\``;
+    let minimum_xp_message_raw = Math.floor(row.messageXP - 2);
     if (minimum_xp_message_raw < 0) minimum_xp_message_raw = 0;
-    let maximum_xp_message_raw = Math.floor(row.message_xp + 2);
-    let minimum_xp_command_raw = Math.floor(row.command_xp - 2);
+    let maximum_xp_message_raw = Math.floor(row.messageXP + 2);
+    let minimum_xp_command_raw = Math.floor(row.commandXP - 2);
     if (minimum_xp_command_raw < 0) minimum_xp_command_raw = 0;
-    let maximum_xp_command_raw = Math.floor(row.command_xp + 2);
-    let minimum_xp_voice_raw = Math.floor(row.voice_xp - 2);
+    let maximum_xp_command_raw = Math.floor(row.commandXP + 2);
+    let minimum_xp_voice_raw = Math.floor(row.voiceXP - 2);
     if (minimum_xp_voice_raw < 0) minimum_xp_voice_raw = 0;
-    let maximum_xp_voice_raw = Math.floor(row.voice_xp + 2);
+    let maximum_xp_voice_raw = Math.floor(row.voiceXP + 2);
 
     const messageXP = `\`Minimum: ${minimum_xp_message_raw}\` - \`Maximum: ${maximum_xp_message_raw}\``
     const commandXP = `\`Minimum: ${minimum_xp_command_raw}\` - \`Maximum: ${maximum_xp_command_raw}\``
     const voiceXP = `\`Minimum: ${minimum_xp_voice_raw}\` - \`Maximum: ${maximum_xp_voice_raw}\``
 
 
-    let verificationMessage = (row.verification_message) ? replaceKeywords(row.verification_message) : '`None`';
-    let welcomeMessage = (row.welcome_message) ? replaceKeywords(row.welcome_message) : '`None`';
-    let farewellMessage = (row.farewell_message) ? replaceKeywords(row.farewell_message ) : '`None`';
-    let crownMessage = (row.crown_message) ? replaceCrownKeywords(row.crown_message) : '`None`';
-    const crownSchedule = (row.crown_schedule) ? `\`${row.crown_schedule}\`` : '`None`';
+    let verificationMessage = (row.verificationMessage) ? replaceKeywords(row.verificationMessage) : '`None`';
+    let welcomeMessage = ((row.welcomeMessage[0].data.text ? row.welcomeMessage[0].data.text : null) ? replaceKeywords(row.welcomeMessage[0].data.text) : '`None`');
+    let farewellMessage = ((row.welcomeMessage[0].data.text ? row.farewellMessage[0].data.text : null) ? replaceKeywords(row.farewellMessage[0].data.text ) : '`None`');
+    let crownMessage = (row.crownMessage[0].data.message) ? replaceCrownKeywords(row.crownMessage[0].data.message) : '`None`';
+    const crownSchedule = (row.crownSchedule) ? `\`${row.crownSchedule}\`` : '`None`';
     let disabledCommands = '`None`';
-    if (row.disabled_commands) 
-      disabledCommands = row.disabled_commands.split(' ').map(c => `\`${c}\``).join(' ');
+    if (row.disabledCommands) 
+      disabledCommands = row.disabledCommands.split(' ').map(c => `\`${c}\``).join(' ');
 
     // Get statuses
     const verificationStatus = `\`${message.client.utils.getStatus(
-      row.verification_role_id && row.verification_channel_id && row.verification_message
+      row.verificationRoleID && row.verificationChannelID && row.verificationMessage
     )}\``;
-    const randomColor = `\`${message.client.utils.getStatus(row.random_color)}\``;
-    const welcomeStatus = `\`${message.client.utils.getStatus(row.welcome_message && row.welcome_channel_id)}\``;
-    const farewellStatus = `\`${message.client.utils.getStatus(row.farewell_message && row.farewell_channel_id)}\``;
-    const pointsStatus = `\`${message.client.utils.getStatus(row.point_tracking)}\``;
-    const xpStatus = `\`${message.client.utils.getStatus(row.xp_tracking)}\``;
-    const crownStatus = `\`${message.client.utils.getStatus(row.crown_role_id && row.crown_schedule)}\``;
+    const randomColor = `\`${message.client.utils.getStatus(row.randomColor)}\``;
+    const welcomeStatus = `\`${message.client.utils.getStatus((row.welcomeMessage ? row.welcomeMessage[0] : null) && row.welcomeChannelID)}\``;
+    const farewellStatus = `\`${message.client.utils.getStatus((row.farewellMessage ? row.farewellMessage[0] : null) && row.farewellChannelID)}\``;
+    const pointsStatus = `\`${message.client.utils.getStatus(row.pointTracking)}\``;
+    const xpStatus = `\`${message.client.utils.getStatus(row.xpTracking)}\``;
+    const crownStatus = `\`${message.client.utils.getStatus(row.crownRoleID && row.crownSchedule)}\``;
     
     // Trim messages to 1024 characters
     if (verificationMessage.length > 1024) verificationMessage = verificationMessage.slice(0, 1021) + '...';
@@ -216,7 +216,7 @@ module.exports = class SettingsCommand extends Command {
         return message.channel.send({embeds: [embed]});
     }
     if (setting)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please enter a valid settings category, use ${row.prefix}settings for a list
       `);
 

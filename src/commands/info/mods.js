@@ -12,10 +12,10 @@ module.exports = class ModsCommand extends Command {
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ADD_REACTIONS']
     });
   }
-  run(message) {
+  async run(message) {
     
     // Get mod role
-    const modRoleId = message.client.db.settings.selectModRoleId.pluck().get(message.guild.id);
+    const modRoleId = await message.client.mongodb.settings.selectModRoleId(message.guild.id);
     const modRole = message.guild.roles.cache.get(modRoleId) || '`None`';
 
     const mods = Array.from(message.guild.members.cache.filter(m => {

@@ -13,9 +13,7 @@ module.exports = {
      * MEMBER LOG
      * ------------------------------------------------------------------------------------------------ */
     // Get member log
-    const memberLogId = client.db.settings.selectMemberLogId
-      .pluck()
-      .get(member.guild.id);
+    const memberLogId = await client.mongodb.settings.selectMemberLogId(member.guild.id);
     const memberLog = member.guild.channels.cache.get(memberLogId);
     if (
       memberLog &&
@@ -42,10 +40,16 @@ module.exports = {
      * ------------------------------------------------------------------------------------------------ */
     // Send farewell message
     let {
-      farewell_channel_id: farewellChannelId,
-      farewell_message: farewellMessage,
-    } = client.db.settings.selectFarewells.get(member.guild.id);
+      farewellChannelID: farewellChannelId,
+      farewellMessage: farewellMessage,
+    } = await client.mongodb.settings.selectRow(member.guild.id);
     const farewellChannel = member.guild.channels.cache.get(farewellChannelId);
+
+    if(farewellMessage[0].data.text){
+      farewellMessage = farewellMessage[0].data.text;
+    } else {
+      farewellMessage = null;
+    }
 
     if (
       farewellChannel &&

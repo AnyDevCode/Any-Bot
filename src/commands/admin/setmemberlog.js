@@ -18,8 +18,8 @@ module.exports = class SetMemberLogCommand extends Command {
       examples: ['setmemberlog #member-log']
     });
   }
-  run(message, args) {
-    const memberLogId = message.client.db.settings.selectMemberLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const memberLogId = await message.client.mongodb.settings.selectMemberLogId(message.guild.id);
     const oldMemberLog = message.guild.channels.cache.get(memberLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetMemberLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateMemberLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateMemberLogId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Member Log', `${oldMemberLog} ➔ \`None\``)]});
     }
 
     const memberLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!memberLog || memberLog.type !== 'GUILD_TEXT' || !memberLog.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateMemberLogId.run(memberLog.id, message.guild.id);
+    await message.client.mongodb.settings.updateMemberLogId(memberLog.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Member Log', `${oldMemberLog} ➔ ${memberLog}`)]});
   }
 };

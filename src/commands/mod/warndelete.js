@@ -15,7 +15,7 @@ module.exports = class WarnCommand extends Command {
       examples: ['warndelete 123 Erronious behaviour', 'warndelete 123'],
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
 
     const warnsdb = message.client.db.warns
@@ -34,11 +34,11 @@ module.exports = class WarnCommand extends Command {
     const member = message.guild.members.cache.get(warn.id)
 
     if (!warn.id) 
-      return this.sendErrorMessage(message, 0, 'Please provide a valid warn ID.');
+      return await this.sendErrorMessage(message, 0, 'Please provide a valid warn ID.');
     if (warn.id === message.member.id) 
-      return this.sendErrorMessage(message, 0, 'You cannot delete a warn from yourself');
+      return await this.sendErrorMessage(message, 0, 'You cannot delete a warn from yourself');
     if (member.roles.highest.position >= message.member.roles.highest.position) 
-      return this.sendErrorMessage(message, 0, 'You cannot delete a warn from someone with an equal or higher role');
+      return await this.sendErrorMessage(message, 0, 'You cannot delete a warn from someone with an equal or higher role');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';

@@ -19,9 +19,9 @@ module.exports = class SetAdminRoleCommand extends Command {
     }
 
     // Command Code:
-    run(message, args) {
+    async run(message, args) {
         // Check role:
-        const adminRoleId = message.client.db.settings.selectAdminRoleId.pluck().get(message.guild.id);
+        const adminRoleId = await message.client.mongodb.settings.selectAdminRoleId(message.guild.id);
         const oldAdminRole = message.guild.roles.cache.find(r => r.id === adminRoleId) || '`None`';
 
         // Create embed:
@@ -35,14 +35,14 @@ module.exports = class SetAdminRoleCommand extends Command {
 
         // Clear if no args provided
         if (args.length === 0) {
-            message.client.db.settings.updateAdminRoleId.run(null, message.guild.id);
+            await message.client.mongodb.settings.updateAdminRoleId(null, message.guild.id);
             return message.channel.send({embeds:[embed.addField('Admin Role', `${oldAdminRole} ➔ \`None\``)]});
         }
 
         // Update role
         const adminRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-        if (!adminRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
-        message.client.db.settings.updateAdminRoleId.run(adminRole.id, message.guild.id);
+        if (!adminRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+        await message.client.mongodb.settings.updateAdminRoleId(adminRole.id, message.guild.id);
         return message.channel.send({embeds: [embed.addField('Admin Role', `${oldAdminRole} ➔ ${adminRole}`)]});
     }
 };

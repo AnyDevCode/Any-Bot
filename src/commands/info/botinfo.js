@@ -16,7 +16,7 @@ module.exports = class BotInfoCommand extends Command {
   }
   async run(message) {
     const botOwner = message.client.users.cache.get(message.client.ownerID).username + '#' + message.client.users.cache.get(message.client.ownerID).discriminator
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const tech = stripIndent`
       Version     :: ${pkg.version}
       Library     :: Discord.js v${version}

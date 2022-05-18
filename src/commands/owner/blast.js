@@ -12,12 +12,12 @@ module.exports = class BlastCommand extends Command {
       examples: ['blast Hello World!']
     });
   }
-  run(message, args) {
-    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message to blast');
+  async run(message, args) {
+    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a message to blast');
     const msg = message.content.slice(message.content.indexOf(args[0]), message.content.length);
     const guilds = [];
-    message.client.guilds.cache.forEach(guild => {
-      const systemChannelId = message.client.db.settings.selectSystemChannelId.pluck().get(guild.id);
+    message.client.guilds.cache.forEach(async guild => {
+      const systemChannelId = await message.client.mongodb.settings.selectSystemChannelId(guild.id);
       const systemChannel = guild.channels.cache.get(systemChannelId);
       if (
         systemChannel && 

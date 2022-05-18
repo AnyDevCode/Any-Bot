@@ -21,13 +21,13 @@ module.exports = class SoftBanCommand extends Command {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
-      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member === message.member) 
-      return this.sendErrorMessage(message, 0, 'You cannot softban yourself'); 
+      return await this.sendErrorMessage(message, 0, 'You cannot softban yourself'); 
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return this.sendErrorMessage(message, 0, 'You cannot softban someone with an equal or higher role');
+      return await this.sendErrorMessage(message, 0, 'You cannot softban someone with an equal or higher role');
     if (!member.bannable)
-      return this.sendErrorMessage(message, 0, 'Provided member is not bannable');
+      return await this.sendErrorMessage(message, 0, 'Provided member is not bannable');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';

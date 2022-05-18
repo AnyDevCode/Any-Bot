@@ -14,10 +14,10 @@ module.exports = class ToggleRandomColorCommand extends Command {
       clientPermissions: ['MANAGE_ROLES'],
     });
   }
-  run(message) {
-    let randomColor = message.client.db.settings.selectRandomColor.pluck().get(message.guild.id);
+  async run(message) {
+    let randomColor = await message.client.mongodb.settings.selectRandomColor(message.guild.id);
     randomColor = 1 - randomColor; // Invert
-    message.client.db.settings.updateRandomColor.run(randomColor, message.guild.id);
+    await message.client.mongodb.settings.updateRandomColor(randomColor, message.guild.id);
     let description, status;
     if (randomColor === 1) {
       status = '`disabled`	🡪 `enabled`';

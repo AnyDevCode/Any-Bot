@@ -13,9 +13,7 @@ module.exports = {
      * MEMBER LOG
      * ------------------------------------------------------------------------------------------------ */
     // Get member log
-    const memberLogId = client.db.settings.selectMemberLogId
-      .pluck()
-      .get(member.guild.id);
+    const memberLogId = await client.mongodb.settings.selectMemberLogId(member.guild.id);
     const memberLog = member.guild.channels.cache.get(memberLogId);
     if (
       memberLog &&
@@ -45,15 +43,13 @@ module.exports = {
      * AUTO ROLE
      * ------------------------------------------------------------------------------------------------ */
     // Get auto role
-    const autoRoleId = client.db.settings.selectAutoRoleId
-      .pluck()
-      .get(member.guild.id);
+    const autoRoleId = await client.mongodb.settings.selectAutoRoleId(member.guild.id);
     const autoRole = member.guild.roles.cache.get(autoRoleId);
     if (autoRole) {
       try {
         await member.roles.add(autoRole);
       } catch (err) {
-        client.sendSystemErrorMessage(
+        await client.sendSystemErrorMessage(
           member.guild,
           "auto role",
           stripIndent`
@@ -69,10 +65,16 @@ module.exports = {
      * ------------------------------------------------------------------------------------------------ */
     // Get welcome channel
     let {
-      welcome_channel_id: welcomeChannelId,
-      welcome_message: welcomeMessage,
-    } = client.db.settings.selectWelcomes.get(member.guild.id);
+      welcomeChannelID: welcomeChannelId,
+      welcomeMessage: welcomeMessage,
+    } = await client.mongodb.settings.selectRow(member.guild.id);
     const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId);
+
+    if(welcomeMessage[0].data.text){
+      welcomeMessage = welcomeMessage[0].data.text;
+    } else {
+      welcomeMessage = null;
+    }
 
     // Send welcome message
     if (
@@ -87,7 +89,8 @@ module.exports = {
         .replace(/`?\?member`?/g, member) // Member mention substitution
         .replace(/`?\?username`?/g, member.user.username) // Username substitution
         .replace(/`?\?tag`?/g, member.user.tag) // Tag substitution
-        .replace(/`?\?size`?/g, member.guild.members.cache.size); // Guild size substitution
+        .replace(/`?\?size`?/g, member.guild.members.cache.size) // Guild size substitution
+        .replace(/`?\?guild`?/g, member.guild.name) // Guild name substitution
       welcomeChannel.send({
         embeds: [
           new MessageEmbed()
@@ -101,9 +104,7 @@ module.exports = {
      * RANDOM COLOR
      * ------------------------------------------------------------------------------------------------ */
     // Assign random color
-    const randomColor = client.db.settings.selectRandomColor
-      .pluck()
-      .get(member.guild.id);
+    const randomColor = await client.mongodb.settings.selectRandomColor(member.guild.id);
     if (randomColor) {
       const colors = member.guild.roles.cache
         .filter((c) => c.name.startsWith("#"))

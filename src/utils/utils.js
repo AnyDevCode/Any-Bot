@@ -170,7 +170,7 @@ async function transferCrown(client, guild, crownRoleId) {
   
   // If crown role is unable to be found
   if (!crownRole) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+    return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
       Unable to transfer crown role, it may have been modified or deleted
     `);
   }
@@ -189,7 +189,7 @@ async function transferCrown(client, guild, crownRoleId) {
 
         quit = true;
         
-        return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+        return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
           Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
         `, err.message);
       } 
@@ -204,15 +204,21 @@ async function transferCrown(client, guild, crownRoleId) {
     // Clear points
     client.db.users.wipeAllPoints.run(guild.id);
   } catch (err) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+    return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
       Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
     `, err.message);
   }
   
   // Get crown channel and crown channel
-  let { crown_channel_id: crownChannelId, crown_message: crownMessage } = 
-    client.db.settings.selectCrown.get(guild.id);
+  let { crownRoleID: crownChannelID, crownMessage: crownMessage } = 
+    await client.mongodb.settings.selectRow(guild.id);
   const crownChannel = guild.channels.cache.get(crownChannelId);
+
+  if (crownMessage[0].data.text){
+    crownMessage = crownMessage[0].data.text;
+  } else {
+    crownMessage = ""
+  }
 
   // Send crown message
   if (
@@ -238,9 +244,9 @@ async function transferCrown(client, guild, crownRoleId) {
  * @param {Client} client 
  * @param {Guild} guild
  */
-function scheduleCrown(client, guild) {
+async function scheduleCrown(client, guild) {
 
-  const { crown_role_id: crownRoleId, crown_schedule: cron } = client.db.settings.selectCrown.get(guild.id);
+  const { crownRoleID: crownRoleId, crownSchedule: cron } = await client.mongodb.settings.selectRow(guild.id);
 
   if (crownRoleId && cron) {
     guild.job = schedule.scheduleJob(cron, () => {

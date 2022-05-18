@@ -150,7 +150,7 @@ module.exports = class FiltersMusicCommand extends Command {
     });
   }
   async run(message, args, client, player) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
     const embed = new MessageEmbed()
       .setTitle("Available Filters")
       .setDescription(

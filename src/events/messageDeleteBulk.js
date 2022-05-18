@@ -6,7 +6,7 @@ module.exports = {
         const message = messages.first();
   
         // Get message delete log
-        const messageDeleteLogId = client.db.settings.selectMessageDeleteLogId.pluck().get(message.guild.id);
+        const messageDeleteLogId = client.mongodb.settings.selectMessageDeleteLogId(message.guild.id);
         const messageDeleteLog = message.guild.channels.cache.get(messageDeleteLogId);
         if (
           messageDeleteLog &&

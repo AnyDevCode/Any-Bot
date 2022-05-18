@@ -57,8 +57,7 @@ module.exports = class TikTokCommand extends Command {
           
         await message.reply({embeds: [embed]});
     } catch (error) {
-      console.log(error);
-        this.sendErrorMessage(message, 0, 'Please use a valid username');
+        await this.sendErrorMessage(message, 0, 'Please use a valid username');
     }
 
   }

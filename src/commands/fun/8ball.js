@@ -39,12 +39,12 @@ module.exports = class EightBallCommand extends Command {
     }
 
     // Command Code:
-    run(message, args) {
+    async run(message, args) {
 
         // Define the question:
         const question = args.join(' ');
         // Check if the question is empty:
-        if (!question) return this.sendErrorMessage(message, 0, 'Please provide a question to ask');
+        if (!question) return await this.sendErrorMessage(message, 0, 'Please provide a question to ask');
         // Send the answer:
         const embed = new MessageEmbed()
             .setTitle('🎱  The Magic 8-Ball  🎱')

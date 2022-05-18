@@ -17,7 +17,7 @@ module.exports = class RankCommand extends Command {
   async run(message, args) {
     // Check if user is in a voice channel
     if (message.member.voice.channel)
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
           message,
           1,
           "Because a limitation of the API, you can't use this command in a voice channel."
@@ -58,13 +58,9 @@ module.exports = class RankCommand extends Command {
     let mod_badge_or_admin_role = null;
 
     let moderator_role =
-        message.client.db.settings.selectModRoleId
-            .pluck()
-            .get(message.guild.id) || "";
+        await message.client.mongodb.settings(message.guild.id) || "";
     let admin_role =
-        message.client.db.settings.selectAdminRoleId
-            .pluck()
-            .get(message.guild.id) || "";
+        await message.client.mongodb.settings.selectAdminRoleId(message.guild.id) || "";
 
     if (member.roles.cache.has(moderator_role)) {
       mod_badge_or_admin_role = "https://i.imgur.com/tpaksRh.png";

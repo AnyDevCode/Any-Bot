@@ -18,8 +18,8 @@ module.exports = class SetMessageEditLogCommand extends Command {
       examples: ['setmessageeditlog #bot-log']
     });
   }
-  run(message, args) {
-    const messageEditLogId = message.client.db.settings.selectMessageEditLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const messageEditLogId = await message.client.mongodb.settings.selectMessageEditLogId(message.guild.id);
     const oldMessageEditLog = message.guild.channels.cache.get(messageEditLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetMessageEditLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateMessageEditLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateMessageEditLogId(null, message.guild.id);
       return message.channel.send({embeds: [embed.addField('Message Edit Log', `${oldMessageEditLog} ➔ \`None\``)]});
     }
 
     const messageEditLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!messageEditLog || messageEditLog.type !== 'GUILD_TEXT' || !messageEditLog.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateMessageEditLogId.run(messageEditLog.id, message.guild.id);
+    await message.client.mongodb.settings.updateMessageEditLogId(messageEditLog.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Message Edit Log', `${oldMessageEditLog} ➔ ${messageEditLog}`)]});
   }
 };

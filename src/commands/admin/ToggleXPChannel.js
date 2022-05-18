@@ -17,16 +17,15 @@ module.exports = class ToggleXPChannelCommand extends Command {
       examples: ['togglexpchannel']
     });
   }
-  run(message) {
+  async run(message) {
 
     let {
-      xp_channel_id: xpChannelID,
-      xp_message_action: xp_message_action
-    } = message.client.db.settings.selectXP.get(message.guild.id);
+      xpMessageAction: xp_message_action
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
 
     xp_message_action = 1 - xp_message_action
 
-    message.client.db.settings.updateXPChannelMessage.run(xp_message_action, message.guild.id);
+    await message.client.mongodb.settings.updateXPChannelMessage(xp_message_action, message.guild.id);
 
     const status = message.client.utils.getStatus(xp_message_action)
 

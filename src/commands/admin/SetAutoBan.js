@@ -24,14 +24,14 @@ module.exports = class SetAutoBanCommand extends Command {
     }
 
   // Command Code:
-  run(message, args) {
+  async run(message, args) {
 
         // Check for warn count:
-        const autoBan = message.client.db.settings.selectAutoBan.pluck().get(message.guild.id) || 'disabled';
+        const autoBan = await message.client.mongodb.settings.selectAutoBan(message.guild.id) || 'disabled';
         const amount = Number(args[0]);
         // Check if warn count is a number:
         if (amount && (!Number.isInteger(amount) || amount < 0))
-            return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+            return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
 
         // Send embed:
         const embed = new MessageEmbed()
@@ -44,12 +44,12 @@ module.exports = class SetAutoBanCommand extends Command {
 
         // Clear if no args provided
         if (args.length === 0 || amount === 0) {
-            message.client.db.settings.updateAutoBan.run(null, message.guild.id);
+            await message.client.mongodb.settings.updateAutoBan(null, message.guild.id);
             return message.channel.send({embeds: [embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`disabled\``)]});
         }
 
         // Update warn count:
-        message.client.db.settings.updateAutoBan.run(amount, message.guild.id);
+        await message.client.mongodb.settings.updateAutoBan(amount, message.guild.id);
         return message.channel.send({embeds: [embed.addField('Auto Ban', `\`${autoBan}\` ➔ \`${amount}\``)]});
     }
 };

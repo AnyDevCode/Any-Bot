@@ -11,8 +11,8 @@ module.exports = class PrefixCommand extends Command {
       type: client.types.INFO
     });
   }
-  run(message) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
+  async run(message) {
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
     const embed = new MessageEmbed()
       .setTitle('Any Bot\'s Prefix')
       .setThumbnail(message.client.user.displayAvatarURL({ dynamic: true }))

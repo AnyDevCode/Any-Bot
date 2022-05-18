@@ -20,8 +20,8 @@ module.exports = class SetXPChannelCommand extends Command {
     });
   }
   async run(message, args) {
-    let { xp_channel_id: xpChannelID, xp_message_action: xp_message_action } =
-      message.client.db.settings.selectXP.get(message.guild.id);
+    let { xpChannelID: xpChannelID, xpMessageAction: xp_message_action } =
+      await message.client.mongodb.settings.selectRow(message.guild.id);
     const oldXPChannel =
       message.guild.channels.cache.get(xpChannelID) || "`None`";
 
@@ -53,7 +53,7 @@ module.exports = class SetXPChannelCommand extends Command {
       .setColor(message.guild.me.displayHexColor);
 
     if (!xpChannel || xpChannel.type !== "GUILD_TEXT" || !xpChannel.viewable) {
-      message.client.db.settings.updateXPChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateXPChannelId(null, message.guild.id);
 
       return message.channel.send({
         embeds: [
@@ -74,7 +74,7 @@ module.exports = class SetXPChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateXPChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateXPChannelId(null, message.guild.id);
 
       // Update status
 
@@ -95,7 +95,7 @@ module.exports = class SetXPChannelCommand extends Command {
       });
     }
 
-    message.client.db.settings.updateXPChannelId.run(
+    await message.client.mongodb.settings.updateXPChannelId(
       xpChannel.id,
       message.guild.id
     );

@@ -29,7 +29,7 @@ module.exports = class CatCommand extends Command {
       message.channel.send({embeds: [embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', "The Api is down");
+      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', "The Api is down");
     }
   }
 };

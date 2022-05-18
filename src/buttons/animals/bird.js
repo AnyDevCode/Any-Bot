@@ -20,7 +20,7 @@ module.exports = class BirdButton extends Button {
               iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
           })
           .setTimestamp()
-          .setColor(interaction.guild.me.displayHexColor);
+          .setColor(interaction.guild ? interaction.guild.me.displayHexColor : '#7289DA');
 
       const row = new MessageActionRow().addComponents(
           new MessageButton()

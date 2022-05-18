@@ -22,7 +22,7 @@ module.exports = class ChatBotCommand extends Command {
 
 
         // Check if it has args:
-        if (!args[0]) return this.sendErrorMessage(message, 0, 'Put some text that you want me to answer you');
+        if (!args[0]) return await this.sendErrorMessage(message, 0, 'Put some text that you want me to answer you');
         // Args:
         let text = args.join(" ");
         // Try to fetch the answer:
@@ -38,9 +38,9 @@ module.exports = class ChatBotCommand extends Command {
                     .setTimestamp()
                     .setColor(message.guild.me.displayHexColor);
                 return message.channel.send({embeds: [embed]});
-            }).catch(() => {
+            }).catch(async () => { 
             // Send the error message:
-            this.sendErrorMessage(message, 1, "I'm sorry, I can't answer that right now. Please try again later.");
+            await this.sendErrorMessage(message, 1, "I'm sorry, I can't answer that right now. Please try again later."); 
         })
 
     }

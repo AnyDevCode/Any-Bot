@@ -15,12 +15,12 @@ module.exports = {
     }
   
     // Get disabled commands
-    let disabledCommands = client.db.settings.selectDisabledCommands.pluck().get(message.guild.id) || [];
+    let disabledCommands = await client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof (disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
   
     // Get points
     const {point_tracking: pointTracking, message_points: messagePoints, command_points: commandPoints} =
-        client.db.settings.selectPoints.get(message.guild.id);
+        client.mongodb.settings.selectPoints(message.guild.id);
   
     //Get XP
     let {
@@ -30,7 +30,7 @@ module.exports = {
       xp_message_action: xp_message_action,
       xp_channel_id: xp_channel_id
     } =
-        client.db.settings.selectXP.get(message.guild.id);
+        client.mongodb.settings.selectXP(message.guild.id);
   
     let min_Messages_xp = Math.floor(xpMessages - 2)
     if (min_Messages_xp < 0) min_Messages_xp = 0;
@@ -49,13 +49,13 @@ module.exports = {
   
   
     // Command handler
-    const prefix = client.db.settings.selectPrefix.pluck().get(message.guild.id);
+    const prefix = await client.mongodb.settings.selectPrefix(message.guild.id);
     const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})\\s*`);
   
     if (prefixRegex.test(message.content)) {
   
       // Get mod channels
-      let modChannelIds = message.client.db.settings.selectModChannelIds.pluck().get(message.guild.id) || [];
+      let modChannelIds = await message.client.mongodb.settings.selectModChannelIds(message.guild.id) || [];
       if (typeof(modChannelIds) === 'string') modChannelIds = modChannelIds.split(' ');
   
       const [, match] = message.content.match(prefixRegex);

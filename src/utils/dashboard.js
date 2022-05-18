@@ -3,6 +3,7 @@ const app = express();
 
 let port = process.env.PORT || 80
 
+
 async function index(client){
   app.get('/api/all', (req, res) => {
     const users = {}
@@ -22,7 +23,7 @@ async function index(client){
           count: guild.memberCount,
           online: guild.members.cache.filter((member) => {
             if(member.presence) return member.presence.status === 'online';
-            else return false;
+            else return false; 
           }).size,
           idle: guild.members.cache.filter((m) => {
             if(m.presence) return m.presence.status === 'idle';
@@ -110,7 +111,6 @@ async function index(client){
     res.status(200).json(data);
   });
 }
-
 app.listen(port, () => {
   console.log("Server in port " + port);
 });

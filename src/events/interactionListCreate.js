@@ -8,8 +8,6 @@ module.exports = {
     try {
       await menu.run(interaction);
     } catch (e) {
-      if (e) console.log(e);
-
       interaction.client.emit("error", e);
     }
   },

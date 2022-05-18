@@ -95,7 +95,7 @@ module.exports = {
      * UPDATE TABLES
      * ------------------------------------------------------------------------------------------------ */
     // Update settings table
-    client.db.settings.insertRow.run(
+    await client.mongodb.settings.insertRow(
       guild.id,
       guild.name,
       guild.systemChannelID, // Default channel

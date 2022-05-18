@@ -19,7 +19,7 @@ module.exports = class LyricsMusicCommand extends Command {
       const first_result = searches[0];
       const lyrics = await first_result.lyrics();
 
-      if(!lyrics) return this.sendErrorMessage(message, 1, 'No lyrics found for that song.');
+      if(!lyrics) return await this.sendErrorMessage(message, 1, 'No lyrics found for that song.');
 
       if(lyrics.length > 2048) {
         const embeds = [];

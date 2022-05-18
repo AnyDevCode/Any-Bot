@@ -8,7 +8,7 @@ module.exports = {
   once: true,
   async execute(client, slashes) {
     const activities = [
-      { name: `!help`, type: "LISTENING" },
+      { name: `>help`, type: "LISTENING" },
       { name: "for you", type: "LISTENING" },
     ];
 
@@ -30,6 +30,7 @@ module.exports = {
         name: `with ${client.commands.size} commands`,
         type: "PLAYING",
       }; // Update command count
+
       if (activity >= activities.length) activity = 0;
       client.user.setActivity(activities[activity].name, {
         type: activities[activity].type,
@@ -62,7 +63,8 @@ module.exports = {
           client.users.cache.size
         )}/${abbreviateNumber(closest_users)}`
       );
-    }, 1000 * 60 * 5);
+    }, //Every 10 minutes
+    600000);
 
     client.logger.info(`Logged in as ${client.user.tag}!`);
     client.logger.info(
@@ -84,12 +86,11 @@ module.exports = {
           client.logger.info("Global slash commands updated!");
         } else {
           await rest.put(
-          Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
-              {
-                body: slashes,
-              }
-        )
-          ;
+            Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
+            {
+              body: slashes,
+            }
+          );
           client.logger.info("Guild slash commands updated!");
         }
       } catch (e) {
@@ -99,7 +100,7 @@ module.exports = {
     })();
 
     client.logger.info("Updating database and scheduling jobs...");
-    for (const guild of client.guilds.cache.values()) {
+    for await (const guild of client.guilds.cache.values()) {
       /** ------------------------------------------------------------------------------------------------
        * FIND SETTINGS
        * ------------------------------------------------------------------------------------------------ */
@@ -129,7 +130,7 @@ module.exports = {
        * UPDATE TABLES
        * ------------------------------------------------------------------------------------------------ */
       // Update settings table
-      await client.db.settings.insertRow.run(
+      await client.mongodb.settings.insertRow(
         guild.id,
         guild.name,
         guild.systemChannelID, // Default channel
@@ -144,18 +145,205 @@ module.exports = {
         crownRole ? crownRole.id : null
       );
 
+      if (process.argv.slice(2)[0] === "--update") {
+        const database = await client.db.settings.selectRow.get(guild.id);
+
+        const crownMessage = [
+          {
+            type: "message",
+            data: { text: database.crown_message },
+          },
+        ];
+
+        const welcomeMessage = [
+          {
+            type: "message",
+            data: { text: database.welcome_message },
+          },
+        ];
+
+        const farewellMessage = [
+          {
+            type: "message",
+            data: { text: database.farewell_message },
+          },
+        ];
+
+        await client.mongodb.settings.updatesqlitetomongo(
+          database.guild_id,
+          database.guild_name,
+          database.prefix,
+          database.system_channel_id,
+          database.starboard_channel_id,
+          database.admin_role_id,
+          database.mod_role_id,
+          database.mute_role_id,
+          database.auto_role_id,
+          database.auto_kick,
+          database.auto_ban,
+          database.random_color,
+          database.mod_channel_ids,
+          database.disabled_commands,
+          database.mod_log_id,
+          database.member_log_id,
+          database.nickname_log_id,
+          database.role_log_id,
+          database.message_edit_log_id,
+          database.message_delete_log_id,
+          database.verification_role_id,
+          database.verification_channel_id,
+          database.verification_message,
+          database.verification_message_id,
+          0,
+          database.welcome_channel_id,
+          welcomeMessage,
+          database.farewell_channel_id,
+          farewellMessage,
+          database.point_tracking,
+          database.message_points,
+          database.command_points,
+          database.voice_points,
+          database.xp_tracking,
+          database.message_xp,
+          database.command_xp,
+          database.voice_xp,
+          database.xp_message_action,
+          database.xp_channel_id,
+          database.crown_role_id,
+          database.crown_channel_id,
+          crownMessage,
+          database.crown_schedule
+        );
+
+        const newMembers = [];
+
+        for (const member of guild.members.cache.values()) {
+          const memberDatabase = client.db.users.selectRow.get(
+            member.id,
+            guild.id
+          );
+
+          newMembers.push({
+            user_id: member.id,
+            user_name: member.user.username,
+            user_discriminator: member.user.discriminator,
+            guild_id: guild.id,
+            guild_name: guild.name,
+            date_joined: member.joinedAt ? member.joinedAt.toString() : null,
+            bot: member.user.bot ? true : false,
+            points: memberDatabase ? memberDatabase.points : 0,
+            xp: memberDatabase ? memberDatabase.xp : 0,
+            level: memberDatabase ? memberDatabase.level : 0,
+            total_points: memberDatabase ? memberDatabase.total_points : 0,
+            total_xp: memberDatabase ? memberDatabase.total_xp : 0,
+            total_messages: memberDatabase ? memberDatabase.total_messages : 0,
+            total_commands: memberDatabase ? memberDatabase.total_commands : 0,
+            total_reactions: memberDatabase
+              ? memberDatabase.total_reactions
+              : 0,
+            total_voice: memberDatabase ? memberDatabase.total_voice : 0,
+            total_streams: memberDatabase ? memberDatabase.total_streams : 0,
+            total_pictures: memberDatabase ? memberDatabase.total_pictures : 0,
+            current_member: member.roles.cache.has(guild.id) ? true : false,
+          });
+
+
+          client.logger.info(
+            `${member.user.username} has been added to the database!`
+          );
+        }
+
+        await client.mongodb.users.updatesqlitetomongo(newMembers);
+
+      }
+
       // Update users table
-      guild.members.cache.forEach((member) => {
-        client.db.users.insertRow.run(
+      // guild.members.cache.forEach((member) => {
+      //     client.db.users.insertRow.run(
+      //         member.id,
+      //         member.user.username,
+      //         member.user.discriminator,
+      //         guild.id,
+      //         guild.name,
+      //         member.joinedAt.toString(),
+      //         member.user.bot ? 1 : 0
+      //     );
+      // });
+
+      //Get all users in the guild
+      const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
+
+      //Check if the user is in the database
+      for await (const member of guild.members.cache.values()) {
+        const user = dbUsers.find((u) => u.user_id === member.id);
+
+        if (user) {
+          //Check if have the same data
+          if (
+            user.user_name !== member.user.username ||
+            user.user_discriminator !== member.user.discriminator ||
+            guild.name !== user.guild_name
+          ) {
+            //Update the user
+            await client.mongodb.users.updateRow(
+              member.id,
+              member.user.username,
+              member.user.discriminator,
+              guild.id,
+              guild.name,
+              member.joinedAt
+                ? member.joinedAt.toString()
+                : Date.now().toString(),
+              member.user.bot ? 1 : 0,
+              user.points,
+              user.xp,
+              user.level,
+              user.total_points,
+              user.total_xp,
+              user.total_messages,
+              user.total_commands,
+              user.total_reactions,
+              user.total_voice,
+              user.total_stream,
+              user.total_pictures,
+              user.current_member
+            );
+
+            continue;
+          } else {
+            //No run more and continue with the next member
+            continue;
+          }
+        }
+
+        //If the user is not in the database, add them
+        await client.mongodb.users.insertRow(
           member.id,
           member.user.username,
           member.user.discriminator,
           guild.id,
           guild.name,
-          member.joinedAt.toString(),
+          member.joinedAt ? member.joinedAt.toString() : Date.now().toString(),
           member.user.bot ? 1 : 0
         );
-      });
+
+        client.logger.info(
+          `${member.user.username} has been added to the database!`
+        );
+      }
+
+      // for await (const member of guild.members.cache.values()) {
+      //     await client.mongodb.users.insertRow(
+      //         member.id,
+      //         member.user.username,
+      //         member.user.discriminator,
+      //         guild.id,
+      //         guild.name,
+      //         member.joinedAt ? member.joinedAt.toString() : (Date.now()).toString(),
+      //         member.user.bot ? 1 : 0
+      //     );
+
+      // }
 
       /** ------------------------------------------------------------------------------------------------
        * CHECK DATABASE
@@ -186,41 +374,47 @@ module.exports = {
        * ------------------------------------------------------------------------------------------------ */
       // Fetch verification message
       const {
-        verification_channel_id: verificationChannelId,
-        verification_message_id: verificationMessageId,
-      } = client.db.settings.selectVerification.get(guild.id);
+        verificationChannelID: verificationChannelId,
+        verificationMessageID: verificationMessageId,
+      } = await client.mongodb.settings.selectRow(guild.id);
       const verificationChannel = guild.channels.cache.get(
         verificationChannelId
       );
       if (verificationChannel && verificationChannel.viewable) {
         try {
           await verificationChannel.messages.fetch(verificationMessageId);
-        } catch (err) {
-          // Message was deleted
-          client.logger.error(err);
-        }
+        } catch (e) {}
       }
 
       /** ------------------------------------------------------------------------------------------------
        * CROWN ROLE
        * ------------------------------------------------------------------------------------------------ */
       // Schedule crown role rotation
-      client.utils.scheduleCrown(client, guild);
+      await client.utils.scheduleCrown(client, guild);
     }
 
     // Remove left guilds
     if (!client.shard) {
-      const dbGuilds = await client.db.settings.selectGuilds.all();
+      const dbGuilds = await client.mongodb.settings.selectGuilds();
       const guilds = Array.from(client.guilds.cache.keys());
-      const leftGuilds = dbGuilds.filter(
-        (g1) => !guilds.some((g2) => g1.guildID === g2.id)
-      );
+
+      //Create a const leftGuilds if the guilds in the dbGuilds array are not in the guilds array
+
+      const leftGuilds = dbGuilds.filter((g1) => !guilds.includes(g1.guildID));
+
       for (const guild of leftGuilds) {
         await client.mongodb.settings.deleteGuild(guild.guildID);
-        client.db.users.deleteGuild.run(guild.guild_id);
 
         client.logger.info(`Any Bot has left ${guild.guild_name}`);
       }
     }
+
+    if (process.argv.slice(2)[0] === "--update") {
+      // Terminate the process
+      process.exit(0);
+    }
+
+    // Finish message
+    client.logger.info(`Ready to serve ${client.guilds.cache.size} guilds, in ${client.channels.cache.size} channels of ${client.users.cache.size} users.`);
   },
 };

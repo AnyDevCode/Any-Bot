@@ -13,6 +13,9 @@ const {
   verified_bot,
   verified_developer,
 } = require("../../utils/emojis.json");
+const { get } = require("request");
+const { user } = require("tiktok-scraper");
+const { default: axios } = require("axios");
 const status = {
   online: "🟢 `Online`",
   dnd: "🔴  `Do Not Disturbe`",
@@ -39,47 +42,77 @@ let badges1 = {
   HOUSE_BRILLIANCE: house_brilliance,
   BUGHUNTER_LEVEL_1: bughunter_level_1,
   BUGHUNTER_LEVEL_2: bughunter_level_2,
-  VERIFIED_DEVELOPER: verified_developer,
+  EARLY_VERIFIED_BOT_DEVELOPER: verified_developer,
   HOUSE_BALANCE: house_balance,
   VERIFIED_BOT: verified_bot,
 };
-
 module.exports = class UserInfoCommand extends Command {
   constructor(client) {
     super(client, {
       name: "userinfo",
-      aliases: ["ui", "user"],
-      usage: "userinfo <Mention>",
+      aliases: ["ui", "user", "whois"],
+      usage: "userinfo <mention/userID>",
       description: "Fetches information about a user.",
       examples: ["userinfo @MDC"],
       type: client.types.INFO,
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const member =
       this.getMemberFromMention(message, args[0]) ||
       message.guild.members.cache.get(args[0]) ||
       message.member;
+
+
+    async function getUserBannerUrl(userId) {
+      let user = await message.client.api.users(userId).get();
+      if (!user.banner) return null;
+      if(user.banner.startsWith("a_")){
+        //Insert a ".gif" at the end of the banner url
+        user.banner = user.banner.replace(user.banner, `${user.banner}.gif`);
+      }
+      return user.banner ? `https://cdn.discordapp.com/banners/${userId}/${user.banner}?size=4096` : null;
+  }
+
+
+  const banner = await getUserBannerUrl(member.id);
+
+    //Check if the user have a role with "#" in the start
+    let color_role
+  
+    const roles_colors = member.roles.cache
+      .filter((r) => r.name.startsWith("#"))
+      .map((r) => r.id)
+      .join(", ");
+
+      if(roles_colors){
+        color_role = roles_colors.split(",")[0];
+      }
+    
+    //Get the user's highest role
+    const highestRole = member.roles.highest;
+
     const embed = new MessageEmbed()
-      .setColor(message.guild.me.displayHexColor)
-      .setAuthor({
-        name: member.user.tag,
-        iconURL: member.user.displayAvatarURL({ dynamic: true }),
-      })
-      .setTitle(`${member.user.username}'s Info`)
+      .setColor(member.displayHexColor)
+      .setTitle(`${member.user.username}'s Information`)
       .setThumbnail(
         member.user.displayAvatarURL({ format: "png", dynamic: true })
       )
-      .addField("Username", member.user.tag, true)
-      .addField("ID", member.user.id, true)
-      .addField(
-        "Created At",
-        formatDate("MM/DD/YYYY, at HH:mm:ss", member.user.createdAt)
-      )
+      .addField("User", `${member.user}`, true)
+      
+      .addField("ID", `\`${member.user.id}\``, true)
+      .addField("Discriminator", `\`#${member.user.discriminator}\``, true)
+
+      .addField("Color role", color_role ? `<@&${color_role}>` : "\`None\`", true)
+      .addField("Highest role", highestRole ? `<@&${highestRole.id}>` : "\`None\`", true)
       .addField(
         "Joined At",
-        formatDate("MM/DD/YYYY, at HH:mm:ss", member.joinedAt),
+        `<t:${Math.round(Date.parse(member.joinedAt)/1000)}:R>`,
         true
+      )
+      .addField(
+        "Created At",
+        `<t:${Math.round(Date.parse(member.user.createdAt)/1000)}:R>`,
       )
       .addField(
         "Roles",
@@ -88,12 +121,6 @@ module.exports = class UserInfoCommand extends Command {
           .map((r) => r)
           .join(", ") || "None"
       )
-      .addField(
-        "Status",
-        member.presence.status ? status[member.presence.status] : "Offline",
-        true
-      )
-      .addField("Bot", member.user.bot ? "Yes" : "No", true)
       .addField(
         "Badges",
         (member.user.flags
@@ -107,8 +134,8 @@ module.exports = class UserInfoCommand extends Command {
         true
       )
       .addField(
-        "Boosts",
-        member.premiumSince ? `${member.premiumSince}` : "None",
+        "Boosts?",
+        member.premiumSince ? "\`Yes\`" : "\`No\`",
         true
       )
       .setThumbnail(
@@ -118,6 +145,7 @@ module.exports = class UserInfoCommand extends Command {
         text: message.member.displayName,
         iconURL: message.author.displayAvatarURL({ dynamic: true }),
       })
+      .setImage(user.banner ? user.banner : (banner ? banner : null))
       .setTimestamp();
     message.channel.send({ embeds: [embed] });
   }

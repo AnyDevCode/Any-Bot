@@ -14,11 +14,11 @@ module.exports = class WarnsCommand extends Command {
       examples: ['warns @MDC']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member) 
-      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
 
     let warns = message.client.db.warns.warnsByUser.all(member.id, message.guild.id) || [{ }];
     const count = warns.length;

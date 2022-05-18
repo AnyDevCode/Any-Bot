@@ -19,7 +19,7 @@ module.exports = class ToggleCommandCommand extends Command {
       examples: ['togglecommand ping']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
     const { ADMIN, OWNER } = message.client.types;
 
@@ -32,7 +32,7 @@ module.exports = class ToggleCommandCommand extends Command {
     if (command.type === ADMIN) 
       return this.sendErrorMessage(message, 0, `${capitalize(ADMIN)} commands cannot be disabled`);
 
-    let disabledCommands = message.client.db.settings.selectDisabledCommands.pluck().get(message.guild.id) || [];
+    let disabledCommands = await message.client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof(disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
 
     let description;
@@ -48,7 +48,7 @@ module.exports = class ToggleCommandCommand extends Command {
       description = `The \`${command.name}\` command has been successfully **enabled**. ${success}`;
     }
 
-    message.client.db.settings.updateDisabledCommands.run(disabledCommands.join(' '), message.guild.id);
+    await message.client.mongodb.settings.updateDisabledCommands(disabledCommands.join(' '), message.guild.id);
 
     disabledCommands = disabledCommands.map(c => `\`${c}\``).join(' ') || '`None`';
     const embed = new MessageEmbed()

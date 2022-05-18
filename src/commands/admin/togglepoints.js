@@ -13,15 +13,15 @@ module.exports = class TogglePointsCommand extends Command {
       userPermissions: ['MANAGE_GUILD']
     });
   }
-  run(message) {
+  async run(message) {
     let {
-      point_tracking: pointTracking,
-      message_points: messagePoints,
-      command_points: commandPoints,
-      voice_points: voicePoints
-    } = message.client.db.settings.selectPoints.get(message.guild.id);
+      pointTracking: pointTracking,
+      messagePoints: messagePoints,
+      commandPoints: commandPoints,
+      voicePoints: voicePoints
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
     pointTracking = 1 - pointTracking; // Invert
-    message.client.db.settings.updatePointTracking.run(pointTracking, message.guild.id);
+    await message.client.mongodb.settings.updatePointTracking(pointTracking, message.guild.id);
 
     let description, status;
     if (pointTracking === 1) {

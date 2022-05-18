@@ -14,7 +14,7 @@ module.exports = class e621Command extends Command {
     }
 
     async run(message, args) {
-        if (!message.channel.nsfw) return this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
+        if (!message.channel.nsfw) return await this.sendErrorMessage(message, 2, 'Please use in a NSFW channel');
         const {stringToUrlEncoded} = message.client.utils;
         const tags = []
         for (let i = 0; i < args.length; i++) {

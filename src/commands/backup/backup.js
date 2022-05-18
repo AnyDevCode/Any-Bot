@@ -23,7 +23,7 @@ module.exports = class BackupCreateCommand extends Command {
   async run(message, args) {
     // Check if the user is the guild owner:
     if (message.guild.ownerId !== message.author.id)
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
         message,
         3,
         "You must be the server owner to use this command!"
@@ -41,7 +41,7 @@ module.exports = class BackupCreateCommand extends Command {
           .create(message.guild, {
             jsonBeautify: true,
           })
-          .then((backupData) => {
+          .then(async (backupData) => {
             // Send the backup ID to MD:
             message.author.send({
               embeds: [
@@ -49,7 +49,7 @@ module.exports = class BackupCreateCommand extends Command {
                   .setAuthor({ name: `Backup created successfully!` })
                   .setColor(message.guild.me.displayHexColor)
                   .setDescription(
-                    `To load backup, use ${message.client.db.settings.selectPrefix.get(
+                    `To load backup, use ${await message.client.mongodb.settings.selectPrefix(
                       message.guild.id
                     )}backup load ${backupData.id}`
                   )
@@ -71,7 +71,7 @@ module.exports = class BackupCreateCommand extends Command {
       case "info":
         // Check if the backup ID is valid:
         if (!backupID)
-          return this.sendErrorMessage(
+          return await this.sendErrorMessage(
             message,
             0,
             "Please specify a backup ID!"
@@ -102,15 +102,15 @@ module.exports = class BackupCreateCommand extends Command {
               .setColor(message.guild.me.displayHexColor);
             return message.channel.send({ embeds: [embed] });
           })
-          .catch(() => {
+          .catch(async () => {
             // if the backup wasn't found
-            return this.sendErrorMessage(message, 1, "Backup not found!");
+            return await this.sendErrorMessage(message, 1, "Backup not found!");
           });
       // Load a backup:
       case "load":
         // Check if the backup ID is valid:
         if (!backupID)
-          return this.sendErrorMessage(
+          return await this.sendErrorMessage(
             message,
             0,
             "Please specify a backup ID!"
@@ -156,9 +156,9 @@ module.exports = class BackupCreateCommand extends Command {
                         // When the backup is loaded, delete them from the server
                         backup.remove(backupID);
                       })
-                      .catch(() => {
+                      .catch(async () => {
                         // If an error occurred
-                        return this.sendErrorMessage(
+                        return await this.sendErrorMessage(
                           message,
                           3,
                           "An error occurred, check if I have administrator permissions"
@@ -171,10 +171,10 @@ module.exports = class BackupCreateCommand extends Command {
       // If the command is not valid
       default:
         // Send an error message
-        return this.sendErrorMessage(
+        return await this.sendErrorMessage(
           message,
           0,
-          `Invalid option! For more info, use ${message.client.db.settings.selectPrefix.get(
+          `Invalid option! For more info, use ${await message.client.mongodb.settings.selectPrefix(
             message.guild.id
           )}help backup`
         );

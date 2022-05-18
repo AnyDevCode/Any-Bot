@@ -12,15 +12,15 @@ module.exports = class ExplainPointsCommand extends Command {
       type: client.types.POINTS
     });
   }
-  run(message) {
+  async run(message) {
 
     // Get disabled leaderboard
-    let disabledCommands = message.client.db.settings.selectDisabledCommands.pluck().get(message.guild.id) || [];
+    let disabledCommands = await message.client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof(disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
 
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
-    const { message_points: messagePoints, command_points: commandPoints, voice_points: voicePoints } 
-      = message.client.db.settings.selectPoints.get(message.guild.id);
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
+    const { messagePoints: messagePoints, commandPoints: commandPoints, voicePoints: voicePoints } 
+      = await message.client.mongodb.settings.selectRow(message.guild.id);
 
     // Points per
     let earningPoints = 

@@ -38,7 +38,7 @@ module.exports = class BirdCommand extends Command {
 
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', 'The Api is down');
+      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', 'The Api is down');
     }
   }
 };

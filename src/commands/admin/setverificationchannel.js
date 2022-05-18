@@ -24,11 +24,11 @@ module.exports = class SetVerificationChannelCommand extends Command {
   }
   async run(message, args) {
     let {
-      verification_role_id: verificationRoleId,
-      verification_channel_id: verificationChannelId,
-      verification_message: verificationMessage,
-      verification_message_id: verificationMessageId,
-    } = message.client.db.settings.selectVerification.get(message.guild.id);
+      verificationRoleID: verificationRoleId,
+      verificationChannelID: verificationChannelId,
+      verificationMessage: verificationMessage,
+      verificationMessageID: verificationMessageId,
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
     const oldVerificationChannel =
       message.guild.channels.cache.get(verificationChannelId) || "`None`";
@@ -59,11 +59,11 @@ module.exports = class SetVerificationChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateVerificationChannelId.run(
+      await message.client.mongodb.settings.updateVerificationChannelId(
         null,
         message.guild.id
       );
-      message.client.db.settings.updateVerificationMessageId.run(
+      await message.client.mongodb.settings.updateVerificationMessageId(
         null,
         message.guild.id
       );
@@ -107,7 +107,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
       verificationChannel.type !== "GUILD_TEXT" ||
       !verificationChannel.viewable
     )
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
         message,
         0,
         stripIndent`
@@ -124,7 +124,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
         ? `\`${oldStatus}\` ➔ \`${status}\``
         : `\`${oldStatus}\``;
 
-    message.client.db.settings.updateVerificationChannelId.run(
+    await message.client.mongodb.settings.updateVerificationChannelId(
       verificationChannel.id,
       message.guild.id
     );
@@ -162,12 +162,12 @@ module.exports = class SetVerificationChannelCommand extends Command {
         }
         );
         await msg.react(verify.split(":")[2].slice(0, -1));
-        message.client.db.settings.updateVerificationMessageId.run(
+        await message.client.mongodb.settings.updateVerificationMessageId(
           msg.id,
           message.guild.id
         );
       } else {
-        return message.client.sendSystemErrorMessage(
+        return await message.client.sendSystemErrorMessage(
           message.guild,
           "verification",
           stripIndent`

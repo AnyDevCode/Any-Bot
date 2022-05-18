@@ -18,9 +18,9 @@ module.exports = class RemoveRoleCommand extends Command {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
-      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return this.sendErrorMessage(message, 0, 'You cannot remove a role from someone with an equal or higher role');
+      return await this.sendErrorMessage(message, 0, 'You cannot remove a role from someone with an equal or higher role');
 
     const role = this.getRoleFromMention(message, args[1]) || message.guild.roles.cache.get(args[1]);
 
@@ -29,9 +29,9 @@ module.exports = class RemoveRoleCommand extends Command {
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
     if (!role) 
-      return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
     else if (!member.roles.cache.has(role.id)) // If member doesn't have role
-      return this.sendErrorMessage(message, 0, 'User does not have the provided role');
+      return await this.sendErrorMessage(message, 0, 'User does not have the provided role');
     else {
       try {
 
@@ -57,7 +57,7 @@ module.exports = class RemoveRoleCommand extends Command {
 
       } catch (err) {
         message.client.logger.error(err.stack);
-        this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
+        await this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
       }
     }  
   }

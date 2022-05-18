@@ -20,14 +20,14 @@ module.exports = class SetVoicePointsVoice extends Command {
       examples: ['setvoicexp 5']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     let amount = args[0];
     if (!amount || !Number.isInteger(Number(amount)) || amount < 0) 
-      return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+      return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
     amount = Math.floor(amount);
     const {
-      xp_tracking: xpTracking, message_xp: xpMessages, command_xp: xpCommands, voice_xp: xpVoice
-    } = message.client.db.settings.selectXP.get(message.guild.id);
+      xpTracking: xpTracking, messageXP: xpMessages, commandXP: xpCommands, voiceXP: xpVoice
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
 
     let old_minimum = Math.floor(xpVoice - 2);
     if (old_minimum < 0) old_minimum = 0;
@@ -46,7 +46,7 @@ module.exports = class SetVoicePointsVoice extends Command {
     let maximum_xp_message = Math.floor(xpMessages + 2);
 
     const status = message.client.utils.getStatus(xpTracking);
-    message.client.db.settings.updateVoiceXP.run(amount, message.guild.id);
+    await message.client.mongodb.settings.updateVoiceXP(amount, message.guild.id);
     const embed = new MessageEmbed()
         .setTitle('Settings: `XP`')
         .setThumbnail(message.guild.iconURL({ dynamic: true }))

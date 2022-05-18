@@ -19,17 +19,18 @@ module.exports = class WarnPurgeCommand extends Command {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member) 
-      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member === message.member) 
-      return this.sendErrorMessage(message, 0, 'You cannot warn yourself'); 
+      return await this.sendErrorMessage(message, 0, 'You cannot warn yourself'); 
     if (member.roles.highest.position >= message.member.roles.highest.position) 
-      return this.sendErrorMessage(message, 0, 'You cannot warn someone with an equal or higher role');
+      return await this.sendErrorMessage(message, 0, 'You cannot warn someone with an equal or higher role');
     
-    const autoKick = message.client.db.settings.selectAutoKick.pluck().get(message.guild.id); // Get warn # for auto kick
-    const autoBan = message.client.db.settings.selectAutoBan.pluck().get(message.guild.id); // Get warn # for auto ban
+      const autoKick = await message.client.mongodb.settings.selectAutoKick(message.guild.id); // Get warn # for auto kick
+      const autoBan = await message.client.mongodb.settings.selectAutoBan(message.guild.id); // Get warn # for auto kick
+      
     const amount = parseInt(args[1]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
+      return await this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
 
     let reason = args.slice(2).join(' ');
     if (!reason) reason = '`None`';

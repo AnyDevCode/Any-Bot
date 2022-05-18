@@ -17,10 +17,10 @@ module.exports = class AliasesCommand extends Command {
       examples: ['aliases Fun']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
     // Get disabled commands
-    let disabledCommands = message.client.db.settings.selectDisabledCommands.pluck().get(message.guild.id) || [];
+    let disabledCommands = await message.client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof(disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
 
     const aliases = {};
@@ -73,7 +73,7 @@ module.exports = class AliasesCommand extends Command {
         .setColor(message.guild.me.displayHexColor);
 
     } else if (type) {
-      return this.sendErrorMessage(message, 0, 'Unable to find command type, please check provided type');
+      return await this.sendErrorMessage(message, 0, 'Unable to find command type, please check provided type');
 
     } else {
 
@@ -82,7 +82,7 @@ module.exports = class AliasesCommand extends Command {
           aliases[command.type].push(`**${command.name}:** ${command.aliases.map(a => `\`${a}\``).join(' ')}`);
       });
 
-      const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+      const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
 
       embed
         .setTitle(`${message.client.user.username}\'s Alias Types`)

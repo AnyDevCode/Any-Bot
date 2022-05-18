@@ -11,15 +11,15 @@ module.exports = class ServerStaffCommand extends Command {
       type: client.types.INFO
     });
   }
-  run(message) {
+  async run(message) {
     
     // Get mod role
-    const modRoleId = message.client.db.settings.selectModRoleId.pluck().get(message.guild.id);
+    const modRoleId = await message.client.mongodb.settings.selectModRoleId(message.guild.id);
     let modRole, mods;
     if (modRoleId) modRole = message.guild.roles.cache.get(modRoleId);
     
     // Get admin role
-    const adminRoleId = message.client.db.settings.selectAdminRoleId.pluck().get(message.guild.id);
+    const adminRoleId = await message.client.mongodb.settings.selectAdminRoleId(message.guild.id);
     let adminRole, admins;
     if (adminRoleId) adminRole = message.guild.roles.cache.get(adminRoleId);
   

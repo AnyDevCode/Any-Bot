@@ -24,14 +24,14 @@ module.exports = class SetAutoKickCommand extends Command {
     }
 
     // Command Code:
-    run(message, args) {
+    async run(message, args) {
 
         // Check for warn count:
-        const autoKick = message.client.db.settings.selectAutoKick.pluck().get(message.guild.id) || 'disabled';
+        const autoKick = await message.client.mongodb.settings.selectAutoKick(message.guild.id) || 'disabled';
         const amount = Number(args[0]);
         // Check if warn count is a number:
         if (amount && (!Number.isInteger(amount) || amount < 0))
-            return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+            return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
 
         // Send embed:
         const embed = new MessageEmbed()
@@ -44,12 +44,12 @@ module.exports = class SetAutoKickCommand extends Command {
 
         // Clear if no args provided
         if (args.length === 0 || amount === 0) {
-            message.client.db.settings.updateAutoKick.run(null, message.guild.id);
+            await message.client.mongodb.settings.updateAutoKick(null, message.guild.id);
             return message.channel.send({embeds: [embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`disabled\``)]});
         }
 
         // Update warn count:
-        message.client.db.settings.updateAutoKick.run(amount, message.guild.id);
+        await message.client.mongodb.settings.updateAutoKick(amount, message.guild.id);
         return message.channel.send({embeds: [embed.addField('Auto Kick', `\`${autoKick}\` ➔ \`${amount}\``)]});
     }
 };

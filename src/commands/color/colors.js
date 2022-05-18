@@ -13,7 +13,7 @@ module.exports = class ColorsCommand extends Command {
       clientPermissions: ["SEND_MESSAGES", "EMBED_LINKS", "ADD_REACTIONS"],
     });
   }
-  run(message) {
+  async run(message) {
     const colors = Array.from(message.guild.roles.cache
       .filter((c) => c.name.startsWith("#"))
       .sort((a, b) => b.position - a.position).values())
@@ -26,9 +26,7 @@ module.exports = class ColorsCommand extends Command {
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
 
-    const prefix = message.client.db.settings.selectPrefix
-      .pluck()
-      .get(message.guild.id); // Get prefix
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id); // Get prefix
 
     const interval = 50;
     if (colors.length === 0)

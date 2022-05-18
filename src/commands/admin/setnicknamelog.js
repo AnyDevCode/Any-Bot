@@ -18,8 +18,8 @@ module.exports = class SetNicknameLogCommand extends Command {
       examples: ['setnicknamelog #bot-log']
     });
   }
-  run(message, args) {
-    const nicknameLogId = message.client.db.settings.selectNicknameLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const nicknameLogId = await message.client.mongodb.settings.selectNicknameLogId(message.guild.id);
     const oldNicknameLog = message.guild.channels.cache.get(nicknameLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetNicknameLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateNicknameLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateNicknameLogId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Nickname Log', `${oldNicknameLog} ➔ \`None\``)]});
     }
 
     const nicknameLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!nicknameLog || nicknameLog.type !== 'GUILD_TEXT' || !nicknameLog.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateNicknameLogId.run(nicknameLog.id, message.guild.id);
+    await message.client.mongodb.settings.updateNicknameLogId(nicknameLog.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Nickname Log', `${oldNicknameLog} ➔ ${nicknameLog}`)]});
   }
 };

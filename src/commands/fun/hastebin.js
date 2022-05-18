@@ -26,10 +26,10 @@ module.exports = class HasteBinCommand extends Command {
     ];
 
     if (!args[0])
-      return this.sendErrorMessage(message, 0, "Please specify an extension.");
+      return await this.sendErrorMessage(message, 0, "Please specify an extension.");
 
     if (!extensions.includes(args[0].toLowerCase()))
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
         message,
         0,
         `The extension is not valid`,
@@ -39,7 +39,7 @@ module.exports = class HasteBinCommand extends Command {
       );
 
     if (!args[1])
-      return this.sendErrorMessage(message, 0, "Please specify the text.");
+      return await this.sendErrorMessage(message, 0, "Please specify the text.");
 
     let text = args.slice(1).join(" ");
 
@@ -65,9 +65,8 @@ module.exports = class HasteBinCommand extends Command {
             link = url;
           });
         })
-        .catch((e) => {
-          console.log(e);
-          this.sendErrorMessage(message, 1, "Error while saving");
+        .catch(async () => {
+          await this.sendErrorMessage(message, 1, "Error while saving");
         });
 
       //if the link is undefined, try again
@@ -76,7 +75,7 @@ module.exports = class HasteBinCommand extends Command {
           setTimeout(resolve, 10000);
         });
         if (typeof link === "undefined") {
-          this.sendErrorMessage(message, 1, "Error while saving");
+          await this.sendErrorMessage(message, 1, "Error while saving");
         }
       }
 

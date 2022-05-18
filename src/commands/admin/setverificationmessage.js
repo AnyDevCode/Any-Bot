@@ -23,12 +23,12 @@ module.exports = class SetVerificationMessageCommand extends Command {
   }
   async run(message, args) {
 
-    let { 
-      verification_role_id: verificationRoleId,
-      verification_channel_id: verificationChannelId, 
-      verification_message: oldVerificationMessage,
-      verification_message_id: verificationMessageId 
-    } = message.client.db.settings.selectVerification.get(message.guild.id);
+    let {
+      verificationRoleID: verificationRoleId,
+      verificationChannelID: verificationChannelId,
+      verificationMessage: oldVerificationMessage,
+      verificationMessageID: verificationMessageId,
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
     const verificationChannel = message.guild.channels.cache.get(verificationChannelId);
 
@@ -50,8 +50,8 @@ module.exports = class SetVerificationMessageCommand extends Command {
       .setColor(message.guild.me.displayHexColor);
 
     if (!args[0]) {
-      message.client.db.settings.updateVerificationMessage.run(null, message.guild.id);
-      message.client.db.settings.updateVerificationMessageId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateVerificationMessage(null, message.guild.id);
+      await message.client.mongodb.settings.updateVerificationMessageId(null, message.guild.id);
 
       if (verificationChannel && verificationMessageId) {
         try {
@@ -72,7 +72,7 @@ module.exports = class SetVerificationMessageCommand extends Command {
     }
     
     let verificationMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    message.client.db.settings.updateVerificationMessage.run(verificationMessage, message.guild.id);
+    await message.client.mongodb.settings.updateVerificationMessage(verificationMessage, message.guild.id);
     if (verificationMessage.length > 1024) verificationMessage = verificationMessage.slice(0, 1021) + '...';
 
     // Update status
@@ -87,25 +87,61 @@ module.exports = class SetVerificationMessageCommand extends Command {
     // Update verification
     if (status === 'enabled') {
       if (verificationChannel.viewable) {
+        let oldMessageId, msg;
         try {
-          await verificationChannel.messages.fetch(verificationMessageId);
-        } catch (err) { // Message was deleted
-          // Create new message
-          const newVerificationMessage = await verificationChannel.send(verificationMessage);
-          message.client.db.settings.updateVerificationMessageId.run(newVerificationMessage.id, message.guild.id);
+          oldMessageId = await verificationChannel.messages.fetch(verificationMessageId);
+        } catch (err) {
+          //Send a new message
+          let msg2 = await verificationChannel.send("Verification");
+          oldMessageId = msg2;
         }
-        const msg = await verificationChannel.send({
+
+        if (oldMessageId) {
+          try {
+            msg = await oldMessageId.edit({
+              embeds: [
+              new MessageEmbed()
+              .setDescription(verificationMessage)
+              .setColor(message.guild.me.displayHexColor)
+              ]
+            });
+            await msg.react(verify.split(":")[2].slice(0, -1));
+            await message.client.mongodb.settings.updateVerificationMessageId(
+              msg.id,
+              message.guild.id
+            );
+          } catch (err) {
+        msg = await verificationChannel.send({
           embeds: [
-            new MessageEmbed()
+          new MessageEmbed()
           .setDescription(verificationMessage)
           .setColor(message.guild.me.displayHexColor)
-        
           ]
-        });
-        await msg.react(verify.split(':')[2].slice(0, -1));
-        message.client.db.settings.updateVerificationMessageId.run(msg.id, message.guild.id);
+        }
+        );
+        await msg.react(verify.split(":")[2].slice(0, -1));
+        await message.client.mongodb.settings.updateVerificationMessageId(
+          msg.id,
+          message.guild.id
+        );
+        }
       } else {
-        return message.client.sendSystemErrorMessage(message.guild, 'verification', stripIndent`
+          msg = await verificationChannel.send({
+            embeds: [
+            new MessageEmbed()
+            .setDescription(verificationMessage)
+            .setColor(message.guild.me.displayHexColor)
+            ]
+          }
+          );
+          await msg.react(verify.split(":")[2].slice(0, -1));
+          await message.client.mongodb.settings.updateVerificationMessageId(
+            msg.id,
+            message.guild.id
+          );
+        }
+      } else {
+        return await message.client.sendSystemErrorMessage(message.guild, 'verification', stripIndent`
           Unable to send verification message, please ensure I have permission to access the verification channel
         `);
       }

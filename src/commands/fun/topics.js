@@ -11,8 +11,8 @@ module.exports = class TopicsCommand extends Command {
       type: client.types.FUN
     });
   }
-  run(message) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
+  async run(message) {
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const topics = [];
     message.client.topics.forEach(topic => {
       topics.push(`\`${topic}\``);

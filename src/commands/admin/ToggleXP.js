@@ -13,14 +13,14 @@ module.exports = class TogglePointsCommand extends Command {
       userPermissions: ['MANAGE_GUILD']
     });
   }
-  run(message) {
+  async run(message) {
     let {
-      xp_tracking: xpTracking, message_xp: xpMessages, command_xp: xpCommands, voice_xp: xpVoice
-    } = message.client.db.settings.selectXP.get(message.guild.id);
+      xpTracking: xpTracking, messageXP: xpMessages, commandXP: xpCommands, voiceXP: xpVoice
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
     xpTracking = 1 - xpTracking; // Invert
-    message.client.db.settings.updateXPTracking.run(xpTracking, message.guild.id);
+    await message.client.mongodb.settings.updateXPTracking(xpTracking, message.guild.id);
 
-    let description, status;
+    let status, description;
     if (xpTracking === 1) {
       status = '`disabled`	🡪 `enabled`';
       description = `\`XP\` have been successfully **enabled**. ${success}`;

@@ -17,7 +17,6 @@ module.exports = {
             await command.run(interaction);
         } catch(e) {
             if(e.message.includes("unknown type: 5")) return
-            if(e) console.log(e);
     
             await interaction.reply({
                 content: "An error occured while executing that command!",

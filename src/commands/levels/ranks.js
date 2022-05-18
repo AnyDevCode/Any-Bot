@@ -21,7 +21,7 @@ module.exports = class RanksCommand extends Command {
   async run(message, args) {
     // Check if user is in a voice channel
     if (message.member.voice.channel)
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
           message,
           1,
           "Because a limitation of the API, you can't use this command in a voice channel."

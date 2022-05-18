@@ -13,7 +13,7 @@ module.exports = {
 
   // Starboard
   if (emoji.name === '⭐' && message.author !== user) {
-    const starboardChannelId = client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
+    const starboardChannelId = await client.mongodb.settings.selectStarboardChannelId(message.guild.id);
     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
     if (
       !starboardChannel || 

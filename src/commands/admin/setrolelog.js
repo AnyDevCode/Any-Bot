@@ -18,8 +18,8 @@ module.exports = class SetRoleLogCommand extends Command {
       examples: ['setrolelog #bot-log']
     });
   }
-  run(message, args) {
-    const roleLogId = message.client.db.settings.selectRoleLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const roleLogId = await message.client.mongodb.settings.selectRoleLogId(message.guild.id);
     const oldRoleLog = message.guild.channels.cache.get(roleLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetRoleLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateRoleLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateRoleLogId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Role Log', `${oldRoleLog} ➔ \`None\``)]});
     }
 
     const roleLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!roleLog || roleLog.type !== 'GUILD_TEXT' || !roleLog.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateRoleLogId.run(roleLog.id, message.guild.id);
+    await message.client.mongodb.settings.updateRoleLogId(roleLog.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Role Log', `${oldRoleLog} ➔ ${roleLog}`)]});
   }
 };

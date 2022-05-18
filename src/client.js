@@ -38,6 +38,11 @@ class Client extends Discord.Client {
     this.db = require("./utils/db.js");
 
     /**
+     * Create MongoDB
+     */
+    this.mongodb = require("./utils/mongodb.js");
+
+    /**
      * All possible command types
      * @type {Object}
      */
@@ -420,7 +425,7 @@ class Client extends Discord.Client {
     if(parseInt(user.id) === this.id) return true;
 
     for (let i = 0; i < this.developerID.length; i++) {
-      if (this.developerID[i] === parseInt(user.id)) return true;
+      if (parseInt(this.developerID[i]) === parseInt(user.id)) return true;
     }
 
     return parseInt(user.id) === parseInt(this.ownerID);
@@ -436,11 +441,9 @@ class Client extends Discord.Client {
    * @param {string} error
    * @param {string} errorMessage
    */
-  sendSystemErrorMessage(guild, error, errorMessage) {
+  async sendSystemErrorMessage(guild, error, errorMessage) {
     // Get system channel
-    const systemChannelId = this.db.settings.selectSystemChannelId
-      .pluck()
-      .get(guild.id);
+    const systemChannelId = await this.mongodb.settings.selectSystemChannelId(guild.id);
     const systemChannel = guild.channels.cache.get(systemChannelId);
 
     if (

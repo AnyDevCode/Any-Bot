@@ -19,7 +19,7 @@ module.exports = class CountryCommand extends Command {
         const {stringToUrlEncoded} = message.client.utils
 
         let country = stringToUrlEncoded(args.join(' '));
-        if (!country) return this.sendErrorMessage(message, 0, 'You must provide a country.');
+        if (!country) return await this.sendErrorMessage(message, 0, 'You must provide a country.');
         let url = `https://restcountries.com/v3.1/name/${country}`;
         await axios.get(url).then(res => {
             let data = res.data[0];
@@ -56,8 +56,8 @@ module.exports = class CountryCommand extends Command {
                 .setEmoji("🗺"),
             )
             return message.channel.send({embeds: [embed], components: [linkrow]})
-        }).catch(() => {
-            return this.sendErrorMessage(message, 1, 'Could not find that country.');
+        }).catch(async () => {
+            return await this.sendErrorMessage(message, 1, 'Could not find that country.');
         });
 
     }

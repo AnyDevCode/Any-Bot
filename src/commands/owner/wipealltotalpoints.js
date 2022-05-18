@@ -15,12 +15,12 @@ module.exports = class WipeAllTotalPointsCommand extends Command {
       examples: ['wipealltotalpoints 709992782252474429']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const guildId = args[0];
     if (!rgx.test(guildId))
-      return this.sendErrorMessage(message, 0, 'Please provide a valid server ID');
+      return await this.sendErrorMessage(message, 0, 'Please provide a valid server ID');
     const guild = message.client.guilds.cache.get(guildId);
-    if (!guild) return this.sendErrorMessage(message, 0, 'Unable to find server, please check the provided ID');
+    if (!guild) return await this.sendErrorMessage(message, 0, 'Unable to find server, please check the provided ID');
     message.client.db.users.wipeAllTotalPoints.run(guildId);
     const embed = new MessageEmbed()
       .setTitle('Wipe All Total Points')

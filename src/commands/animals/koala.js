@@ -14,7 +14,7 @@ module.exports = class KoalaCommand extends Command {
   async run(message) {
     try {
       const img = await koala()
-      if(typeof img === 'undefined') return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      if(typeof img === 'undefined') return await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
       const embed = new MessageEmbed()
         .setTitle('🐨  Woof!  🐨')
         .setImage(img)
@@ -27,7 +27,7 @@ module.exports = class KoalaCommand extends Command {
       message.channel.send({s});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
     }
   }
 };

@@ -17,13 +17,13 @@ module.exports = class KickCommand extends Command {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
-      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member === message.member) 
-      return this.sendErrorMessage(message, 0, 'You cannot kick yourself'); 
+      return await this.sendErrorMessage(message, 0, 'You cannot kick yourself'); 
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return this.sendErrorMessage(message, 0, 'You cannot kick someone with an equal or higher role');
+      return await this.sendErrorMessage(message, 0, 'You cannot kick someone with an equal or higher role');
     if (!member.kickable) 
-      return this.sendErrorMessage(message, 0, 'Provided member is not kickable');
+      return await this.sendErrorMessage(message, 0, 'Provided member is not kickable');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';

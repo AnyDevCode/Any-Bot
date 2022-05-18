@@ -19,9 +19,16 @@ module.exports = class SetFarewellChannelCommand extends Command {
       examples: ['setfarewellchannel #general']
     });
   }
-  run(message, args) {
-    let { farewell_channel_id: farewellChannelId, farewell_message: farewellMessage } = 
-      message.client.db.settings.selectFarewells.get(message.guild.id);
+  async run(message, args) {
+    let { farewellChannelID: farewellChannelId, farewellMessage: farewellMessage } =
+        await message.client.mongodb.settings.selectRow(message.guild.id);
+
+        if(farewellMessage[0].data.text){
+          farewellMessage = farewellMessage[0].data.text;
+        } else {
+          farewellMessage = null;
+        }
+
     const oldFarewellChannel = message.guild.channels.cache.get(farewellChannelId) || '`None`';
 
     // Get status
@@ -41,7 +48,7 @@ module.exports = class SetFarewellChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateFarewellChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateFarewellChannelId(null, message.guild.id);
 
       // Update status
       const status = 'disabled';
@@ -55,7 +62,7 @@ module.exports = class SetFarewellChannelCommand extends Command {
 
     const farewellChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!farewellChannel || (farewellChannel.type !== 'GUILD_TEXT' && farewellChannel.type !== 'GUILD_NEWS') || !farewellChannel.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
@@ -63,7 +70,7 @@ module.exports = class SetFarewellChannelCommand extends Command {
     const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
     const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
-    message.client.db.settings.updateFarewellChannelId.run(farewellChannel.id, message.guild.id);
+    await message.client.mongodb.settings.updateFarewellChannelId(farewellChannel.id, message.guild.id);
     message.channel.send({embeds:[embed
       .spliceFields(0, 0, { name: 'Channel', value: `${oldFarewellChannel} ➔ ${farewellChannel}`, inline: true})
       .spliceFields(1, 0, { name: 'Status', value: statusUpdate, inline: true})

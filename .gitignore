@@ -100,3 +100,5 @@ config.json
 src/commands/fun/notes.json
 /.vscode/settings.json
 /identifier.sqlite
+.storyteller
+.vscode

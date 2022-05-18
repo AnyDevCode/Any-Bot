@@ -27,9 +27,7 @@ function init() {
     client.loadEvents("./src/events", client, player);
     client.loadMusicEvents("./src/music", player);
     client.loadTopics("./data/trivia");
-    client.login(client.token).then(() =>
-        console.log(`Logged in as ${client.user.tag}`)
-    ).catch(e => console.log(e));
+    client.login(client.token)
 }
 
 init();

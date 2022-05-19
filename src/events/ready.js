@@ -350,23 +350,21 @@ module.exports = {
        * ------------------------------------------------------------------------------------------------ */
       // If member left
       if (!client.shard) {
-        const currentMemberIds = client.db.users.selectCurrentMembers
-          .all(guild.id)
-          .map((row) => row.user_id);
-        for (const id of currentMemberIds) {
-          if (!guild.members.cache.has(id)) {
-            client.db.users.updateCurrentMember.run(0, id, guild.id);
+        const currentMember = await client.mongodb.users.selectCurrentMembers(guild.id)
+        for (const user of currentMember) {
+          if (!guild.members.cache.has(user.user_id)) {
+            client.mongodb.users.updateCurrentMember(0, user.user_id, guild.id);
           }
         }
       }
 
       // If member joined
-      const missingMemberIds = client.db.users.selectMissingMembers
-        .all(guild.id)
-        .map((row) => row.user_id);
-      for (const id of missingMemberIds) {
-        if (guild.members.cache.has(id))
-          client.db.users.updateCurrentMember.run(1, id, guild.id);
+      const missingMember = await client.mongodb.users.selectMissingMembers(guild.id);
+
+      for (const user of missingMember) {
+        if (guild.members.cache.has(user.user_id)) {
+          client.mongodb.users.updateCurrentMember(1, user.user_id, guild.id);
+        }
       }
 
       /** ------------------------------------------------------------------------------------------------

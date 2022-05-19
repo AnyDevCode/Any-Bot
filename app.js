@@ -7,7 +7,8 @@ const discordModals = require('discord-modals')
 global.__basedir = __dirname;
 
 const client = new Client(config, {
-    intents: 8191,
+    partials: ["CHANNEL"],
+    intents: 130815,
     allowedMentions: { parse: ['users', 'roles'], repliedUser: true }
 });
 

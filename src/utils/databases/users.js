@@ -121,7 +121,7 @@ module.exports = {
   },
 
   async selectRow(userID, guildID) {
-    return User.findOne({ user_id: userID, guild_id: guildID });
+    return await User.findOne({ user_id: userID, guild_id: guildID });
   },
 
   async updateRow(
@@ -234,11 +234,22 @@ module.exports = {
     }
   },
 
-  selectAllofGuild(guildID) {
-    return User.find({ guild_id: guildID });
+  async selectAllofGuild(guildID) {
+    return await User.find({ guild_id: guildID });
   },
 
-  selectAll() {
-    return User.find({});
+  async selectAll() {
+    return await User.find({});
   },
+
+  async selectMissingMembers(guildID) {
+    return await User.find({ guild_id: guildID, current_member: false });
+  },
+
+  updateCurrentMember(current_member, userID, guildId ) {
+    return User.updateOne({ user_id: userID, guild_id: guildId }, { current_member: current_member });
+  },
+  async selectCurrentMembers(guildID) {
+    return User.find({ guild_id: guildID, current_member: true });
+  }
 };

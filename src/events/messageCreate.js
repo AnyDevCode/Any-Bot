@@ -2,7 +2,9 @@ const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const { oneLine } = require("common-tags");
 module.exports = {
   name: "messageCreate",
-  async execute(message, commands, client, player) {
+  async execute(message, commands, client, player) {    
+
+    if(message.channel.type === 'DM' && !(message.author.bot)) return message.channel.send('Hi, i want tell you how idiot are you.\n\nYou can use this bot in server only, not in DM. \n\nAre you the most idiot person in the world ' + message.author.username + '?')
     if (message.channel.type === 'DM' || !message.channel.viewable || message.author.bot) return;
 
     //Check if message has image attachment

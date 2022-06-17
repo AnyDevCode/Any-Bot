@@ -54,7 +54,7 @@
     "swiftcord": "2.1.5",
     "tiktok-scraper": "^1.4.36",
     "topgg-autoposter": "^2.0.1",
-    "undici": "^4.14.1",
+    "undici": "^5.5.1",
     "unofficial-amazon-search": "^2.0.8",
     "winston": "^3.6.0",
     "yaml": "^1.10.2",

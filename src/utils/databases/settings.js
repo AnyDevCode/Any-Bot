@@ -182,6 +182,7 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
 module.exports = {
     async insertRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id){
         //Check if the guild is already in the table
+
         let row = await this.selectRow(guildID);
         if(row){
             //If it is, update the row

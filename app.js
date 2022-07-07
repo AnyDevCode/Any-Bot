@@ -5,6 +5,7 @@ const { Player } = require('discord-player');
 const botlist = config.botlist;
 const discordModals = require('discord-modals')
 global.__basedir = __dirname;
+const WebSocket = require('ws');
 
 const client = new Client(config, {
     partials: ["CHANNEL"],
@@ -19,6 +20,7 @@ const player = client.player;
 
 // Initialize client
 function init() {
+
     client.loadCommands("./src/commands");
     client.loadSlashCommands("./src/slash")
     client.loadButtons("./src/buttons");
@@ -48,6 +50,8 @@ if(!(client.shard)) {
         client.logger.info("Dashboard initialized!");
     });
 }
+
+global.__Client = client;
 
 
 process.on("unhandledRejection", (err) => client.logger.error(err));

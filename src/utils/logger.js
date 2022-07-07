@@ -21,8 +21,8 @@ const logger = createLogger({
   level: 'debug',
   format: format.combine(
     format.errors({ stack: true }),
-    format.label({ label: path.basename(process.mainModule.filename) }),
-    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' })
+    format.label({ label: path.basename(require.main.filename) }),
+    format.timestamp({ format: '(YYYY/MM/DD) HH:mm:ss' })
   ),
   transports: [ 
     // Logging to console
@@ -30,14 +30,15 @@ const logger = createLogger({
       format: format.combine(
         format.colorize(),
         logFormat
-      )
+      ),
+      handleExceptions: true
     }),
     // Logging info and up to file
     new transports.File({ 
       filename: path.join(__basedir, 'logs/full.log'), 
       level: 'info',
       format: logFormat,
-      options: { flags: 'w' } 
+      options: { flags: 'w' }
     }),
     // Logging only warns and errors to file
     new transports.File({ 

@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 
 let port = process.env.PORT || 80
-
+let Client
 
 async function index(client){
+  Client = client
   app.get('/api/all', (req, res) => {
     const users = {}
     client.users.cache.forEach(user => {
@@ -112,7 +113,7 @@ async function index(client){
   });
 }
 app.listen(port, () => {
-  console.log("Server in port " + port);
+  Client.logger.info("Server in port " + port);
 });
 
 module.exports = {

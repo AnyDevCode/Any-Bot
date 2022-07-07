@@ -26,7 +26,7 @@
     "discord-modals": "^1.2.3",
     "discord-player": "^5.2.2",
     "discord-utilities-js": "^0.4.0",
-    "discord.js": "^13.7.0",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "ffmpeg-static": "^4.4.1",

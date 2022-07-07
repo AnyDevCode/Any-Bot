@@ -119,6 +119,12 @@ class Client extends Discord.Client {
     this.apiKeys = config.apiKeys;
 
     /**
+     * Api Url
+     * @type {string}
+     */
+    this.apiUrl = config.apiUrl;
+
+    /**
      * Bot Stats
      * @type {Object}
      */

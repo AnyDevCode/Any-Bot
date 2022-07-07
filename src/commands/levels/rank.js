@@ -1,5 +1,5 @@
 const Command = require("../Command.js");
-const {MessageAttachment} = require("discord.js");
+const { MessageAttachment } = require("discord.js");
 const canvas = require("discord-canvas");
 rankCardCanvas = new canvas.RankCard();
 
@@ -9,47 +9,33 @@ module.exports = class RankCommand extends Command {
       name: "rank",
       usage: "rank <user mention/ID>",
       description:
-          "Fetches a user's  xp. If no user is given, your own xp will be displayed.",
+        "Fetches a user's  xp. If no user is given, your own xp will be displayed.",
       type: client.types.LEVELS,
       examples: ["rank @MDC"],
     });
   }
   async run(message, args) {
-    // Check if user is in a voice channel
-    if (message.member.voice.channel)
-      return await this.sendErrorMessage(
-          message,
-          1,
-          "Because a limitation of the API, you can't use this command in a voice channel."
-      );
+    let {
+      xp,
+      level,
+      total_messages,
+      total_commands,
+      total_reactions,
+      total_voice,
+      total_pictures,
+    } = await message.client.mongodb.users.selectRow(
+      message.author.id,
+      message.guild.id
+    );
+
     const member =
-        this.getMemberFromMention(message, args[0]) ||
-        message.guild.members.cache.get(args[0]) ||
-        message.member;
-    const xp = message.client.db.users.selectXP
-        .pluck()
-        .get(member.id, message.guild.id);
-    const level = message.client.db.users.selectLevel
-        .pluck()
-        .get(member.id, message.guild.id);
-    let total_messages = message.client.db.users.selectTotalMessages
-        .pluck()
-        .get(member.id, message.guild.id);
-    let total_commands = message.client.db.users.selectTotalCommands
-        .pluck()
-        .get(member.id, message.guild.id);
-    let total_reactions = message.client.db.users.selectTotalReactions
-        .pluck()
-        .get(member.id, message.guild.id);
-    let total_voice = message.client.db.users.selectTotalVoice
-        .pluck()
-        .get(member.id, message.guild.id);
-    let total_pictures = message.client.db.users.selectTotalPictures
-        .pluck()
-        .get(member.id, message.guild.id);
+      this.getMemberFromMention(message, args[0]) ||
+      message.guild.members.cache.get(args[0]) ||
+      message.member;
+
     const requiredXP = 50 * Math.pow(level, 2);
-    const leaderboard = message.client.db.users.selectRank.all(
-        message.guild.id
+    const leaderboard = await message.client.mongodb.users.selectRank(
+      message.guild.id
     );
     const position = leaderboard.map((row) => row.user_id).indexOf(member.id);
     let boosts = member.premiumSince;
@@ -58,9 +44,13 @@ module.exports = class RankCommand extends Command {
     let mod_badge_or_admin_role = null;
 
     let moderator_role =
-        await message.client.mongodb.settings(message.guild.id) || "";
+      (await message.client.mongodb.settings.selectModRoleId(
+        message.guild.id
+      )) || "";
     let admin_role =
-        await message.client.mongodb.settings.selectAdminRoleId(message.guild.id) || "";
+      (await message.client.mongodb.settings.selectAdminRoleId(
+        message.guild.id
+      )) || "";
 
     if (member.roles.cache.has(moderator_role)) {
       mod_badge_or_admin_role = "https://i.imgur.com/tpaksRh.png";
@@ -131,32 +121,32 @@ module.exports = class RankCommand extends Command {
     }
 
     let image = await rankCardCanvas
-        .setAvatar(member.user.displayAvatarURL({format: "png", dynamic: true}))
-        .setXP("current", xp)
-        .setXP("needed", requiredXP)
-        .setLevel(level)
-        .setRank(position + 1)
-        .setUsername(member.displayName)
-        .setRankName(username)
-        .setColor("level-box", "#d7588f")
-        .setText(
-            "needed-xp",
-            "{current}/{needed} for next rank. {latest} remaining!"
-        )
-        .setRadius(20)
-        .setAddon("reputation", false)
-        .setBackground("https://i.imgur.com/rLArvSC.png")
-        .setBadge(1, total_messages)
-        .setBadge(2, total_voice)
-        .setBadge(4, total_pictures)
-        .setBadge(5, total_reactions)
-        .setBadge(6, mod_badge_or_admin_role)
-        .setBadge(7, boosts)
-        .setBadge(9, total_commands)
-        .toAttachment();
+      .setAvatar(member.user.displayAvatarURL({ format: "png", dynamic: true }))
+      .setXP("current", xp)
+      .setXP("needed", requiredXP)
+      .setLevel(level)
+      .setRank(position + 1)
+      .setUsername(member.displayName)
+      .setRankName(username)
+      .setColor("level-box", "#d7588f")
+      .setText(
+        "needed-xp",
+        "{current}/{needed} for next rank. {latest} remaining!"
+      )
+      .setRadius(20)
+      .setAddon("reputation", false)
+      .setBackground("https://i.imgur.com/rLArvSC.png")
+      .setBadge(1, total_messages)
+      .setBadge(2, total_voice)
+      .setBadge(4, total_pictures)
+      .setBadge(5, total_reactions)
+      .setBadge(6, mod_badge_or_admin_role)
+      .setBadge(7, boosts)
+      .setBadge(9, total_commands)
+      .toAttachment();
 
     let attachment = new MessageAttachment(image.toBuffer(), "rank.png");
 
-    return message.channel.send({files: [attachment]});
+    return message.channel.send({ files: [attachment] });
   }
 };

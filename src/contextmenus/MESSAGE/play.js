@@ -18,8 +18,11 @@ module.exports = class PlaySongMessageContextMenu extends ContextMenu {
       //Make a array
       let args = interaction.options._hoistedOptions[0].message.content.split(" ");
 
+      let message = interaction.options._hoistedOptions[0].message
+      message.author = message.interaction.user
+
       //Run the command
-      await interaction.client.commands.get("play").run(interaction.options._hoistedOptions[0].message, args, client, player)
+      await interaction.client.commands.get("play").run(message, args, client, player)
 
       //Send a message
       return interaction.editReply("Ready to play!")

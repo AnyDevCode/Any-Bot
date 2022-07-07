@@ -13,8 +13,6 @@ module.exports = {
   if (emoji.id === verify.split(':')[2].slice(0, -1)) {
     const { verificationRoleID: verificationRoleId, verificationMessageID: verificationMessageId } =
     await client.mongodb.settings.selectRow(message.guild.id);
-    console.log(verificationRoleId, verificationMessageId)
-
     const verificationRole = message.guild.roles.cache.get(verificationRoleId);
 
     if (!verificationRole || message.id !== verificationMessageId) return;

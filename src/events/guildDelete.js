@@ -16,7 +16,7 @@ module.exports = {
       });
 
     await client.mongodb.settings.deleteGuild(guild.id);
-    client.db.users.deleteGuild.run(guild.id);
+    await client.mongodb.users.deleteGuild(guild.id);
     if (guild.job) guild.job.cancel(); // Cancel old job
   },
 };

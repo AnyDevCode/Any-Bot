@@ -17,7 +17,7 @@ module.exports = class WipeTotalPointsCommand extends Command {
     const member =  this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
       return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
-    message.client.db.users.wipeTotalPoints.run(member.id, message.guild.id);
+    await message.client.mongodb.users.wipeTotalPoints(member.id, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle('Wipe Total Points')
       .setDescription(`Successfully wiped ${member}'s points and total points.`)

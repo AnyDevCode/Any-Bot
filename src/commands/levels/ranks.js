@@ -29,7 +29,7 @@ module.exports = class RanksCommand extends Command {
     let max = parseInt(args[0]);
     if (!max || max < 0) max = 10;
     else if (max > 25) max = 25;
-    let leaderboard = message.client.db.users.selectRank.all(message.guild.id);
+    let leaderboard = await message.client.mongodb.users.selectRankXP(message.guild.id);
     const position = leaderboard
         .map((row) => row.user_id)
         .indexOf(message.author.id);

@@ -175,9 +175,9 @@ async function transferCrown(client, guild, crownRoleId) {
     `);
   }
   
-  const leaderboard = client.db.users.selectLeaderboard.all(guild.id);
+  const leaderboard = await client.mongodb.users.selectLeaderboard(guild.id);
   const winner = guild.members.cache.get(leaderboard[0].user_id);
-  const points = client.db.users.selectPoints.pluck().get(winner.id, guild.id);
+  const points = await client.mongodb.users.selectPoints(winner.id, guild.id);
   let quit = false;
 
   // Remove role from losers
@@ -202,7 +202,7 @@ async function transferCrown(client, guild, crownRoleId) {
   try {
     await winner.roles.add(crownRole);
     // Clear points
-    client.db.users.wipeAllPoints.run(guild.id);
+    await client.mongodb.users.wipeAllPoints(guild.id);
   } catch (err) {
     return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
       Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission

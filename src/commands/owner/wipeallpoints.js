@@ -21,7 +21,7 @@ module.exports = class WipeAllPointsCommand extends Command {
       return await this.sendErrorMessage(message, 0, 'Please provide a valid server ID');
     const guild = message.client.guilds.cache.get(guildId);
     if (!guild) return await this.sendErrorMessage(message, 0, 'Unable to find server, please check the provided ID');
-    message.client.db.users.wipeAllPoints.run(guildId);
+    await message.client.mongodb.users.wipeAllPoints(guildId);
     const embed = new MessageEmbed()
       .setTitle('Wipe All Points')
       .setDescription(`Successfully wiped **${guild.name}**'s points.`)

@@ -7,11 +7,12 @@ const path = require('path');
 mongoose.connect(mongodb_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+
 }).then(() => {
-    console.log("Connected to MongoDB");
+    __Client.logger.info("Connected to MongoDB!");
 }).catch(err => {
-    console.log("Error connecting to MongoDB");
-    console.log(err);
+    __Client.logger.warn("Error connecting to MongoDB");
+    __Client.logger.warn(err);
 });
 
 const models = fs.readdirSync(path.join(__dirname, 'databases'));

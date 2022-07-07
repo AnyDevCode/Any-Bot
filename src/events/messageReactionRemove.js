@@ -9,7 +9,7 @@ module.exports = {
 
   const { message, emoji } = messageReaction;
 
-  client.db.users.updateTotalReactionsMinus.run(message.author.id, message.guild.id);
+  await client.mongodb.users.updateTotalReactionsMinus(message.author.id, message.guild.id);
 
   // Starboard
   if (emoji.name === '⭐' && message.author !== user) {

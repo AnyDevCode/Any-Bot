@@ -112,7 +112,7 @@ module.exports = {
 
     // Update users table
     guild.members.cache.forEach((member) => {
-      client.db.users.insertRow.run(
+      client.mongodb.users.insertRow(
         member.id,
         member.username,
         member.discriminator,

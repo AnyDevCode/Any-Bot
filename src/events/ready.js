@@ -39,32 +39,34 @@ module.exports = {
       activity++;
     }, 30000);
 
-    setInterval(() => {
-      //Update name of a channel
-      const guilds_channel = client.channels.cache.get(
-        client.statsChannels.guilds_channel
-      );
-      let guilds = client.guilds.cache.size;
-      //Create a variable with the number closest to guilds that is a power of 100
-      let closest_guilds = Math.pow(10, Math.floor(Math.log10(guilds))) * 10;
-      guilds_channel.setName(
-        `『🏁』 Guilds: ${client.guilds.cache.size}/${closest_guilds}`
-      );
+    setInterval(
+      () => {
+        //Update name of a channel
+        const guilds_channel = client.channels.cache.get(
+          client.statsChannels.guilds_channel
+        );
+        let guilds = client.guilds.cache.size;
+        //Create a variable with the number closest to guilds that is a power of 100
+        let closest_guilds = Math.pow(10, Math.floor(Math.log10(guilds))) * 10;
+        guilds_channel.setName(
+          `『🏁』 Guilds: ${client.guilds.cache.size}/${closest_guilds}`
+        );
 
-      //Update name of a channel
-      const users_channel = client.channels.cache.get(
-        client.statsChannels.users_channel
-      );
-      let users = client.users.cache.size;
-      //Create a variable with the number closest to users that is a power of 10000
-      let closest_users = Math.pow(10, Math.floor(Math.log10(users))) * 10;
-      users_channel.setName(
-        `『🧑』 Users: ${abbreviateNumber(
-          client.users.cache.size
-        )}/${abbreviateNumber(closest_users)}`
-      );
-    }, //Every 10 minutes
-    600000);
+        //Update name of a channel
+        const users_channel = client.channels.cache.get(
+          client.statsChannels.users_channel
+        );
+        let users = client.users.cache.size;
+        //Create a variable with the number closest to users that is a power of 10000
+        let closest_users = Math.pow(10, Math.floor(Math.log10(users))) * 10;
+        users_channel.setName(
+          `『🧑』 Users: ${abbreviateNumber(
+            client.users.cache.size
+          )}/${abbreviateNumber(closest_users)}`
+        );
+      }, //Every 10 minutes
+      600000
+    );
 
     client.logger.info(`Logged in as ${client.user.tag}!`);
     client.logger.info(
@@ -101,9 +103,13 @@ module.exports = {
 
     client.logger.info("Updating database and scheduling jobs...");
     for await (const guild of client.guilds.cache.values()) {
-      /** ------------------------------------------------------------------------------------------------
-       * FIND SETTINGS
-       * ------------------------------------------------------------------------------------------------ */
+
+      /*
+       ** -----------------------------------------------------------------------
+       *  FIND SETTINGS
+       ** -----------------------------------------------------------------------
+      */
+
       // Find mod log
       const modLog = guild.channels.cache.find(
         (c) =>
@@ -247,34 +253,21 @@ module.exports = {
             current_member: member.roles.cache.has(guild.id) ? true : false,
           });
 
-
           client.logger.info(
             `${member.user.username} has been added to the database!`
           );
         }
 
         await client.mongodb.users.updatesqlitetomongo(newMembers);
-
       }
-
-      // Update users table
-      // guild.members.cache.forEach((member) => {
-      //     client.db.users.insertRow.run(
-      //         member.id,
-      //         member.user.username,
-      //         member.user.discriminator,
-      //         guild.id,
-      //         guild.name,
-      //         member.joinedAt.toString(),
-      //         member.user.bot ? 1 : 0
-      //     );
-      // });
 
       //Get all users in the guild
       const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
 
+      const membersGuildObject = await guild.members.fetch()
+
       //Check if the user is in the database
-      for await (const member of guild.members.cache.values()) {
+      for await (const member of membersGuildObject.values()) {
         const user = dbUsers.find((u) => u.user_id === member.id);
 
         if (user) {
@@ -350,16 +343,20 @@ module.exports = {
        * ------------------------------------------------------------------------------------------------ */
       // If member left
       if (!client.shard) {
-        const currentMember = await client.mongodb.users.selectCurrentMembers(guild.id)
+        const currentMember = await client.mongodb.users.selectCurrentMembers(
+          guild.id
+        );
         for (const user of currentMember) {
-          if (!guild.members.cache.has(user.user_id)) {
-            client.mongodb.users.updateCurrentMember(0, user.user_id, guild.id);
+          if (!membersGuildObject.has(user.user_id)) {
+            await client.mongodb.users.updateCurrentMember(0, user.user_id, guild.id);
           }
         }
       }
 
       // If member joined
-      const missingMember = await client.mongodb.users.selectMissingMembers(guild.id);
+      const missingMember = await client.mongodb.users.selectMissingMembers(
+        guild.id
+      );
 
       for (const user of missingMember) {
         if (guild.members.cache.has(user.user_id)) {
@@ -413,6 +410,8 @@ module.exports = {
     }
 
     // Finish message
-    client.logger.info(`Ready to serve ${client.guilds.cache.size} guilds, in ${client.channels.cache.size} channels of ${client.users.cache.size} users.`);
+    client.logger.info(
+      `Ready to serve ${client.guilds.cache.size} guilds, in ${client.channels.cache.size} channels of ${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)} users.`
+    );
   },
 };

@@ -77,7 +77,7 @@ module.exports = {
      * USERS TABLE
      * ------------------------------------------------------------------------------------------------ */
     // Update users table
-    client.db.users.updateCurrentMember.run(0, member.id, member.guild.id);
-    client.db.users.wipeTotalPoints.run(member.id, member.guild.id);
+    await client.mongodb.users.updateCurrentMember(0, member.id, member.guild.id);
+    await client.mongodb.users.wipeTotalPoints(member.id, member.guild.id);
   },
 };

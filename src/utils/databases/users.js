@@ -121,7 +121,12 @@ module.exports = {
   },
 
   async selectRow(userID, guildID) {
-    return await User.findOne({ user_id: userID, guild_id: guildID });
+    const user = await User.findOne({ user_id: userID, guild_id: guildID });
+    if (user) {
+      return user;
+    } else {
+      return false;
+    }
   },
 
   async updateRow(
@@ -246,10 +251,192 @@ module.exports = {
     return await User.find({ guild_id: guildID, current_member: false });
   },
 
-  updateCurrentMember(current_member, userID, guildId ) {
-    return User.updateOne({ user_id: userID, guild_id: guildId }, { current_member: current_member });
+  async updateCurrentMember(current_member, userID, guildId) {
+    return await User.updateOne(
+      { user_id: userID, guild_id: guildId },
+      { current_member: current_member }
+    );
   },
   async selectCurrentMembers(guildID) {
     return User.find({ guild_id: guildID, current_member: true });
-  }
+  },
+
+  async selectLeaderboard(guildID) {
+    return await User.find({ guild_id: guildID, current_member: true }).sort({
+      points: -1,
+    });
+  },
+
+  async selectPoints(userID, guildID) {
+    return await User.findOne({ user_id: userID, guild_id: guildID });
+  },
+
+  async wipeAllPoints(guildID) {
+    return await User.updateMany({ guild_id: guildID }, { points: 0 });
+  },
+
+  async wipeAllTotalPoints(guildID) {
+    return await User.updateMany({ guild_id: guildID }, { total_points: 0 });
+  },
+
+  async wipePoints(userID, guildID) {
+    return await User.updateOne(
+      { user_id: userID, guild_id: guildID },
+      { points: 0 }
+    );
+  },
+
+  async wipeTotalPoints(userID, guildID) {
+    return await User.updateOne(
+      { user_id: userID, guild_id: guildID },
+      { total_points: 0 }
+    );
+  },
+
+  async selectXP(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))?.xp ?? 0
+    );
+  },
+
+  async selectTotalMessages(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_messages ?? 0
+    );
+  },
+
+  async selectTotalCommands(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_commands ?? 0
+    );
+  },
+
+  async selectTotalReactions(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_reactions ?? 0
+    );
+  },
+
+  async selectTotalVoice(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_voice ?? 0
+    );
+  },
+
+  async selectTotalStream(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_stream ?? 0
+    );
+  },
+
+  async selectTotalPictures(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))
+        ?.total_pictures ?? 0
+    );
+  },
+
+  async selectRank(guildID) {
+    return await User.find({ guild_id: guildID, current_member: true }).sort({
+      points: -1,
+    });
+  },
+
+  async selectRankXP(guildID) {
+    return await User.find({ guild_id: guildID, current_member: true }).sort({
+      xp: -1,
+    });
+  },
+
+  async updatePoints({ points }, userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { points: points } }
+    );
+  },
+
+  async updateXP({ xp }, userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_xp: xp, xp: xp } }
+    );
+  },
+
+  async updateTotalMessages(userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_messages: 1 } }
+    );
+  },
+
+  async updateLevel({ level }, userID, guildID) {
+    return await User.updateOne(
+      { user_id: userID, guild_id: guildID },
+      { level: level, xp: 0 }
+    );
+  },
+
+  async updateTotalCommands(userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_commands: 1 } }
+    );
+  },
+
+  async updateTotalVoice(userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_voice: 1 } }
+    );
+  },
+
+  async updateUser(username, userDiscriminator, userID) {
+    return await User.updateOne(
+      { user_id: userID },
+      { user_name: username, user_discriminator: userDiscriminator }
+    );
+  },
+
+  async updateTotalReactionsMinus(userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_reactions: -1 } }
+    );
+  },
+
+  async updateTotalImage(userID, guildID) {
+    return User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { total_pictures: 1 } }
+    );
+  },
+
+  async updateGuildName(guildName, guildID) {
+    return await User.updateMany(
+      { guild_id: guildID },
+      { guild_name: guildName }
+    );
+  },
+
+  async wipeTotalPoints(userID, guildID) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { points: 0 }
+    );
+  },
+
+  async deleteGuild(guildID) {
+    return await User.deleteMany({ guild_id: guildID });
+  },
+
+  async selectTotalPoints(userID, guildID) {
+    return (
+      (await User.findOne({ user_id: userID, guild_id: guildID }))?.points ?? 0
+    );
+  },
 };

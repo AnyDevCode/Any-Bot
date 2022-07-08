@@ -20,7 +20,7 @@ module.exports = class WarnsCommand extends Command {
     if (!member) 
       return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
 
-    let warns = message.client.db.warns.warnsByUser.all(member.id, message.guild.id) || [{ }];
+    let warns = await message.client.mongodb.warns.warnsByUser(member.id, message.guild.id) || [{ }];
     const count = warns.length;
 
 

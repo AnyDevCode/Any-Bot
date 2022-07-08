@@ -96,19 +96,18 @@ module.exports = {
           client.logger.info("Guild slash commands updated!");
         }
       } catch (e) {
-        if (e) console.log(e);
+        if (e) client.logger.error(e);
         client.logger.error("Failed to update slash commands!");
       }
     })();
 
     client.logger.info("Updating database and scheduling jobs...");
     for await (const guild of client.guilds.cache.values()) {
-
       /*
        ** -----------------------------------------------------------------------
        *  FIND SETTINGS
        ** -----------------------------------------------------------------------
-      */
+       */
 
       // Find mod log
       const modLog = guild.channels.cache.find(
@@ -254,17 +253,53 @@ module.exports = {
           });
 
           client.logger.info(
-            `${member.user.username} has been added to the database!`
+            `${member.user.username} has been added to the database of ${guild.name}`
           );
         }
 
         await client.mongodb.users.updatesqlitetomongo(newMembers);
+
+        let oldWarns = client.db.warns.selectGuildWarns.get(guild.id);
+        if (typeof oldWarns !== "array" && oldWarns !== undefined) {
+          oldWarns = [oldWarns];
+        }
+        const newWarns = [];
+
+        if (oldWarns) {
+          for (const warn of oldWarns) {
+            if (warn.guild_id === guild.id) {
+              newWarns.push({
+                guild_id: warn.guild_id,
+                guild_name: warn.guild_name,
+                user_id: warn.user_id,
+                user_name: warn.user_name,
+                user_discriminator: warn.user_discriminator,
+                moderator_id: warn.moderator_id,
+                moderator_name: warn.moderator_name,
+                moderator_discriminator: warn.moderator_discriminator,
+                reason: warn.reason,
+                date_issued: warn.date_issued,
+                warn_id: warn.warn_id,
+              });
+            }
+
+            if (warn.user_name !== client.user.name) {
+              client.logger.info(
+                `${warn.user_name} has been added to the database of warns!`
+              );
+            }
+          }
+        }
+
+        if (newWarns.length > 0) {
+          await client.mongodb.warns.updatesqlitetomongo(newWarns);
+        }
       }
 
       //Get all users in the guild
       const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
 
-      const membersGuildObject = await guild.members.fetch()
+      const membersGuildObject = await guild.members.fetch();
 
       //Check if the user is in the database
       for await (const member of membersGuildObject.values()) {
@@ -325,19 +360,6 @@ module.exports = {
         );
       }
 
-      // for await (const member of guild.members.cache.values()) {
-      //     await client.mongodb.users.insertRow(
-      //         member.id,
-      //         member.user.username,
-      //         member.user.discriminator,
-      //         guild.id,
-      //         guild.name,
-      //         member.joinedAt ? member.joinedAt.toString() : (Date.now()).toString(),
-      //         member.user.bot ? 1 : 0
-      //     );
-
-      // }
-
       /** ------------------------------------------------------------------------------------------------
        * CHECK DATABASE
        * ------------------------------------------------------------------------------------------------ */
@@ -348,7 +370,11 @@ module.exports = {
         );
         for (const user of currentMember) {
           if (!membersGuildObject.has(user.user_id)) {
-            await client.mongodb.users.updateCurrentMember(0, user.user_id, guild.id);
+            await client.mongodb.users.updateCurrentMember(
+              0,
+              user.user_id,
+              guild.id
+            );
           }
         }
       }
@@ -411,7 +437,12 @@ module.exports = {
 
     // Finish message
     client.logger.info(
-      `Ready to serve ${client.guilds.cache.size} guilds, in ${client.channels.cache.size} channels of ${client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0)} users.`
+      `Ready to serve ${client.guilds.cache.size} guilds, in ${
+        client.channels.cache.size
+      } channels of ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.memberCount,
+        0
+      )} users.`
     );
   },
 };

@@ -27,7 +27,7 @@ module.exports = class ClearWarnsCommand extends Command {
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
-    message.client.db.warns.deleteUserWarns.run(member.id, message.guild.id);
+    await message.client.mongodb.warns.deleteUserWarns(member.id, message.guild.id);
 
     const embed = new MessageEmbed()
       .setTitle('Clear Warns')

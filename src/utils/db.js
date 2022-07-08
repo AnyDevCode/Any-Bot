@@ -331,6 +331,7 @@ const warns = {
   // Selects
   maxWarnId: db.prepare('SELECT COUNT(*) FROM warns;'),
   selectRow: db.prepare('SELECT * FROM warns WHERE warn_id = ?;'),
+  selectAllWarns: db.prepare('SELECT * FROM warns;'),
   selectUserWarns: db.prepare('SELECT * FROM warns WHERE user_id = ? AND guild_id = ?;'),
   selectGuildWarns: db.prepare('SELECT * FROM warns WHERE guild_id = ?;'),
   selectUserWarnsCount: db.prepare('SELECT COUNT(*) FROM warns WHERE user_id = ? AND guild_id = ?;'),

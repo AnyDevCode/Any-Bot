@@ -21,7 +21,7 @@ module.exports = {
     // Message delete
 
     const { apiUrl } = client;
-    
+
     if (message.embeds.length === 0) {
       // Dont send logs for starboard delete
       const starboardChannelId =
@@ -57,12 +57,18 @@ module.exports = {
           for (const attachment of message.attachments.values()) {
             await axios
               .post(
-                `${apiUrl}/upload?url=${attachment.proxyURL}&name=${attachment.name}&id=${attachment.id}`
+                `${apiUrl}/upload?url=${attachment.proxyURL}&name=${attachment.name}&id=${attachment.id}`,
+                undefined,
+                {
+                  headers: {
+                    API_KEY: client.apiKeys.customAPIKey,
+                  },
+                }
               )
               .then(async (res) => {
                 links += `${res.data.url} \n`;
               })
-              .catch(async () => {
+              .catch(async (e) => {
                 links += `${attachment.proxyURL} \n`;
               });
           }

@@ -1,17 +1,15 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require("discord.js");
 
 /**
  * Any Bot's custom Button class
  */
 class Button {
-
   /**
    * Create new command
    * @param {Client} client
    * @param {Object} options
    */
   constructor(client, options) {
-
     /**
      * The client
      * @type {Client}
@@ -22,7 +20,7 @@ class Button {
      * Data
      * @type { Array }
      */
-    this.data = options.data
+    this.data = options.data;
 
     /**
      * Name of the command

@@ -14,7 +14,7 @@ module.exports = {
         try {
             await command.run(interaction, Client, Player);
         } catch(e) {
-            if(e) console.log(e);
+            if(e) Client.logger.error(e);
 
             await interaction.reply({
                 content: "An error occured while executing that command!",

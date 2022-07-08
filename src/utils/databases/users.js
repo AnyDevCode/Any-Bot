@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { users } = require("node-os-utils");
 
 const User = mongoose.model(
   "Users",
@@ -233,8 +232,8 @@ module.exports = {
           });
           await user.save();
         }
-      } catch (error) {
-        //console.log(error);
+      } catch (e) {
+        __Client.logger.error(e);
       }
     }
   },

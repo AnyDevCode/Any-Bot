@@ -27,7 +27,7 @@ async function botlist(client){
 
             const postertopgg = AutoPoster(bldapikey.topgg, client);
 
-            connectBdlBot(bldapikey.bdl, client).then(r => console.log(r));
+            connectBdlBot(bldapikey.bdl, client).then(r => client.logger.info(r));
 
             postertopgg.on("posted", async (stats) => {
                 client.logger.info("Post in Top.gg | " + stats.serverCount + " servers");
@@ -52,7 +52,7 @@ async function botlist(client){
             });
 
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     }, 300000);
 

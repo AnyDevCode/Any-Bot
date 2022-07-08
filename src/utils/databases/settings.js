@@ -205,7 +205,7 @@ module.exports = {
                 });
                 return newGuild.save();
             } catch (error) {
-                console.log(error);
+                __Client.logger.error(error);
             }
         }
     },
@@ -214,7 +214,7 @@ module.exports = {
         try {
             return await Guild.findOne({guildID: guildID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -234,7 +234,7 @@ module.exports = {
                 crownRoleID: crown_role_id
             });
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -337,7 +337,7 @@ module.exports = {
                 await guild.save();
             }
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -346,7 +346,7 @@ module.exports = {
             //Select all rows from the table, only the guildID and guildName
             return await Guild.find({}, {guildID: 1, guildName: 1});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -354,7 +354,7 @@ module.exports = {
         try {
             return await Guild.deleteOne({guildID: guildID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -362,7 +362,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {guildName: guildName});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -370,7 +370,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {disabledCommands: 1})).disabledCommands;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -378,7 +378,7 @@ module.exports = {
         try {
             return await Guild.findOne({guildID: guildID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -386,7 +386,7 @@ module.exports = {
         try {
             return await Guild.findOne({guildID: guildID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -394,7 +394,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {prefix: 1})).prefix;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -402,7 +402,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {modChannelIDs: 1})).modChannelIDs;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -410,7 +410,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {messageDeleteLogID: 1})).messageDeleteLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -419,7 +419,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {verificationChannelID: 1})).verificationChannelID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -427,7 +427,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {starboardChannelID: 1})).starboardChannelID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -435,7 +435,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {modChannelIDs: modChannelIDs})
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -443,7 +443,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {autoBan: 1})).autoBan;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -451,7 +451,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {autoBan: autoBan});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -459,7 +459,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {adminRoleID: 1})).adminRoleID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -467,7 +467,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {adminRoleID: adminRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -475,7 +475,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {autoKick: 1})).autoKick;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -483,7 +483,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {autoKick: autoKick});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -491,7 +491,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {autoRoleID: 1})).autoRoleID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -499,7 +499,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {autoRoleID: autoRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -507,7 +507,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {commandXP: commandXP});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -515,7 +515,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {commandPoints: commandPoints});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -523,7 +523,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {crownChannelID: crownChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -540,7 +540,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {crownMessage: message});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -548,7 +548,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {crownRoleID: crownRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -556,7 +556,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {crownSchedule: crownSchedule});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -564,7 +564,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {farewellChannelID: farewellChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -578,14 +578,14 @@ module.exports = {
                 }
             ]});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
     async selectMemberLogId(guildID){
         try {
             return (await Guild.findOne({guildID: guildID}, {memberLogID: 1})).memberLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -593,7 +593,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {memberLogID: memberLogID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -601,7 +601,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {messageDeleteLogID: 1})).messageDeleteLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
     async updateMessageDeleteLogId(messageDeleteLogID, guildID){
@@ -609,7 +609,7 @@ module.exports = {
             return await Guild.updateOne({guildID: guildID}, {messageDeleteLogID: messageDeleteLogID});
         }
         catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -617,7 +617,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {messageEditLogID: 1})).messageEditLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -625,7 +625,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {messageEditLogID: messageEditLogID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -633,7 +633,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {messagePoints: messagePoints});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -641,7 +641,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {messageXP: messageXP});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -649,7 +649,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {modLogID: 1})).modLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -657,7 +657,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {modLogID: modLogID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -665,7 +665,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {modRoleID: 1})).modRoleID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -673,7 +673,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {modRoleID: modRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -681,7 +681,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {mutedRoleID: 1})).mutedRoleID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -689,7 +689,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {mutedRoleID: mutedRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -697,7 +697,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {nicknameLogID: 1})).nicknameLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -705,7 +705,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {nicknameLogID: nicknameLogID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -713,7 +713,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {prefix: prefix});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -721,7 +721,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {roleLogID: 1})).roleLogID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -729,7 +729,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {roleLogID: roleLogID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -737,7 +737,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {starboardChannelID: starboardChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -745,7 +745,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {systemChannelID: 1})).systemChannelID;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -753,7 +753,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {systemChannelID: systemChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -761,7 +761,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {verificationMessage: verificationMessage});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -769,7 +769,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {verificationMessageID: verificationMessageID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -777,7 +777,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {verificationChannelID: verificationChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -785,7 +785,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {verificationRoleID: verificationRoleID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -793,7 +793,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {voicePoints: voicePoints});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -801,7 +801,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {voiceXP: voiceXP});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -809,7 +809,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {welcomeChannelID: welcomeChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -822,7 +822,7 @@ module.exports = {
                 }
             ]});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -830,7 +830,7 @@ module.exports = {
         try {
             return (await Guild.findOne({guildID: guildID}, {randomColor: 1})).randomColor;
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -838,7 +838,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {xpChannelID: xpChannelID});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -846,7 +846,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {disabledCommands: disabledCommands});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -854,7 +854,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {pointTracking: pointTracking});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -862,7 +862,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {randomColor: randomColor});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -870,7 +870,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {xpTracking: xpTracking});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 
@@ -878,7 +878,7 @@ module.exports = {
         try {
             return await Guild.updateOne({guildID: guildID}, {xpMessageAction: xpChannelMessage});
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     },
 

@@ -240,9 +240,9 @@ class Client extends Discord.Client {
         slashes.forEach((f) => {
           const Slash = require(resolve(__basedir, join(path, dir, f)));
           const slash = new Slash(this); // Instantiate the specific command
-          try{
+          try {
             Slashes.push(slash.data.toJSON());
-          }catch (e){
+          } catch (e) {
             Slashes.push(slash.data);
           }
           this.slashes.set(slash.data.name, slash);
@@ -262,23 +262,23 @@ class Client extends Discord.Client {
     let table = new AsciiTable("Context Menus");
     table.setHeading("File", "Status");
     readdirSync(path)
-        .filter((f) => !f.endsWith(".js"))
-        .forEach((dir) => {
-          const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
-              (f) => f.endsWith("js")
-          );
-          slashes.forEach((f) => {
-            const ContextMenu = require(resolve(__basedir, join(path, dir, f)));
-            const contextMenu = new ContextMenu(this); // Instantiate the specific command
-            try{
-              Slashes.push(contextMenu.data.toJSON());
-            }catch (e){
-              Slashes.push(contextMenu.data);
-            }
-            this.slashes.set(contextMenu.data.name, contextMenu);
-            table.addRow(f, "pass");
-          });
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const ContextMenu = require(resolve(__basedir, join(path, dir, f)));
+          const contextMenu = new ContextMenu(this); // Instantiate the specific command
+          try {
+            Slashes.push(contextMenu.data.toJSON());
+          } catch (e) {
+            Slashes.push(contextMenu.data);
+          }
+          this.slashes.set(contextMenu.data.name, contextMenu);
+          table.addRow(f, "pass");
         });
+      });
     this.logger.info(`\n${table.toString()}`);
     return this;
   }
@@ -292,18 +292,18 @@ class Client extends Discord.Client {
     let table = new AsciiTable("Modals");
     table.setHeading("File", "Status");
     readdirSync(path)
-        .filter((f) => !f.endsWith(".js"))
-        .forEach((dir) => {
-          const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
-              (f) => f.endsWith("js")
-          );
-          slashes.forEach((f) => {
-            const Modal = require(resolve(__basedir, join(path, dir, f)));
-            const modal = new Modal(this); // Instantiate the specific command
-            this.modals.set(modal.name, modal);
-            table.addRow(f, "pass");
-          });
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Modal = require(resolve(__basedir, join(path, dir, f)));
+          const modal = new Modal(this); // Instantiate the specific command
+          this.modals.set(modal.name, modal);
+          table.addRow(f, "pass");
         });
+      });
     this.logger.info(`\n${table.toString()}`);
     return this;
   }
@@ -317,18 +317,18 @@ class Client extends Discord.Client {
     let table = new AsciiTable("Buttons");
     table.setHeading("File", "Status");
     readdirSync(path)
-        .filter((f) => !f.endsWith(".js"))
-        .forEach((dir) => {
-          const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
-              (f) => f.endsWith("js")
-          );
-          slashes.forEach((f) => {
-            const Button = require(resolve(__basedir, join(path, dir, f)));
-            const button = new Button(this); // Instantiate the specific command
-            this.buttons.set(button.name, button);
-            table.addRow(f, "pass");
-          });
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Button = require(resolve(__basedir, join(path, dir, f)));
+          const button = new Button(this); // Instantiate the specific command
+          this.buttons.set(button.name, button);
+          table.addRow(f, "pass");
         });
+      });
     this.logger.info(`\n${table.toString()}`);
     return this;
   }
@@ -342,18 +342,18 @@ class Client extends Discord.Client {
     let table = new AsciiTable("Selects Menus");
     table.setHeading("File", "Status");
     readdirSync(path)
-        .filter((f) => !f.endsWith(".js"))
-        .forEach((dir) => {
-          const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
-              (f) => f.endsWith("js")
-          );
-          slashes.forEach((f) => {
-            const Menu = require(resolve(__basedir, join(path, dir, f)));
-            const menu = new Menu(this); // Instantiate the specific command
-            this.menus.set(menu.name, menu);
-            table.addRow(f, "pass");
-          });
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Menu = require(resolve(__basedir, join(path, dir, f)));
+          const menu = new Menu(this); // Instantiate the specific command
+          this.menus.set(menu.name, menu);
+          table.addRow(f, "pass");
         });
+      });
     this.logger.info(`\n${table.toString()}`);
     return this;
   }
@@ -370,22 +370,36 @@ class Client extends Discord.Client {
       files = files.filter((f) => f.split(".").pop() === "js");
       if (files.length === 0) return this.logger.warn("No events found");
       this.logger.info(`${files.length} event(s) found...`);
-      files.forEach((f) => {
-        const event = require(resolve(__basedir, join(path, f)));
-        if (event.once) {
-          super.once(event.name, (...args) => event.execute(...args, Slashes));
-        } else {
-          if (event.name === "interactionCreate") {
-            super.on(event.name, (...args) =>
-              event.execute(...args, Slashes, Commands, client, player)
-            );
-          } else {
-            super.on(event.name, (...args) =>
-              event.execute(...args, Commands, client, player)
+      if (process.argv.slice(2)[0] === "--update") {
+        this.logger.info("Updating events...");
+        files.forEach((f) => {
+          const event = require(resolve(__basedir, join(path, f)));
+          if (event.once) {
+            super.once(event.name, (...args) =>
+              event.execute(...args, Slashes)
             );
           }
-        }
-      });
+        });
+      } else {
+        files.forEach((f) => {
+          const event = require(resolve(__basedir, join(path, f)));
+          if (event.once) {
+            super.once(event.name, (...args) =>
+              event.execute(...args, Slashes)
+            );
+          } else {
+            if (event.name === "interactionCreate") {
+              super.on(event.name, (...args) =>
+                event.execute(...args, Slashes, Commands, client, player)
+              );
+            } else {
+              super.on(event.name, (...args) =>
+                event.execute(...args, Commands, client, player)
+              );
+            }
+          }
+        });
+      }
     });
     return this;
   }
@@ -428,7 +442,7 @@ class Client extends Discord.Client {
    * @param {User} user
    */
   isOwner(user) {
-    if(parseInt(user.id) === this.id) return true;
+    if (parseInt(user.id) === this.id) return true;
 
     for (let i = 0; i < this.developerID.length; i++) {
       if (parseInt(this.developerID[i]) === parseInt(user.id)) return true;
@@ -449,7 +463,9 @@ class Client extends Discord.Client {
    */
   async sendSystemErrorMessage(guild, error, errorMessage) {
     // Get system channel
-    const systemChannelId = await this.mongodb.settings.selectSystemChannelId(guild.id);
+    const systemChannelId = await this.mongodb.settings.selectSystemChannelId(
+      guild.id
+    );
     const systemChannel = guild.channels.cache.get(systemChannelId);
 
     if (
@@ -489,7 +505,7 @@ class Client extends Discord.Client {
     return setTimeout.apply(undefined, arguments);
   }
 
-  clearTimeout_(id){
+  clearTimeout_(id) {
     this.setTimeout_(clearTimeout, id);
   }
 }

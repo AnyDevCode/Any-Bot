@@ -286,7 +286,7 @@ async function play_song (guild, song, queue) {
 
   const song_queue = queue.get(guild.id);
 
-  if (song) console.log(colors.green(`[${guild.name}] `) + colors.yellow(`${song.title}`) + colors.green(` is now playing`));
+  if (song) __Client.logger.info(colors.green(`[${guild.name}] `) + colors.yellow(`${song.title}`) + colors.green(` is now playing`));
 
   //If no song is left in the server queue. Leave the voice channel and delete the key and value pair from the global queue.
   if (!song) {

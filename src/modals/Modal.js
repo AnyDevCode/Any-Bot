@@ -1,16 +1,13 @@
-
 /**
  * Any Bot's custom Modal
  */
 class Modal {
-
   /**
    * Create new command
    * @param {Client} client
    * @param {Object} options
    */
   constructor(client, options) {
-
     /**
      * The client
      * @type {Client}
@@ -21,7 +18,7 @@ class Modal {
      * Data
      * @type { Array }
      */
-    this.data = options.data
+    this.data = options.data;
 
     /**
      * Name of the command

@@ -1,6 +1,6 @@
 {
   "name": "any-bot",
-  "version": "v2.0.0",
+  "version": "v2.0.0-dev",
   "description": "A fully customizable bot built with discord.js",
   "main": "app.js",
   "dependencies": {
@@ -78,7 +78,8 @@
     "start": "node app.js",
     "shard": "node shard.js",
     "dev": "nodemon app.js",
-    "update": "node app.js --update"
+    "update": "node app.js --update",
+    "pm2": "pm2 start --name \"Any-Bot\" app.js --watch"
   },
   "repository": {
     "type": "git",

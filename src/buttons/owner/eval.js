@@ -1,16 +1,16 @@
-const {MessageEmbed, MessageActionRow, MessageButton} = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const Button = require("../Button.js");
 
 module.exports = class EvalButton extends Button {
-    constructor(client) {
+  constructor(client) {
     super(client, {
       name: "evalbtn",
-        ownerOnly: true,
+      ownerOnly: true,
     });
   }
 
   async run(interaction) {
-        //Delete the message
-        await interaction.message.delete()
-      }
-  };
+    //Delete the message
+    await interaction.message.delete();
+  }
+};

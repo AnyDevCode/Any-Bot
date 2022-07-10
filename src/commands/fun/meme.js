@@ -27,7 +27,7 @@ module.exports = class MemeCommand extends Command {
       message.channel.send({embeds:[embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
+      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
     }
   }
 };

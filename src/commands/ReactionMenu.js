@@ -12,9 +12,10 @@ module.exports = class ReactionMenu {
    * @param {GuildMember} member
    * @param {MessageEmbed} embed
    * @param {Array} arr
-   * @param {int} interval 
+   * @param {int} interval
    * @param {Object} reactions
-   * @param {int} timeout 
+   * @param {int} timeout
+   * @param extra
    */
   constructor(client, channel, member, embed, arr = null, interval = 10, reactions = {
     '⏪': this.first.bind(this), 
@@ -161,7 +162,7 @@ module.exports = class ReactionMenu {
     // Create collector
     const collector = this.message.createReactionCollector((reaction, user) => {
       return (this.emojis.includes(reaction.emoji.name) || this.emojis.includes(reaction.emoji.id)) &&
-        user.id == this.memberId;
+        user.id === this.memberId;
     }, { time: this.timeout });
     
     // On collect

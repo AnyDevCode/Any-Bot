@@ -20,19 +20,19 @@ module.exports = class GoogleCommand extends Command {
 
     const msg = await message.channel.send({content: 'Searching...'});
 
-    var options = {
-      host : "google.com",
-      qs : {
-        q : search,
-        filter : 1,
-        pws : 0
-      },
-      num : 50
-    };
+      const options = {
+          host: "google.com",
+          qs: {
+              q: search,
+              filter: 1,
+              pws: 0
+          },
+          num: 50
+      };
 
-    var i = 0;
+      let i = 0;
 
-    const links = await serp.search(options);
+      const links = serp.search(options);
 
     let max = links.length - 1
 
@@ -53,11 +53,11 @@ module.exports = class GoogleCommand extends Command {
        msg.react('⏹️')
        msg.react('▶️')
        msg.awaitReactions((reaction,user) => {
-           if(message.author.id != user.id){
+           if(message.author.id !== user.id){
                return;
            }
            if(reaction.emoji.name === '▶️'){
-               if(i != max){
+               if(i !== max){
                    i++
                    const embeds = new MessageEmbed()
                    .setAuthor({
@@ -89,7 +89,7 @@ module.exports = class GoogleCommand extends Command {
                    msg.edit({embeds:[embedsss]});
            }
            if(reaction.emoji.name === '◀️'){
-               if(i != 0){
+               if(i !== 0){
                i--
                const embedss = new MessageEmbed()
                .setAuthor({

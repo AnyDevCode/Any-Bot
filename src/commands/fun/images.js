@@ -23,7 +23,7 @@ module.exports = class ImagesCommand extends Command {
 
     search = customFilter.clean(search);
 
-    var options = {
+    const options = {
       searchTerm: search,
       queryStringAddition: "&safe=active",
       filterOutDomains: [
@@ -42,15 +42,39 @@ module.exports = class ImagesCommand extends Command {
 
     gis(options, logResults);
 
-    function logResults(error, results) {
+    async function logResults(error, results) {
+      if (!results[0]) {
+        return msg.edit("No results found");
+      }
+
+      let newresults = []
+
+      for (let i = 0; i < results.length; i++) {
+        //Delete every url that is not an image in format png, jpg, jpeg, gif
+        if (
+          results[i].url.includes(".png") ||
+          results[i].url.includes(".jpg") ||
+          results[i].url.includes(".jpeg") ||
+          results[i].url.includes(".gif")
+        ) {
+          newresults.push(results[i]);
+        }
+      }
+
+      results = newresults;
+
+      if (!results[0]) {
+        return msg.edit("No results found");
+      }
+
       if (error) {
-        return this.sendErrorMessage(
+        return await this.sendErrorMessage(
           message,
           1,
           "Please try again in a few seconds"
         );
       } else {
-        var i = 0;
+        let i = 0;
 
         let max = results.length - 1;
 
@@ -81,7 +105,7 @@ module.exports = class ImagesCommand extends Command {
                   .setFooter({
                     text: "Page : " + parseInt(i + 1) + "/" + parseInt(max + 1),
                   });
-                msg.edit({ embeds: [embeds] });
+                msg.edit({ content: "Result to your search:", embeds: [embeds] });
               }
             }
             if (reaction.emoji.name === "⏹️") {
@@ -97,7 +121,7 @@ module.exports = class ImagesCommand extends Command {
                 .setDescription("Thanks for using Google Images")
                 .setColor(message.guild.me.displayHexColor)
                 .setTimestamp();
-              msg.edit({ embeds: [embedsss] });
+                msg.edit({ content: "Result to your search:", embeds: [embedsss] });
             }
             if (reaction.emoji.name === "◀️") {
               if (1 !== i) {
@@ -110,7 +134,7 @@ module.exports = class ImagesCommand extends Command {
                   .setFooter({
                     text: "Page : " + parseInt(i + 1) + "/" + parseInt(max + 1),
                   });
-                msg.edit({ embeds: [embedss] });
+                  msg.edit({ content: "Result to your search:", embeds: [embedss] });
               }
             }
           });

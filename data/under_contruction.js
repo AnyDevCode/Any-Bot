@@ -2,7 +2,7 @@ module.exports = {
   name: "under_construction",
   run: async () => {
     require("dotenv").config();
-    const {Client} = require("Discord.js");
+    const {Client} = require("discord.js");
     global.__basedir = __dirname;
 
     const client = new Client({
@@ -25,6 +25,6 @@ module.exports = {
         ) 
     });
 
-    client.login(process.env.TOKEN);
+    await client.login(process.env.TOKEN);
   },
 };

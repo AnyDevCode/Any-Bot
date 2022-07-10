@@ -29,7 +29,7 @@ module.exports = class ServersCommand extends Command {
       .setColor(message.guild.me.displayHexColor);
 
     if (servers.length <= 10) {
-      const range = (servers.length == 1) ? '[1]' : `[1 - ${servers.length}]`;
+      const range = (servers.length === 1) ? '[1]' : `[1 - ${servers.length}]`;
       message.channel.send({embeds:[embed.setTitle(`Server List ${range}`).setDescription(servers.join('\n'))]});
     } else {
       new ReactionMenu(message.client, message.channel, message.member, embed, servers);

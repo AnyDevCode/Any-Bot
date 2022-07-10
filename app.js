@@ -1,23 +1,32 @@
 require("dotenv").config();
 const Client = require("./src/client.js");
 const config = require("./config.json");
-const { Player } = require('discord-player');
-const {index} = require("./src/utils/dashboard.js");
+const { Player } = require("discord-player");
 const botlist = config.botlist;
+const discordModals = require("discord-modals");
 global.__basedir = __dirname;
+const WebSocket = require("ws");
 
 const client = new Client(config, {
-    intents: 8191,
-    allowedMentions: { parse: ['users', 'roles'], repliedUser: true }
+  partials: ["CHANNEL"],
+  intents: 130815,
+  allowedMentions: { parse: ["users", "roles"], repliedUser: true },
 });
+
+discordModals(client);
 
 client.player = new Player(client);
 const player = client.player;
 
 // Initialize client
 function init() {
+
     client.loadCommands("./src/commands");
-    client.loadSlashCommands("./src/slash")
+    client.loadSlashCommands("./src/slash");
+    client.loadButtons("./src/buttons");
+    client.loadSelectMenus("./src/selectmenus");
+    client.loadContextMenus("./src/contextmenus");
+    client.loadModals("./src/modals");
     client.loadEvents("./src/events", client, player);
     client.loadMusicEvents("./src/music", player);
     client.loadTopics("./data/trivia");
@@ -27,18 +36,19 @@ function init() {
 init();
 
 if (botlist) {
-    let {botlist} = require("./src/utils/botlist.js")
-    botlist(client).then(() => {
-            client.logger.info("Botlist updated!");
-        }
-    );
+  let { botlist } = require("./src/utils/botlist.js");
+  botlist(client).then(() => {
+    client.logger.info("Botlist updated!");
+  });
 }
 
-
-if(!(client.shard)) {
-    const { index } = require("./src/utils/dashboard.js");
-    index(client);
+if (!client.shard) {
+  const { index } = require("./src/utils/dashboard.js");
+  index(client).then(() => {
+    client.logger.info("Dashboard initialized!");
+  });
 }
 
+global.__Client = client;
 
 process.on("unhandledRejection", (err) => client.logger.error(err));

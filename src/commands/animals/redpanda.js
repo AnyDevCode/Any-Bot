@@ -14,7 +14,7 @@ module.exports = class RedPandaCommand extends Command {
   async run(message) {
     try {
       const img = await redpanda();
-      if (typeof img === "undefined") return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      if (typeof img === "undefined") return await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
 
       const embed = new MessageEmbed()
         .setTitle("🐼  Woof!  🐼")
@@ -28,7 +28,7 @@ module.exports = class RedPandaCommand extends Command {
       message.channel.send({embeds: [embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
     }
   }
 };

@@ -12,11 +12,11 @@ module.exports = class TotalPointsCommand extends Command {
       examples: ['totalpoints @User']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const member =  this.getMemberFromMention(message, args[0]) || 
       message.guild.members.cache.get(args[0]) || 
       message.member;
-    const points = message.client.db.users.selectTotalPoints.pluck().get(member.id, message.guild.id);
+    const points = await message.client.mongodb.users.selectTotalPoints(member.id, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Total Points`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))

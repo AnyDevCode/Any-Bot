@@ -18,7 +18,7 @@ module.exports = class TranslateCommand extends Command {
 
   async run(message, args) {
 
-    if(!args[2]) return this.sendErrorMessage(message, 0, `Please check the command and try again.`);
+    if(!args[2]) return await this.sendErrorMessage(message, 0, `Please check the command and try again.`);
 
     try {
       translate({
@@ -30,7 +30,7 @@ module.exports = class TranslateCommand extends Command {
       });
     } catch (err) {
       message.client.logger.error(err);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
+      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
     }
   }
 };

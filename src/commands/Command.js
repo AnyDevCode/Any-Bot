@@ -106,6 +106,8 @@ class Command {
    * Runs the command
    * @param {Message} message
    * @param {string[]} args
+   * @param client
+   * @param player
    */
   // eslint-disable-next-line no-unused-vars
   run(message, args, client, player) {
@@ -198,7 +200,6 @@ class Command {
   /**
    * Checks the client permissions
    * @param {Message} message
-   * @param {boolean} ownerOverride
    */
   checkClientPermissions(message) {
     const missingPermissions =
@@ -219,13 +220,13 @@ class Command {
   /**
    * Creates and sends command failure embed
    * @param {Message} message
-   * @param {int} errorType
+   * @param {string} errorType
    * @param {string} reason
-   * @param {string} errorMessage
+   * @param {null} errorMessage
    */
-  sendErrorMessage(message, errorType, reason, errorMessage = null) {
+  async sendErrorMessage(message, errorType, reason, errorMessage = null) {
     errorType = this.errorTypes[errorType];
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const embed = new MessageEmbed()
       .setAuthor({name: `${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
       .setTitle(`${fail} Error: \`${this.name}\``)
@@ -245,7 +246,7 @@ class Command {
    * @param {Object} fields
    */
   async sendModLogMessage(message, reason, fields = {}) {
-    const modLogId = message.client.db.settings.selectModLogId.pluck().get(message.guild.id);
+    const modLogId = await message.client.mongodb.settings.selectModLogId(message.guild.id);
     const modLog = message.guild.channels.cache.get(modLogId);
     if (
       modLog &&

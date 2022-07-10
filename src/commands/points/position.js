@@ -16,14 +16,14 @@ module.exports = class PositionCommand extends Command {
       examples: ['position @MDC']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const member =  this.getMemberFromMention(message, args[0]) || 
       message.guild.members.cache.get(args[0]) || 
       message.member;
-    const leaderboard = message.client.db.users.selectLeaderboard.all(message.guild.id);
+    const leaderboard = await message.client.mongodb.users.selectLeaderboard(message.guild.id);
     const pos = leaderboard.map(row => row.user_id).indexOf(member.id) + 1;
     const ordinalPos = message.client.utils.getOrdinalNumeral(pos);
-    const points = message.client.db.users.selectPoints.pluck().get(member.id, message.guild.id);
+    const points = await message.client.mongodb.users.selectPoints(member.id, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Position`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))

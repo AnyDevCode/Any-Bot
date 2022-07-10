@@ -10,7 +10,7 @@
   "serverLogId": "Your_Server_Log_Channel_Id",
   "supportServerInvite": "Your_Support_Server_Invite",
   "mongodb_url": "Your_MongoDB_Url",
-  "botStats":{
+  "botStats": {
     "guilds_channel": "Your_Guilds_Channel_Stats_Bot",
     "users_channel": "Your_Users_Channel_Stats_Bot"
   },

@@ -14,13 +14,13 @@ module.exports = class SetPrefixCommand extends Command {
       examples: ['setprefix !']
     });
   }
-  run(message, args) {
-    const oldPrefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+  async run(message, args) {
+    const oldPrefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const prefix = args[0];
-    if (!prefix) return this.sendErrorMessage(message, 0, 'Please provide a prefix');
+    if (!prefix) return await this.sendErrorMessage(message, 0, 'Please provide a prefix');
     else if (prefix.length > 3) 
-      return this.sendErrorMessage(message, 0, 'Please ensure the prefix is no larger than 3 characters');
-    message.client.db.settings.updatePrefix.run(prefix, message.guild.id);
+      return await this.sendErrorMessage(message, 0, 'Please ensure the prefix is no larger than 3 characters');
+    await message.client.mongodb.settings.updatePrefix(prefix, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle('Settings: `System`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))

@@ -28,7 +28,7 @@ module.exports = class PurgeCommand extends Command {
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return await this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
@@ -39,11 +39,11 @@ module.exports = class PurgeCommand extends Command {
 
     const amount = parseInt(args[0]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
+      return await this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
 
     // Check channel permissions
     if (!channel.permissionsFor(message.guild.me).has(['MANAGE_MESSAGES']))
-      return this.sendErrorMessage(message, 0, 'I do not have permission to manage messages in the provided channel');
+      return await this.sendErrorMessage(message, 0, 'I do not have permission to manage messages in the provided channel');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';
@@ -117,7 +117,7 @@ module.exports = class PurgeCommand extends Command {
       fields['Found Messages'] = `\`${messages.size}\``;
     } else fields['Message Count'] = `\`${amount}\``;
 
-    this.sendModLogMessage(message, reason, fields);
+    await this.sendModLogMessage(message, reason, fields);
 
   }
 };

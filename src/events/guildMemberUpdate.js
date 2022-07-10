@@ -9,9 +9,9 @@ module.exports = {
         .setColor(oldMember.guild.me.displayHexColor);
     
       // Nickname change
-      if (oldMember.nickname != newMember.nickname) {
+      if (oldMember.nickname !== newMember.nickname) {
         // Get nickname log
-        const nicknameLogId = client.db.settings.selectNicknameLogId.pluck().get(oldMember.guild.id);
+        const nicknameLogId = await client.mongodb.settings.selectNicknameLogId(oldMember.guild.id);
         const nicknameLog = oldMember.guild.channels.cache.get(nicknameLogId);
         if (
           nicknameLog &&
@@ -31,7 +31,7 @@ module.exports = {
       // Role add
       if (oldMember.roles.cache.size < newMember.roles.cache.size) {
         // Get role log
-        const roleLogId = client.db.settings.selectRoleLogId.pluck().get(oldMember.guild.id);
+        const roleLogId = await client.mongodb.settings.selectRoleLogId(oldMember.guild.id);
         const roleLog = oldMember.guild.channels.cache.get(roleLogId);
         if (
           roleLog &&
@@ -49,7 +49,7 @@ module.exports = {
       // Role remove
       if (oldMember.roles.cache.size > newMember.roles.cache.size) {
         // Get role log
-        const roleLogId = client.db.settings.selectRoleLogId.pluck().get(oldMember.guild.id);
+        const roleLogId = await client.mongodb.settings.selectRoleLogId(oldMember.guild.id);
         const roleLog = oldMember.guild.channels.cache.get(roleLogId);
         if (
           roleLog &&

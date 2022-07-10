@@ -8,7 +8,7 @@ module.exports = {
   once: true,
   async execute(client, slashes) {
     const activities = [
-      { name: `!help`, type: "LISTENING" },
+      { name: `>help`, type: "LISTENING" },
       { name: "for you", type: "LISTENING" },
     ];
 
@@ -30,6 +30,7 @@ module.exports = {
         name: `with ${client.commands.size} commands`,
         type: "PLAYING",
       }; // Update command count
+
       if (activity >= activities.length) activity = 0;
       client.user.setActivity(activities[activity].name, {
         type: activities[activity].type,
@@ -38,31 +39,34 @@ module.exports = {
       activity++;
     }, 30000);
 
-    setInterval(() => {
-      //Update name of a channel
-      const guilds_channel = client.channels.cache.get(
-        client.statsChannels.guilds_channel
-      );
-      let guilds = client.guilds.cache.size;
-      //Create a variable with the number closest to guilds that is a power of 100
-      let closest_guilds = Math.pow(10, Math.floor(Math.log10(guilds))) * 10;
-      guilds_channel.setName(
-        `『🏁』 Guilds: ${client.guilds.cache.size}/${closest_guilds}`
-      );
+    setInterval(
+      () => {
+        //Update name of a channel
+        const guilds_channel = client.channels.cache.get(
+          client.statsChannels.guilds_channel
+        );
+        let guilds = client.guilds.cache.size;
+        //Create a variable with the number closest to guilds that is a power of 100
+        let closest_guilds = Math.pow(10, Math.floor(Math.log10(guilds))) * 10;
+        guilds_channel.setName(
+          `『🏁』 Guilds: ${client.guilds.cache.size}/${closest_guilds}`
+        );
 
-      //Update name of a channel
-      const users_channel = client.channels.cache.get(
-        client.statsChannels.users_channel
-      );
-      let users = client.users.cache.size;
-      //Create a variable with the number closest to users that is a power of 10000
-      let closest_users = Math.pow(10, Math.floor(Math.log10(users))) * 10;
-      users_channel.setName(
-        `『🧑』 Users: ${abbreviateNumber(
-          client.users.cache.size
-        )}/${abbreviateNumber(closest_users)}`
-      );
-    }, 1000 * 60 * 5);
+        //Update name of a channel
+        const users_channel = client.channels.cache.get(
+          client.statsChannels.users_channel
+        );
+        let users = client.users.cache.size;
+        //Create a variable with the number closest to users that is a power of 10000
+        let closest_users = Math.pow(10, Math.floor(Math.log10(users))) * 10;
+        users_channel.setName(
+          `『🧑』 Users: ${abbreviateNumber(
+            client.users.cache.size
+          )}/${abbreviateNumber(closest_users)}`
+        );
+      }, //Every 10 minutes
+      600000
+    );
 
     client.logger.info(`Logged in as ${client.user.tag}!`);
     client.logger.info(
@@ -75,7 +79,7 @@ module.exports = {
       version: "10",
     }).setToken(process.env.TOKEN);
 
-    (async () => {
+    await (async () => {
       try {
         if (process.env.ENV === "production") {
           await rest.put(Routes.applicationCommands(CLIENT_ID), {
@@ -92,16 +96,19 @@ module.exports = {
           client.logger.info("Guild slash commands updated!");
         }
       } catch (e) {
-        if (e) console.log(e);
+        if (e) client.logger.error(e);
         client.logger.error("Failed to update slash commands!");
       }
     })();
 
     client.logger.info("Updating database and scheduling jobs...");
-    for (const guild of client.guilds.cache.values()) {
-      /** ------------------------------------------------------------------------------------------------
-       * FIND SETTINGS
-       * ------------------------------------------------------------------------------------------------ */
+    for await (const guild of client.guilds.cache.values()) {
+      /*
+       ** -----------------------------------------------------------------------
+       *  FIND SETTINGS
+       ** -----------------------------------------------------------------------
+       */
+
       // Find mod log
       const modLog = guild.channels.cache.find(
         (c) =>
@@ -128,7 +135,7 @@ module.exports = {
        * UPDATE TABLES
        * ------------------------------------------------------------------------------------------------ */
       // Update settings table
-      await client.db.settings.insertRow.run(
+      await client.mongodb.settings.insertRow(
         guild.id,
         guild.name,
         guild.systemChannelID, // Default channel
@@ -143,41 +150,102 @@ module.exports = {
         crownRole ? crownRole.id : null
       );
 
-      // Update users table
-      guild.members.cache.forEach((member) => {
-        client.db.users.insertRow.run(
+      //Get all users in the guild
+      const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
+
+      const membersGuildObject = await guild.members.fetch();
+
+      //Check if the user is in the database
+      for (const member of membersGuildObject.values()) {
+        const user = dbUsers.find((u) => u.user_id === member.id);
+
+        if (user) {
+          //Check if have the same data
+          if (
+            user.user_name !== member.user.username ||
+            user.user_discriminator !== member.user.discriminator ||
+            guild.name !== user.guild_name
+          ) {
+            //Update the user
+            await client.mongodb.users.updateRow(
+              member.id,
+              member.user.username,
+              member.user.discriminator,
+              guild.id,
+              guild.name,
+              member.joinedAt
+                ? member.joinedAt.toString()
+                : Date.now().toString(),
+              member.user.bot ? 1 : 0,
+              user.points,
+              user.xp,
+              user.level,
+              user.total_points,
+              user.total_xp,
+              user.total_messages,
+              user.total_commands,
+              user.total_reactions,
+              user.total_voice,
+              user.total_stream,
+              user.total_pictures,
+              user.current_member
+            );
+
+            continue;
+          } else {
+            //No run more and continue with the next member
+            continue;
+          }
+        } else {
+
+        //If the user is not in the database, add them
+        await client.mongodb.users.insertRow(
           member.id,
           member.user.username,
           member.user.discriminator,
           guild.id,
           guild.name,
-          member.joinedAt.toString(),
+          member.joinedAt ? member.joinedAt.toString() : Date.now().toString(),
           member.user.bot ? 1 : 0
         );
-      });
+
+        client.logger.info(
+          `${member.user.username} has been added to the database!`
+        );
+
+        }
+
+
+      }
 
       /** ------------------------------------------------------------------------------------------------
        * CHECK DATABASE
        * ------------------------------------------------------------------------------------------------ */
       // If member left
       if (!client.shard) {
-        const currentMemberIds = client.db.users.selectCurrentMembers
-          .all(guild.id)
-          .map((row) => row.user_id);
-        for (const id of currentMemberIds) {
-          if (!guild.members.cache.has(id)) {
-            client.db.users.updateCurrentMember.run(0, id, guild.id);
+        const currentMember = await client.mongodb.users.selectCurrentMembers(
+          guild.id
+        );
+        for (const user of currentMember) {
+          if (!membersGuildObject.has(user.user_id)) {
+            await client.mongodb.users.updateCurrentMember(
+              0,
+              user.user_id,
+              guild.id
+            );
           }
         }
       }
 
       // If member joined
-      const missingMemberIds = client.db.users.selectMissingMembers
-        .all(guild.id)
-        .map((row) => row.user_id);
-      for (const id of missingMemberIds) {
-        if (guild.members.cache.has(id))
-          client.db.users.updateCurrentMember.run(1, id, guild.id);
+      const missingMember = await client.mongodb.users.selectMissingMembers(
+        guild.id
+      );
+
+      for (const user of missingMember) {
+        if (guild.members.cache.has(user.user_id)) {
+          client.mongodb.users.updateCurrentMember(1, user.user_id, guild.id);
+        }
       }
 
       /** ------------------------------------------------------------------------------------------------
@@ -185,41 +253,49 @@ module.exports = {
        * ------------------------------------------------------------------------------------------------ */
       // Fetch verification message
       const {
-        verification_channel_id: verificationChannelId,
-        verification_message_id: verificationMessageId,
-      } = client.db.settings.selectVerification.get(guild.id);
+        verificationChannelID: verificationChannelId,
+        verificationMessageID: verificationMessageId,
+      } = await client.mongodb.settings.selectRow(guild.id);
       const verificationChannel = guild.channels.cache.get(
         verificationChannelId
       );
       if (verificationChannel && verificationChannel.viewable) {
         try {
           await verificationChannel.messages.fetch(verificationMessageId);
-        } catch (err) {
-          // Message was deleted
-          client.logger.error(err);
-        }
+        } catch (e) {}
       }
 
       /** ------------------------------------------------------------------------------------------------
        * CROWN ROLE
        * ------------------------------------------------------------------------------------------------ */
       // Schedule crown role rotation
-      client.utils.scheduleCrown(client, guild);
+      await client.utils.scheduleCrown(client, guild);
     }
 
     // Remove left guilds
     if (!client.shard) {
-      const dbGuilds = await client.db.settings.selectGuilds.all();
+      const dbGuilds = await client.mongodb.settings.selectGuilds();
       const guilds = Array.from(client.guilds.cache.keys());
-      const leftGuilds = dbGuilds.filter(
-        (g1) => !guilds.some((g2) => g1.guildID === g2.id)
-      );
+
+      //Create a const leftGuilds if the guilds in the dbGuilds array are not in the guilds array
+
+      const leftGuilds = dbGuilds.filter((g1) => !guilds.includes(g1.guildID));
+
       for (const guild of leftGuilds) {
         await client.mongodb.settings.deleteGuild(guild.guildID);
-        client.db.users.deleteGuild.run(guild.guild_id);
 
         client.logger.info(`Any Bot has left ${guild.guild_name}`);
       }
     }
+
+    // Finish message
+    client.logger.info(
+      `Ready to serve ${client.guilds.cache.size} guilds, in ${
+        client.channels.cache.size
+      } channels of ${client.guilds.cache.reduce(
+        (acc, guild) => acc + guild.memberCount,
+        0
+      )} users.`
+    );
   },
 };

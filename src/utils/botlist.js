@@ -27,10 +27,10 @@ async function botlist(client){
 
             const postertopgg = AutoPoster(bldapikey.topgg, client);
 
-            connectBdlBot(bldapikey.bdl, client).then(r => console.log(r));
+            connectBdlBot(bldapikey.bdl, client).then(r => client.logger.info(r));
 
             postertopgg.on("posted", async (stats) => {
-                console.log("Post in Top.gg | " + stats.serverCount + " servers");
+                client.logger.info("Post in Top.gg | " + stats.serverCount + " servers");
                 await fetch(
                     "https://discordbotlist.com/api/v1/bots/733728002910715977/stats",
                     {
@@ -47,12 +47,12 @@ async function botlist(client){
                         })
                     }
                 ).then(async (res) => {
-                    console.log("Post en DiscordBotList | " + res.status);
+                    client.logger.info("Post en DiscordBotList | " + res.status);
                 });
             });
 
         } catch (error) {
-            console.log(error);
+            __Client.logger.error(error);
         }
     }, 300000);
 

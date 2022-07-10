@@ -17,10 +17,10 @@ module.exports = class UnbanCommand extends Command {
   }
   async run(message, args) {
     const id = args[0];
-    if (!rgx.test(id)) return this.sendErrorMessage(message, 0, 'Please provide a valid user ID');
+    if (!rgx.test(id)) return await this.sendErrorMessage(message, 0, 'Please provide a valid user ID');
     const bannedUsers = await message.guild.bans.fetch()
     const user = bannedUsers.get(id).user;
-    if (!user) return this.sendErrorMessage(message, 0, 'Unable to find user, please check the provided ID');
+    if (!user) return await this.sendErrorMessage(message, 0, 'Unable to find user, please check the provided ID');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';
@@ -44,6 +44,6 @@ module.exports = class UnbanCommand extends Command {
     message.client.logger.info(`${message.guild.name}: ${message.author.tag} unbanned ${user.tag}`);
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Member: user.tag });
+    await this.sendModLogMessage(message, reason, {Member: user.tag});
   }
 };

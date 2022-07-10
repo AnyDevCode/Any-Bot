@@ -39,18 +39,21 @@ module.exports = class EightBallCommand extends Command {
     }
 
     // Command Code:
-    run(message, args) {
+    async run(message, args) {
 
         // Define the question:
         const question = args.join(' ');
         // Check if the question is empty:
-        if (!question) return this.sendErrorMessage(message, 0, 'Please provide a question to ask');
+        if (!question) return await this.sendErrorMessage(message, 0, 'Please provide a question to ask');
         // Send the answer:
         const embed = new MessageEmbed()
             .setTitle('🎱  The Magic 8-Ball  🎱')
             .addField('Question', question)
             .addField('Answer', `${answers[Math.floor(Math.random() * answers.length)]}`)
-            .setFooter(message.member.displayName, message.author.displayAvatarURL({dynamic: true}))
+            .setFooter({
+                text: `${this.client.credentials.name} | Question by ${message.member.displayName}`,
+                iconURL: message.author.displayAvatarURL({dynamic: true})
+            })
             .setTimestamp()
             .setColor(message.guild.me.displayHexColor);
         message.channel.send({embeds: [embed]});

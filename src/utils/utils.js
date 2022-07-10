@@ -17,7 +17,7 @@ function capitalize(string) {
  * @param {*} value
  */
 function removeElement(arr, value) {
-  var index = arr.indexOf(value);
+  const index = arr.indexOf(value);
   if (index > -1) {
     arr.splice(index, 1);
   }
@@ -70,7 +70,7 @@ function getRange(arr, current, interval) {
 
 /**
  * Gets the ordinal numeral of a number
- * @param {int} number
+ * @param {string} number
  */
 function getOrdinalNumeral(number) {
   number = number.toString();
@@ -170,14 +170,14 @@ async function transferCrown(client, guild, crownRoleId) {
   
   // If crown role is unable to be found
   if (!crownRole) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+    return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
       Unable to transfer crown role, it may have been modified or deleted
     `);
   }
   
-  const leaderboard = client.db.users.selectLeaderboard.all(guild.id);
+  const leaderboard = await client.mongodb.users.selectLeaderboard(guild.id);
   const winner = guild.members.cache.get(leaderboard[0].user_id);
-  const points = client.db.users.selectPoints.pluck().get(winner.id, guild.id);
+  const points = await client.mongodb.users.selectPoints(winner.id, guild.id);
   let quit = false;
 
   // Remove role from losers
@@ -189,7 +189,7 @@ async function transferCrown(client, guild, crownRoleId) {
 
         quit = true;
         
-        return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+        return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
           Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
         `, err.message);
       } 
@@ -202,17 +202,23 @@ async function transferCrown(client, guild, crownRoleId) {
   try {
     await winner.roles.add(crownRole);
     // Clear points
-    client.db.users.wipeAllPoints.run(guild.id);
+    await client.mongodb.users.wipeAllPoints(guild.id);
   } catch (err) {
-    return client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
+    return await client.sendSystemErrorMessage(guild, 'crown update', stripIndent`
       Unable to transfer crown role, please check the role hierarchy and ensure I have the Manage Roles permission
     `, err.message);
   }
   
   // Get crown channel and crown channel
-  let { crown_channel_id: crownChannelId, crown_message: crownMessage } = 
-    client.db.settings.selectCrown.get(guild.id);
+  let { crownRoleID: crownChannelID, crownMessage: crownMessage } = 
+    await client.mongodb.settings.selectRow(guild.id);
   const crownChannel = guild.channels.cache.get(crownChannelId);
+
+  if (crownMessage[0].data.text){
+    crownMessage = crownMessage[0].data.text;
+  } else {
+    crownMessage = ""
+  }
 
   // Send crown message
   if (
@@ -238,9 +244,9 @@ async function transferCrown(client, guild, crownRoleId) {
  * @param {Client} client 
  * @param {Guild} guild
  */
-function scheduleCrown(client, guild) {
+async function scheduleCrown(client, guild) {
 
-  const { crown_role_id: crownRoleId, crown_schedule: cron } = client.db.settings.selectCrown.get(guild.id);
+  const { crownRoleID: crownRoleId, crownSchedule: cron } = await client.mongodb.settings.selectRow(guild.id);
 
   if (crownRoleId && cron) {
     guild.job = schedule.scheduleJob(cron, () => {
@@ -280,7 +286,7 @@ async function play_song (guild, song, queue) {
 
   const song_queue = queue.get(guild.id);
 
-  if (song) console.log(colors.green(`[${guild.name}] `) + colors.yellow(`${song.title}`) + colors.green(` is now playing`));
+  if (song) __Client.logger.info(colors.green(`[${guild.name}] `) + colors.yellow(`${song.title}`) + colors.green(` is now playing`));
 
   //If no song is left in the server queue. Leave the voice channel and delete the key and value pair from the global queue.
   if (!song) {

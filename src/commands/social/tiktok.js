@@ -1,6 +1,6 @@
 const Command = require('../Command.js');
 const { MessageEmbed } = require('discord.js');
-var tiktokScraper = require("tiktok-scraper")
+const tiktokScraper = require("tiktok-scraper");
 const { abbreviateNumber } = require("js-abbreviation-number");
 
 const options = {
@@ -55,10 +55,9 @@ module.exports = class TikTokCommand extends Command {
             .setColor(message.guild.me.displayHexColor)
             .setTimestamp();
           
-        message.reply({embeds: [embed]});
+        await message.reply({embeds: [embed]});
     } catch (error) {
-      console.log(error);
-        this.sendErrorMessage(message, 0, 'Please use a valid username');
+        await this.sendErrorMessage(message, 0, 'Please use a valid username');
     }
 
   }

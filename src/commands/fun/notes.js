@@ -19,10 +19,10 @@ module.exports = class NotesCommand extends Command {
       examples: ['notes add Buy Nitro', 'notes edit 253 Buy Premiun', 'notes all', 'notes delete 167'],
     });
   }
-  run(message, args) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+  async run(message, args) {
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     if (args[0] === "add") {
-      if (!args[1]) return this.sendErrorMessage(message, 0, "Please enter a message to add.");
+      if (!args[1]) return await this.sendErrorMessage(message, 0, "Please enter a message to add.");
       if (notes.exists(message.author.id)) {
         const arr = notes.get(message.author.id);
         arr.push(
@@ -62,7 +62,7 @@ module.exports = class NotesCommand extends Command {
     } else if (args[0] === "delete") {
       if (notes.exists(message.author.id)) {
         if (!args[1]) {
-          return this.sendErrorMessage(message, 0, "Please enter a note id to delete.");
+          return await this.sendErrorMessage(message, 0, "Please enter a note id to delete.");
         }
         if (args[1] === "all") {
           notes.delete(message.author.id);
@@ -79,9 +79,9 @@ module.exports = class NotesCommand extends Command {
         } else {
           const arr = notes.get(message.author.id);
           let o = parseInt(args[1]);
-          if (!o) return this.sendErrorMessage(message, 0, "Please enter a id.");
+          if (!o) return await this.sendErrorMessage(message, 0, "Please enter a id.");
           let i = o - 1;
-          if (!arr[i]) return this.sendErrorMessage(message, 0, "Please enter a valid id.");
+          if (!arr[i]) return await this.sendErrorMessage(message, 0, "Please enter a valid id.");
           arr.splice(i, 1);
           notes.set(message.author.id, arr);
           {
@@ -97,17 +97,17 @@ module.exports = class NotesCommand extends Command {
             return message.channel.send({embeds:[embed]});
           }
         }
-      } else return this.sendErrorMessage(message, 1, "You don't have any notes.");
+      } else return await this.sendErrorMessage(message, 1, "You don't have any notes.");
     } else if (args[0] === "edit") {
       if (notes.exists(message.author.id)) {
-        if (!args[1]) return this.sendErrorMessage(message, 0, "Please enter a note id to edit.");
+        if (!args[1]) return await this.sendErrorMessage(message, 0, "Please enter a note id to edit.");
         else {
           const arr = notes.get(message.author.id);
           let o = parseInt(args[1]);
-          if (!o) return this.sendErrorMessage(message, 0, "Please enter a id.");
+          if (!o) return await this.sendErrorMessage(message, 0, "Please enter a id.");
           let i = o - 1;
-          if (!arr[i]) return this.sendErrorMessage(message, 0, "Please enter a valid id.");
-          if (!args[2]) return this.sendErrorMessage(message, 0, "Please enter a message to edit.");
+          if (!arr[i]) return await this.sendErrorMessage(message, 0, "Please enter a valid id.");
+          if (!args[2]) return await this.sendErrorMessage(message, 0, "Please enter a message to edit.");
           arr[i] = args
             .slice(2)
             .join(" ")
@@ -126,13 +126,13 @@ module.exports = class NotesCommand extends Command {
             return message.channel.send({embeds:[embed]});
           }
         }
-      } else return this.sendErrorMessage(message, 1, "You don't have any notes.");
+      } else return await this.sendErrorMessage(message, 1, "You don't have any notes.");
     } else {
             if (args[0] === "all") {
 
       if (notes.exists(message.author.id)) {
         const arr = notes.get(message.author.id);
-        if (!arr[0]) return this.sendErrorMessage(message, 1, "You don't have any notes.");
+        if (!arr[0]) return await this.sendErrorMessage(message, 1, "You don't have any notes.");
         let text = "";
         let i = 0;
         arr.forEach(r => {

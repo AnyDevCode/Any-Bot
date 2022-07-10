@@ -21,11 +21,11 @@ module.exports = class FortniteUserCommand extends Command {
     const platform = args[0];
 
     if (!user)
-      return this.sendErrorMessage(message, 0, "Please enter a username.");
+      return await this.sendErrorMessage(message, 0, "Please enter a username.");
     if (!platform)
-      return this.sendErrorMessage(message, 0, "Please enter a platform.");
+      return await this.sendErrorMessage(message, 0, "Please enter a platform.");
     if (platform !== "pc" && platform !== "xbl" && platform !== "psn")
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
         message,
         0,
         "Please enter a valid platform (pc/xbl/psn)."
@@ -37,7 +37,7 @@ module.exports = class FortniteUserCommand extends Command {
       .setPlatform(platform)
       .toAttachment();
 
-    if (!image) return this.sendErrorMessage(message, 0, "User not found.");
+    if (!image) return await this.sendErrorMessage(message, 0, "User not found.");
 
     let attachment = new Discord.MessageAttachment(
       image.toBuffer(),

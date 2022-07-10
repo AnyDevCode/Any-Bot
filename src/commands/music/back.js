@@ -14,7 +14,6 @@ module.exports = class BackMusicCommand extends Command {
     if(!queue || !queue.playing) return message.reply(`❌ | There is nothing playing.`);
 
     try{
-      success = await queue.back();
     }catch(e){
       return message.reply(`❌ | There is nothing to go back to.`);
     }

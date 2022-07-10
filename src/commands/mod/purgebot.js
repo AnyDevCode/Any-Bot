@@ -29,23 +29,23 @@ module.exports = class PurgeBotCommand extends Command {
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return await this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
     const amount = parseInt(args[0]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
+      return await this.sendErrorMessage(message, 0, 'Please provide a message count between 1 and 100');
 
     // Check channel permissions
     if (!channel.permissionsFor(message.guild.me).has(['MANAGE_MESSAGES']))
-      return this.sendErrorMessage(message, 0, 'I do not have permission to manage messages in the provided channel');
+      return await this.sendErrorMessage(message, 0, 'I do not have permission to manage messages in the provided channel');
 
     let reason = args.slice(1).join(' ');
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id); // Get prefix
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
 
     await message.delete(); // Delete command message
 
@@ -102,6 +102,6 @@ module.exports = class PurgeBotCommand extends Command {
     }
     
     // Update mod log
-    this.sendModLogMessage(message, reason, { Channel: channel, 'Found Messages': `\`${messages.size}\`` });
+    await this.sendModLogMessage(message, reason, {Channel: channel, 'Found Messages': `\`${messages.size}\``});
   }
 };

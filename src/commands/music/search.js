@@ -17,7 +17,7 @@ module.exports = class SearchMusicCommand extends Command {
 
     async run(message, args) {
         let query = args.join(' ');
-        if (!query) return this.sendErrorMessage(message, 1, 'You must provide a query to search for.');
+        if (!query) return await this.sendErrorMessage(message, 1, 'You must provide a query to search for.');
 
         const play_song = async (guild, song, queue) => message.client.utils.play_song(guild, song, queue);
 
@@ -27,12 +27,18 @@ module.exports = class SearchMusicCommand extends Command {
         }
 
         const video_result = await video_finder(query);
-        if (!video_result) return this.sendErrorMessage(message, 1, 'No results found for that query.');
+        if (!video_result) return await this.sendErrorMessage(message, 1, 'No results found for that query.');
 
         let embed = new MessageEmbed()
-            .setAuthor(`${message.guild.name} Music Search`, message.guild.iconURL())
+            .setAuthor({
+                name: `${message.guild.name} Music Search`,
+                iconURL: message.guild.iconURL()
+            })
             .setColor(message.guild.me.displayHexColor)
-            .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL())
+            .setFooter({
+                text: `Requested by ${message.author.tag}`,
+                iconURL: message.author.displayAvatarURL()
+            })
 
         let description = '';
         for (let i = 0; i < video_result.videos.length; i++) {
@@ -83,10 +89,10 @@ module.exports = class SearchMusicCommand extends Command {
                 //Establish a connection and play the song with the vide_player function.
                 try {
                     queue_constructor.connection = await voice_channel.join();
-                    play_song(message.guild, queue_constructor.songs[0], queue);
+                    await play_song(message.guild, queue_constructor.songs[0], queue);
                 } catch (err) {
                     queue.delete(message.guild.id);
-                    this.sendErrorMessage(message, 1, 'There was an error connecting!');
+                    await this.sendErrorMessage(message, 1, 'There was an error connecting!');
                     throw err;
                 }
             } else {

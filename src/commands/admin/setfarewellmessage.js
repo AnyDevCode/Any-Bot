@@ -23,12 +23,18 @@ module.exports = class SetFarewellMessageCommand extends Command {
       examples: ['setfarewellmessage ?member has left the server.']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
-    const { farewell_channel_id: farewellChannelId, farewell_message: oldFarewellMessage } = 
-      message.client.db.settings.selectFarewells.get(message.guild.id);
+    let { farewellChannelID: farewellChannelId, farewellMessage: oldFarewellMessage } =
+        await message.client.mongodb.settings.selectRow(message.guild.id);
     const farewellChannel = message.guild.channels.cache.get(farewellChannelId);
-    
+
+    if(oldFarewellMessage[0].data.text){
+      oldFarewellMessage = oldFarewellMessage[0].data.text;
+    } else {
+      oldFarewellMessage = null;
+    }
+
     // Get status
     const oldStatus = message.client.utils.getStatus(farewellChannelId, oldFarewellMessage);
 
@@ -42,11 +48,11 @@ module.exports = class SetFarewellMessageCommand extends Command {
       .setColor(message.guild.me.displayHexColor);
 
     if (!args[0]) {
-      message.client.db.settings.updateFarewellMessage.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateFarewellMessage(null, message.guild.id);
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
       return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
@@ -55,12 +61,12 @@ module.exports = class SetFarewellMessageCommand extends Command {
     }
     
     let farewellMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    message.client.db.settings.updateFarewellMessage.run(farewellMessage, message.guild.id);
+    await message.client.mongodb.settings.updateFarewellMessage(farewellMessage, message.guild.id);
     if (farewellMessage.length > 1024) farewellMessage = farewellMessage.slice(0, 1021) + '...';
 
     // Update status
     const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
     
     message.channel.send({embeds:[embed
       .addField('Status', statusUpdate, true)

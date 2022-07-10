@@ -18,8 +18,8 @@ module.exports = class SetStarboardChannelCommand extends Command {
       examples: ['setstarboardchannel #starboard']
     });
   }
-  run(message, args) {
-    const starboardChannelId = message.client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const starboardChannelId = await message.client.mongodb.settings.selectStarboardChannelId(message.guild.id);
     const oldStarboardChannel = message.guild.channels.cache.get(starboardChannelId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Starboard`')
@@ -31,21 +31,21 @@ module.exports = class SetStarboardChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateStarboardChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateStarboardChannelId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ \`None\``)]});
     }
 
     const starboardChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (
       !starboardChannel || 
-      (starboardChannel.type != 'GUILD_TEXT' && starboardChannel.type != 'GUILD_NEWS') || 
+      (starboardChannel.type !== 'GUILD_TEXT' && starboardChannel.type !== 'GUILD_NEWS') ||
       !starboardChannel.viewable
     ) {
-      return this.sendErrorMessage(message, 0, stripIndent`
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
     }
-    message.client.db.settings.updateStarboardChannelId.run(starboardChannel.id, message.guild.id);
+    await message.client.mongodb.settings.updateStarboardChannelId(starboardChannel.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Starboard Channel', `${oldStarboardChannel} ➔ ${starboardChannel}`)]});
   }
 };

@@ -22,7 +22,7 @@ module.exports = class JumpMusicCommand extends Command {
     const trackName = queue.tracks[trackIndex].title;
     queue.jump(trackIndex);
     
-    message.reply({ content: `⏭ | **${trackName}** has jumped the queue!` })
+    await await message.reply({content: `⏭ | **${trackName}** has jumped the queue!`})
   }
 }
 

@@ -12,9 +12,9 @@ module.exports = class SetAvatarCommand extends Command {
       examples: ['setavatar [attachment]']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     //Check if have attachment
-    if (!message.attachments.size) return this.sendErrorMessage(message, 0, 'Please attach an image to set the avatar to.');
+    if (!message.attachments.size) return await this.sendErrorMessage(message, 0, 'Please attach an image to set the avatar to.');
     //Get attachment
     const attachment = message.attachments.first();
     //Set avatar
@@ -29,8 +29,8 @@ module.exports = class SetAvatarCommand extends Command {
         })
         .setImage(attachment.url);
       message.channel.send({embeds: [embed]});
-    }).catch(() => {
-      this.sendErrorMessage(message, 1, 'Failed to set avatar.');
+    }).catch(async () => {
+      await this.sendErrorMessage(message, 1, 'Failed to set avatar.');
     });
   } 
 };

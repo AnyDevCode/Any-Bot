@@ -15,15 +15,15 @@ module.exports = class MinecraftArchievementCommand extends Command {
     try {
       let text = args.join(" ");
       if (!text)
-        return this.sendErrorMessage(message, 0, "Please enter a text.");
+        return await this.sendErrorMessage(message, 0, "Please enter a text.");
       if (text.length > 25)
-        return this.sendErrorMessage(
+        return await this.sendErrorMessage(
           message,
           1,
           "Text must be 25 characters or less."
         );
       if (text.length < 2)
-        return this.sendErrorMessage(
+        return await this.sendErrorMessage(
           message,
           1,
           "Text must be 2 characters or more."
@@ -43,8 +43,7 @@ module.exports = class MinecraftArchievementCommand extends Command {
       message.channel.send({
         files: [{ attachment: body, name: "Achievement.png" }],
       });
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
     }
   }
 };

@@ -18,15 +18,16 @@ module.exports = class SetAutoRoleCommand extends Command {
       `,
             type: client.types.ADMIN,
             userPermissions: ['MANAGE_GUILD'],
+            clientPermissions: ['MANAGE_ROLES'],
             examples: ['setautorole @Member']
         });
     }
 
     // Command Code:
-    run(message, args) {
+    async run(message, args) {
 
         // Check for role:
-        const autoRoleId = message.client.db.settings.selectAutoRoleId.pluck().get(message.guild.id);
+        const autoRoleId = await message.client.mongodb.settings.selectAutoRoleId(message.guild.id);
         const oldAutoRole = message.guild.roles.cache.find(r => r.id === autoRoleId) || '`None`';
 
         // Send embed:
@@ -40,14 +41,14 @@ module.exports = class SetAutoRoleCommand extends Command {
 
         // Clear if no args provided
         if (args.length === 0) {
-            message.client.db.settings.updateAutoRoleId.run(null, message.guild.id);
+            await message.client.mongodb.settings.updateAutoRoleId(null, message.guild.id);
             return message.channel.send({embeds: [embed.addField('Auto Role', `${oldAutoRole} ➔ \`None\``)]});
         }
 
         // Update role
         const autoRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-        if (!autoRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
-        message.client.db.settings.updateAutoRoleId.run(autoRole.id, message.guild.id);
+        if (!autoRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+        await message.client.mongodb.settings.updateAutoRoleId(autoRole.id, message.guild.id);
         return message.channel.send({embeds: [embed.addField('Auto Role', `${oldAutoRole} ➔ ${autoRole}`)]});
     }
 };

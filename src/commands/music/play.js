@@ -30,10 +30,10 @@ module.exports = class PlayMusicCommand extends Command {
         ":x: | I'm sorry but you need to be in the same voice channel as the bot to play music!"
       );
 
-    const query = args.join(" ") || message.attachments.first().url;
+    const query = args.join(" ") || (message.attachments.first() ? message.attachments.first().url : null);
     // //If query have the word "playlist"
     // if (query.includes("playlist") || query.includes("list")) {
-    //   return this.sendErrorMessage(
+    //   return await this.sendErrorMessage(
     //     message,
     //     0,
     //     ":x: | I'm sorry but you cannot play playlists!"
@@ -46,8 +46,8 @@ module.exports = class PlayMusicCommand extends Command {
         requestedBy: message.author,
         searchEngine: QueryType.AUTO,
       })
-      .catch(() => {
-        return this.sendErrorMessage(
+      .catch(async () => {
+        return await this.sendErrorMessage(
           message,
           0,
           ":x: | I'm sorry but I could not find any results for that search term!"

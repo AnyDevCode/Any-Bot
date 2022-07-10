@@ -18,8 +18,8 @@ module.exports = class SetMessageDeleteLogCommand extends Command {
       examples: ['setmessagedeletelog #bot-log']
     });
   }
-  run(message, args) {
-    const messageDeleteLogId = message.client.db.settings.selectMessageDeleteLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const messageDeleteLogId = await message.client.mongodb.settings.selectMessageDeleteLogId(message.guild.id);
     const oldMessageDeleteLog = message.guild.channels.cache.get(messageDeleteLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetMessageDeleteLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateMessageDeleteLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateMessageDeleteLogId(null, message.guild.id);
       return message.channel.send({embed: [embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ \`None\``)]});
     }
 
     const messageDeleteLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!messageDeleteLog || messageDeleteLog.type != 'GUILD_TEXT' || !messageDeleteLog.viewable) 
-      return this.sendErrorMessage(message, 0, stripIndent`
+    if (!messageDeleteLog || messageDeleteLog.type !== 'GUILD_TEXT' || !messageDeleteLog.viewable)
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateMessageDeleteLogId.run(messageDeleteLog.id, message.guild.id);
+      await message.client.mongodb.settings.updateMessageDeleteLogId(messageDeleteLog.id, message.guild.id);
     message.channel.send({embeds: [embed.addField('Message Delete Log', `${oldMessageDeleteLog} ➔ ${messageDeleteLog}`)]});
   }
 };

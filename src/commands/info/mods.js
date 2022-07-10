@@ -12,10 +12,10 @@ module.exports = class ModsCommand extends Command {
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'ADD_REACTIONS']
     });
   }
-  run(message) {
+  async run(message) {
     
     // Get mod role
-    const modRoleId = message.client.db.settings.selectModRoleId.pluck().get(message.guild.id);
+    const modRoleId = await message.client.mongodb.settings.selectModRoleId(message.guild.id);
     const modRole = message.guild.roles.cache.get(modRoleId) || '`None`';
 
     const mods = Array.from(message.guild.members.cache.filter(m => {
@@ -37,7 +37,7 @@ module.exports = class ModsCommand extends Command {
     const interval = 25;
     if (mods.length === 0) message.channel.send({embeds:[embed.setDescription('No mods found.')]});
     else if (mods.length <= interval) {
-      const range = (mods.length == 1) ? '[1]' : `[1 - ${mods.length}]`;
+      const range = (mods.length === 1) ? '[1]' : `[1 - ${mods.length}]`;
       message.channel.send({embeds:[embed
         .setTitle(`Mod List ${range}`)
         .setDescription(mods.join('\n'))

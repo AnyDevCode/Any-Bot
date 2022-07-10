@@ -33,13 +33,20 @@ module.exports = class SetCrownScheduleCommand extends Command {
       examples: ['setcrownschedule 0 21 * * 3,6', 'setcrownschedule 0 0 15 * *']
     });
   }
-  run(message, args) {
-    let { 
-      crown_role_id: crownRoleId, 
-      crown_channel_id: crownChannelId, 
-      crown_message: crownMessage, 
-      crown_schedule: oldCrownSchedule 
-    } = message.client.db.settings.selectCrown.get(message.guild.id);
+  async run(message, args) {
+    let {
+      crownRoleID: crownRoleId,
+      crownChannelID: crownChannelId,
+      crownMessage: crownMessage,
+      crownSchedule: oldCrownSchedule
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
+
+    if (crownMessage[0].data.text){
+      crownMessage = crownMessage[0].data.text;
+    } else {
+      crownMessage = ""
+    }
+
     const crownRole = message.guild.roles.cache.get(crownRoleId);
     const crownChannel = message.guild.channels.cache.get(crownChannelId);
 
@@ -63,7 +70,7 @@ module.exports = class SetCrownScheduleCommand extends Command {
 
     // Clear schedule
     if (!message.content.includes(' ')) {
-      message.client.db.settings.updateCrownSchedule.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateCrownSchedule(null, message.guild.id);
       if (message.guild.job) message.guild.job.cancel(); // Cancel old job
 
       message.client.logger.info(`${message.guild.name}: Cancelled job`);
@@ -82,7 +89,7 @@ module.exports = class SetCrownScheduleCommand extends Command {
     try {
       parser.parseExpression(crownSchedule);
     } catch (err) {
-      return this.sendErrorMessage(message, 0, 'Please try again with a valid cron expression');
+      return await this.sendErrorMessage(message, 0, 'Please try again with a valid cron expression');
     }
 
     // Set minutes and seconds to 0
@@ -100,11 +107,11 @@ module.exports = class SetCrownScheduleCommand extends Command {
     crownSchedule = cron.join(' ');
     embed.setDescription(description);
 
-    message.client.db.settings.updateCrownSchedule.run(crownSchedule, message.guild.id);
+    await message.client.mongodb.settings.updateCrownSchedule(crownSchedule, message.guild.id);
     if (message.guild.job) message.guild.job.cancel(); // Cancel old job
 
     // Schedule crown role rotation
-    message.client.utils.scheduleCrown(message.client, message.guild);
+    await message.client.utils.scheduleCrown(message.client, message.guild);
 
     // Update status
     const status =  message.client.utils.getStatus(crownRole, crownSchedule);

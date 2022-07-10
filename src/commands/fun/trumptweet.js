@@ -18,7 +18,7 @@ module.exports = class TrumpTweetCommand extends Command {
     const { stringToUrlEncoded } = message.client.utils
 
     // Get message
-    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message to tweet');
+    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a message to tweet');
     let tweet = stringToUrlEncoded(args.join(' '));
     if (tweet.length > 68) tweet = tweet.slice(0, 65) + '...';
 
@@ -34,7 +34,7 @@ module.exports = class TrumpTweetCommand extends Command {
       message.channel.send({embeds:[embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
+      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
     }
   }
 };

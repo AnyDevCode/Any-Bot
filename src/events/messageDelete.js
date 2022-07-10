@@ -1,8 +1,9 @@
 const { MessageEmbed } = require("discord.js");
+const axios = require("axios");
 
 module.exports = {
   name: "messageDelete",
-  execute(message, commands, client) {
+  async execute(message, commands, client) {
     if (message.author.bot) return;
 
     // Check for webhook and that message is not empty
@@ -19,19 +20,21 @@ module.exports = {
 
     // Message delete
 
+    const { apiUrl } = client;
+
     if (message.embeds.length === 0) {
       // Dont send logs for starboard delete
-      const starboardChannelId = client.db.settings.selectStarboardChannelId
-        .pluck()
-        .get(message.guild.id);
+      const starboardChannelId =
+        client.mongodb.settings.selectStarboardChannelId(message.guild.id);
       const starboardChannel =
         message.guild.channels.cache.get(starboardChannelId);
-      if (message.channel == starboardChannel) return;
+      if (message.channel === starboardChannel) return;
 
       // Get message delete log
-      const messageDeleteLogId = client.db.settings.selectMessageDeleteLogId
-        .pluck()
-        .get(message.guild.id);
+      const messageDeleteLogId =
+        await client.mongodb.settings.selectMessageDeleteLogId(
+          message.guild.id
+        );
       const messageDeleteLog =
         message.guild.channels.cache.get(messageDeleteLogId);
       if (
@@ -48,11 +51,32 @@ module.exports = {
           message.content = "`Empty or Embed`";
         }
 
-        let links
+        let links = "";
 
-        if(message.attachments.size > 0) {
-          links = message.attachments.map(a => a.proxyURL).join("\n")
-          if(links.length > 1024) links = links.slice(0, 1021) + "..."
+        if (message.attachments.size > 0) {
+          for (const attachment of message.attachments.values()) {
+            await axios
+              .post(
+                `${apiUrl}/upload?url=${attachment.proxyURL}&name=${attachment.name}&id=${attachment.id}`,
+                undefined,
+                {
+                  headers: {
+                    API_KEY: client.apiKeys.customAPIKey,
+                  },
+                }
+              )
+              .then(async (res) => {
+                links += `${res.data.url} \n`;
+              })
+              .catch(async (e) => {
+                links += `${attachment.proxyURL} \n`;
+              });
+          }
+          if (links.length > 1024) {
+            links = links.slice(0, 1021) + "...";
+            //Remove all lines with ... at the end
+            links = links.replace(/\n.*\.\.\./g, "");
+          }
         }
 
         embed
@@ -62,36 +86,79 @@ module.exports = {
           .addField("Message", message.content)
           .addField(
             "Attachments",
-            message.attachments.size > 0
-              ? links
-              : "None"
+            message.attachments.size > 0 ? links : "None"
           )
           .setFooter({
             text: `Some Attachments may be deleted due to Discord API limitations.`,
           });
         let image = "";
-        const attachment = Array.from(message.attachments.values())[0];
-        if (attachment && attachment.url) {
-          const extension = attachment.url.split(".").pop();
-          if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
+        let embed2;
+        let embed3;
+        let embed4;
+
+        let attachments = links.split("\n");
+        //Delete last line if it is empty
+        if (attachments[attachments.length - 1] === "") {
+          attachments.pop();
+        }
+
+        for (const attachment of attachments) {
+          const extension = attachment.split(".").pop();
+          if (/(jpg|jpeg|png|gif)/gi.test(extension)) {
+            if (image) {
+              if (embed2) {
+                if (embed3) {
+                  if (!embed4) {
+                    embed4 = new MessageEmbed();
+                    embed4.setURL("https://any-bot.tech");
+                    embed4.setImage(attachment);
+                  }
+                } else {
+                  embed3 = new MessageEmbed();
+                  embed3.setURL("https://any-bot.tech");
+                  embed3.setImage(attachment);
+                }
+              } else {
+                embed2 = new MessageEmbed();
+                embed2.setURL("https://any-bot.tech");
+                embed2.setImage(attachment);
+
+                embed.setURL("https://any-bot.tech");
+              }
+            } else {
+              image = attachment;
+            }
+          }
         }
         embed.setImage(image);
 
-        messageDeleteLog.send({ embeds: [embed] });
+        //If only exist the primary embed, send it
+        if (embed4) {
+          return messageDeleteLog.send({
+            embeds: [embed, embed2, embed3, embed4],
+          });
+        }
+        if (embed3) {
+          return messageDeleteLog.send({ embeds: [embed, embed2, embed3] });
+        }
+        if (embed2) {
+          return messageDeleteLog.send({ embeds: [embed, embed2] });
+        }
+        return messageDeleteLog.send({ embeds: [embed] });
       }
     } else {
       // Dont send logs for starboard delete
-      const starboardChannelId = client.db.settings.selectStarboardChannelId
-        .pluck()
-        .get(message.guild.id);
+      const starboardChannelId =
+        client.mongodb.settings.selectStarboardChannelId(message.guild.id);
       const starboardChannel =
         message.guild.channels.cache.get(starboardChannelId);
-      if (message.channel == starboardChannel) return;
+      if (message.channel === starboardChannel) return;
 
       // Get message delete log
-      const messageDeleteLogId = client.db.settings.selectMessageDeleteLogId
-        .pluck()
-        .get(message.guild.id);
+      const messageDeleteLogId =
+        await client.mongodb.settings.selectMessageDeleteLogId(
+          message.guild.id
+        );
       const messageDeleteLog =
         message.guild.channels.cache.get(messageDeleteLogId);
       if (
@@ -101,6 +168,28 @@ module.exports = {
           .permissionsFor(message.guild.me)
           .has(["SEND_MESSAGES", "EMBED_LINKS"])
       ) {
+        let links = "";
+
+        if (message.attachments.size > 0) {
+          for (const attachment of message.attachments.values()) {
+            await axios
+              .post(
+                `${apiUrl}/api/v1/upload?url=${attachment.proxyURL}&name=${attachment.name}&id=${attachment.id}`
+              )
+              .then(async (res) => {
+                links += `${res.data.url} \n`;
+              })
+              .catch(async () => {
+                links += `${attachment.proxyURL} \n`;
+              });
+          }
+          if (links.length > 1024) {
+            links = links.slice(0, 1021) + "...";
+            //Remove all lines with ... at the end
+            links = links.replace(/\n.*\.\.\./g, "");
+          }
+        }
+
         embed
           .setDescription(
             `${message.member}'s **embed** in ${message.channel} was deleted.`
@@ -108,19 +197,21 @@ module.exports = {
           .addField("Message", "`Embed`")
           .addField(
             "Attachments",
-            message.attachments.size > 0
-              ? message.attachments.map((a) => a.proxyURL).join("\n")
-              : "None"
+            message.attachments.size > 0 ? links : "None"
           )
           .setFooter({
             text: `Some Attachments may be deleted due to Discord API limitations.`,
           });
         let image = "";
-        const attachment = Array.from(message.attachments.values())[0];
-        if (attachment && attachment.url) {
-          const extension = attachment.url.split(".").pop();
-          if (/(jpg|jpeg|png|gif)/gi.test(extension)) image = attachment.url;
+        const attachments = links.split("\n");
+
+        for (const attachment of attachments) {
+          const extension = attachment.split(".").pop();
+          if (/(jpg|jpeg|png|gif)/gi.test(extension)) {
+            image = attachment;
+          }
         }
+
         embed.setImage(image);
 
         const embed_embed = new MessageEmbed()
@@ -134,12 +225,16 @@ module.exports = {
           .setColor(message.embeds[0].color || "#000000")
           .setAuthor({
             name: message.embeds[0].author ? message.embeds[0].author.name : "",
-            iconURL: message.embeds[0].author ? message.embeds[0].author.iconURL : "",
+            iconURL: message.embeds[0].author
+              ? message.embeds[0].author.iconURL
+              : "",
           })
           .setImage(message.embeds[0].image ? message.embeds[0].image.url : "")
           .setFooter({
             text: message.embeds[0].footer ? message.embeds[0].footer.text : "",
-            iconURL: message.embeds[0].footer ? message.embeds[0].footer.iconURL : "",
+            iconURL: message.embeds[0].footer
+              ? message.embeds[0].footer.iconURL
+              : "",
           })
           .setTimestamp();
 

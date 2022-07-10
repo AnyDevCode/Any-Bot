@@ -95,7 +95,7 @@ module.exports = {
      * UPDATE TABLES
      * ------------------------------------------------------------------------------------------------ */
     // Update settings table
-    client.db.settings.insertRow.run(
+    await client.mongodb.settings.insertRow(
       guild.id,
       guild.name,
       guild.systemChannelID, // Default channel
@@ -112,7 +112,7 @@ module.exports = {
 
     // Update users table
     guild.members.cache.forEach((member) => {
-      client.db.users.insertRow.run(
+      client.mongodb.users.insertRow(
         member.id,
         member.username,
         member.discriminator,

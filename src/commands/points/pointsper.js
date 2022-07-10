@@ -12,11 +12,11 @@ module.exports = class PointPerCommand extends Command {
       type: client.types.POINTS
     });
   }
-  run(message) {
+  async run(message) {
     
     // Get points values
-    const { message_points: messagePoints, command_points: commandPoints, voice_points: voicePoints } 
-      = message.client.db.settings.selectPoints.get(message.guild.id);
+    const { messagePoints: messagePoints, commandPoints: commandPoints, voicePoints: voicePoints } 
+      = await message.client.mongodb.settings.selectRow(message.guild.id);
     const pointsPer = stripIndent`
       Message Points :: ${messagePoints} per message
       Command Points :: ${commandPoints} per command

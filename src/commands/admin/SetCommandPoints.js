@@ -14,18 +14,19 @@ module.exports = class SetCommandPointsCommand extends Command {
       examples: ['setcommandpoints 5']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const amount = args[0];
     if (!amount || !Number.isInteger(Number(amount)) || amount < 0) 
-      return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+      return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
     const { 
-      point_tracking: pointTracking, 
-      message_points: messagePoints, 
-      command_points: commandPoints,
-      voice_points: voicePoints 
-    } = message.client.db.settings.selectPoints.get(message.guild.id);
+      pointTracking: pointTracking,
+      messagePoints: messagePoints,
+      commandPoints: commandPoints,
+      voicePoints: voicePoints
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
+
     const status = message.client.utils.getStatus(pointTracking);
-    message.client.db.settings.updateCommandPoints.run(amount, message.guild.id);
+    await message.client.mongodb.settings.updateCommandPoints(amount, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle('Settings: `Points`')
       .setThumbnail(message.guild.iconURL({ dynamic: true }))

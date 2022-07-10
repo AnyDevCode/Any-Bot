@@ -1,3 +1,5 @@
+// noinspection JSClosureCompilerSyntax
+
 const Discord = require("discord.js");
 const { readdir, readdirSync } = require("fs");
 const { join, resolve } = require("path");
@@ -36,6 +38,11 @@ class Client extends Discord.Client {
     this.db = require("./utils/db.js");
 
     /**
+     * Create MongoDB
+     */
+    this.mongodb = require("./utils/mongodb.js");
+
+    /**
      * All possible command types
      * @type {Object}
      */
@@ -70,6 +77,24 @@ class Client extends Discord.Client {
     this.slashes = new Discord.Collection();
 
     /**
+     * Collection of bot buttons
+     * @type {Collection<string, Button>}
+     */
+    this.buttons = new Discord.Collection();
+
+    /**
+     * Collection of bot selects menus
+     * @type {Collection<string, Button>}
+     */
+    this.menus = new Discord.Collection();
+
+    /**
+     * Collection of bot modals
+     * @type {Collection<string, Modal>}
+     */
+    this.modals = new Discord.Collection();
+
+    /**
      * Collection of command aliases
      * @type {Collection<string, Command>}
      */
@@ -92,6 +117,12 @@ class Client extends Discord.Client {
      * @type {Object}
      */
     this.apiKeys = config.apiKeys;
+
+    /**
+     * Api Url
+     * @type {string}
+     */
+    this.apiUrl = config.apiUrl;
 
     /**
      * Bot Stats
@@ -209,8 +240,117 @@ class Client extends Discord.Client {
         slashes.forEach((f) => {
           const Slash = require(resolve(__basedir, join(path, dir, f)));
           const slash = new Slash(this); // Instantiate the specific command
-          Slashes.push(slash.data.toJSON());
+          try {
+            Slashes.push(slash.data.toJSON());
+          } catch (e) {
+            Slashes.push(slash.data);
+          }
           this.slashes.set(slash.data.name, slash);
+          table.addRow(f, "pass");
+        });
+      });
+    this.logger.info(`\n${table.toString()}`);
+    return this;
+  }
+
+  /**
+   * Loads all context menus
+   * @param {string} path
+   */
+  loadContextMenus(path) {
+    this.logger.info("Loading context menus...");
+    let table = new AsciiTable("Context Menus");
+    table.setHeading("File", "Status");
+    readdirSync(path)
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const ContextMenu = require(resolve(__basedir, join(path, dir, f)));
+          const contextMenu = new ContextMenu(this); // Instantiate the specific command
+          try {
+            Slashes.push(contextMenu.data.toJSON());
+          } catch (e) {
+            Slashes.push(contextMenu.data);
+          }
+          this.slashes.set(contextMenu.data.name, contextMenu);
+          table.addRow(f, "pass");
+        });
+      });
+    this.logger.info(`\n${table.toString()}`);
+    return this;
+  }
+
+  /**
+   * Loads all modals
+   * @param {string} path
+   */
+  loadModals(path) {
+    this.logger.info("Loading modals...");
+    let table = new AsciiTable("Modals");
+    table.setHeading("File", "Status");
+    readdirSync(path)
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Modal = require(resolve(__basedir, join(path, dir, f)));
+          const modal = new Modal(this); // Instantiate the specific command
+          this.modals.set(modal.name, modal);
+          table.addRow(f, "pass");
+        });
+      });
+    this.logger.info(`\n${table.toString()}`);
+    return this;
+  }
+
+  /**
+   * Loads all Buttons
+   * @param {string} path
+   */
+  loadButtons(path) {
+    this.logger.info("Loading buttons...");
+    let table = new AsciiTable("Buttons");
+    table.setHeading("File", "Status");
+    readdirSync(path)
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Button = require(resolve(__basedir, join(path, dir, f)));
+          const button = new Button(this); // Instantiate the specific command
+          this.buttons.set(button.name, button);
+          table.addRow(f, "pass");
+        });
+      });
+    this.logger.info(`\n${table.toString()}`);
+    return this;
+  }
+
+  /**
+   * Loads all Buttons
+   * @param {string} path
+   */
+  loadSelectMenus(path) {
+    this.logger.info("Loading Selects Menus...");
+    let table = new AsciiTable("Selects Menus");
+    table.setHeading("File", "Status");
+    readdirSync(path)
+      .filter((f) => !f.endsWith(".js"))
+      .forEach((dir) => {
+        const slashes = readdirSync(resolve(__basedir, join(path, dir))).filter(
+          (f) => f.endsWith("js")
+        );
+        slashes.forEach((f) => {
+          const Menu = require(resolve(__basedir, join(path, dir, f)));
+          const menu = new Menu(this); // Instantiate the specific command
+          this.menus.set(menu.name, menu);
           table.addRow(f, "pass");
         });
       });
@@ -221,6 +361,8 @@ class Client extends Discord.Client {
   /**
    * Loads all available events
    * @param {string} path
+   * @param client
+   * @param player
    */
   loadEvents(path, client, player) {
     readdir(path, (err, files) => {
@@ -228,22 +370,24 @@ class Client extends Discord.Client {
       files = files.filter((f) => f.split(".").pop() === "js");
       if (files.length === 0) return this.logger.warn("No events found");
       this.logger.info(`${files.length} event(s) found...`);
-      files.forEach((f) => {
-        const event = require(resolve(__basedir, join(path, f)));
-        if (event.once) {
-          super.once(event.name, (...args) => event.execute(...args, Slashes));
-        } else {
-          if (event.name === "interactionCreate") {
-            super.on(event.name, (...args) =>
-              event.execute(...args, Slashes, Commands)
+        files.forEach((f) => {
+          const event = require(resolve(__basedir, join(path, f)));
+          if (event.once) {
+            super.once(event.name, (...args) =>
+              event.execute(...args, Slashes)
             );
           } else {
-            super.on(event.name, (...args) =>
-              event.execute(...args, Commands, client, player)
-            );
+            if (event.name === "interactionCreate") {
+              super.on(event.name, (...args) =>
+                event.execute(...args, Slashes, Commands, client, player)
+              );
+            } else {
+              super.on(event.name, (...args) =>
+                event.execute(...args, Commands, client, player)
+              );
+            }
           }
-        }
-      });
+        });
     });
     return this;
   }
@@ -286,10 +430,10 @@ class Client extends Discord.Client {
    * @param {User} user
    */
   isOwner(user) {
-    if(parseInt(user.id) === this.id) return true;
+    if (parseInt(user.id) === this.id) return true;
 
     for (let i = 0; i < this.developerID.length; i++) {
-      if (this.developerID[i] === parseInt(user.id)) return true;
+      if (parseInt(this.developerID[i]) === parseInt(user.id)) return true;
     }
 
     return parseInt(user.id) === parseInt(this.ownerID);
@@ -305,11 +449,11 @@ class Client extends Discord.Client {
    * @param {string} error
    * @param {string} errorMessage
    */
-  sendSystemErrorMessage(guild, error, errorMessage) {
+  async sendSystemErrorMessage(guild, error, errorMessage) {
     // Get system channel
-    const systemChannelId = this.db.settings.selectSystemChannelId
-      .pluck()
-      .get(guild.id);
+    const systemChannelId = await this.mongodb.settings.selectSystemChannelId(
+      guild.id
+    );
     const systemChannel = guild.channels.cache.get(systemChannelId);
 
     if (
@@ -335,10 +479,10 @@ class Client extends Discord.Client {
   }
 
   setTimeout_(fn, delay) {
-    var maxDelay = Math.pow(2, 31) - 1;
+    const maxDelay = Math.pow(2, 31) - 1;
 
     if (delay > maxDelay) {
-      var args = arguments;
+      const args = arguments;
       args[1] -= maxDelay;
 
       return setTimeout(function () {
@@ -349,7 +493,7 @@ class Client extends Discord.Client {
     return setTimeout.apply(undefined, arguments);
   }
 
-  clearTimeout_(id){
+  clearTimeout_(id) {
     this.setTimeout_(clearTimeout, id);
   }
 }

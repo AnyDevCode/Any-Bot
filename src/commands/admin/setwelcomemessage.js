@@ -14,7 +14,8 @@ module.exports = class SetWelcomeMessageCommand extends Command {
         You may use \`?member\` to substitute for a user mention,
         \`?username\` to substitute for someone's username,
         \`?tag\` to substitute for someone's full Discord tag (username + discriminator),
-        and \`?size\` to substitute for your server's current member count.
+        \`?size\` to substitute for your server's current member count,
+        \`?guild\` to substitute for your server's name,
         Enter no message to clear the current \`welcome message\`.
         A \`welcome channel\` must also be set to enable welcome messages.
       `,
@@ -23,10 +24,17 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       examples: ['setwelcomemessage ?member has joined the server!']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
-    const { welcome_channel_id: welcomeChannelId, welcome_message: oldWelcomeMessage } = 
-      message.client.db.settings.selectWelcomes.get(message.guild.id);
+    let { welcomeChannelID: welcomeChannelId, welcomeMessage: oldWelcomeMessage } = 
+      await message.client.mongodb.settings.selectRow(message.guild.id);
+
+      if(oldWelcomeMessage[0].data.text){
+        oldWelcomeMessage = oldWelcomeMessage[0].data.text;
+      } else {
+        oldWelcomeMessage = null;
+      }
+      
     let welcomeChannel = message.guild.channels.cache.get(welcomeChannelId);
 
     // Get status
@@ -42,11 +50,11 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       .setColor(message.guild.me.displayHexColor);
 
     if (!args[0]) {
-      message.client.db.settings.updateWelcomeMessage.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateWelcomeMessage(null, message.guild.id);
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
       return message.channel.send({embeds:[embed
         .addField('Status', statusUpdate, true)
@@ -55,12 +63,12 @@ module.exports = class SetWelcomeMessageCommand extends Command {
     }
     
     let welcomeMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    message.client.db.settings.updateWelcomeMessage.run(welcomeMessage, message.guild.id);
+    await message.client.mongodb.settings.updateWelcomeMessage(welcomeMessage, message.guild.id);
     if (welcomeMessage.length > 1024) welcomeMessage = welcomeMessage.slice(0, 1021) + '...';
 
     // Update status
     const status =  message.client.utils.getStatus(welcomeChannel, welcomeMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.channel.send({embeds:[embed
       .addField('Status', statusUpdate, true)

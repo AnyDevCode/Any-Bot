@@ -24,22 +24,18 @@ module.exports = class HelpCommand extends Command {
     });
   }
 
-  run(message, args) {
+  async run(message, args) {
     let modules_list = []
 
     // Get disabled commands
     let disabledCommands =
-      message.client.db.settings.selectDisabledCommands
-        .pluck()
-        .get(message.guild.id) || [];
+      await message.client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof disabledCommands === "string")
       disabledCommands = disabledCommands.split(" ");
 
     const all = args[0] === "all" ? args[0] : "";
     const embed = new MessageEmbed();
-    const prefix = message.client.db.settings.selectPrefix
-      .pluck()
-      .get(message.guild.id); // Get prefix
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const {
       INFO,
       FUN,
@@ -105,7 +101,7 @@ module.exports = class HelpCommand extends Command {
     }
 
     message.client.commands.forEach((command) => {
-      if (!disabledCommands.includes(command.name)) {
+      if (!disabledCommands.includes((command.name).toLowerCase())) {
         if (
           command.userPermissions &&
           command.userPermissions.every((p) =>
@@ -187,18 +183,18 @@ module.exports = class HelpCommand extends Command {
         if (isNsfw)
           embed.setDescription(
             `**${capitalize(
-              args[0].toLowerCase()
+              args[1].toLowerCase()
             )}** is a NSFW module. You can only use it in NSFW channels.`
           );
         if (isOwner)
           embed.setDescription(
             `**${capitalize(
-              args[0].toLowerCase()
+              args[1].toLowerCase()
             )}** is an owner module. You can't use it.`
           );
       }
     } else if (args.length > 0 && !all) {
-      return this.sendErrorMessage(
+      return await this.sendErrorMessage(
         message,
         0,
         "Unable to find command, please check provided command"

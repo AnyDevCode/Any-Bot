@@ -19,10 +19,17 @@ module.exports = class SetWelcomeChannelCommand extends Command {
       examples: ['setwelcomechannel #general']
     });
   }
-  run(message, args) {
+  async run(message, args) {
 
-    let { welcome_channel_id: welcomeChannelId, welcome_message: welcomeMessage } = 
-      message.client.db.settings.selectWelcomes.get(message.guild.id);
+    let { welcomeChannelID: welcomeChannelId, welcomeMessage: welcomeMessage } = 
+      await message.client.mongodb.settings.selectRow(message.guild.id);
+
+      if(welcomeMessage[0].data.text){
+        welcomeMessage = welcomeMessage[0].data.text;
+      } else {
+        welcomeMessage = null;
+      }
+
     const oldWelcomeChannel = message.guild.channels.cache.get(welcomeChannelId) || '`None`';
 
     // Get status
@@ -42,11 +49,11 @@ module.exports = class SetWelcomeChannelCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateWelcomeChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateWelcomeChannelId(null, message.guild.id);
 
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
       
       return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Channel', value: `${oldWelcomeChannel} ➔ \`None\``, inline: true })
@@ -55,16 +62,16 @@ module.exports = class SetWelcomeChannelCommand extends Command {
     }
 
     const welcomeChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!welcomeChannel || (welcomeChannel.type != 'GUILD_TEXT' && welcomeChannel.type != 'GUILD_NEWS') || !welcomeChannel.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent`
+    if (!welcomeChannel || (welcomeChannel.type !== 'GUILD_TEXT' && welcomeChannel.type !== 'GUILD_NEWS') || !welcomeChannel.viewable)
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
     // Update status
     const status =  message.client.utils.getStatus(welcomeChannel, welcomeMessage);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
-    message.client.db.settings.updateWelcomeChannelId.run(welcomeChannel.id, message.guild.id);
+    await message.client.mongodb.settings.updateWelcomeChannelId(welcomeChannel.id, message.guild.id);
     message.channel.send({embeds: [embed
       .spliceFields(0, 0, { name: 'Channel', value: `${oldWelcomeChannel} ➔ ${welcomeChannel}`, inline: true})
       .spliceFields(1, 0, { name: 'Status', value: statusUpdate, inline: true})

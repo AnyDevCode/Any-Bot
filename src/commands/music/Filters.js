@@ -150,7 +150,7 @@ module.exports = class FiltersMusicCommand extends Command {
     });
   }
   async run(message, args, client, player) {
-    const prefix = message.client.db.settings.selectPrefix.pluck().get(message.guild.id);
+    const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
     const embed = new MessageEmbed()
       .setTitle("Available Filters")
       .setDescription(
@@ -160,7 +160,7 @@ module.exports = class FiltersMusicCommand extends Command {
     for (const filter of filters_list) {
       embed.addField(filter.name, filter.usage);
     }
-    message.reply({embeds: [embed]});
+    await await message.reply({embeds: [embed]});
   }
 
 }

@@ -9,11 +9,11 @@ module.exports = {
 
   const { message, emoji } = messageReaction;
 
-  client.db.users.updateTotalReactionsMinus.run(message.author.id, message.guild.id);
+  await client.mongodb.users.updateTotalReactionsMinus(message.author.id, message.guild.id);
 
   // Starboard
-  if (emoji.name === '⭐' && message.author != user) {
-    const starboardChannelId = client.db.settings.selectStarboardChannelId.pluck().get(message.guild.id);
+  if (emoji.name === '⭐' && message.author !== user) {
+    const starboardChannelId = await client.mongodb.settings.selectStarboardChannelId(message.guild.id);
     const starboardChannel = message.guild.channels.cache.get(starboardChannelId);
     if (
       !starboardChannel || 
@@ -30,7 +30,7 @@ module.exports = {
         return m.content.startsWith(e) &&
           m.embeds[0] &&
           m.embeds[0].footer &&
-          m.embeds[0].footer.text == message.id;
+          m.embeds[0].footer.text === message.id;
       });
     });
 
@@ -50,7 +50,7 @@ module.exports = {
       const starMessage = await starboardChannel.messages.fetch(starred.id);
       await starMessage.edit({content: `${emojiType} **${starCount}  |**  ${message.channel}`});
 
-      if (starCount == 0)
+      if (starCount === 0)
         await starMessage.delete().catch(err => client.logger.error(err.stack));
     }
   } 

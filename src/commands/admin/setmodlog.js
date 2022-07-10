@@ -18,8 +18,8 @@ module.exports = class SetModLogCommand extends Command {
       examples: ['setmodlog #mod-log']
     });
   }
-  run(message, args) {
-    const modLogId = message.client.db.settings.selectModLogId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const modLogId = await message.client.mongodb.settings.selectModLogId(message.guild.id);
     const oldModLog = message.guild.channels.cache.get(modLogId) || '`None`';
     const embed = new MessageEmbed()
       .setTitle('Settings: `Logging`')
@@ -31,16 +31,16 @@ module.exports = class SetModLogCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateModLogId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateModLogId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Mod Log', `${oldModLog} ➔ \`None\``)]});
     }
 
     const modLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!modLog || modLog.type != 'GUILD_TEXT' || !modLog.viewable) 
-      return this.sendErrorMessage(message, 0, stripIndent`
+    if (!modLog || modLog.type !== 'GUILD_TEXT' || !modLog.viewable)
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
-    message.client.db.settings.updateModLogId.run(modLog.id, message.guild.id);
+    await message.client.mongodb.settings.updateModLogId(modLog.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Mod Log', `${oldModLog} ➔ ${modLog}`)]});
   }
 };

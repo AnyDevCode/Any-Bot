@@ -19,13 +19,20 @@ module.exports = class SetCrownChannelCommand extends Command {
       examples: ['setcrownchannel #general']
     });
   }
-  run(message, args) {
-    let { 
-      crown_role_id: crownRoleId, 
-      crown_channel_id: crownChannelId, 
-      crown_message: crownMessage, 
-      crown_schedule: crownSchedule 
-    } = message.client.db.settings.selectCrown.get(message.guild.id);
+  async run(message, args) {
+    let {
+      crownRoleID: crownRoleId,
+      crownChannelID: crownChannelId,
+      crownMessage: crownMessage,
+      crownSchedule: crownSchedule
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
+
+    if (crownMessage[0].data.text){
+      crownMessage = crownMessage[0].data.text;
+    } else {
+      crownMessage = ""
+    }
+
     const crownRole = message.guild.roles.cache.get(crownRoleId);
     const oldCrownChannel = message.guild.channels.cache.get(crownChannelId) || '`None`';
 
@@ -49,7 +56,7 @@ module.exports = class SetCrownChannelCommand extends Command {
 
     // Clear channel
     if (args.length === 0) {
-      message.client.db.settings.updateCrownChannelId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateCrownChannelId(null, message.guild.id);
       return message.channel.send(embed.spliceFields(1, 0, { 
         name: 'Channel', 
         value: `${oldCrownChannel} ➔ \`None\``, 
@@ -58,12 +65,12 @@ module.exports = class SetCrownChannelCommand extends Command {
     }
 
     const crownChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
-    if (!crownChannel || (crownChannel.type != 'GUILD_TEXT' && crownChannel.type != 'GUILD_NEWS') || !crownChannel.viewable) 
-      return this.sendErrorMessage(message, 0, stripIndent`
+    if (!crownChannel || (crownChannel.type !== 'GUILD_TEXT' && crownChannel.type !== 'GUILD_NEWS') || !crownChannel.viewable)
+      return await this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 
-    message.client.db.settings.updateCrownChannelId.run(crownChannel.id, message.guild.id);
+    await message.client.mongodb.settings.updateCrownChannelId(crownChannel.id, message.guild.id);
     message.channel.send({embeds: [embed.spliceFields(1, 0, { 
       name: 'Channel', 
       value: `${oldCrownChannel} ➔ ${crownChannel}`, 

@@ -34,25 +34,25 @@ module.exports = class SlowmodeCommand extends Command {
     else time = (ms(args[index]) / 1000).toFixed(0);
 
     // Check type and viewable
-    if (channel.type != 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return await this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
       
     const rate = args[index];
-    if (!time || time < 0 || time > 21600) return this.sendErrorMessage(message, 0, stripIndent`
+    if (!time || time < 0 || time > 21600) return await this.sendErrorMessage(message, 0, stripIndent`
       Please provide a rate limit between 0 and 6 hours
     `);
 
     // Check channel permissions
     if (!channel.permissionsFor(message.guild.me).has(['MANAGE_CHANNELS']))
-      return this.sendErrorMessage(message, 0, 'I do not have permission to manage the provided channel');
+      return await this.sendErrorMessage(message, 0, 'I do not have permission to manage the provided channel');
 
     let reason = args.slice(index + 1).join(' ');
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
-    await channel.setRateLimitPerUser(time, reason); // set channel rate
     const status = (channel.rateLimitPerUser) ? 'enabled' : 'disabled';
+    await channel.setRateLimitPerUser(time, reason); // set channel rate
     const embed = new MessageEmbed()
       .setTitle('Slowmode')
       .setFooter({
@@ -84,6 +84,6 @@ module.exports = class SlowmodeCommand extends Command {
     }
 
     // Update mod log
-    this.sendModLogMessage(message, reason, { Channel: channel, Rate: `\`${rate}\`` });
+    await this.sendModLogMessage(message, reason, {Channel: channel, Rate: `\`${rate}\``});
   }
 };

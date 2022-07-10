@@ -14,8 +14,8 @@ module.exports = class SetModRoleCommand extends Command {
       examples: ['setmodrole @Mod']
     });
   }
-  run(message, args) {
-    const modRoleId = message.client.db.settings.selectModRoleId.pluck().get(message.guild.id);
+  async run(message, args) {
+    const modRoleId = await message.client.mongodb.settings.selectModRoleId(message.guild.id);
     const oldModRole = message.guild.roles.cache.find(r => r.id === modRoleId) || '`None`';
 
     const embed = new MessageEmbed()
@@ -28,14 +28,14 @@ module.exports = class SetModRoleCommand extends Command {
 
     // Clear if no args provided
     if (args.length === 0) {
-      message.client.db.settings.updateModRoleId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateModRoleId(null, message.guild.id);
       return message.channel.send({embeds:[embed.addField('Mod Role', `${oldModRole} ➔ \`None\``)]});
     }
 
     // Update role
     const modRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-    if (!modRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
-    message.client.db.settings.updateModRoleId.run(modRole.id, message.guild.id);
+    if (!modRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+    await message.client.mongodb.settings.updateModRoleId(modRole.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Mod Role', `${oldModRole} ➔ ${modRole}`)]});
   }
 };

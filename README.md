@@ -3,7 +3,7 @@
 
 <p align="center">  
 
-<img src="https://github.com/MDCYT/Any-Bot/actions/workflows/pre-release.yml/badge.svg">  
+<img src="https://github.com/MDCYT/Any-Bot/actions/workflows/pre-release.yml/badge.svg" alt="prerelease">  
 
 <img src="https://github.com/MDCYT/Any-Bot/actions/workflows/codeql-analysis.yml/badge.svg">  
 

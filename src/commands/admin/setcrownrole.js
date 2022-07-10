@@ -16,16 +16,24 @@ module.exports = class SetCrownRoleCommand extends Command {
       `,
       type: client.types.ADMIN,
       userPermissions: ['MANAGE_GUILD'],
+      clientPermissions: ['MANAGE_ROLES'],
       examples: ['setcrownrole @Crowned']
     });
   }
-  run(message, args) {
-    let { 
-      crown_role_id: crownRoleId, 
-      crown_channel_id: crownChannelId, 
-      crown_message: crownMessage, 
-      crown_schedule: crownSchedule 
-    } = message.client.db.settings.selectCrown.get(message.guild.id);
+  async run(message, args) {
+    let {
+      crownRoleID: crownRoleId,
+      crownChannelID: crownChannelId,
+      crownMessage: crownMessage,
+      crownSchedule: crownSchedule
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
+
+    if (crownMessage[0].data.text){
+      crownMessage = crownMessage[0].data.text;
+    } else {
+      crownMessage = ""
+    }
+
     const oldCrownRole = message.guild.roles.cache.get(crownRoleId) || '`None`';
     const crownChannel = message.guild.channels.cache.get(crownChannelId);
 
@@ -48,14 +56,14 @@ module.exports = class SetCrownRoleCommand extends Command {
 
     // Clear role
     if (args.length === 0) {
-      message.client.db.settings.updateCrownRoleId.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateCrownRoleId(null, message.guild.id);
       if (message.guild.job) message.guild.job.cancel(); // Cancel old job
 
       message.client.logger.info(`${message.guild.name}: Cancelled job`);
       
       // Update status
       const status = 'disabled';
-      const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``; 
+      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
       return message.channel.send({embeds:[embed
         .spliceFields(0, 0, { name: 'Role', value: `${oldCrownRole} ➔ \`None\``, inline: true })
@@ -65,12 +73,12 @@ module.exports = class SetCrownRoleCommand extends Command {
 
     // Update role
     const crownRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-    if (!crownRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
-    message.client.db.settings.updateCrownRoleId.run(crownRole.id, message.guild.id);
+    if (!crownRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+    await message.client.mongodb.settings.updateCrownRoleId(crownRole.id, message.guild.id);
 
     // Update status
     const status =  message.client.utils.getStatus(crownRole, crownSchedule);
-    const statusUpdate = (oldStatus != status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
+    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
 
     message.channel.send({embeds:[embed
       .spliceFields(0, 0, { name: 'Role', value: `${oldCrownRole} ➔ ${crownRole}`, inline: true })
@@ -78,6 +86,6 @@ module.exports = class SetCrownRoleCommand extends Command {
     ]});
 
     // Schedule crown role rotation
-    message.client.utils.scheduleCrown(message.client, message.guild);
+    await message.client.utils.scheduleCrown(message.client, message.guild);
   }
 };

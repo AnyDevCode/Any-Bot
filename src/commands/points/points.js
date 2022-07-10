@@ -12,11 +12,11 @@ module.exports = class PointsCommand extends Command {
       examples: ['points @MDC']
     });
   }
-  run(message, args) {
+  async run(message, args) {
     const member =  this.getMemberFromMention(message, args[0]) || 
       message.guild.members.cache.get(args[0]) || 
       message.member;
-    const points = message.client.db.users.selectPoints.pluck().get(member.id, message.guild.id);
+    const points = await message.client.mongodb.users.selectPoints(member.id, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle(`${member.displayName}'s Points`)
       .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))

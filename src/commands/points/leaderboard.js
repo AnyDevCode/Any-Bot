@@ -23,7 +23,7 @@ module.exports = class LeaderboardCommand extends Command {
     let max = parseInt(args[0]);
     if (!max || max < 0) max = 10;
     else if (max > 25) max = 25;
-    let leaderboard = message.client.db.users.selectLeaderboard.all(message.guild.id);
+    let leaderboard = await message.client.mongodb.users.selectLeaderboard(message.guild.id);
     const position = leaderboard.map(row => row.user_id).indexOf(message.author.id);
 
     const members = [];
@@ -48,7 +48,7 @@ module.exports = class LeaderboardCommand extends Command {
     
 
     if (members.length <= max) {
-      const range = (members.length == 1) ? '[1]' : `[1 - ${members.length}]`;
+      const range = (members.length === 1) ? '[1]' : `[1 - ${members.length}]`;
       message.channel.send({embeds:[embed
         .setTitle(`Points Leaderboard ${range}`)
         .setDescription(members.join('\n'))

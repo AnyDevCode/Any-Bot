@@ -24,12 +24,13 @@ module.exports = class SetCrownMessageCommand extends Command {
       examples: ['setcrownmessage ?member has won the ?role!']
     });
   }
-  run(message, args) {
-    const { 
-      crown_role_id: crownRoleId, 
-      crown_channel_id: crownChannelId, 
-      crown_schedule: crownSchedule 
-    } = message.client.db.settings.selectCrown.get(message.guild.id);
+  async run(message, args) {
+    let {
+      crownRoleID: crownRoleId,
+      crownChannelID: crownChannelId,
+      crownSchedule: crownSchedule
+    } = await message.client.mongodb.settings.selectRow(message.guild.id);
+
     const crownRole = message.guild.roles.cache.get(crownRoleId);
     const crownChannel = message.guild.channels.cache.get(crownChannelId);
 
@@ -50,13 +51,13 @@ module.exports = class SetCrownMessageCommand extends Command {
 
     // Clear message
     if (!args[0]) {
-      message.client.db.settings.updateCrownMessage.run(null, message.guild.id);
+      await message.client.mongodb.settings.updateCrownMessage(null, message.guild.id);
       return message.channel.send({embeds: [embed.addField('Message', '`None`')]}
       );
     }
 
     let crownMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    message.client.db.settings.updateCrownMessage.run(crownMessage, message.guild.id);
+    await message.client.mongodb.settings.updateCrownMessage(crownMessage, message.guild.id);
     if (crownMessage.length > 1024) crownMessage = crownMessage.slice(0, 1021) + '...';
     message.channel.send({embeds:[embed.addField('Message', message.client.utils.replaceCrownKeywords(crownMessage))]
     });

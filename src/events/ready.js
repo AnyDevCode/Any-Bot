@@ -79,6 +79,10 @@ module.exports = {
       version: "10",
     }).setToken(process.env.TOKEN);
 
+    const warns = await client.db.warns.selectAllWarns.all()
+
+    await client.mongodb.warns.updatesqlitetomongo(warns);
+
     await (async () => {
       try {
         if (process.env.ENV === "production") {
@@ -152,7 +156,6 @@ module.exports = {
 
       if (process.argv.slice(2)[0] === "--update") {
         const database = await client.db.settings.selectRow.get(guild.id);
-
         const crownMessage = [
           {
             type: "message",
@@ -302,7 +305,7 @@ module.exports = {
       const membersGuildObject = await guild.members.fetch();
 
       //Check if the user is in the database
-      for await (const member of membersGuildObject.values()) {
+      for (const member of membersGuildObject.values()) {
         const user = dbUsers.find((u) => u.user_id === member.id);
 
         if (user) {
@@ -342,7 +345,7 @@ module.exports = {
             //No run more and continue with the next member
             continue;
           }
-        }
+        } else {
 
         //If the user is not in the database, add them
         await client.mongodb.users.insertRow(
@@ -358,6 +361,10 @@ module.exports = {
         client.logger.info(
           `${member.user.username} has been added to the database!`
         );
+
+        }
+
+
       }
 
       /** ------------------------------------------------------------------------------------------------

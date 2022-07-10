@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const session = mongoose.startSession();
+
 const User = mongoose.model(
   "Users",
   new mongoose.Schema({
@@ -176,7 +178,7 @@ module.exports = {
   },
 
   async updatesqlitetomongo(Array) {
-    let allUsers = await this.selectAll();
+    let allUsers = await this.selectAllofGuild(Array[0].guild_id);
 
     for (let i = 0; i < Array.length; i++) {
       try {
@@ -239,7 +241,8 @@ module.exports = {
   },
 
   async selectAllofGuild(guildID) {
-    return await User.find({ guild_id: guildID });
+    //Return all users of a guild, only the user_id and guild_id of all users
+    return User.find({ guild_id: guildID, current_member: true }).lean();
   },
 
   async selectAll() {

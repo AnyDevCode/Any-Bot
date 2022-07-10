@@ -6,49 +6,38 @@ const Warn = mongoose.model(
     {
       userID: {
         type: String,
-        required: true,
       },
       userName: {
         type: String,
-        required: true,
       },
       userDiscriminator: {
         type: String,
-        required: true,
       },
       guildID: {
         type: String,
-        required: true,
       },
       guildName: {
         type: String,
-        required: true,
       },
       dateIssued: {
         type: Date,
-        required: true,
       },
       reason: {
         type: String,
-        required: false,
         default: "No reason given",
       },
       moderatorID: {
         type: String,
-        required: true,
       },
       moderatorName: {
         type: String,
-        required: true,
       },
       moderatorDiscriminator: {
         type: String,
-        required: true,
       },
       warnID: {
         type: Number,
         unique: true,
-        index: true,
         required: true,
       },
     },
@@ -126,57 +115,26 @@ module.exports = {
     return warn;
   },
 
-  async updatesqlitetomongo(ArrayOfWarns) {
-    const oldWarns = await this.selectAllWarns();
-    const newWarns = ArrayOfWarns;
+  async updatesqlitetomongo(WarnsArray) {
+    const newWarns = WarnsArray;
 
-    for (let i = 0; i < newWarns.length; i++) {
-      let newWarn = newWarns[i];
-      let oldWarn = oldWarns.find((warn) => warn.warnID === newWarn.warnID);
-      if (oldWarn) {
-        newWarn.warn_id = Number(newWarn.warn_id);
-        oldWarn.warnID = Number(oldWarn.warnID);
-        newWarn.date_issued = new Date(newWarn.date_issued);
-        const update = {
-          userID: newWarn.user_id,
-          userName: newWarn.user_name,
-          userDiscriminator: newWarn.user_discriminator,
-          guildID: newWarn.guild_id,
-          guildName: newWarn.guild_name,
-          dateIssued: newWarn.date_issued,
-          reason: newWarn.reason,
-          moderatorID: newWarn.moderator_id,
-          moderatorName: newWarn.moderator_name,
-          moderatorDiscriminator: newWarn.moderator_discriminator,
-          warnID: newWarn.warn_id,
-        };
-        await this.updateRow(
-          update.userID,
-          update.userName,
-          update.userDiscriminator,
-          update.guildID,
-          update.guildName,
-          update.moderatorID,
-          update.moderatorName,
-          update.moderatorDiscriminator,
-          update.reason,
-          update.dateIssued,
-          update.warnID
-        );
-      } else {
-        await this.insertRow(
-          newWarn.user_id,
-          newWarn.user_name,
-          newWarn.user_discriminator,
-          newWarn.guild_id,
-          newWarn.guild_name,
-          newWarn.moderator_id,
-          newWarn.moderator_name,
-          newWarn.moderator_discriminator,
-          newWarn.reason,
-          newWarn.date_issued,
-          newWarn.warn_id
-        );
+    for await (const warn of newWarns) {
+      try {
+          await this.insertRow(
+            warn.user_id,
+            warn.user_name,
+            warn.user_discriminator,
+            warn.guild_id,
+            warn.guild_name,
+            warn.moderator_id,
+            warn.moderator_name,
+            warn.moderator_discriminator,
+            warn.reason,
+            warn.date_issued,
+            warn.warn_id
+          );
+      } catch (e) {
+        __Client.logger.error(e);
       }
     }
   },

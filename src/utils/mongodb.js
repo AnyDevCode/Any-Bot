@@ -17,6 +17,8 @@ mongoose
     __Client.logger.warn(err);
   });
 
+global.__Mongoose = mongoose;
+
 const models = fs.readdirSync(path.join(__dirname, "databases"));
 models.forEach((model) => {
   const modelName = model.split(".")[0];

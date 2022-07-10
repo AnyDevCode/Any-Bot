@@ -20,10 +20,7 @@ const player = client.player;
 
 // Initialize client
 function init() {
-  if (process.argv.slice(2)[0] === "--update") {
-    client.loadEvents("./src/events", client, player);
-    client.login(client.token);
-  } else {
+
     client.loadCommands("./src/commands");
     client.loadSlashCommands("./src/slash");
     client.loadButtons("./src/buttons");
@@ -34,7 +31,6 @@ function init() {
     client.loadMusicEvents("./src/music", player);
     client.loadTopics("./data/trivia");
     client.login(client.token);
-  }
 }
 
 init();

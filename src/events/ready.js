@@ -79,10 +79,6 @@ module.exports = {
       version: "10",
     }).setToken(process.env.TOKEN);
 
-    const warns = await client.db.warns.selectAllWarns.all()
-
-    await client.mongodb.warns.updatesqlitetomongo(warns);
-
     await (async () => {
       try {
         if (process.env.ENV === "production") {
@@ -153,151 +149,6 @@ module.exports = {
         muteRole ? muteRole.id : null,
         crownRole ? crownRole.id : null
       );
-
-      if (process.argv.slice(2)[0] === "--update") {
-        const database = await client.db.settings.selectRow.get(guild.id);
-        const crownMessage = [
-          {
-            type: "message",
-            data: { text: database.crown_message },
-          },
-        ];
-
-        const welcomeMessage = [
-          {
-            type: "message",
-            data: { text: database.welcome_message },
-          },
-        ];
-
-        const farewellMessage = [
-          {
-            type: "message",
-            data: { text: database.farewell_message },
-          },
-        ];
-
-        await client.mongodb.settings.updatesqlitetomongo(
-          database.guild_id,
-          database.guild_name,
-          database.prefix,
-          database.system_channel_id,
-          database.starboard_channel_id,
-          database.admin_role_id,
-          database.mod_role_id,
-          database.mute_role_id,
-          database.auto_role_id,
-          database.auto_kick,
-          database.auto_ban,
-          database.random_color,
-          database.mod_channel_ids,
-          database.disabled_commands,
-          database.mod_log_id,
-          database.member_log_id,
-          database.nickname_log_id,
-          database.role_log_id,
-          database.message_edit_log_id,
-          database.message_delete_log_id,
-          database.verification_role_id,
-          database.verification_channel_id,
-          database.verification_message,
-          database.verification_message_id,
-          0,
-          database.welcome_channel_id,
-          welcomeMessage,
-          database.farewell_channel_id,
-          farewellMessage,
-          database.point_tracking,
-          database.message_points,
-          database.command_points,
-          database.voice_points,
-          database.xp_tracking,
-          database.message_xp,
-          database.command_xp,
-          database.voice_xp,
-          database.xp_message_action,
-          database.xp_channel_id,
-          database.crown_role_id,
-          database.crown_channel_id,
-          crownMessage,
-          database.crown_schedule
-        );
-
-        const newMembers = [];
-
-        for (const member of guild.members.cache.values()) {
-          const memberDatabase = client.db.users.selectRow.get(
-            member.id,
-            guild.id
-          );
-
-          newMembers.push({
-            user_id: member.id,
-            user_name: member.user.username,
-            user_discriminator: member.user.discriminator,
-            guild_id: guild.id,
-            guild_name: guild.name,
-            date_joined: member.joinedAt ? member.joinedAt.toString() : null,
-            bot: member.user.bot ? true : false,
-            points: memberDatabase ? memberDatabase.points : 0,
-            xp: memberDatabase ? memberDatabase.xp : 0,
-            level: memberDatabase ? memberDatabase.level : 0,
-            total_points: memberDatabase ? memberDatabase.total_points : 0,
-            total_xp: memberDatabase ? memberDatabase.total_xp : 0,
-            total_messages: memberDatabase ? memberDatabase.total_messages : 0,
-            total_commands: memberDatabase ? memberDatabase.total_commands : 0,
-            total_reactions: memberDatabase
-              ? memberDatabase.total_reactions
-              : 0,
-            total_voice: memberDatabase ? memberDatabase.total_voice : 0,
-            total_streams: memberDatabase ? memberDatabase.total_streams : 0,
-            total_pictures: memberDatabase ? memberDatabase.total_pictures : 0,
-            current_member: member.roles.cache.has(guild.id) ? true : false,
-          });
-
-          client.logger.info(
-            `${member.user.username} has been added to the database of ${guild.name}`
-          );
-        }
-
-        await client.mongodb.users.updatesqlitetomongo(newMembers);
-
-        let oldWarns = client.db.warns.selectGuildWarns.get(guild.id);
-        if (typeof oldWarns !== "array" && oldWarns !== undefined) {
-          oldWarns = [oldWarns];
-        }
-        const newWarns = [];
-
-        if (oldWarns) {
-          for (const warn of oldWarns) {
-            if (warn.guild_id === guild.id) {
-              newWarns.push({
-                guild_id: warn.guild_id,
-                guild_name: warn.guild_name,
-                user_id: warn.user_id,
-                user_name: warn.user_name,
-                user_discriminator: warn.user_discriminator,
-                moderator_id: warn.moderator_id,
-                moderator_name: warn.moderator_name,
-                moderator_discriminator: warn.moderator_discriminator,
-                reason: warn.reason,
-                date_issued: warn.date_issued,
-                warn_id: warn.warn_id,
-              });
-            }
-
-            if (warn.user_name !== client.user.name) {
-              client.logger.info(
-                `${warn.user_name} has been added to the database of warns!`
-              );
-            }
-          }
-        }
-
-        if (newWarns.length > 0) {
-          await client.mongodb.warns.updatesqlitetomongo(newWarns);
-        }
-      }
 
       //Get all users in the guild
       const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
@@ -435,11 +286,6 @@ module.exports = {
 
         client.logger.info(`Any Bot has left ${guild.guild_name}`);
       }
-    }
-
-    if (process.argv.slice(2)[0] === "--update") {
-      // Terminate the process
-      process.exit(0);
     }
 
     // Finish message

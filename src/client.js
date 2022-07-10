@@ -370,17 +370,6 @@ class Client extends Discord.Client {
       files = files.filter((f) => f.split(".").pop() === "js");
       if (files.length === 0) return this.logger.warn("No events found");
       this.logger.info(`${files.length} event(s) found...`);
-      if (process.argv.slice(2)[0] === "--update") {
-        this.logger.info("Updating events...");
-        files.forEach((f) => {
-          const event = require(resolve(__basedir, join(path, f)));
-          if (event.once) {
-            super.once(event.name, (...args) =>
-              event.execute(...args, Slashes)
-            );
-          }
-        });
-      } else {
         files.forEach((f) => {
           const event = require(resolve(__basedir, join(path, f)));
           if (event.once) {
@@ -399,7 +388,6 @@ class Client extends Discord.Client {
             }
           }
         });
-      }
     });
     return this;
   }

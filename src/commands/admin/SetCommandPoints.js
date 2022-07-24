@@ -17,7 +17,7 @@ module.exports = class SetCommandPointsCommand extends Command {
   async run(message, args) {
     const amount = args[0];
     if (!amount || !Number.isInteger(Number(amount)) || amount < 0) 
-      return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+      return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
     const { 
       pointTracking: pointTracking,
       messagePoints: messagePoints,

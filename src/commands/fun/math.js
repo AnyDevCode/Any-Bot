@@ -56,7 +56,7 @@ module.exports = class DogFactCommand extends Command {
     mathembed.setFooter({
       text: "Please enter an `mathematical expression` to calculate."
     });
-    return await message.channel.send({embeds:[mathembed]}); // Devuelve un mensaje si es que ejecuta el comando sin nada
+    return message.channel.send({embeds:[mathembed]}); // Devuelve un mensaje si es que ejecuta el comando sin nada
   }
   let resultado;
   try {

@@ -17,9 +17,9 @@ module.exports = class SetPrefixCommand extends Command {
   async run(message, args) {
     const oldPrefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const prefix = args[0];
-    if (!prefix) return await this.sendErrorMessage(message, 0, 'Please provide a prefix');
+    if (!prefix) return this.sendErrorMessage(message, 0, 'Please provide a prefix');
     else if (prefix.length > 3) 
-      return await this.sendErrorMessage(message, 0, 'Please ensure the prefix is no larger than 3 characters');
+      return this.sendErrorMessage(message, 0, 'Please ensure the prefix is no larger than 3 characters');
     await message.client.mongodb.settings.updatePrefix(prefix, message.guild.id);
     const embed = new MessageEmbed()
       .setTitle('Settings: `System`')

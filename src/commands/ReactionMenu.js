@@ -149,7 +149,7 @@ module.exports = class ReactionMenu {
    * Adds reactions to the message
    */
   async addReactions() {
-    for (const emoji of this.emojis) {
+    for await (const emoji of this.emojis) {
       await this.message.react({ name: emoji });
     }
   }

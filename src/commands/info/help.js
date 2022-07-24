@@ -194,7 +194,7 @@ module.exports = class HelpCommand extends Command {
           );
       }
     } else if (args.length > 0 && !all) {
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Unable to find command, please check provided command"

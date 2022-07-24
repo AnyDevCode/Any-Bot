@@ -19,7 +19,7 @@ module.exports = class MinesweeperCommand extends Command {
   const bomb = 9; // Value of the bomb
   let bombas =  args[0] || 20; // Number of bombs
 
-  if (bombas > 64) return await this.sendErrorMessage(message, 0, 'The maximum number of bombs is 64.');
+  if (bombas > 64) return this.sendErrorMessage(message, 0, 'The maximum number of bombs is 64.');
   
   let row = number[Math.floor(Math.random() * number.length)];  // Random number in the board
   let column = number[Math.floor(Math.random() * number.length)]; // Random number in the board

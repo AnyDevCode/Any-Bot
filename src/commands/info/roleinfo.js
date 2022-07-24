@@ -18,7 +18,7 @@ module.exports = class RoleInfoCommand extends Command {
 
     const role = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
     if (!role)
-      return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+      return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
 
     // Get role permissions
     const rolePermissions = role.permissions.toArray();

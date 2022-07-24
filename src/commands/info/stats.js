@@ -20,7 +20,6 @@ module.exports = class StatsCommand extends Command {
     const hours = d.hours() === 1 ? `${d.hours()} hour` : `${d.hours()} hours`;
     const clientStats = stripIndent`
       Servers   :: ${message.client.guilds.cache.size}
-      Users     :: ${message.client.users.cache.size}
       Channels  :: ${message.client.channels.cache.size}
       WS Ping   :: ${Math.round(message.client.ws.ping)}ms
       Uptime    :: ${days} and ${hours}

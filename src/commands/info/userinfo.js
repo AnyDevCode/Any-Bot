@@ -13,26 +13,7 @@ const {
   verified_bot,
   verified_developer,
 } = require("../../utils/emojis.json");
-const { get } = require("request");
 const { user } = require("tiktok-scraper");
-const { default: axios } = require("axios");
-const status = {
-  online: "🟢 `Online`",
-  dnd: "🔴  `Do Not Disturbe`",
-  idle: "🌙 `Idle`",
-  offline: "⚫ `Disconnected/Invisible`",
-};
-
-function formatDate(template, date) {
-  const specs = "YYYY:MM:DD:HH:mm:ss".split(":");
-  date = new Date(date || Date.now() - new Date().getTimezoneOffset() * 6e4);
-  return date
-    .toISOString()
-    .split(/[-:.TZ]/)
-    .reduce(function (template, item, i) {
-      return template.split(specs[i]).join(item);
-    }, template);
-}
 let badges1 = {
   EARLY_SUPPORTER: early_supporter,
   DISCORD_EMPLOYEE: discord_employee,

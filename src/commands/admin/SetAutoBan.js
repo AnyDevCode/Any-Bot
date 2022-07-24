@@ -32,7 +32,7 @@ module.exports = class SetAutoBanCommand extends Command {
     const amount = Number(args[0]);
     // Check if warn count is a number:
     if (amount && (!Number.isInteger(amount) || amount < 0))
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please enter a positive integer"

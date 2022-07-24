@@ -54,7 +54,7 @@ module.exports = class SetModChannelsCommand extends Command {
     for (const arg of args) {
       const channel = this.getChannelFromMention(message, arg) || message.guild.channels.cache.get(arg);
       if (channel && channel.type === 'GUILD_TEXT' && channel.viewable) channels.push(channel);
-      else return await this.sendErrorMessage(message, 0, stripIndent`
+      else return this.sendErrorMessage(message, 0, stripIndent`
         Please mention only accessible text channels or provide only valid text channel IDs
       `);
     }

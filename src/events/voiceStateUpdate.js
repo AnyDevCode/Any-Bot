@@ -1,6 +1,6 @@
 module.exports = {
   name: "voiceStateUpdate",
-  async execute(oldState, newState, commands, client, player) {
+  async execute(oldState, newState, commands, client) {
     // Check member
     if (oldState.member !== newState.member) return;
     const member = newState.member;

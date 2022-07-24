@@ -17,20 +17,20 @@ module.exports = class UnmuteCommand extends Command {
     const muteRoleId = await message.client.mongodb.settings.selectMuteRoleId(message.guild.id);
     let muteRole;
     if (muteRoleId) muteRole = message.guild.roles.cache.get(muteRoleId);
-    else return await this.sendErrorMessage(message, 1, 'There is currently no mute role set on this server');
+    else return this.sendErrorMessage(message, 1, 'There is currently no mute role set on this server');
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
-      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return await this.sendErrorMessage(message, 0, 'You cannot unmute someone with an equal or higher role');
+      return this.sendErrorMessage(message, 0, 'You cannot unmute someone with an equal or higher role');
 
     let reason = args.slice(2).join(' ');
     if (!reason) reason = '`None`';
     if (reason.length > 1024) reason = reason.slice(0, 1021) + '...';
     
     if (!member.roles.cache.has(muteRoleId)) 
-      return await this.sendErrorMessage(message, 0, 'Provided member is not muted');
+      return this.sendErrorMessage(message, 0, 'Provided member is not muted');
     
     // Unmute member
     message.client.clearTimeout_(member.timeout);
@@ -49,7 +49,7 @@ module.exports = class UnmuteCommand extends Command {
       message.channel.send({embeds:[embed]});
     } catch (err) {
       message.client.logger.error(err.stack);
-      return await this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
+      return this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
     }
     
     // Update mod log

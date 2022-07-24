@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const session = mongoose.startSession();
-
 const User = mongoose.model(
   "Users",
   new mongoose.Schema({
@@ -270,7 +268,7 @@ module.exports = {
   },
 
   async selectPoints(userID, guildID) {
-    return await User.findOne({ user_id: userID, guild_id: guildID });
+    return (await User.findOne({ user_id: userID, guild_id: guildID })).points;
   },
 
   async wipeAllPoints(guildID) {
@@ -351,7 +349,7 @@ module.exports = {
 
   async selectRankXP(guildID) {
     return await User.find({ guild_id: guildID, current_member: true }).sort({
-      xp: -1,
+      total_xp: -1,
     });
   },
 
@@ -441,4 +439,17 @@ module.exports = {
       (await User.findOne({ user_id: userID, guild_id: guildID }))?.points ?? 0
     );
   },
+
+  async updateLevelXPPointsCommandsandMessages(userID, guildID, {
+    level,
+    xp,
+    points,
+    total_commands,
+    total_messages,
+  }) {
+    return await User.findOneAndUpdate(
+      { user_id: userID, guild_id: guildID },
+      { $inc: { xp: xp, points: points, total_commands: total_commands, total_messages: total_messages, level: level } }
+    );
+  }
 };

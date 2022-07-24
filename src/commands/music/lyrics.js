@@ -13,18 +13,23 @@ module.exports = class LyricsMusicCommand extends Command {
       type: client.types.MUSIC,
     });
   }
-  async run(message, args) {
-    let song = args.join(" ");
-    const searches = await Client.songs.search(song);
-    const first_result = searches[0];
-    const lyrics = await first_result.lyrics();
+  async run(message, args, client, player) {
+    let song, lyrics, searches, first_result;
+    const queue = player.getQueue(message.guild.id);
+    if (args[0]) song = args.join(" ");
+    else song = queue.current.title;
 
-    if (!lyrics)
-      return await this.sendErrorMessage(
+    try {
+      searches = await Client.songs.search(song);
+      first_result = searches[0];
+      lyrics = await first_result.lyrics();
+    } catch (e) {
+      return this.sendErrorMessage(
         message,
         1,
         "No lyrics found for that song."
       );
+    }
     const embeds = [];
 
     let initialEmbed = new MessageEmbed()
@@ -57,15 +62,18 @@ module.exports = class LyricsMusicCommand extends Command {
         message.channel.send({ embeds: embeds });
       }
     } else {
-      message.channel.send({ embeds: [new MessageEmbed()
-        .setColor(message.guild.me.displayColor)
-        .setTitle(`Lyrics for ${first_result.title}`)
-        .setFooter({
-          text: `Requested by ${message.author.tag}`,
-          icon_url: message.author.displayAvatarURL(),
-        })
-        .setDescription(lyrics)]
-       });
+      message.channel.send({
+        embeds: [
+          new MessageEmbed()
+            .setColor(message.guild.me.displayColor)
+            .setTitle(`Lyrics for ${first_result.title}`)
+            .setFooter({
+              text: `Requested by ${message.author.tag}`,
+              icon_url: message.author.displayAvatarURL(),
+            })
+            .setDescription(lyrics),
+        ],
+      });
     }
   }
 };

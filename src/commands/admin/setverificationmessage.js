@@ -141,7 +141,7 @@ module.exports = class SetVerificationMessageCommand extends Command {
           );
         }
       } else {
-        return await message.client.sendSystemErrorMessage(message.guild, 'verification', stripIndent`
+        return message.client.sendSystemErrorMessage(message.guild, 'verification', stripIndent`
           Unable to send verification message, please ensure I have permission to access the verification channel
         `);
       }

@@ -3,7 +3,6 @@ const { MessageEmbed } = require("discord.js");
 // Command Require:
 const Command = require("../Command.js");
 const ReactionMenu = require("../ReactionMenu.js");
-const fs = require("fs");
 const axios = require("axios");
 
 //Make a petition to the API https://api.uberduck.ai/voices?mode=tts-all
@@ -206,7 +205,7 @@ module.exports = class aivoiceCommand extends Command {
       let category_voices = [];
       for (let i = 0; i < new_voices.length; i++) {
 
-        if (new_voices[i].category == category) {
+        if (new_voices[i].category === category) {
           category_voices.push(new_voices[i]);
         }
       }

@@ -23,7 +23,7 @@ module.exports = class BackupCreateCommand extends Command {
   async run(message, args) {
     // Check if the user is the guild owner:
     if (message.guild.ownerId !== message.author.id)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         3,
         "You must be the server owner to use this command!"
@@ -71,7 +71,7 @@ module.exports = class BackupCreateCommand extends Command {
       case "info":
         // Check if the backup ID is valid:
         if (!backupID)
-          return await this.sendErrorMessage(
+          return this.sendErrorMessage(
             message,
             0,
             "Please specify a backup ID!"
@@ -104,13 +104,13 @@ module.exports = class BackupCreateCommand extends Command {
           })
           .catch(async () => {
             // if the backup wasn't found
-            return await this.sendErrorMessage(message, 1, "Backup not found!");
+            return this.sendErrorMessage(message, 1, "Backup not found!");
           });
       // Load a backup:
       case "load":
         // Check if the backup ID is valid:
         if (!backupID)
-          return await this.sendErrorMessage(
+          return this.sendErrorMessage(
             message,
             0,
             "Please specify a backup ID!"
@@ -158,7 +158,7 @@ module.exports = class BackupCreateCommand extends Command {
                       })
                       .catch(async () => {
                         // If an error occurred
-                        return await this.sendErrorMessage(
+                        return this.sendErrorMessage(
                           message,
                           3,
                           "An error occurred, check if I have administrator permissions"
@@ -171,7 +171,7 @@ module.exports = class BackupCreateCommand extends Command {
       // If the command is not valid
       default:
         // Send an error message
-        return await this.sendErrorMessage(
+        return this.sendErrorMessage(
           message,
           0,
           `Invalid option! For more info, use ${await message.client.mongodb.settings.selectPrefix(

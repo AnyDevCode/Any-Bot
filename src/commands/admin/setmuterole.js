@@ -35,7 +35,7 @@ module.exports = class SetMuteRoleCommand extends Command {
 
     // Update role
     const muteRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-    if (!muteRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+    if (!muteRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
     await message.client.mongodb.settings.updateMuteRoleId(muteRole.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Mute Role', `${oldMuteRole} ➔ ${muteRole}`)]});
   }

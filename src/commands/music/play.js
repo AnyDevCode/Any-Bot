@@ -31,14 +31,7 @@ module.exports = class PlayMusicCommand extends Command {
       );
 
     const query = args.join(" ") || (message.attachments.first() ? message.attachments.first().url : null);
-    // //If query have the word "playlist"
-    // if (query.includes("playlist") || query.includes("list")) {
-    //   return await this.sendErrorMessage(
-    //     message,
-    //     0,
-    //     ":x: | I'm sorry but you cannot play playlists!"
-    //   );
-    // }
+
     if (!query) return message.reply("Please provide a search term");
 
     const searchResult = await player
@@ -47,7 +40,7 @@ module.exports = class PlayMusicCommand extends Command {
         searchEngine: QueryType.AUTO,
       })
       .catch(async () => {
-        return await this.sendErrorMessage(
+        return this.sendErrorMessage(
           message,
           0,
           ":x: | I'm sorry but I could not find any results for that search term!"
@@ -78,7 +71,7 @@ module.exports = class PlayMusicCommand extends Command {
       }
     } catch {
       await player.deleteQueue(message.guild.id);
-      return await message.reply({
+      return message.reply({
         content: "Could not join your voice channel!",
       });
     }
@@ -89,7 +82,7 @@ module.exports = class PlayMusicCommand extends Command {
       })
       .then((x) => x.tracks[0]);
     if (!track)
-      return await message.reply({
+      return message.reply({
         content: `❌ | Track **${query}** not found!`,
       });
 

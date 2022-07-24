@@ -21,25 +21,25 @@ module.exports = class SayCommand extends Command {
     } else channel = message.channel;
 
     // Check type and viewable
-    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return await this.sendErrorMessage(message, 0, stripIndent`
+    if (channel.type !== 'GUILD_TEXT' || !channel.viewable) return this.sendErrorMessage(message, 0, stripIndent`
       Please mention an accessible text channel or provide a valid text channel ID
     `);
 
     // Get mod channels
     let modChannelIds = await message.client.mongodb.settings.selectModChannelIds(message.guild.id) || [];
     if (typeof(modChannelIds) === 'string') modChannelIds = modChannelIds.split(' ');
-    if (modChannelIds.includes(channel.id)) return await this.sendErrorMessage(message, 0, stripIndent`
+    if (modChannelIds.includes(channel.id)) return this.sendErrorMessage(message, 0, stripIndent`
       Provided channel is moderator only, please mention an accessible text channel or provide a valid text channel ID
     `);
 
-    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a message for me to say');
+    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message for me to say');
 
     // Check channel permissions
     if (!channel.permissionsFor(message.guild.me).has(['SEND_MESSAGES']))
-      return await this.sendErrorMessage(message, 0, 'I do not have permission to send messages in the provided channel');
+      return this.sendErrorMessage(message, 0, 'I do not have permission to send messages in the provided channel');
 
     if (!channel.permissionsFor(message.member).has(['SEND_MESSAGES']))
-      return await this.sendErrorMessage(message, 0, 'You do not have permission to send messages in the provided channel');
+      return this.sendErrorMessage(message, 0, 'You do not have permission to send messages in the provided channel');
 
     const msg = message.content.slice(message.content.indexOf(args[0]), message.content.length);
     channel.send(

@@ -21,7 +21,7 @@ module.exports = class RanksCommand extends Command {
   async run(message, args) {
     // Check if user is in a voice channel
     if (message.member.voice.channel)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
           message,
           1,
           "Because a limitation of the API, you can't use this command in a voice channel."
@@ -38,9 +38,7 @@ module.exports = class RanksCommand extends Command {
     let count = 1;
     for (const row of leaderboard) {
       members.push(oneLine`
-        **${count}.** ${await message.guild.members.cache.get(
-          row.user_id
-      )} - XP: ${row.total_xp} - Level: ${row.level}
+        **${count}.** <@!${row.user_id}> - XP: ${row.total_xp} - Level: ${row.level}
       `);
       count++;
     }

@@ -1,79 +1,97 @@
-const Command = require('../Command.js');
-const ReactionMenu = require('../ReactionMenu.js');
-const { MessageEmbed } = require('discord.js');
+const Command = require("../Command.js");
+const ReactionMenu = require("../ReactionMenu.js");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = class WarnsCommand extends Command {
   constructor(client) {
     super(client, {
-      name: 'warns',
-      aliases: ['warnings'],
-      usage: 'warns <user mention/ID>',
-      description: 'Displays a member\'s current warnings. A max of 5 warnings can be displayed at one time.',
+      name: "warns",
+      aliases: ["warnings"],
+      usage: "warns <user mention/ID>",
+      description:
+        "Displays a member's current warnings. A max of 5 warnings can be displayed at one time.",
       type: client.types.MOD,
-      userPermissions: ['KICK_MEMBERS'],
-      examples: ['warns @MDC']
+      userPermissions: ["KICK_MEMBERS"],
+      examples: ["warns @MDC"],
     });
   }
   async run(message, args) {
+    const member =
+      this.getMemberFromMention(message, args[0]) ||
+      message.guild.members.cache.get(args[0]);
+    if (!member)
+      return this.sendErrorMessage(
+        message,
+        0,
+        "Please mention a user or provide a valid user ID"
+      );
 
-    const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
-    if (!member) 
-      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
-
-    let warns = await message.client.mongodb.warns.warnsByUser(member.id, message.guild.id) || [{ }];
+    let warns = (await message.client.mongodb.warns.warnsByUser(
+      member.id,
+      message.guild.id
+    )) || [{}];
     const count = warns.length;
 
-
     const embed = new MessageEmbed()
-      .setAuthor(
-        {
-          name: member.user.tag,
-          iconURL: member.user.displayAvatarURL({ dynamic: true }),
-        }
-      )
+      .setAuthor({
+        name: member.user.tag,
+        iconURL: member.user.displayAvatarURL({ dynamic: true }),
+      })
       .setFooter({
         text: message.member.displayName,
         iconURL: message.author.displayAvatarURL({ dynamic: true }),
       })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
-    
+
     const buildEmbed = (current, embed) => {
-      const max = (count > current + 5) ? current + 5 : count;
+      const max = count > current + 5 ? current + 5 : count;
       let amount = 0;
       for (let i = current; i < max; i++) {
+        const date = new Date(warns[i].dateIssued);
+
+        //Convert date to unix timestamp
+        const dateUnix = Math.floor(date.getTime() / 1000);
+
         embed // Build warning list
-          .addField('\u200b', `**Warn \`#${i + 1}\`**`)
-          .addField('Reason', `${warns[i].reason}`)
+          .addField("\u200b", `**Warn \`#${i + 1}\`**`)
+          .addField("Reason", `${warns[i].reason}`)
           .addField(
-            'Moderator', 
-            `${message.guild.members.cache.get(warns[i].moderator_id)}` || '`Unable to find moderator`',
+            "Moderator",
+            `<@!${warns[i].moderatorID}>` || "`Unable to find moderator`",
             true
           )
-          .addField('Date Issued', `${warns[i].date_issued}`, true)
-          .addField('Warn ID', `\`${parseInt(warns[i].warn_id)}\``, true);
+          .addField("Date Issued", `<t:${dateUnix}:R>`, true)
+          .addField("Warn ID", `\`${parseInt(warns[i].warnID)}\``, true);
         amount += 1;
       }
 
       return embed
-        .setTitle('Warn List ' + this.client.utils.getRange(warns, current, 5))
-        .setDescription(`Showing \`${amount}\` of ${member}'s \`${count}\` total warns.`);
+        .setTitle("Warn List " + this.client.utils.getRange(warns, current, 5))
+        .setDescription(
+          `Showing \`${amount}\` of ${member}'s \`${count}\` total warns.`
+        );
     };
 
-    if (count === 0) message.channel.send({embeds:[embed
-      .setTitle('Warn List [0]')
-      .setDescription(`${member} currently has no warns.`)
-    ]});
-    else if (count < 5) message.channel.send({embeds:[buildEmbed(0, embed)]});
+    if (count === 0)
+      message.channel.send({
+        embeds: [
+          embed
+            .setTitle("Warn List [0]")
+            .setDescription(`${member} currently has no warns.`),
+        ],
+      });
+    else if (count < 5)
+      message.channel.send({ embeds: [buildEmbed(0, embed)] });
     else {
-
       let n = 0;
-      const json = embed.setFooter({
-        text: 'Expires after three minutes.\n' + message.member.displayName, 
-        iconURL: message.author.displayAvatarURL({ dynamic: true })
-      }
-      ).toJSON();
-      
+      const json = embed
+        .setFooter({
+          text: "Expires after three minutes.\n" + message.member.displayName,
+          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        })
+        .toJSON();
+
       const first = () => {
         if (n === 0) return;
         n = 0;
@@ -104,26 +122,25 @@ module.exports = class WarnsCommand extends Command {
       };
 
       const reactions = {
-        '⏪': first,
-        '◀️': previous,
-        '▶️': next,
-        '⏩': last,
-        '⏹️': null,
+        "⏪": first,
+        "◀️": previous,
+        "▶️": next,
+        "⏩": last,
+        "⏹️": null,
       };
 
       const menu = new ReactionMenu(
         message.client,
-        message.channel, 
-        message.member, 
-        buildEmbed(n, new MessageEmbed(json)), 
+        message.channel,
+        message.member,
+        buildEmbed(n, new MessageEmbed(json)),
         null,
         null,
-        reactions, 
+        reactions,
         180000
       );
 
-      menu.reactions['⏹️'] = menu.stop.bind(menu);
-
+      menu.reactions["⏹️"] = menu.stop.bind(menu);
     }
   }
 };

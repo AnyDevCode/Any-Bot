@@ -61,7 +61,7 @@ module.exports = class ChannelInfoCommand extends Command {
       const members = Array.from(channel.members.values())
       if (members.length > 0) 
         embed.addField('Members Joined', message.client.utils.trimArray(Array.from(channel.members.values())).join(' '));
-    } else return await this.sendErrorMessage(message, 0, stripIndent`
+    } else return this.sendErrorMessage(message, 0, stripIndent`
       Please enter mention a valid text or announcement channel` +
       ' or provide a valid text, announcement, or voice channel ID'
     );

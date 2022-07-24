@@ -22,7 +22,7 @@ module.exports = class ChatBotCommand extends Command {
 
 
         // Check if it has args:
-        if (!args[0]) return await this.sendErrorMessage(message, 0, 'Put some text that you want me to answer you');
+        if (!args[0]) return this.sendErrorMessage(message, 0, 'Put some text that you want me to answer you');
         // Args:
         let text = args.join(" ");
         // Try to fetch the answer:

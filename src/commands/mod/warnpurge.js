@@ -26,19 +26,19 @@ module.exports = class WarnPurgeCommand extends Command {
       this.getMemberFromMention(message, args[0]) ||
       message.guild.members.cache.get(args[0]);
     if (!member)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please mention a user or provide a valid user ID"
       );
     if (member === message.member)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot warn yourself"
       );
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot warn someone with an equal or higher role"
@@ -53,7 +53,7 @@ module.exports = class WarnPurgeCommand extends Command {
 
     const amount = parseInt(args[1]);
     if (isNaN(amount) === true || !amount || amount < 0 || amount > 100)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please provide a message count between 1 and 100"

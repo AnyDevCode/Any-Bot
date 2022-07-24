@@ -30,7 +30,7 @@ module.exports = class LeaderboardCommand extends Command {
     let count = 1;
     for (const row of leaderboard) {
       members.push(oneLine`
-        **${count}.** ${await message.guild.members.cache.get(row.user_id)} - \`${row.points}\` points
+        **${count}.** <@!${row.user_id}> - \`${row.points}\` points
       `);
       count++;
     }

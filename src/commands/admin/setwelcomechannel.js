@@ -63,7 +63,7 @@ module.exports = class SetWelcomeChannelCommand extends Command {
 
     const welcomeChannel = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!welcomeChannel || (welcomeChannel.type !== 'GUILD_TEXT' && welcomeChannel.type !== 'GUILD_NEWS') || !welcomeChannel.viewable)
-      return await this.sendErrorMessage(message, 0, stripIndent`
+      return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
 

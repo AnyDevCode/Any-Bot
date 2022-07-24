@@ -1,6 +1,6 @@
 const Command = require("../Command.js");
 const { MessageEmbed } = require("discord.js");
-const { bear } = require("discord-utilities-js");
+const axios = require("axios");
 
 module.exports = class BearCommand extends Command {
   constructor(client) {
@@ -9,14 +9,16 @@ module.exports = class BearCommand extends Command {
       usage: "bear",
       description: "Finds a random bear for your viewing pleasure.",
       type: client.types.ANIMALS,
-      disabled: true,
     });
   }
   async run(message) {
     try {
-      const img = await bear();
+      const res = await axios
+        .get("https://api.any-bot.tech/api/v1/bear")
+        .then((res) => res.data);
+      const img = res.image;
       if (typeof img === "undefined")
-        return await this.sendErrorMessage(
+        return this.sendErrorMessage(
           message,
           1,
           "Please try again in a few seconds",

@@ -12,9 +12,9 @@ module.exports = class SetAvatarCommand extends Command {
       examples: ['setavatar [attachment]']
     });
   }
-  async run(message, args) {
+  async run(message) {
     //Check if have attachment
-    if (!message.attachments.size) return await this.sendErrorMessage(message, 0, 'Please attach an image to set the avatar to.');
+    if (!message.attachments.size) return this.sendErrorMessage(message, 0, 'Please attach an image to set the avatar to.');
     //Get attachment
     const attachment = message.attachments.first();
     //Set avatar

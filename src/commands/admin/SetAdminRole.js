@@ -56,7 +56,7 @@ module.exports = class SetAdminRoleCommand extends Command {
       this.getRoleFromMention(message, args[0]) ||
       message.guild.roles.cache.get(args[0]);
     if (!adminRole)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please mention a role or provide a valid role ID"

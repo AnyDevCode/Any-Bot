@@ -9,11 +9,10 @@
   "feedbackChannelId": "Your_Feedback_Channel_Id",
   "serverLogId": "Your_Server_Log_Channel_Id",
   "supportServerInvite": "Your_Support_Server_Invite",
-  "mongodb_url": "Your_MongoDB_Url",
   "botStats": {
-    "guilds_channel": "Your_Guilds_Channel_Stats_Bot",
-    "users_channel": "Your_Users_Channel_Stats_Bot"
+    "guilds_channel": "Your_Guilds_Channel_Stats_Bot"
   },
+  "apiUrl": "https://api.any-bot.tech/api/v1",
   "apiKeys": {
     "catApi": "Cat_Api_Key",
     "googleApi": "Google_Api_Key",
@@ -27,7 +26,8 @@
     "nasaapi": "Nasa_Api_Key",
     "uberduckapi_key": "UberDuck_Api_Key",
     "uberduckapi_secret": "UberDuck_Api_Secret",
-    "osuapikey": "Osu_Api_Key"
+    "osuapikey": "Osu_Api_Key",
+    "customAPIKey": "Your_Custom_Api_Key_For_Any_API"
   },
   "botlist": false
 }

@@ -1,7 +1,5 @@
 const Command = require("../Command.js");
 const { MessageEmbed } = require("discord.js");
-const moment = require("moment");
-
 module.exports = class WarnCommand extends Command {
   constructor(client) {
     super(client, {
@@ -19,19 +17,19 @@ module.exports = class WarnCommand extends Command {
       this.getMemberFromMention(message, args[0]) ||
       message.guild.members.cache.get(args[0]);
     if (!member)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please mention a user or provide a valid user ID"
       );
     if (member === message.member)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot warn yourself"
       );
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot warn someone with an equal or higher role"
@@ -59,7 +57,7 @@ module.exports = class WarnCommand extends Command {
         )) + 1
       ) || 1;
 
-    const time = moment().format("MMM DD YYYY");
+    const time = new Date();
     await message.client.mongodb.warns.createWarn(
       member.id,
       member.user.username,

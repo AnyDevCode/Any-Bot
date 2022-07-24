@@ -11,7 +11,7 @@ module.exports = class EvalCommand extends Command {
       ownerOnly: true
     });
   }
-  async run(message, args) {
+  async run(message) {
     const embed = new MessageEmbed()
         .setTitle('Shutdown...')
         .setFooter({

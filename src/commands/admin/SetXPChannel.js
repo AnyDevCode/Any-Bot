@@ -1,7 +1,7 @@
 const Command = require("../Command.js");
 const { MessageEmbed } = require("discord.js");
-const { success, verify } = require("../../utils/emojis.json");
-const { oneLine, stripIndent } = require("common-tags");
+const { success } = require("../../utils/emojis.json");
+const { oneLine } = require("common-tags");
 
 module.exports = class SetXPChannelCommand extends Command {
   constructor(client) {

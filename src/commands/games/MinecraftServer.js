@@ -16,7 +16,7 @@ module.exports = class MinecraftServerCommand extends Command {
   }
   async run(message, args) {
     if (!args[0])
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please enter an IP of a Minecraft server."
@@ -31,10 +31,10 @@ module.exports = class MinecraftServerCommand extends Command {
     try{
 
     request(pingURL, async function (err, resp, body) {
-      if (err) return await this.sendErrorMessage(message, 0, "A error has occured.");
+      if (err) return this.sendErrorMessage(message, 0, "A error has occured.");
       body = JSON.parse(body);
       if (body.error)
-        return await this.sendErrorMessage(message, 0, "Server not found.");
+        return this.sendErrorMessage(message, 0, "Server not found.");
 
       let motd = `http://status.mclive.eu/MinecraftServer/${args[0]}/${port}/banner.png`;
 

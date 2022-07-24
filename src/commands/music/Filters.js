@@ -149,7 +149,7 @@ module.exports = class FiltersMusicCommand extends Command {
       type: client.types.MUSIC,
     });
   }
-  async run(message, args, client, player) {
+  async run(message) {
     const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);    
     const embed = new MessageEmbed()
       .setTitle("Available Filters")

@@ -2,7 +2,25 @@ const Command = require("../Command.js");
 const { MessageEmbed } = require("discord.js");
 const gis = require("g-i-s");
 const Filter = require("bad-words");
-const customFilter = new Filter({ placeHolder: "*" });
+const customFilter = new Filter({
+  placeHolder: "#",
+  replaceRegex: /[A-Za-z0-9가-힣_]/g,
+});
+customFilter.addWords(
+  "NSFW",
+  "nsfw",
+  "r34",
+  "R34",
+  "rule34",
+  "Rule34",
+  "e621",
+  "E621",
+  "desnudos",
+  "desnudas",
+  "R-34",
+  "rule 34"
+);
+const ReactionMenu = require("../ReactionMenu.js");
 
 module.exports = class ImagesCommand extends Command {
   constructor(client) {
@@ -21,7 +39,11 @@ module.exports = class ImagesCommand extends Command {
       return message.channel.send("Insert the you want to search first");
     }
 
-    search = customFilter.clean(search);
+    try {
+      search = customFilter.clean(search);
+    } catch (err) {
+      search = search;
+    }
 
     const options = {
       searchTerm: search,
@@ -31,7 +53,6 @@ module.exports = class ImagesCommand extends Command {
         "youtube.com",
         "giphy.com",
         "imgur.com",
-        "twitter.com",
         "facebook.com",
         "instagram.com",
         "pixabay.com",
@@ -42,20 +63,27 @@ module.exports = class ImagesCommand extends Command {
 
     gis(options, logResults);
 
-    async function logResults(error, results) {
-      if (!results[0]) {
-        return msg.edit("No results found");
-      }
+    let allResults;
 
-      let newresults = []
+    function logResults(error, results) {
+      if (error)
+        return this.sendErrorMessage(
+          message,
+          1,
+          "Please try again in a few seconds"
+        );
+
+      if (!results[0]) return msg.edit("No results found");
+
+      let newresults = [];
 
       for (let i = 0; i < results.length; i++) {
-        //Delete every url that is not an image in format png, jpg, jpeg, gif
+        //Delete every url that is not an image in format png, jpg, jpeg, gif, check if end with png, jpg, jpeg, gif
         if (
-          results[i].url.includes(".png") ||
-          results[i].url.includes(".jpg") ||
-          results[i].url.includes(".jpeg") ||
-          results[i].url.includes(".gif")
+          results[i].url.endsWith(".png") ||
+          results[i].url.endsWith(".jpg") ||
+          results[i].url.endsWith(".jpeg") ||
+          results[i].url.endsWith(".gif")
         ) {
           newresults.push(results[i]);
         }
@@ -63,83 +91,76 @@ module.exports = class ImagesCommand extends Command {
 
       results = newresults;
 
-      if (!results[0]) {
-        return msg.edit("No results found");
-      }
+      if (!results[0]) return msg.edit("No results found");
 
-      if (error) {
-        return await this.sendErrorMessage(
-          message,
-          1,
-          "Please try again in a few seconds"
-        );
-      } else {
-        let i = 0;
+      allResults = results;
 
-        let max = results.length - 1;
+      msg.edit({
+        content: "Found " + results.length + " results for " + search,
+      });
 
-        const embed = new MessageEmbed()
-          .setTitle("Result to your search")
-          .setImage(results[i].url)
-          .setTimestamp()
-          .setColor(message.guild.me.displayHexColor)
-          .setFooter({
-            text: `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1),
-          });
-        msg.edit({ embeds: [embed] }).then((msg) => {
-          msg.react("◀️");
-          msg.react("⏹️");
-          msg.react("▶️");
-          msg.awaitReactions((reaction, user) => {
-            if (message.author.id !== user.id) {
-              return;
-            }
-            if (reaction.emoji.name === "▶️") {
-              if (i !== max) {
-                i++;
-                const embeds = new MessageEmbed()
-                  .setTitle("Result to your search")
-                  .setImage(results[i].url)
-                  .setTimestamp()
-                  .setColor(message.guild.me.displayHexColor)
-                  .setFooter({
-                    text: "Page : " + parseInt(i + 1) + "/" + parseInt(max + 1),
-                  });
-                msg.edit({ content: "Result to your search:", embeds: [embeds] });
-              }
-            }
-            if (reaction.emoji.name === "⏹️") {
-              msg.reactions.cache.get("◀️").remove();
-              msg.reactions.cache.get("⏹️").remove();
-              msg.reactions.cache.get("▶️").remove();
-              const embedsss = new MessageEmbed()
-                .setAuthor({
-                  name: "Google Images",
-                  iconURL:
-                    "https://assets.stickpng.com/thumbs/5847f9cbcef1014c0b5e48c8.png",
-                })
-                .setDescription("Thanks for using Google Images")
-                .setColor(message.guild.me.displayHexColor)
-                .setTimestamp();
-                msg.edit({ content: "Result to your search:", embeds: [embedsss] });
-            }
-            if (reaction.emoji.name === "◀️") {
-              if (1 !== i) {
-                i--;
-                const embedss = new MessageEmbed()
-                  .setTitle("Result to your search")
-                  .setImage(results[i].url)
-                  .setTimestamp()
-                  .setColor(message.guild.me.displayHexColor)
-                  .setFooter({
-                    text: "Page : " + parseInt(i + 1) + "/" + parseInt(max + 1),
-                  });
-                  msg.edit({ content: "Result to your search:", embeds: [embedss] });
-              }
-            }
-          });
+      let i = 0;
+
+      let max = allResults.length - 1;
+
+      //First Embed
+      const embed = new MessageEmbed()
+        .setTitle("Result to your search")
+        .setImage(allResults[i].url)
+        .setTimestamp()
+        .setColor(message.guild.me.displayHexColor)
+        .setFooter({
+          text: `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1),
         });
-      }
+
+      const json = embed.toJSON();
+
+      const previous = () => {
+        if (i > 0) {
+          i--;
+          return new MessageEmbed(json)
+            .setTitle("Result to your search")
+            .setImage(allResults[i].url)
+            .setTimestamp()
+            .setColor(message.guild.me.displayHexColor)
+            .setFooter({
+              text: `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1),
+            });
+        }
+      };
+
+      const next = () => {
+        if (i < max - 1) {
+          i++;
+          return new MessageEmbed(json)
+            .setTitle("Result to your search")
+            .setImage(allResults[i].url)
+            .setTimestamp()
+            .setColor(message.guild.me.displayHexColor)
+            .setFooter({
+              text: `Page : ` + parseInt(i + 1) + `/` + parseInt(max + 1),
+            });
+        }
+      };
+
+      const reactions = {
+        "◀️": previous,
+        "⏹️": null,
+        "▶️": next,
+      };
+
+      const menu = new ReactionMenu(
+        message.client,
+        message.channel,
+        message.member,
+        embed,
+        null,
+        null,
+        reactions,
+        600000
+      );
+
+      menu.reactions["⏹️"] = menu.stop.bind(menu);
     }
   }
 };

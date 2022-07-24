@@ -36,13 +36,13 @@ module.exports = class WarnCommand extends Command {
     const member = message.guild.members.cache.get(warn.userID);
 
     if (warn.warnID === message.member.id)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot delete a warn from yourself"
       );
     if (member.roles.highest.position >= message.member.roles.highest.position)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "You cannot delete a warn from someone with an equal or higher role"

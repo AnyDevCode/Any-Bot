@@ -216,7 +216,7 @@ module.exports = class SettingsCommand extends Command {
         return message.channel.send({embeds: [embed]});
     }
     if (setting)
-      return await this.sendErrorMessage(message, 0, stripIndent`
+      return this.sendErrorMessage(message, 0, stripIndent`
         Please enter a valid settings category, use ${row.prefix}settings for a list
       `);
 

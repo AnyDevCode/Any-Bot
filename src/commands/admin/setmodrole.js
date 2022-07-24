@@ -34,7 +34,7 @@ module.exports = class SetModRoleCommand extends Command {
 
     // Update role
     const modRole = this.getRoleFromMention(message, args[0]) || message.guild.roles.cache.get(args[0]);
-    if (!modRole) return await this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
+    if (!modRole) return this.sendErrorMessage(message, 0, 'Please mention a role or provide a valid role ID');
     await message.client.mongodb.settings.updateModRoleId(modRole.id, message.guild.id);
     message.channel.send({embeds:[embed.addField('Mod Role', `${oldModRole} ➔ ${modRole}`)]});
   }

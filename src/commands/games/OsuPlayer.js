@@ -16,13 +16,13 @@ module.exports = class OsuPlayerCommand extends Command {
 
     async run(message, args) {
         if (!args[0])
-            return await this.sendErrorMessage(
+            return this.sendErrorMessage(
                 message,
                 0,
                 "Please enter an osu! mode. (osu, taiko, catch, mania)",
             );
         if (!["osu", "taiko", "catch", "mania"].includes(args[0].toLowerCase()))
-            return await this.sendErrorMessage(
+            return this.sendErrorMessage(
                 message,
                 0,
                 "Please enter an osu! mode. (osu, taiko, catch, mania)",
@@ -33,7 +33,7 @@ module.exports = class OsuPlayerCommand extends Command {
         // Username is the second and more argument
         const username = args.slice(1).join(" ");
         if (!username)
-            return await this.sendErrorMessage(
+            return this.sendErrorMessage(
                 message,
                 0,
                 "Please enter an osu! username.",
@@ -46,7 +46,7 @@ module.exports = class OsuPlayerCommand extends Command {
 
         let player = await osuApi.apiCall('/get_user', {u: username, m: mode});
         if (!player[0])
-            return await this.sendErrorMessage(
+            return this.sendErrorMessage(
                 message,
                 0,
                 "Could not find an osu! player with that name."

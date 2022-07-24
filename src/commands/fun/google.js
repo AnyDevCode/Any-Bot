@@ -8,7 +8,8 @@ module.exports = class GoogleCommand extends Command {
       name: 'google',
       usage: 'google <search>',
       description: 'Find an page in Google.',
-      type: client.types.FUN
+      type: client.types.FUN,
+      disabled: true,
     });
   }
   async run(message, args) {

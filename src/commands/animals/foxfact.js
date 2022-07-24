@@ -15,7 +15,7 @@ module.exports = class FoxFactCommand extends Command {
   async run(message) {
     try {
       const fact = await foxfact();
-      if(typeof fact === "undefined") return await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      if(typeof fact === "undefined") return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
       const embed = new MessageEmbed()
         .setTitle("🦊  Fox Fact!  🦊")
         .setDescription(fact)

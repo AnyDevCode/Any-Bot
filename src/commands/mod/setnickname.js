@@ -23,26 +23,26 @@ module.exports = class SetNicknameCommand extends Command {
 
     const member = this.getMemberFromMention(message, args[0]) || message.guild.members.cache.get(args[0]);
     if (!member)
-      return await this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
+      return this.sendErrorMessage(message, 0, 'Please mention a user or provide a valid user ID');
     if (member.roles.highest.position >= message.member.roles.highest.position && member !== message.member)
-      return await this.sendErrorMessage(message, 0, stripIndent`
+      return this.sendErrorMessage(message, 0, stripIndent`
         You cannot change the nickname of someone with an equal or higher role
       `);
 
-    if (!args[1]) return await this.sendErrorMessage(message, 0, 'Please provide a nickname');
+    if (!args[1]) return this.sendErrorMessage(message, 0, 'Please provide a nickname');
 
     // Multi-word nickname
     let nickname = args[1];
     if (nickname.startsWith('"')) {
       nickname = message.content.slice(message.content.indexOf(args[1]) + 1);
       if (!nickname.includes('"')) 
-        return await this.sendErrorMessage(message, 0, 'Please ensure the nickname is surrounded in quotes');
+        return this.sendErrorMessage(message, 0, 'Please ensure the nickname is surrounded in quotes');
       nickname = nickname.slice(0, nickname.indexOf('"'));
-      if (!nickname.replace(/\s/g, '').length) return await this.sendErrorMessage(message, 0, 'Please provide a nickname');
+      if (!nickname.replace(/\s/g, '').length) return this.sendErrorMessage(message, 0, 'Please provide a nickname');
     }
 
     if (nickname.length > 32) {
-      return await this.sendErrorMessage(message, 0, 'Please ensure the nickname is no larger than 32 characters');
+      return this.sendErrorMessage(message, 0, 'Please ensure the nickname is no larger than 32 characters');
       
     } else {
 

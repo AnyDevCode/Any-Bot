@@ -15,7 +15,7 @@ module.exports = class BirdFactCommand extends Command {
   async run(message) {
     try {
       const fact = await birdfact();
-      if (typeof fact === "undefined") return await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      if (typeof fact === "undefined") return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
       const embed = new MessageEmbed()
         .setTitle("🐦  Bird Fact!  🐦")
         .setDescription(fact)

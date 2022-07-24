@@ -114,7 +114,7 @@ module.exports = class SetVerificationRoleCommand extends Command {
       this.getRoleFromMention(message, args[0]) ||
       message.guild.roles.cache.get(args[0]);
     if (!verificationRole)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please mention a role or provide a valid role ID"
@@ -207,7 +207,7 @@ module.exports = class SetVerificationRoleCommand extends Command {
         
 
       } else {
-        return await message.client.sendSystemErrorMessage(
+        return message.client.sendSystemErrorMessage(
           message.guild,
           "verification",
           stripIndent`

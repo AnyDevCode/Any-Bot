@@ -1,19 +1,32 @@
-const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
+const {
+  REST
+} = require("@discordjs/rest");
+const {
+  Routes
+} = require("discord-api-types/v9");
 require("dotenv").config();
-const { abbreviateNumber } = require("js-abbreviation-number");
+const {
+  abbreviateNumber
+} = require("js-abbreviation-number");
 
 module.exports = {
   name: "ready",
   once: true,
   async execute(client, slashes) {
-    const activities = [
-      { name: `>help`, type: "LISTENING" },
-      { name: "for you", type: "LISTENING" },
+    const activities = [{
+        name: `>help`,
+        type: "LISTENING"
+      },
+      {
+        name: "for you",
+        type: "LISTENING"
+      },
     ];
 
     // Update presence
-    client.user.setActivity(activities[0].name, { type: activities[0].type });
+    client.user.setActivity(activities[0].name, {
+      type: activities[0].type
+    });
 
     let activity = 1;
 
@@ -23,10 +36,6 @@ module.exports = {
         type: "WATCHING",
       }; // Update server count
       activities[3] = {
-        name: `${client.users.cache.size} users`,
-        type: "WATCHING",
-      }; // Update user count
-      activities[4] = {
         name: `with ${client.commands.size} commands`,
         type: "PLAYING",
       }; // Update command count
@@ -49,20 +58,7 @@ module.exports = {
         //Create a variable with the number closest to guilds that is a power of 100
         let closest_guilds = Math.pow(10, Math.floor(Math.log10(guilds))) * 10;
         guilds_channel.setName(
-          `『🏁』 Guilds: ${client.guilds.cache.size}/${closest_guilds}`
-        );
-
-        //Update name of a channel
-        const users_channel = client.channels.cache.get(
-          client.statsChannels.users_channel
-        );
-        let users = client.users.cache.size;
-        //Create a variable with the number closest to users that is a power of 10000
-        let closest_users = Math.pow(10, Math.floor(Math.log10(users))) * 10;
-        users_channel.setName(
-          `『🧑』 Users: ${abbreviateNumber(
-            client.users.cache.size
-          )}/${abbreviateNumber(closest_users)}`
+          `『🏁』 Guilds: ${abbreviateNumber(client.guilds.cache.size)}/${closest_guilds}`
         );
       }, //Every 10 minutes
       600000
@@ -88,8 +84,7 @@ module.exports = {
           client.logger.info("Global slash commands updated!");
         } else {
           await rest.put(
-            Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID),
-            {
+            Routes.applicationGuildCommands(CLIENT_ID, process.env.GUILD_ID), {
               body: slashes,
             }
           );
@@ -103,6 +98,12 @@ module.exports = {
 
     client.logger.info("Updating database and scheduling jobs...");
     for await (const guild of client.guilds.cache.values()) {
+
+      // if((guild.id === "374071874222686211") || (guild.id === "992960423081037925")) continue;
+
+      // console.log(guild.name)
+      // console.log(guild.id)
+
       /*
        ** -----------------------------------------------------------------------
        *  FIND SETTINGS
@@ -112,19 +113,19 @@ module.exports = {
       // Find mod log
       const modLog = guild.channels.cache.find(
         (c) =>
-          c.name.replace("-", "").replace("s", "") === "modlog" ||
-          c.name.replace("-", "").replace("s", "") === "moderatorlog"
+        c.name.replace("-", "").replace("s", "") === "modlog" ||
+        c.name.replace("-", "").replace("s", "") === "moderatorlog"
       );
 
       // Find admin and mod roles
       const adminRole = guild.roles.cache.find(
         (r) =>
-          r.name.toLowerCase() === "admin" ||
-          r.name.toLowerCase() === "administrator"
+        r.name.toLowerCase() === "admin" ||
+        r.name.toLowerCase() === "administrator"
       );
       const modRole = guild.roles.cache.find(
         (r) =>
-          r.name.toLowerCase() === "mod" || r.name.toLowerCase() === "moderator"
+        r.name.toLowerCase() === "mod" || r.name.toLowerCase() === "moderator"
       );
       const muteRole = guild.roles.cache.find(
         (r) => r.name.toLowerCase() === "muted"
@@ -150,6 +151,7 @@ module.exports = {
         crownRole ? crownRole.id : null
       );
 
+      /*
       //Get all users in the guild
       const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
 
@@ -217,10 +219,11 @@ module.exports = {
 
 
       }
+      */
 
       /** ------------------------------------------------------------------------------------------------
        * CHECK DATABASE
-       * ------------------------------------------------------------------------------------------------ */
+       * ------------------------------------------------------------------------------------------------ 
       // If member left
       if (!client.shard) {
         const currentMember = await client.mongodb.users.selectCurrentMembers(
@@ -236,6 +239,8 @@ module.exports = {
           }
         }
       }
+
+      */
 
       // If member joined
       const missingMember = await client.mongodb.users.selectMissingMembers(
@@ -262,7 +267,9 @@ module.exports = {
       if (verificationChannel && verificationChannel.viewable) {
         try {
           await verificationChannel.messages.fetch(verificationMessageId);
-        } catch (e) {}
+        } catch (e) {
+          client.logger.error(e);
+        }
       }
 
       /** ------------------------------------------------------------------------------------------------

@@ -36,7 +36,7 @@ module.exports = class ColorCommand extends Command {
         return message.channel.send(embed.addField('Color', `${oldColor} ➔ \`None\``, true));
       } catch (err) {
         message.client.logger.error(err.stack);
-        return await this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
+        return this.sendErrorMessage(message, 1, 'Please check the role hierarchy', err.message);
       }
     }
 
@@ -51,7 +51,7 @@ module.exports = class ColorCommand extends Command {
     }
     // Color does not exist
     if (!color)
-      return await this.sendErrorMessage(message, 0, `Please provide a valid color, use ${prefix}colors for a list`);
+      return this.sendErrorMessage(message, 0, `Please provide a valid color, use ${prefix}colors for a list`);
     // Color exists
     else {
       try {

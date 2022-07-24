@@ -22,7 +22,7 @@ module.exports = {
       try {
         await member.roles.add(verificationRole);
       } catch (err) {
-        return await client.sendSystemErrorMessage(member.guild, 'verification',
+        return client.sendSystemErrorMessage(member.guild, 'verification',
           stripIndent`Unable to assign verification role,` +
           'please check the role hierarchy and ensure I have the Manage Roles permission'
           , err.message);

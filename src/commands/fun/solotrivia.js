@@ -25,7 +25,7 @@ module.exports = class SoloTriviaCommand extends Command {
     if (!topic) { // Pick a random topic if none given
       topic = message.client.topics[Math.floor(Math.random() * message.client.topics.length)];
     } else if (!message.client.topics.includes(topic))
-      return await this.sendErrorMessage(message, 0, `Please provide a valid topic, use ${prefix}topics for a list`);
+      return this.sendErrorMessage(message, 0, `Please provide a valid topic, use ${prefix}topics for a list`);
     
     // Get question and answers
     const path = __basedir + '/data/trivia/' + topic + '.yml';

@@ -19,7 +19,7 @@ module.exports = class GivePointsCommand extends Command {
       this.getMemberFromMention(message, args[0]) ||
       message.guild.members.cache.get(args[0]);
     if (!member)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please mention a user or provide a valid user ID"
@@ -34,13 +34,13 @@ module.exports = class GivePointsCommand extends Command {
       message.guild.id
     );
     if (isNaN(amount) === true || !amount)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         "Please provide a valid point count"
       );
     if (amount < 0 || amount > points)
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         stripIndent`

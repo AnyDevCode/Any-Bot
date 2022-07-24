@@ -26,11 +26,11 @@ module.exports = class ToggleTypeCommand extends Command {
     const { ADMIN, OWNER } = message.client.types;
 
     if (args.length === 0 || args[0].toLowerCase() === OWNER)
-      return await this.sendErrorMessage(message, 0, 'Please provide a valid command type');
+      return this.sendErrorMessage(message, 0, 'Please provide a valid command type');
     
     const type = args[0].toLowerCase();
     
-    if (type === ADMIN) return await this.sendErrorMessage(message, 0, `${capitalize(ADMIN)} commands cannot be disabled`);
+    if (type === ADMIN) return this.sendErrorMessage(message, 0, `${capitalize(ADMIN)} commands cannot be disabled`);
 
     let disabledCommands = await message.client.mongodb.settings.selectDisabledCommands(message.guild.id) || [];
     if (typeof(disabledCommands) === 'string') disabledCommands = disabledCommands.split(' ');
@@ -59,7 +59,7 @@ module.exports = class ToggleTypeCommand extends Command {
         }
         description = `All \`${capitalize(type)}\` type commands have been successfully **disabled**. ${fail}`;
       }
-    } else return await this.sendErrorMessage(message, 0, 'Please provide a valid command type');
+    } else return this.sendErrorMessage(message, 0, 'Please provide a valid command type');
       
     await message.client.mongodb.settings.updateDisabledCommands(disabledCommands.join(' '), message.guild.id);
 

@@ -3,7 +3,6 @@ const { MessageEmbed, MessageAttachment } = require("discord.js");
 const axios = require("axios");
 // Command Require:
 const Command = require("../Command.js");
-const fs = require("fs");
 
 // Command Definition:
 module.exports = class aivoiceCommand extends Command {
@@ -39,7 +38,7 @@ module.exports = class aivoiceCommand extends Command {
 
     // If voice is not defined, return error
     if (voice.length < 1) {
-      return await this.sendErrorMessage(message, 0, "The voice is not defined.");
+      return this.sendErrorMessage(message, 0, "The voice is not defined.");
     }
 
     // Check if the voice is in the voices.txt file:
@@ -60,7 +59,7 @@ module.exports = class aivoiceCommand extends Command {
       }
     }
     if (!voices.includes(voice)) {
-      return await this.sendErrorMessage(message, 0, "That voice is not supported");
+      return this.sendErrorMessage(message, 0, "That voice is not supported");
     }
 
     // Make a voice lowercase
@@ -69,12 +68,12 @@ module.exports = class aivoiceCommand extends Command {
 
     // Check if the text has a length of 1000 characters:
     if (text.length > 1000) {
-      return await this.sendErrorMessage(message, 0, "Text is too long");
+      return this.sendErrorMessage(message, 0, "Text is too long");
     }
 
     // Check if the text is empty:
     if (text.length < 1) {
-      return await this.sendErrorMessage(message, 0, "Text is empty");
+      return this.sendErrorMessage(message, 0, "Text is empty");
     }
 
     let time_wait = 10;

@@ -31,7 +31,7 @@ module.exports = class SetAutoKickCommand extends Command {
         const amount = Number(args[0]);
         // Check if warn count is a number:
         if (amount && (!Number.isInteger(amount) || amount < 0))
-            return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+            return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
 
         // Send embed:
         const embed = new MessageEmbed()

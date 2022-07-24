@@ -16,8 +16,8 @@ module.exports = class FeedbackCommand extends Command {
   async run(message, args) {
     const feedbackChannel = message.client.channels.cache.get(message.client.feedbackChannelId);
     if (!feedbackChannel) 
-      return await this.sendErrorMessage(message, 1, 'The feedbackChannelId property has not been set');
-    if (!args[0]) return await this.sendErrorMessage(message, 0, 'Please provide a message to send');
+      return this.sendErrorMessage(message, 1, 'The feedbackChannelId property has not been set');
+    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message to send');
     let feedback = message.content.slice(message.content.indexOf(args[0]), message.content.length);
 
     // Send report

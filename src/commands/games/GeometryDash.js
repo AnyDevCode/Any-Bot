@@ -15,7 +15,7 @@ module.exports = class GeometryDashCommand extends Command {
   }
   async run(message, args) {
     if (!args[0])
-      return await this.sendErrorMessage(message, 0, "Please enter a username.");
+      return this.sendErrorMessage(message, 0, "Please enter a username.");
 
     const GD = new GDClient({
       userName: message.client.apiKeys.geometrydash.user,
@@ -28,7 +28,7 @@ module.exports = class GeometryDashCommand extends Command {
 
     const user = await api.users.getByNick(args.join(" "));
 
-    if (!user) return await this.sendErrorMessage(message, 0, "User not found.");
+    if (!user) return this.sendErrorMessage(message, 0, "User not found.");
     const embed = new MessageEmbed()
       .setAuthor({
         name: "Geometry Dash",

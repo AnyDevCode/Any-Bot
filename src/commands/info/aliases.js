@@ -73,7 +73,7 @@ module.exports = class AliasesCommand extends Command {
         .setColor(message.guild.me.displayHexColor);
 
     } else if (type) {
-      return await this.sendErrorMessage(message, 0, 'Unable to find command type, please check provided type');
+      return this.sendErrorMessage(message, 0, 'Unable to find command type, please check provided type');
 
     } else {
 

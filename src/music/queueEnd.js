@@ -1,6 +1,6 @@
 module.exports = {
   name: "queueEnd",
-  async execute(queue, track, player) {
+  async execute(queue) {
     queue.metadata.channel.send("✅ | Queue finished!");
   },
 };

@@ -14,7 +14,7 @@ module.exports = class PandaCommand extends Command {
   async run(message) {
     try {
       const img = await panda();
-      if (typeof img === "undefined") return await this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
+      if (typeof img === "undefined") return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The Api is down");
       const embed = new MessageEmbed()
         .setTitle("🐼  Woof!  🐼")
         .setImage(img)

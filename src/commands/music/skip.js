@@ -1,5 +1,4 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
 
 module.exports = class QueueMusicCommand extends Command {
   constructor(client) {

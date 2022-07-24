@@ -1,5 +1,3 @@
-const { MessageEmbed } = require("discord.js");
-
 /**
  * Any Bot's custom Button class
  */

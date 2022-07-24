@@ -44,7 +44,7 @@ module.exports = class TogglePointsCommand extends Command {
     const embed = new MessageEmbed()
         .setTitle('Settings: `XP`')
         .setThumbnail(message.guild.iconURL({ dynamic: true }))
-        .setDescription(`The \`message XP\` value was successfully updated. ${success}`)
+        .setDescription(description)
         .addField("Message XP", `\`Minimum: ${minimum_xp_message}\` - \`Maximum: ${maximum_xp_message}\``)
         .addField('Command XP', `\`Minimum: ${minimum_xp_command}\` - \`Maximum: ${maximum_xp_command}\``)
         .addField('Voice XP', `\`Minimum: ${minimum_xp_voice}\` - \`Maximum: ${maximum_xp_voice}\``)

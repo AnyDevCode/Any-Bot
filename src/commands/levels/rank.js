@@ -1,15 +1,16 @@
 const Command = require("../Command.js");
-const { MessageAttachment } = require("discord.js");
+const {
+  MessageAttachment
+} = require("discord.js");
 const canvas = require("discord-canvas");
-rankCardCanvas = new canvas.RankCard();
+const rankCardCanvas = new canvas.RankCard();
 
 module.exports = class RankCommand extends Command {
   constructor(client) {
     super(client, {
       name: "rank",
       usage: "rank <user mention/ID>",
-      description:
-        "Fetches a user's  xp. If no user is given, your own xp will be displayed.",
+      description: "Fetches a user's  xp. If no user is given, your own xp will be displayed.",
       type: client.types.LEVELS,
       examples: ["rank @MDC"],
     });
@@ -34,7 +35,7 @@ module.exports = class RankCommand extends Command {
       message.member;
 
     const requiredXP = 50 * Math.pow(level, 2);
-    const leaderboard = await message.client.mongodb.users.selectRank(
+    const leaderboard = await message.client.mongodb.users.selectRankXP(
       message.guild.id
     );
     const position = leaderboard.map((row) => row.user_id).indexOf(member.id);
@@ -59,69 +60,72 @@ module.exports = class RankCommand extends Command {
       mod_badge_or_admin_role = "https://i.imgur.com/984Lqf8.png";
     }
 
-    if (total_messages == null) total_messages = 0;
+    if (total_messages === null) total_messages = 0;
     else {
       if (total_messages < 100) total_messages = null;
-      if (1000 > total_messages && total_messages >= 100)
+      if (total_messages < 1000 && total_messages >= 100)
         total_messages = "bronze";
-      if (2500 > total_messages && total_messages >= 1000)
+      if (total_messages < 2500 && total_messages >= 1000)
         total_messages = "silver";
-      if (10000 > total_messages && total_messages >= 2500)
+      if (total_messages < 10000 && total_messages >= 2500)
         total_messages = "gold";
       if (total_messages >= 10000) total_messages = "diamond";
     }
-    if (total_commands == null) total_commands = 0;
+    if (total_commands === null) total_commands = 0;
     else {
       if (total_commands < 10) total_commands = null;
-      if (100 > total_commands && total_commands >= 10)
+      if (total_commands < 100 && total_commands >= 10)
         total_commands = "bronze";
-      if (500 > total_commands && total_commands >= 100)
+      if (total_commands < 500 && total_commands >= 100)
         total_commands = "silver";
-      if (1000 > total_commands && total_commands >= 500)
+      if (total_commands < 1000 && total_commands >= 500)
         total_commands = "gold";
       if (total_commands >= 1000) total_commands = "diamond";
     }
-    if (total_reactions == null) total_reactions = 0;
+    if (total_reactions === null) total_reactions = 0;
     else {
       if (total_reactions < 10) total_reactions = null;
-      if (50 > total_reactions && total_reactions >= 10)
+      if (total_reactions < 50 && total_reactions >= 10)
         total_reactions = "bronze";
-      if (150 > total_reactions && total_reactions >= 50)
+      if (total_reactions < 150 && total_reactions >= 50)
         total_reactions = "silver";
-      if (300 > total_reactions && total_reactions >= 150)
+      if (total_reactions < 300 && total_reactions >= 150)
         total_reactions = "gold";
       if (total_reactions >= 300) total_reactions = "diamond";
     }
-    if (total_voice == null) total_voice = 0;
+    if (total_voice === null) total_voice = 0;
     else {
       if (total_voice < 60) total_voice = null;
-      if (600 > total_voice && total_voice >= 60) total_voice = "bronze";
-      if (3000 > total_voice && total_voice >= 600) total_voice = "silver";
-      if (12000 > total_voice && total_voice >= 3000) total_voice = "gold";
+      if ((total_voice < 600) && (total_voice >= 60)) total_voice = "bronze";
+      if ((total_voice < 3000) && (total_voice >= 600)) total_voice = "silver";
+      if ((total_voice < 12000) && (total_voice >= 3000)) total_voice = "gold";
       if (total_voice >= 12000) total_voice = "diamond";
     }
-    if (total_pictures == null) total_pictures = 0;
+    if (total_pictures === null) total_pictures = 0;
     else {
       if (total_pictures < 10) total_pictures = null;
-      if (50 > total_pictures && total_pictures >= 10)
+      if ((total_pictures < 50) && (total_pictures >= 10))
         total_pictures = "bronze";
-      if (100 > total_pictures && total_pictures >= 50)
+      if ((total_pictures < 100) && (total_pictures >= 50))
         total_pictures = "silver";
-      if (200 > total_pictures && total_pictures >= 100)
+      if ((total_pictures < 200) && (total_pictures >= 100))
         total_pictures = "gold";
       if (total_pictures >= 200) total_pictures = "diamond";
     }
-    if (boosts == null) boosts = null;
+    if (boosts === null) boosts = null;
     else {
-      if (3 > boosts > 0) boosts = "bronze";
-      if (6 > boosts >= 3) boosts = "silver";
-      if (10 > boosts >= 6) boosts = "gold";
+      if ((boosts < 3) && (boosts > 0)) boosts = "bronze";
+      if ((boosts < 6) && (boosts >= 3)) boosts = "silver";
+      if ((boosts < 10) && (boosts >= 6)) boosts = "gold";
       if (boosts >= 10) boosts = "diamond";
       if (total_messages < 100) total_messages = null;
     }
 
     let image = await rankCardCanvas
-      .setAvatar(member.user.displayAvatarURL({ format: "png", dynamic: true }))
+      .setAvatar(member.user.displayAvatarURL({
+        format: "png",
+        dynamic: true
+      }))
       .setXP("current", xp)
       .setXP("needed", requiredXP)
       .setLevel(level)
@@ -147,6 +151,8 @@ module.exports = class RankCommand extends Command {
 
     let attachment = new MessageAttachment(image.toBuffer(), "rank.png");
 
-    return message.channel.send({ files: [attachment] });
+    return message.channel.send({
+      files: [attachment]
+    });
   }
 };

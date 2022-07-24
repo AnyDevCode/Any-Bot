@@ -21,7 +21,7 @@ module.exports = {
     try {
       await command.run(interaction);
     } catch (e) {
-      if (e.message.includes("unknown type: 5")) return;
+      interaction.client.logger.error(e.stack);
 
       await interaction.reply({
         content: "An error occured while executing that command!",

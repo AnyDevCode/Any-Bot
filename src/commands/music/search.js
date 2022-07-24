@@ -17,7 +17,7 @@ module.exports = class SearchMusicCommand extends Command {
 
     async run(message, args) {
         let query = args.join(' ');
-        if (!query) return await this.sendErrorMessage(message, 1, 'You must provide a query to search for.');
+        if (!query) return this.sendErrorMessage(message, 1, 'You must provide a query to search for.');
 
         const play_song = async (guild, song, queue) => message.client.utils.play_song(guild, song, queue);
 
@@ -27,7 +27,7 @@ module.exports = class SearchMusicCommand extends Command {
         }
 
         const video_result = await video_finder(query);
-        if (!video_result) return await this.sendErrorMessage(message, 1, 'No results found for that query.');
+        if (!video_result) return this.sendErrorMessage(message, 1, 'No results found for that query.');
 
         let embed = new MessageEmbed()
             .setAuthor({

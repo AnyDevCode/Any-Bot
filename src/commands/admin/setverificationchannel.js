@@ -107,7 +107,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
       verificationChannel.type !== "GUILD_TEXT" ||
       !verificationChannel.viewable
     )
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         stripIndent`
@@ -167,7 +167,7 @@ module.exports = class SetVerificationChannelCommand extends Command {
           message.guild.id
         );
       } else {
-        return await message.client.sendSystemErrorMessage(
+        return message.client.sendSystemErrorMessage(
           message.guild,
           "verification",
           stripIndent`

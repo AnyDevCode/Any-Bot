@@ -89,7 +89,7 @@ module.exports = class SetCrownScheduleCommand extends Command {
     try {
       parser.parseExpression(crownSchedule);
     } catch (err) {
-      return await this.sendErrorMessage(message, 0, 'Please try again with a valid cron expression');
+      return this.sendErrorMessage(message, 0, 'Please try again with a valid cron expression');
     }
 
     // Set minutes and seconds to 0

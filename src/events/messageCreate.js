@@ -41,15 +41,7 @@ module.exports = {
       }
     }
 
-    // Get disabled commands
-    let disabledCommands =
-      (await client.mongodb.settings.selectDisabledCommands(
-        message.guild.id
-      )) || [];
-    if (typeof disabledCommands === "string")
-      disabledCommands = disabledCommands.split(" ");
-
-    // Get points and XP
+    // Get points, XP, disabled commands and prefix
     let {
       pointTracking: pointTracking,
       messagePoints: messagePoints,
@@ -59,7 +51,18 @@ module.exports = {
       commandXP: xpCommands,
       xpMessageAction: xp_message_action,
       xpChannelID: xp_channel_id,
+      disabledCommands: disabledCommands,
+      prefix: prefix,
+      modChannelIDs: modChannelIds,
     } = await client.mongodb.settings.selectRow(message.guild.id);
+
+    if (typeof disabledCommands !== "string") disabledCommands = [];
+    if (typeof disabledCommands === "string")
+      disabledCommands = disabledCommands.split(" ");
+
+    if (typeof modChannelIds !== "string") modChannelIds = [];
+    if (typeof modChannelIds === "string")
+      modChannelIds = modChannelIds.split(" ");
 
     let { level, xp } = await client.mongodb.users.selectRow(
       message.author.id,
@@ -87,7 +90,6 @@ module.exports = {
     const requiredXP = 50 * Math.pow(level, 2);
 
     // Command handler
-    const prefix = await client.mongodb.settings.selectPrefix(message.guild.id);
     const prefixRegex = new RegExp(
       `^(<@!?${client.user.id}>|${prefix.replace(
         /[.*+?^${}()|[\]\\]/g,
@@ -96,14 +98,6 @@ module.exports = {
     );
 
     if (prefixRegex.test(message.content)) {
-      // Get mod channels
-      let modChannelIds =
-        (await message.client.mongodb.settings.selectModChannelIds(
-          message.guild.id
-        )) || [];
-      if (typeof modChannelIds === "string")
-        modChannelIds = modChannelIds.split(" ");
-
       const [, match] = message.content.match(prefixRegex);
       const args = message.content.slice(match.length).trim().split(/ +/g);
       const cmd = args.shift().toLowerCase();
@@ -124,26 +118,16 @@ module.exports = {
         // Check permissions
         const permission = command.checkPermissions(message);
         if (permission) {
+          let NewPoints,
+            NewXP,
+            newLevel = 0;
           // Update points with commandPoints value
-          if (pointTracking)
-            await client.mongodb.users.updatePoints(
-              { points: commandPoints },
-              message.author.id,
-              message.guild.id
-            );
+          if (pointTracking) NewPoints = commandPoints || 0;
           if (xpTracking) {
-            await client.mongodb.users.updateXP(
-              { xp: xpCommands },
-              message.author.id,
-              message.guild.id
-            );
+            NewXP = xpCommands || 0;
 
             if (xp + xpCommands >= requiredXP) {
-              await client.mongodb.users.updateLevel(
-                { level: level + 1 },
-                message.author.id,
-                message.guild.id
-              );
+              newLevel = 1;
               if (xp_message_action && xp_channel_id) {
                 const xpChannel =
                   message.guild.channels.cache.get(xp_channel_id);
@@ -156,9 +140,16 @@ module.exports = {
             }
           }
 
-          await client.mongodb.users.updateTotalCommands(
+          await client.mongodb.users.updateLevelXPPointsCommandsandMessages(
             message.author.id,
-            message.guild.id
+            message.guild.id,
+            {
+              level: newLevel || 0,
+              xp: NewXP || 0,
+              points: NewPoints || 0,
+              total_commands: 1,
+              total_messages: 0,
+            }
           );
 
           message.command = true; // Add flag for messageUpdate event
@@ -212,35 +203,23 @@ module.exports = {
               .setEmoji("🛠️")
           );
 
-        message.channel.send({ embeds: [embed], components: [linkrow] });
+        message.channel.send({
+          embeds: [embed],
+          components: [linkrow],
+        });
       }
     }
 
-    // Update the total messages
-    await client.mongodb.users.updateTotalMessages(
-      message.author.id,
-      message.guild.id
-    );
+    let NewPoints,
+      NewXP,
+      newLevel = 0;
 
     // Update points with messagePoints value
-    if (pointTracking)
-      await client.mongodb.users.updatePoints(
-        { points: messagePoints },
-        message.author.id,
-        message.guild.id
-      );
+    if (pointTracking) NewPoints = messagePoints || 0;
     if (xpTracking) {
-      await client.mongodb.users.updateXP(
-        { xp: xpMessages },
-        message.author.id,
-        message.guild.id
-      );
+      NewXP = xpMessages || 0;
       if (xp + xpMessages >= requiredXP) {
-        await client.mongodb.users.updateLevel(
-          { level: level + 1 },
-          message.author.id,
-          message.guild.id
-        );
+        newLevel = 1;
         if (xp_message_action && xp_channel_id) {
           const xpChannel = message.guild.channels.cache.get(xp_channel_id);
           if (xpChannel) {
@@ -251,5 +230,18 @@ module.exports = {
         }
       }
     }
+
+    // Update the total messages
+    await client.mongodb.users.updateLevelXPPointsCommandsandMessages(
+      message.author.id,
+      message.guild.id,
+      {
+        level: newLevel || 0,
+        xp: NewXP || 0,
+        points: NewPoints || 0,
+        total_commands: 0,
+        total_messages: 1,
+      }
+    );
   },
 };

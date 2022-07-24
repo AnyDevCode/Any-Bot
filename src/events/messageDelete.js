@@ -68,7 +68,7 @@ module.exports = {
               .then(async (res) => {
                 links += `${res.data.url} \n`;
               })
-              .catch(async (e) => {
+              .catch(async () => {
                 links += `${attachment.proxyURL} \n`;
               });
           }

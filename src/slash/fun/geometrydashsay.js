@@ -24,45 +24,49 @@ module.exports = class GeometryDashSaySlash extends Slash {
                 .setName("monster")
                 .setDescription("The name of the monster")
                 .setRequired(false)
-                .addChoice("Gatekeeper", "gatekeeper")
-                .addChoice("Gatekeeper (Dark)", "gatekeeper.dark")
-                .addChoice("KeyMaster", "keymaster")
-                .addChoice("KeyMaster (Huh)", "keymaster.huh")
-                .addChoice("KeyMaster (Scared)", "keymaster.scared")
-                .addChoice("KeyMaster (Scream)", "keymaster.scream")
-                .addChoice("Monster", "monster")
-                .addChoice("Monster (Suprise)", "monster.eyes")
-                .addChoice("Potbor", "potbor")
-                .addChoice("Potbor (Annoyed)", "potbor.annoyed")
-                .addChoice("Potbor (Huh)", "potbor.huh")
-                .addChoice("Potbor (Mad)", "potbor.mad")
-                .addChoice("Potbor (Right)", "potbor.right")
-                .addChoice("Potbor (Talk)", "potbor.talk")
-                .addChoice("Potbor (Tired)", "potbor.tired")
-                .addChoice("Scratch", "scratch")
-                .addChoice("Scratch (Annoyed)", "scratch.annoyed")
-                .addChoice("Scratch (Huh)", "scratch.huh")
-                .addChoice("Scratch (Mad)", "scratch.mad")
-                .addChoice("Scratch (Right)", "scratch.right")
-                .addChoice("Scratch (Talk)", "scratch.talk")
-                .addChoice("Shopkeeper", "shopkeeper")
-                .addChoice("Shopkeeper (Annoyed)", "shopkeeper.annoyed")
-                .addChoice("Spooky", "spooky")
+                .addChoices(
+                  { name: "Gatekeeper", value: "gatekeeper" },
+                  { name: "Gatekeeper (Dark)", value: "gatekeeper.dark" },
+                  { name: "KeyMaster", value: "keymaster" },
+                  { name: "KeyMaster (Huh)", value: "keymaster.huh" },
+                  { name: "KeyMaster (Scared)", value: "keymaster.scared" },
+                  { name: "KeyMaster (Scream)", value: "keymaster.scream" },
+                  { name: "Monster", value: "monster" },
+                  { name: "Monster (Suprise)", value: "monster.eyes" },
+                  { name: "Potbor", value: "potbor" },
+                  { name: "Potbor (Annoyed)", value: "potbor.annoyed" },
+                  { name: "Potbor (Huh)", value: "potbor.huh" },
+                  { name: "Potbor (Mad)", value: "potbor.mad" },
+                  { name: "Potbor (Right)", value: "potbor.right" },
+                  { name: "Potbor (Talk)", value: "potbor.talk" },
+                  { name: "Potbor (Tired)", value: "potbor.tired" },
+                  { name: "Scratch", value: "scratch" },
+                  { name: "Scratch (Annoyed)", value: "scratch.annoyed" },
+                  { name: "Scratch (Huh)", value: "scratch.huh" },
+                  { name: "Scratch (Mad)", value: "scratch.mad" },
+                  { name: "Scratch (Right)", value: "scratch.right" },
+                  { name: "Scratch (Talk)", value: "scratch.talk" },
+                  { name: "Shopkeeper", value: "shopkeeper" },
+                  { name: "Shopkeeper (Annoyed)", value: "shopkeeper.annoyed" },
+                  { name: "Spooky", value: "spooky" }
+                )
             )
             .addStringOption((option) =>
               option
                 .setName("color")
                 .setDescription("The color of the background")
                 .setRequired(false)
-                .addChoice("Blue", "blue")
-                .addChoice("Green", "green")
-                .addChoice("Orange", "orange")
-                .addChoice("Pink", "pink")
-                .addChoice("Purple", "purple")
-                .addChoice("Red", "red")
-                .addChoice("Brown", "brown")
-                .addChoice("Aqua", "aqua")
-                .addChoice("Grey", "grey")
+                .addChoices(
+                  { name: "Blue", value: "blue" },
+                  { name: "Green", value: "green" },
+                  { name: "Orange", value: "orange" },
+                  { name: "Pink", value: "pink" },
+                  { name: "Purple", value: "purple" },
+                  { name: "Red", value: "red" },
+                  { name: "Brown", value: "brown" },
+                  { name: "Aqua", value: "aqua" },
+                  { name: "Grey", value: "grey" }
+                )
             )
         ),
     });
@@ -70,6 +74,7 @@ module.exports = class GeometryDashSaySlash extends Slash {
 
   async run(interaction) {
     const options = interaction.options;
+    console.log(options);
     const type_message = options._subcommand;
     const { stringToUrlEncoded } = interaction.client.utils;
 

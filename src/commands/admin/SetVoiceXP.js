@@ -23,7 +23,7 @@ module.exports = class SetVoicePointsVoice extends Command {
   async run(message, args) {
     let amount = args[0];
     if (!amount || !Number.isInteger(Number(amount)) || amount < 0) 
-      return await this.sendErrorMessage(message, 0, 'Please enter a positive integer');
+      return this.sendErrorMessage(message, 0, 'Please enter a positive integer');
     amount = Math.floor(amount);
     const {
       xpTracking: xpTracking, messageXP: xpMessages, commandXP: xpCommands, voiceXP: xpVoice

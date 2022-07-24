@@ -41,7 +41,7 @@ module.exports = class SetStarboardChannelCommand extends Command {
       (starboardChannel.type !== 'GUILD_TEXT' && starboardChannel.type !== 'GUILD_NEWS') ||
       !starboardChannel.viewable
     ) {
-      return await this.sendErrorMessage(message, 0, stripIndent`
+      return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text or announcement channel or provide a valid text or announcement channel ID
       `);
     }

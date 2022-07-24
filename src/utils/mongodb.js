@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const { mongodb_url } = require("../../config.json");
+const { MONGODB_URL } = process.env;
 const fs = require("fs");
 const path = require("path");
 
 // Connect to MongoDB
 mongoose
-  .connect(mongodb_url, {
+  .connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

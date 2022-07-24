@@ -22,7 +22,7 @@ module.exports = class RandomColorCommand extends Command {
       .setTimestamp();
     const colors = Array.from(message.guild.roles.cache.filter(c => c.name.startsWith('#')).values());
     if (colors.length === 0)
-      return await this.sendErrorMessage(message, 1, 'There are currently no colors set on this server');
+      return this.sendErrorMessage(message, 1, 'There are currently no colors set on this server');
     let color = colors[Math.floor(Math.random() * colors.length)];
     const oldColor = (message.member.roles.color && message.member.roles.color.name.startsWith('#')) ? 
       message.member.roles.color : '`None`';

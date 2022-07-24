@@ -37,7 +37,7 @@ module.exports = class SetMessageEditLogCommand extends Command {
 
     const messageEditLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!messageEditLog || messageEditLog.type !== 'GUILD_TEXT' || !messageEditLog.viewable)
-      return await this.sendErrorMessage(message, 0, stripIndent`
+      return this.sendErrorMessage(message, 0, stripIndent`
         Please mention an accessible text channel or provide a valid text channel ID
       `);
     await message.client.mongodb.settings.updateMessageEditLogId(messageEditLog.id, message.guild.id);

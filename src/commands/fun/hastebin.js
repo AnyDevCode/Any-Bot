@@ -26,10 +26,10 @@ module.exports = class HasteBinCommand extends Command {
     ];
 
     if (!args[0])
-      return await this.sendErrorMessage(message, 0, "Please specify an extension.");
+      return this.sendErrorMessage(message, 0, "Please specify an extension.");
 
     if (!extensions.includes(args[0].toLowerCase()))
-      return await this.sendErrorMessage(
+      return this.sendErrorMessage(
         message,
         0,
         `The extension is not valid`,
@@ -39,7 +39,7 @@ module.exports = class HasteBinCommand extends Command {
       );
 
     if (!args[1])
-      return await this.sendErrorMessage(message, 0, "Please specify the text.");
+      return this.sendErrorMessage(message, 0, "Please specify the text.");
 
     let text = args.slice(1).join(" ");
 

@@ -1,33 +1,88 @@
 const Command = require('../Command.js');
-const {MessageEmbed, MessageCollector} = require('discord.js');
-const ytSearch = require('yt-search');
-
+const {
+    MessageEmbed,
+    MessageCollector
+} = require('discord.js');
+const {
+    QueryType
+} = require('discord-player');
 module.exports = class SearchMusicCommand extends Command {
     constructor(client) {
         super(client, {
             name: 'search',
             usage: 'search <query>',
-            aliases: ['ytsearch'],
-            description: 'Searches Youtube for a provided query',
-            examples: ['search Opinions CG5'],
+            aliases: ['search'],
+            description: 'Searches Music for a provided query',
+            examples: ['search Opinions CG5', 'search Never gonna give you up'],
             type: client.types.MUSIC,
-            disabled: true,
+            clientPermissions: ['CONNECT', 'SPEAK', 'SEND_MESSAGES', 'EMBED_LINKS'],
         });
     }
 
-    async run(message, args) {
+    async run(message, args, client, player) {
+        const {
+            channel
+        } = message.member.voice;
+
+        if (!channel)
+            return message.reply(
+                ":x: | I'm sorry but you need to be in a voice channel to play music!"
+            );
+
+        if (
+            message.guild.me.voice.channelId &&
+            channel.id !== message.guild.me.voice.channelId
+        )
+            return message.reply(
+                ":x: | I'm sorry but you need to be in the same voice channel as the bot to play music!"
+            );
+
         let query = args.join(' ');
-        if (!query) return this.sendErrorMessage(message, 1, 'You must provide a query to search for.');
 
-        const play_song = async (guild, song, queue) => message.client.utils.play_song(guild, song, queue);
+        if (!query) return this.sendErrorMessage(message, 1, 'Please provide a search term');
 
-        const video_finder = async (query) => {
-            const video_result = await ytSearch(query);
-            return (video_result.videos.length > 1) ? video_result : null;
+        const searchResult = await player
+            .search(query, {
+                requestedBy: message.author,
+                searchEngine: QueryType.AUTO,
+            })
+            .catch(async () => {
+                return this.sendErrorMessage(
+                    message,
+                    0,
+                    ":x: | I'm sorry but I could not find any results for that search term!"
+                );
+            });
+        if (!searchResult || !searchResult.tracks.length) return message.reply({
+            content: "No results were found!"
+        });
+
+        const queue = player.createQueue(message.guild, {
+            ytdlOptions: {
+                filter: "audioonly",
+                highWaterMark: 1 << 30,
+                dlChunkSize: 0,
+            },
+            metadata: {
+                channel: message.channel,
+            },
+        });
+
+        try {
+            //If the bot is not in a voice channel
+            if (!queue.connection) await queue.connect(message.member.voice.channel);
+            if (!message.guild.me.voice.channel) {
+                await message.guild.me.voice.channel.join();
+                await player.deleteQueue(message.guild.id);
+                //Reexecute the command
+                return this.run(message, args, client, player);
+            }
+        } catch {
+            await player.deleteQueue(message.guild.id);
+            return message.reply({
+                content: "Could not join your voice channel!",
+            });
         }
-
-        const video_result = await video_finder(query);
-        if (!video_result) return this.sendErrorMessage(message, 1, 'No results found for that query.');
 
         let embed = new MessageEmbed()
             .setAuthor({
@@ -41,66 +96,33 @@ module.exports = class SearchMusicCommand extends Command {
             })
 
         let description = '';
-        for (let i = 0; i < video_result.videos.length; i++) {
-            description += `${i + 1}. [${video_result.videos[i].title}](${video_result.videos[i].url}) - ${video_result.videos[i].author.name}\n`;
+        for (let i = 0; i < searchResult.tracks.length; i++) {
+            description += `${i + 1}. [${searchResult.tracks[i].title}](${searchResult.tracks[i].url}) - ${searchResult.tracks[i].author}\n`;
         }
 
         embed.setDescription(description);
-        message.channel.send(embed);
+        await message.channel.send({
+            embeds: [embed]
+        });
 
-        const collector = new MessageCollector(message.channel, m => m.author.id === message.author.id, {time: 30000});
+        const collector = new MessageCollector(message.channel, m => m.author.id === message.author.id, {
+            time: 30000
+        });
+
         collector.on('collect', async m => {
             const response = parseInt(m.content);
-            if (response < 0 || response >= video_result.videos.length) return collector.stop('invalid');
+            if (response < 0 || response >= searchResult.tracks.length) return collector.stop('invalid');
             collector.stop('valid');
-            let queue = message.client.queue();
 
-            const server_queue = queue.get(message.guild.id);
-            const video = video_result.videos[response - 1];
+            const video = searchResult.tracks[response - 1];
 
-            let voice_channel = message.member.voice.channel;
+            await message.reply({
+                content: `⏱ | Loading your track...`
+            });
 
-            const song = {
-                title: video.title,
-                url: video.url,
-                duration: video.duration,
-                thumbnail: video.thumbnail,
-                requester: message.author.id,
-                type: 'youtube'
-            };
-            if (!server_queue) {
+            queue.addTrack(video);
 
-
-                const queue_constructor = {
-                    voice_channel: voice_channel,
-                    text_channel: message.channel,
-                    connection: null,
-                    songs: [],
-                    volume: 0.5,
-                    playing: true,
-                    loop: false,
-                    channel: message.channel,
-                }
-
-                //Add our key and value pair into the global queue. We then use this to get our server queue.
-                queue.set(message.guild.id, queue_constructor);
-                queue_constructor.songs.push(song);
-
-                //Establish a connection and play the song with the vide_player function.
-                try {
-                    queue_constructor.connection = await voice_channel.join();
-                    await play_song(message.guild, queue_constructor.songs[0], queue);
-                } catch (err) {
-                    queue.delete(message.guild.id);
-                    await this.sendErrorMessage(message, 1, 'There was an error connecting!');
-                    throw err;
-                }
-            } else {
-                server_queue.songs.push(song);
-                return message.channel.send(`👍 **${song.title}** added to queue!`);
-            }
-
-
+            if (!queue.playing) await queue.play();
         });
         collector.on('end', (_, reason) => {
             if (reason === 'invalid') return message.channel.send('Invalid response, try again.');

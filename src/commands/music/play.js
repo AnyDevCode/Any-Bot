@@ -1,5 +1,7 @@
 const Command = require("../Command.js");
-const { QueryType } = require('discord-player');
+const {
+  QueryType
+} = require('discord-player');
 
 module.exports = class PlayMusicCommand extends Command {
   constructor(client) {
@@ -17,7 +19,9 @@ module.exports = class PlayMusicCommand extends Command {
     });
   }
   async run(message, args, client, player) {
-    const { channel } = message.member.voice;
+    const {
+      channel
+    } = message.member.voice;
     if (!channel)
       return message.reply(
         ":x: | I'm sorry but you need to be in a voice channel to play music!"
@@ -47,7 +51,9 @@ module.exports = class PlayMusicCommand extends Command {
         );
       });
     if (!searchResult || !searchResult.tracks.length)
-      return  message.reply({ content: "No results were found!" });
+      return message.reply({
+        content: "No results were found!"
+      });
 
     const queue = player.createQueue(message.guild, {
       ytdlOptions: {
@@ -81,13 +87,14 @@ module.exports = class PlayMusicCommand extends Command {
         requestedBy: message.user,
       })
       .then((x) => x.tracks[0]);
-    if (!track)
-      return message.reply({
-        content: `❌ | Track **${query}** not found!`,
-      });
+    if (!track) return message.reply({
+      content: `❌ | Track **${query}** not found!`,
+    });
 
-      await message.reply({ content: `⏱ | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...` });
-      searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
-      if (!queue.playing) await queue.play();
+    await message.reply({
+      content: `⏱ | Loading your ${searchResult.playlist ? 'playlist' : 'track'}...`
+    });
+    searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
+    if (!queue.playing) await queue.play();
   }
 };

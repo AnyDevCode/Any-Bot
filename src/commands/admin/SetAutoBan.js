@@ -1,7 +1,13 @@
 // Dependencies:
-const { MessageEmbed } = require("discord.js");
-const { success } = require("../../utils/emojis.json");
-const { oneLine } = require("common-tags");
+const {
+  MessageEmbed
+} = require("discord.js");
+const {
+  success
+} = require("../../utils/emojis.json");
+const {
+  oneLine
+} = require("common-tags");
 // Command Require:
 const Command = require("../Command.js");
 
@@ -12,7 +18,7 @@ module.exports = class SetAutoBanCommand extends Command {
       name: "setautoban",
       aliases: ["setab", "sab"],
       usage: "setautoban <warn count>",
-      description: oneLine`
+      description: oneLine `
         Sets the amount of warns needed before Any Bot will automatically ban someone from your server.
         Provide no warn count or a warn count of 0 to disable \`auto ban\`.
       `,
@@ -41,11 +47,15 @@ module.exports = class SetAutoBanCommand extends Command {
     // Send embed:
     const embed = new MessageEmbed()
       .setTitle("Settings: `System`")
-      .setThumbnail(message.guild.iconURL({ dynamic: true }))
+      .setThumbnail(message.guild.iconURL({
+        dynamic: true
+      }))
       .setDescription(`\`Auto ban\` was successfully updated. ${success}`)
       .setFooter({
         text: message.member.displayName,
-        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
       })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);

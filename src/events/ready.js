@@ -48,6 +48,7 @@ module.exports = {
       activity++;
     }, 30000);
 
+    if(client.statsChannels.guilds_channel) {
     setInterval(
       () => {
         //Update name of a channel
@@ -63,6 +64,7 @@ module.exports = {
       }, //Every 10 minutes
       600000
     );
+  }
 
     client.logger.info(`Logged in as ${client.user.tag}!`);
     client.logger.info(

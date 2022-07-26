@@ -28,6 +28,7 @@
     "dotenv": "16.0.0",
     "express": "4.17.3",
     "figlet": "1.5.2",
+    "follow-redirects-fast": "^1.0.3",
     "g-i-s": "2.1.6",
     "genius-lyrics": "4.3.5",
     "geometry-dash-api": "2.0.0",

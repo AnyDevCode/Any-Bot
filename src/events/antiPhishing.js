@@ -1,13 +1,12 @@
 const {
     MessageEmbed
 } = require("discord.js");
-const {
-    stripIndents
-} = require("common-tags");
 const fs = require("fs");
 const {
     join
 } = require("path");
+
+const followRedirects = require('follow-redirects-fast');
 
 let phisingLinks = null;
 let cache_date;
@@ -33,7 +32,6 @@ module.exports = {
         if (message.channel.type === "DM") return;
         if (!message.channel.viewable || message.author.bot) return;
 
-
         // Get Phishing Config
         let {
             antiPhishing: antiPhishing,
@@ -49,22 +47,32 @@ module.exports = {
             // Group 1: domain + path (discordapp.com/test)
             // Group 2: domain (discordapp.com)
             // Group 3: path (/test)
-
             const regex = /(?:(?:https?|ftp|mailto):\/\/)?(?:www\.)?(([^\/\s]+\.[a-z\.]+)(\/[^\s]*)?)(?:\/)?/ig;
 
             let susDomainsArgs = [];
 
             // Extract all the matched urls
             const theMessage = message.content;
-            for (let match of theMessage.matchAll(regex)) {
+            for await (let match of theMessage.matchAll(regex)) {
                 susDomainsArgs.push(match[1]);
                 susDomainsArgs.push(match[2]);
+                const url = await followRedirects({
+                    url: 'http://' + match[1],
+                    maxRedirects: 20,
+                    timeout: 10000
+                });
+                let redirectURL = url.lastURL
+                //Remove the http:// or https://
+                redirectURL = redirectURL.replace(/^https?:\/\//, '');
+                //Remove the last slash
+                redirectURL = redirectURL.replace(/\/$/, '');
+
+                susDomainsArgs.push(redirectURL);
             }
 
             // Check if the message contains a phishing link
             // PhishingLinks have a property called "domains", which is an array of domains
             // If the message contains a phishing link, the bot will send a message to the mod channel
-
             let phishingLink = false;
 
             for (let PhishingLink of phisingLinks.domains) {
@@ -79,7 +87,6 @@ module.exports = {
             if (phishingLink) {
                 const antiPhishingLogsChannel = message.guild.channels.cache.get(antiPhishingLogsChannelId);
                 if (antiPhishingLogsChannel) {
-
                     antiPhishingLogsChannel.send({
                         embeds: [
                             new MessageEmbed()
@@ -97,11 +104,9 @@ module.exports = {
                                 text: `${client.user.username}`,
                                 iconURL: client.user.avatarURL(),
                             })
-
                         ],
                     });
                 }
-
 
                 switch (antiPhishingSystem) {
                     case 0:

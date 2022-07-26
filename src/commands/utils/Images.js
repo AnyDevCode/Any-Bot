@@ -28,7 +28,7 @@ module.exports = class ImagesCommand extends Command {
       name: "images",
       usage: "images <search>",
       description: "Find an image in Google.",
-      type: client.types.FUN,
+      type: client.types.UTILS,
     });
   }
   async run(message, args) {

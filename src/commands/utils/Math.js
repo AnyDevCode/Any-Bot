@@ -46,7 +46,7 @@ module.exports = class DogFactCommand extends Command {
       atanh Inverse Hyperbolic Tangent
       \`\`\`
       `,
-      type: client.types.FUN
+      type: client.types.UTILS
     });
   }
   async run(message, args) {

@@ -1,6 +1,10 @@
-const { MessageEmbed } = require('discord.js');
+const {
+  MessageEmbed
+} = require('discord.js');
 const permissions = require('../utils/permissions.json');
-const { fail } = require('../utils/emojis.json');
+const {
+  fail
+} = require('../utils/emojis.json');
 
 /**
  * Any Bot's custom Command class
@@ -185,12 +189,19 @@ class Command {
         message.channel.permissionsFor(message.author).missing(this.userPermissions).map(p => permissions[p]);
       if (missingPermissions.length !== 0) {
         const embed = new MessageEmbed()
-          .setAuthor({name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+          .setAuthor({
+            name: `${message.author.tag}`,
+            iconURL: message.author.displayAvatarURL({
+              dynamic: true
+            })
+          })
           .setTitle(`${fail} Missing User Permissions: \`${this.name}\``)
           .setDescription(`\`\`\`diff\n${missingPermissions.map(p => `- ${p}`).join('\n')}\`\`\``)
           .setTimestamp()
           .setColor(message.guild.me.displayHexColor);
-        message.channel.send({embeds: [embed]});
+        message.channel.send({
+          embeds: [embed]
+        });
         return false;
       }
     }
@@ -206,12 +217,19 @@ class Command {
       message.channel.permissionsFor(message.guild.me).missing(this.clientPermissions).map(p => permissions[p]);
     if (missingPermissions.length !== 0) {
       const embed = new MessageEmbed()
-        .setAuthor({name: `${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+        .setAuthor({
+          name: `${message.author.tag}`,
+          iconURL: message.author.displayAvatarURL({
+            dynamic: true
+          })
+        })
         .setTitle(`${fail} Missing Bot Permissions: \`${this.name}\``)
         .setDescription(`\`\`\`diff\n${missingPermissions.map(p => `- ${p}`).join('\n')}\`\`\``)
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send({embeds: [embed]});
+      message.channel.send({
+        embeds: [embed]
+      });
       return false;
 
     } else return true;
@@ -228,7 +246,12 @@ class Command {
     errorType = this.errorTypes[errorType];
     const prefix = await message.client.mongodb.settings.selectPrefix(message.guild.id);
     const embed = new MessageEmbed()
-      .setAuthor({name: `${message.author.username}`, iconURL: message.author.displayAvatarURL({ dynamic: true })})
+      .setAuthor({
+        name: `${message.author.username}`,
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        })
+      })
       .setTitle(`${fail} Error: \`${this.name}\``)
       .setDescription(`\`\`\`diff\n- ${errorType}\n+ ${reason}\`\`\``)
       .addField('Usage', `\`${prefix}${this.usage}\``)
@@ -236,7 +259,9 @@ class Command {
       .setColor(message.guild.me.displayHexColor);
     if (this.examples) embed.addField('Examples', this.examples.map(e => `\`${prefix}${e}\``).join('\n'));
     if (errorMessage) embed.addField('Error Message', `\`\`\`${errorMessage}\`\`\``);
-    message.channel.send({embeds: [embed]})
+    message.channel.send({
+      embeds: [embed]
+    })
   }
 
   /**
@@ -257,14 +282,18 @@ class Command {
       const embed = new MessageEmbed()
         .setTitle(`Action: \`${message.client.utils.capitalize(this.name)}\``)
         .addField('Moderator', `${message.member}`, true)
-        .setFooter({text: `Case #${caseNumber}`})
+        .setFooter({
+          text: `Case #${caseNumber}`
+        })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
       for (const field in fields) {
         embed.addField(`${field}`, `${fields[field]}`, true);
       }
       embed.addField('Reason', `${reason}`);
-      modLog.send({embeds: [embed]}).catch(err => message.client.logger.error(err.stack));
+      modLog.send({
+        embeds: [embed]
+      }).catch(err => message.client.logger.error(err.stack));
     }
   }
 

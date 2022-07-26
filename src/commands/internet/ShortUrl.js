@@ -13,7 +13,7 @@ module.exports = class ShortURLCommand extends Command {
             description: oneLine `
         Shortens a URL.
       `,
-            type: client.types.FUN,
+            type: client.types.INTERNET,
             examples: ['shorturl https://google.com', 'shorturl https://mdcdev.me']
         });
     }

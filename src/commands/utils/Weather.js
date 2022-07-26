@@ -7,7 +7,7 @@ module.exports = class WeatherCommand extends Command {
             name: 'weather',
             usage: 'weather <location>',
             description: 'Gets the weather for a location.',
-            type: client.types.FUN,
+            type: client.types.UTILS,
             examples: ['weather London', "weather Lima"]
         });
     }

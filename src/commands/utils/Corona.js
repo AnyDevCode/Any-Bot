@@ -11,7 +11,7 @@ module.exports = class CoronaCommand extends Command {
             aliases: ['cv', 'covid'],
             usage: 'corona [country]',
             description: 'Says those infected with Corona in the world.',
-            type: client.types.FUN,
+            type: client.types.UTILS,
             examples: ['corona', 'corona USA'],
         });
     }

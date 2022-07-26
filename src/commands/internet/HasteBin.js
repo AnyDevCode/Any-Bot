@@ -9,7 +9,7 @@ module.exports = class HasteBinCommand extends Command {
       name: "hastebin",
       usage: "hastebin <extension> <text>",
       description: "Save your text on the HasteBin page.",
-      type: client.types.FUN,
+      type: client.types.INTERNET,
     });
   }
   async run(message, args) {

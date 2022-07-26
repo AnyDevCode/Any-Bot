@@ -16,7 +16,7 @@ module.exports = class aivoiceCommand extends Command {
       aliases: ["aivs", "iavs", "iavoices"],
       usage: "aivoices <page>",
       description: "List of supported voices",
-      type: client.types.FUN,
+      type: client.types.VOICE,
       examples: ["aivoices", "aivoices 2"],
     });
   }

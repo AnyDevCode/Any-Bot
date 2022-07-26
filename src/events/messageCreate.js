@@ -36,6 +36,8 @@ module.exports = {
       });
     if (!message.channel.viewable || message.author.bot) return;
 
+    message.command = false;
+
     //Check if message has image attachment
     const attachment = Array.from(message.attachments.values())[0];
     if (attachment && attachment.url) {
@@ -162,7 +164,39 @@ module.exports = {
           );
 
           message.command = true; // Add flag for messageUpdate event
+
+          //Create cooldown
+          if (command.cooldown) {
+            if (!client.cooldowns.has(message.author.id + "-" + command.name)) {
+              let date = new Date();
+              date.setSeconds(date.getSeconds() + command.cooldown);
+              client.cooldowns.set(
+                message.author.id + "-" + command.name,
+                date
+              );
+            } else {
+              const cooldown = client.cooldowns.get(
+                message.author.id + "-" + command.name
+              );
+              if (cooldown > Date.now()) {
+                return message.channel.send({
+                  content: `${message.author}, you have to wait ${Math.floor(
+                      (cooldown - Date.now()) / 1000
+                    )} seconds before using this command again.`,
+                });
+              } else {
+                let date = new Date();
+                date.setSeconds(date.getSeconds() + command.cooldown);
+                client.cooldowns.set(
+                  message.author.id + "-" + command.name,
+                  date
+                );
+              }
+            }
+          }
+
           return command.run(message, args, client, player);
+
         }
       } else if (
         (message.content === `<@${client.user.id}>` ||

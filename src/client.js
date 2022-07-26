@@ -1,10 +1,18 @@
 // noinspection JSClosureCompilerSyntax
 
 const Discord = require("discord.js");
-const { readdir, readdirSync } = require("fs");
-const { join, resolve } = require("path");
+const {
+  readdir,
+  readdirSync
+} = require("fs");
+const {
+  join,
+  resolve
+} = require("path");
 const AsciiTable = require("ascii-table");
-const { Collection } = require("discord.js");
+const {
+  Collection
+} = require("discord.js");
 
 let queue = new Map();
 let Commands = new Collection();
@@ -45,6 +53,8 @@ class Client extends Discord.Client {
       INFO: "info",
       FUN: "fun",
       UTILS: "utils",
+      INTERNET: "internet",
+      VOICE: "voice",
       ANIMALS: "animals",
       COLOR: "color",
       POINTS: "points",
@@ -65,6 +75,12 @@ class Client extends Discord.Client {
      * @type {Collection<string, Command>}
      */
     this.commands = new Discord.Collection();
+
+    /**
+     * Collection of bot cooldowns
+     * @type {Collection<string, Date>}
+     */
+    this.cooldowns = new Discord.Collection();
 
     /**
      * Collection of bot slashes
@@ -366,24 +382,24 @@ class Client extends Discord.Client {
       files = files.filter((f) => f.split(".").pop() === "js");
       if (files.length === 0) return this.logger.warn("No events found");
       this.logger.info(`${files.length} event(s) found...`);
-        files.forEach((f) => {
-          const event = require(resolve(__basedir, join(path, f)));
-          if (event.once) {
-            super.once(event.name, (...args) =>
-              event.execute(...args, Slashes)
+      files.forEach((f) => {
+        const event = require(resolve(__basedir, join(path, f)));
+        if (event.once) {
+          super.once(event.name, (...args) =>
+            event.execute(...args, Slashes)
+          );
+        } else {
+          if (event.name === "interactionCreate") {
+            super.on(event.name, (...args) =>
+              event.execute(...args, Slashes, Commands, client, player)
             );
           } else {
-            if (event.name === "interactionCreate") {
-              super.on(event.name, (...args) =>
-                event.execute(...args, Slashes, Commands, client, player)
-              );
-            } else {
-              super.on(event.name, (...args) =>
-                event.execute(...args, Commands, client, player)
-              );
-            }
+            super.on(event.name, (...args) =>
+              event.execute(...args, Commands, client, player)
+            );
           }
-        });
+        }
+      });
     });
     return this;
   }
@@ -457,21 +473,25 @@ class Client extends Discord.Client {
       !systemChannel ||
       !systemChannel.viewable ||
       !systemChannel
-        .permissionsFor(guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"])
+      .permissionsFor(guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"])
     )
       return;
 
     const embed = new Discord.MessageEmbed()
       .setAuthor({
         name: `${this.user.tag}`,
-        iconURL: this.user.displayAvatarURL({ dynamic: true }),
+        iconURL: this.user.displayAvatarURL({
+          dynamic: true
+        }),
       })
       .setTitle(`${fail} System Error: \`${error}\``)
       .setDescription(`\`\`\`diff\n- System Failure\n+ ${errorMessage}\`\`\``)
       .setTimestamp()
       .setColor(guild.me.displayHexColor);
-    systemChannel.send({ embeds: [embed] });
+    systemChannel.send({
+      embeds: [embed]
+    });
   }
 
   setTimeout_(fn, delay) {

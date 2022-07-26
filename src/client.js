@@ -44,6 +44,7 @@ class Client extends Discord.Client {
     this.types = {
       INFO: "info",
       FUN: "fun",
+      UTILS: "utils",
       ANIMALS: "animals",
       COLOR: "color",
       POINTS: "points",

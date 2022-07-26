@@ -39,6 +39,7 @@ module.exports = class HelpCommand extends Command {
     const {
       INFO,
       FUN,
+      UTILS,
       ANIMALS,
       COLOR,
       POINTS,
@@ -58,6 +59,7 @@ module.exports = class HelpCommand extends Command {
     const modules = [
       INFO,
       FUN,
+      UTILS,
       ANIMALS,
       COLOR,
       POINTS,
@@ -203,6 +205,7 @@ module.exports = class HelpCommand extends Command {
       const emojiMap = {
         [INFO]: `${emojis.info} ${capitalize(INFO)}`,
         [FUN]: `${emojis.fun} ${capitalize(FUN)}`,
+        [UTILS]: `${emojis.utils} ${capitalize(UTILS)}`,
         [ANIMALS]: `${emojis.animals} ${capitalize(ANIMALS)}`,
         [COLOR]: `${emojis.color} ${capitalize(COLOR)}`,
         [POINTS]: `${emojis.points} ${capitalize(POINTS)}`,
@@ -221,6 +224,7 @@ module.exports = class HelpCommand extends Command {
       const sectionsMap = {
         [INFO]: `${capitalize(INFO)}`,
         [FUN]: `${capitalize(FUN)}`,
+        [UTILS]: `${capitalize(UTILS)}`,
         [ANIMALS]: `${capitalize(ANIMALS)}`,
         [COLOR]: `${capitalize(COLOR)}`,
         [POINTS]: `${capitalize(POINTS)}`,

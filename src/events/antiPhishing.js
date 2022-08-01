@@ -8,16 +8,16 @@ const {
 
 const followRedirects = require('follow-redirects-fast');
 
+const axios = require("axios");
+
 let phisingLinks = null;
 let cache_date;
 
 function update_cache() {
     if (phisingLinks === null || Date.now() - cache_date > (1000 * 60 * 60)) {
         fs.readFile(join(__basedir, "data/PhishingLinks.json"), (err, data) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
+            if (err) return;
+
             phisingLinks = JSON.parse(data);
         })
         cache_date = Date.now();
@@ -56,18 +56,51 @@ module.exports = {
             for await (let match of theMessage.matchAll(regex)) {
                 susDomainsArgs.push(match[1]);
                 susDomainsArgs.push(match[2]);
-                const url = await followRedirects({
-                    url: 'http://' + match[1],
-                    maxRedirects: 20,
-                    timeout: 10000
-                });
-                let redirectURL = url.lastURL
-                //Remove the http:// or https://
-                redirectURL = redirectURL.replace(/^https?:\/\//, '');
-                //Remove the last slash
-                redirectURL = redirectURL.replace(/\/$/, '');
+                //Check in axios if the url is http or https
+                let url;
+                try {
+                    await axios.get('https://' + match[1]).then(res => {
+                        //If return 200, 301, 302, is a valid url, if not, is not valid
+                        if (res.status === 200 || res.status === 301 || res.status === 302) {
+                            url = 'https://' + match[1];
+                        }
+                    })
+                } catch (err) {
+                    url = err.request.host ? 'https://' + match[1] : null;
+                    if (url === null) {
+                        try {
+                            await axios.get('http://' + match[1]).then(res => {
+                                //If return 200, 301, 302, is a valid url, if not, is not valid
+                                if (res.status === 200 || res.status === 301 || res.status === 302) {
+                                    url = 'http://' + match[1];
+                                }
+                            })
+                        } catch (err) {
+                            url = err.request.host ? 'http://' + match[1] : null;
+                        }
+                    }
 
-                susDomainsArgs.push(redirectURL);
+                }
+                if (url !== null) {
+
+                    await followRedirects({
+                        url: url,
+                        maxRedirects: 20,
+                        timeout: 10000
+                    }).then(async (res) => {
+                        //Regex to get the domain
+                        const lasturl = res.lastURL
+                        for (let match of lasturl.matchAll(regex)){
+                            susDomainsArgs.push(match[1]);
+                            susDomainsArgs.push(match[2]);
+                        }
+                    }).catch(async (err) => {
+                        return match[1];
+                    })
+                }
+
+                
+
             }
 
             // Check if the message contains a phishing link
@@ -81,7 +114,9 @@ module.exports = {
                         phishingLink = true;
                         break;
                     }
-                }
+                } 
+
+                if (phishingLink) break;
             }
 
             if (phishingLink) {

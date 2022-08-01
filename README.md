@@ -89,9 +89,9 @@ You can add Any Bot to your server with [this](https://discordapp.com/oauth2/aut
 git clone https://github.com/MDCYT/Any-Bot.git  
 ```  
 ### Requirements
-- [Node 16 or higher](https://nodejs.org/en/download/)
 - [Discord Bot Token](https://discordapp.com/developers/applications/me)
-- (If you have errors with Python, install [Python 3](https://www.python.org/downloads/))
+- [Node 16 or higher](https://nodejs.org/en/download/)
+- [Python 2.7.2](https://www.python.org/downloads/release/python-272/)
 - Pray to god, or, if you're an atheist, cross your fingers.
 
 After cloning, run an

@@ -5,7 +5,6 @@ const { Player } = require("discord-player");
 const botlist = config.botlist;
 const discordModals = require("discord-modals");
 global.__basedir = __dirname;
-const WebSocket = require("ws");
 
 const client = new Client(config, {
   partials: ["CHANNEL"],

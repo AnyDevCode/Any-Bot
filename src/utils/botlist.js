@@ -8,7 +8,7 @@ async function botlist(client) {
     connectBdlBot
   } = require("bdl.js");
   const bldapikey = require(path.join(__dirname, "../../blapi.json"));
-  const fetch = require("node-fetch");
+  const axios = require("axios");
 
   //Every 5 minutes, update the botlist
   try {
@@ -34,35 +34,32 @@ async function botlist(client) {
       client.logger.info(
         "Post in Top.gg | " + stats.serverCount + " servers"
       );
-      await fetch(
+
+      await axios.post(
         "https://discordbotlist.com/api/v1/bots/" + client.user.id + "/stats", {
-          method: "POST",
+          voice_connections: client.voiceConnections ?
+            client.voiceConnections.size : 0,
+          guilds: client.guilds.cache.size,
+          users: client.users.cache.size,
+          shard_id: client.shard ? client.shard.id : 0,
+        }, {
           headers: {
             Authorization: bldapikey.discordbotlist,
             "content-type": "application/json",
           },
-          body: JSON.stringify({
-            voice_connections: client.voiceConnections ?
-              client.voiceConnections.size :
-              0,
-            guilds: client.guilds.cache.size,
-            users: client.users.cache.size,
-            shard_id: client.shard ? client.shard.id : 0,
-          }),
-        }
-      ).then(async (res) => {
+        }).then(async (res) => {
         client.logger.info("Post en DiscordBotList | " + res.status);
+      }).catch((err) => {
+        client.logger.error(err);
       });
 
-      await fetch("https://discords.com/bots/api/bot/" + client.user.id, {
-          method: "POST",
+      await axios.post("https://discords.com/bots/api/bot/" + client.user.id, {
+          guilds: client.guilds.cache.size,
+        }, {
           headers: {
             Authorization: bldapikey.discords,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            guilds: client.guilds.cache.size,
-          }),
         })
         .then(async (res) => {
           client.logger.info("Post en Discords | " + res.status);

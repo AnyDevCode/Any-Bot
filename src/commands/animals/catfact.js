@@ -1,8 +1,10 @@
 const Command = require('../Command.js');
+const axios = require("axios");
 const {
-  MessageEmbed
-} = require('discord.js');
-const fetch = require('node-fetch');
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
 
 module.exports = class CatFactCommand extends Command {
   constructor(client) {

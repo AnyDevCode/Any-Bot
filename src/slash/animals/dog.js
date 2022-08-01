@@ -1,7 +1,11 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const Slash = require("../Slash.js");
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const fetch = require("node-fetch");
+const axios = require("axios");
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
 
 module.exports = class DogSlash extends Slash {
   constructor(client) {
@@ -14,8 +18,14 @@ module.exports = class DogSlash extends Slash {
   }
 
   async run(interaction) {
-    const res = await fetch("https://dog.ceo/api/breeds/image/random");
-    const img = (await res.json()).message;   
+    const res = await axios
+      .get("https://api.any-bot.tech/api/v1/dog")
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const img = res.image;   
     const embed = new MessageEmbed()
       .setTitle("🐶  Woof!  🐶")
       .setImage(img)

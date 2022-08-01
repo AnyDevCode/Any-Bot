@@ -1,6 +1,8 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const {
+  MessageEmbed
+} = require('discord.js');
+const axios = require("axios");
 
 module.exports = class TrumpTweetCommand extends Command {
   constructor(client) {
@@ -15,26 +17,35 @@ module.exports = class TrumpTweetCommand extends Command {
   }
   async run(message, args) {
 
-    const { stringToUrlEncoded } = message.client.utils
+    const {
+      stringToUrlEncoded
+    } = message.client.utils
 
     // Get message
     if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a message to tweet');
     let tweet = stringToUrlEncoded(args.join(' '));
     if (tweet.length > 68) tweet = tweet.slice(0, 65) + '...';
 
-    try {
-      const res = await fetch('https://nekobot.xyz/api/imagegen?type=trumptweet&text=' + tweet);
-      const img = (await res.json()).message;
-      const embed = new MessageEmbed()
-        .setTitle(':flag_us:  Trump Tweet  :flag_us: ')
-        .setImage(img)
-        .setFooter({ text: message.member.displayName, icon_url: message.author.displayAvatarURL({ dynamic: true })})       
-        .setTimestamp()
-        .setColor(message.guild.me.displayHexColor);
-      message.channel.send({embeds:[embed]});
-    } catch (err) {
-      message.client.logger.error(err.stack);
-      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
-    }
+    const res = await axios.get(`https://nekobot.xyz/api/imagegen?type=trumptweet&text=${tweet}`)
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      })
+    const img = res.message;
+    const embed = new MessageEmbed()
+      .setTitle(':flag_us:  Trump Tweet  :flag_us: ')
+      .setImage(img)
+      .setFooter({
+        text: message.member.displayName,
+        icon_url: message.author.displayAvatarURL({
+          dynamic: true
+        })
+      })
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+    message.channel.send({
+      embeds: [embed]
+    });
   }
 };

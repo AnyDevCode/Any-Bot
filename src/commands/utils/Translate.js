@@ -1,7 +1,4 @@
-// noinspection GrazieInspection
-
 const Command = require("../Command.js");
-require("node-fetch");
 const translate = require("node-google-translate-skidz");
 
 module.exports = class TranslateCommand extends Command {

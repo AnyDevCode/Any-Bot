@@ -1,4 +1,4 @@
-const Command = require("../Command.js");
+const Button = require("../Button.js");
 const axios = require("axios");
 const {
   MessageEmbed,
@@ -6,36 +6,35 @@ const {
   MessageButton
 } = require("discord.js");
 
-module.exports = class PandaFactCommand extends Command {
+module.exports = class PandaFactButton extends Button {
   constructor(client) {
     super(client, {
-      name: "pandafact",
-      aliases: ["pandafacts"],
-      usage: "pandafact",
-      description: "Says a random panda fact.",
-      type: client.types.ANIMALS,
+      name: "panda-fact",
     });
   }
-  async run(message) {
+
+  async run(interaction) {
     const res = await axios
-      .get("https://some-random-api.ml/animal/panda")
+      .get('https://some-random-api.ml/animal/panda')
       .then((res) => res.data)
       .catch((err) => {
-        message.client.logger.error(err.stack);
-        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+        interaction.message.client.logger.error(err.stack);
+        return this.sendErrorMessage(interaction.message, 1, "Please try again in a few seconds", "The API is down");
       });
     const fact = res.fact;
     const embed = new MessageEmbed()
       .setTitle('🐼  Auuu! 🐼')
       .setDescription(fact)
       .setFooter({
-        text: message.member.displayName,
-        iconURL: message.author.displayAvatarURL({
+        text: interaction.user.username,
+        iconURL: interaction.user.displayAvatarURL({
           dynamic: true
         }),
       })
       .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
+      .setColor(
+        interaction.guild ? interaction.guild.me.displayHexColor : "#7289DA"
+      );
 
     const row = new MessageActionRow()
       .addComponents(
@@ -46,7 +45,7 @@ module.exports = class PandaFactCommand extends Command {
         .setCustomId("panda-fact")
       )
 
-    message.channel.send({
+    interaction.update({
       embeds: [embed],
       components: [row]
     });

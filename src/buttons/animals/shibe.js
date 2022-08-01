@@ -1,4 +1,4 @@
-const Command = require('../Command.js');
+const Button = require("../Button.js");
 const axios = require("axios");
 const {
   MessageEmbed,
@@ -6,16 +6,14 @@ const {
   MessageButton
 } = require("discord.js");
 
-module.exports = class ShibeCommand extends Command {
+module.exports = class ShibeButton extends Button {
   constructor(client) {
     super(client, {
-      name: 'shibe',
-      usage: 'shibe',
-      description: 'Finds a random shibe for your viewing pleasure.',
-      type: client.types.ANIMALS
+      name: "shibe",
     });
   }
-  async run(message) {
+
+  async run(interaction) {
     const res = await axios
       .get("https://shibe.online/api/shibes")
       .then((res) => res.data)
@@ -28,24 +26,25 @@ module.exports = class ShibeCommand extends Command {
       .setTitle('🐶  Woof!  🐶')
       .setImage(img)
       .setFooter({
-        text: message.member.displayName,
-        iconURL: message.author.displayAvatarURL({
+        text: interaction.user.username,
+        iconURL: interaction.user.displayAvatarURL({
           dynamic: true
         }),
       })
       .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
+      .setColor(
+        interaction.guild ? interaction.guild.me.displayHexColor : "#7289DA"
+      );
 
-    const row = new MessageActionRow()
-      .addComponents(
-        new MessageButton()
-        .setLabel("Another shibe")
-        .setStyle("PRIMARY")
-        .setEmoji("🐶")
-        .setCustomId("Shibe")
-      )
+    const row = new MessageActionRow().addComponents(
+      new MessageButton()
+      .setLabel("Another shibe")
+      .setStyle("PRIMARY")
+      .setEmoji("🐶")
+      .setCustomId("shibe")
+    );
 
-    message.channel.send({
+    interaction.update({
       embeds: [embed],
       components: [row]
     });

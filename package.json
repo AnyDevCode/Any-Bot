@@ -27,6 +27,7 @@
     "discord.js": "13.8.1",
     "dotenv": "16.0.0",
     "express": "4.17.3",
+    "ffmpeg-static": "^5.0.2",
     "figlet": "1.5.2",
     "follow-redirects-fast": "^1.0.3",
     "g-i-s": "2.1.6",

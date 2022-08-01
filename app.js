@@ -1,4 +1,5 @@
-require("dotenv").config();
+if(process.env.ENV !== "production") require("dotenv").config(); 
+
 const Client = require("./src/client.js");
 const config = require("./config.json");
 const { Player } = require("discord-player");

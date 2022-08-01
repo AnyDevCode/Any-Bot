@@ -1,6 +1,6 @@
 const Button = require("../Button.js");
+const axios = require("axios");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const { birdfact } = require("discord-utilities-js");
 
 module.exports = class BirdFactButton extends Button {
   constructor(client) {
@@ -10,23 +10,25 @@ module.exports = class BirdFactButton extends Button {
   }
 
   async run(interaction) {
-    const fact = await birdfact();
-    if (typeof fact === "undefined")
-      return await this.sendErrorMessage(
-        message,
-        1,
-        "Please try again in a few seconds",
-        "The Api is down"
-      );
-    const embed = new MessageEmbed()
-      .setTitle("🐦  Bird Fact!  🐦")
-      .setDescription(fact)
-      .setFooter({
-        text: interaction.user.username,
-        iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
-      })
-      .setTimestamp()
-      .setColor(interaction.guild.me.displayHexColor);
+    const res = await axios
+        .get('https://api.any-bot.tech/api/v1/bird')
+        .then((res) => res.data)
+        .catch((err) => {
+          interaction.message.client.logger.error(err.stack);
+          return this.sendErrorMessage(interaction.message, 1, "Please try again in a few seconds", "The API is down");
+        });
+      const fact = res.fact;
+      const embed = new MessageEmbed()
+        .setTitle('🐦  Chirp!  🐦')
+        .setDescription(fact)
+        .setFooter({
+          text: interaction.user.username,
+          iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+        })
+        .setTimestamp()
+        .setColor(
+          interaction.guild ? interaction.guild.me.displayHexColor : "#7289DA"
+        );
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()

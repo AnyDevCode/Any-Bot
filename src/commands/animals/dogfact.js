@@ -1,6 +1,10 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require('discord.js');
+const axios = require('axios');
 
 module.exports = class DogFactCommand extends Command {
   constructor(client) {
@@ -13,22 +17,38 @@ module.exports = class DogFactCommand extends Command {
     });
   }
   async run(message) {
-    try {
-      const res = await fetch('https://dog-api.kinduff.com/api/facts');
-      const fact = (await res.json()).facts[0];
-      const embed = new MessageEmbed()
-        .setTitle('🐶  Dog Fact  🐶')
-        .setDescription(fact)
-        .setFooter({
-          text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
-        })    
-        .setTimestamp()
-        .setColor(message.guild.me.displayHexColor);
-      message.channel.send({embeds: [embed]});
-    } catch (err) {
-      message.client.logger.error(err.stack);
-      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', "The Api is down");
-    }
+    const res = await axios
+      .get("https://api.any-bot.tech/api/v1/dog")
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const fact = res.fact;
+    const embed = new MessageEmbed()
+      .setTitle('🐶  Woof!  🐶')
+      .setDescription(fact)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
+      })
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Another dog fact")
+        .setStyle("PRIMARY")
+        .setEmoji("🐶")
+        .setCustomId("dog-fact")
+      )
+
+    message.channel.send({
+      embeds: [embed],
+      components: [row]
+    });
   }
 };

@@ -6,25 +6,25 @@ const {
   MessageButton
 } = require("discord.js");
 
-module.exports = class DogButton extends Button {
+module.exports = class CatFactButton extends Button {
   constructor(client) {
     super(client, {
-      name: "dog",
+      name: "cat-fact",
     });
   }
 
   async run(interaction) {
     const res = await axios
-      .get('https://api.any-bot.tech/api/v1/dog')
+      .get('https://api.any-bot.tech/api/v1/cat')
       .then((res) => res.data)
       .catch((err) => {
         interaction.message.client.logger.error(err.stack);
         return this.sendErrorMessage(interaction.message, 1, "Please try again in a few seconds", "The API is down");
       });
-    const img = res.image;
+    const fact = res.fact;
     const embed = new MessageEmbed()
-      .setTitle('🐶  Woof!  🐶')
-      .setImage(img)
+      .setTitle('🐱  Cat Fact  🐱')
+      .setDescription(fact)
       .setFooter({
         text: interaction.user.username,
         iconURL: interaction.user.displayAvatarURL({
@@ -38,10 +38,10 @@ module.exports = class DogButton extends Button {
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()
-      .setLabel("Another dog")
+      .setLabel("Another cat fact")
       .setStyle("PRIMARY")
-      .setEmoji("🐶")
-      .setCustomId("dog")
+      .setEmoji("🐱")
+      .setCustomId("cat-fact")
     );
 
     interaction.update({

@@ -2,16 +2,16 @@ const Button = require("../Button.js");
 const axios = require("axios");
 const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 
-module.exports = class BirdButton extends Button {
+module.exports = class CatButton extends Button {
   constructor(client) {
     super(client, {
-      name: "bird",
+      name: "cat",
     });
   }
 
   async run(interaction) {
     const res = await axios
-        .get('https://api.any-bot.tech/api/v1/bird')
+        .get('https://api.any-bot.tech/api/v1/cat')
         .then((res) => res.data)
         .catch((err) => {
           interaction.message.client.logger.error(err.stack);
@@ -19,7 +19,7 @@ module.exports = class BirdButton extends Button {
         });
       const img = res.image;
       const embed = new MessageEmbed()
-        .setTitle('🐦  Chirp!  🐦')
+        .setTitle('🐱  Meow!  🐱')
         .setImage(img)
         .setFooter({
           text: interaction.user.username,
@@ -32,10 +32,10 @@ module.exports = class BirdButton extends Button {
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()
-        .setLabel("Another bird")
+        .setLabel("Another cat")
         .setStyle("PRIMARY")
-        .setEmoji("🐦")
-        .setCustomId("bird")
+        .setEmoji("🐱")
+        .setCustomId("cat")
     );
 
     interaction.update({ embeds: [embed], components: [row] });

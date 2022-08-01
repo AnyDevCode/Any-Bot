@@ -1,20 +1,12 @@
 {
-  "ownerId": "Your_Id",
   "developers": [
     "Only if you have developers",
     "Only if you have more of 1 developer"
   ],
-  "botID": "Bot_Id",
-  "bugReportChannelId": "Your_Bug_Report_Channel_Id",
-  "feedbackChannelId": "Your_Feedback_Channel_Id",
-  "serverLogId": "Your_Server_Log_Channel_Id",
-  "supportServerInvite": "Your_Support_Server_Invite",
   "botStats": {
     "guilds_channel": "Your_Guilds_Channel_Stats_Bot"
   },
-  "apiUrl": "https://api.any-bot.tech/api/v1",
   "apiKeys": {
-    "catApi": "Cat_Api_Key",
     "googleApi": "Google_Api_Key",
     "fortniteshopApi": "Fortnite_Shop_Key",
     "fortniteApi": "Fortnite_Api_Key",

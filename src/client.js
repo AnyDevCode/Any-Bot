@@ -33,7 +33,7 @@ class Client extends Discord.Client {
     /**
      * Bot id
      */
-    this.id = config.botID;
+    this.id = process.env.BOTID
 
     /**
      * Create logger
@@ -134,7 +134,7 @@ class Client extends Discord.Client {
      * Api Url
      * @type {string}
      */
-    this.apiUrl = config.apiUrl;
+    this.apiUrl = process.env.APIURL;
 
     /**
      * Bot Stats
@@ -147,7 +147,7 @@ class Client extends Discord.Client {
      * @type {string}
      */
     //Check if the owner ID in the config is a number
-    this.ownerID = config.ownerId;
+    this.ownerID = process.env.OWNERID;
 
     /**
      * Developer's ID
@@ -159,25 +159,25 @@ class Client extends Discord.Client {
      * Any Bot's bug report channel ID
      * @type {string}
      */
-    this.bugReportChannelId = config.bugReportChannelId;
+    this.bugReportChannelId = process.env.BUGREPORTCHANNELID
 
     /**
      * Any Bot's feedback channel ID
      * @type {string}
      */
-    this.feedbackChannelId = config.feedbackChannelId;
+    this.feedbackChannelId = process.env.feedbackChannelId;
 
     /**
      * Any Bot's server log channel ID
      * @type {string}
      */
-    this.serverLogId = config.serverLogId;
+    this.serverLogId = process.env.SERVERLOGID;
 
     /**
      * Any Bot's Support Server Invite
      * @type {string}
      */
-    this.supportServerInvite = config.supportServerInvite;
+    this.supportServerInvite = process.env.SUPPORTSERVERLINK;
 
     /**
      * Any Bot's Version

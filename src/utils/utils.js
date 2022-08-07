@@ -278,6 +278,7 @@ async function transferCrown(client, guild, crownRoleId) {
  * @param {Guild} guild
  */
 async function scheduleCrown(client, guild) {
+  if(!guild.available) return;
   const { crownRoleID: crownRoleId, crownSchedule: cron } =
     await client.mongodb.settings.selectRow(guild.id);
 

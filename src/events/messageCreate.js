@@ -62,7 +62,8 @@ module.exports = {
       xpChannelID: xp_channel_id,
       disabledCommands: disabledCommands,
       prefix: prefix,
-      modChannelIDs: modChannelIds
+      modChannelIDs: modChannelIds,
+      language: language,
     } = await client.mongodb.settings.selectRow(message.guild.id);
 
     if (typeof disabledCommands !== "string") disabledCommands = [];
@@ -194,6 +195,8 @@ module.exports = {
               }
             }
           }
+
+          message.lang = language;
 
           return command.run(message, args, client, player);
 

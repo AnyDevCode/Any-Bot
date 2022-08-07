@@ -1,7 +1,12 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const { success } = require('../../utils/emojis.json');
-const { oneLine } = require('common-tags');
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require('discord.js');
+const {
+  oneLine
+} = require('common-tags');
 
 module.exports = class SetFarewellMessageCommand extends Command {
   constructor(client) {
@@ -9,7 +14,7 @@ module.exports = class SetFarewellMessageCommand extends Command {
       name: 'setfarewellmessage',
       aliases: ['setfarewellmsg', 'setfm', 'sfm'],
       usage: 'setfarewellmessage <message>',
-      description: oneLine`
+      description: oneLine `
         Sets the message Any Bot will say when someone leaves your server.
         You may use \`?member\` to substitute for a user mention,
         \`?username\` to substitute for someone's username,
@@ -23,54 +28,42 @@ module.exports = class SetFarewellMessageCommand extends Command {
       examples: ['setfarewellmessage ?member has left the server.']
     });
   }
-  async run(message, args) {
+  run(message) {
 
-    let { farewellChannelID: farewellChannelId, farewellMessage: oldFarewellMessage } =
-        await message.client.mongodb.settings.selectRow(message.guild.id);
-    const farewellChannel = message.guild.channels.cache.get(farewellChannelId);
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Dashboard")
+        .setStyle("LINK")
+        .setURL(
+          `https://dashboard.any-bot.tech/guild/${message.guild.id}`
+        )
+        .setEmoji("🔗"),
+      );
 
-    if(oldFarewellMessage[0].data.text){
-      oldFarewellMessage = oldFarewellMessage[0].data.text;
-    } else {
-      oldFarewellMessage = null;
-    }
+    message.channel.send({
+      embeds: [
+        new MessageEmbed()
+        .setTitle('Setting Farewell Message')
+        .setDescription(
+          oneLine `
+              This command was moved to the [dashboard](https://dashboard.any-bot.tech).
+              Please use the link below to set your farewell message.
+              `
+        )
+        .setURL('https://dashboard.any-bot.tech/settings')
+        .setColor(message.guild.me.displayHexColor)
+        .setTimestamp()
+        .setFooter({
+          text: `${message.guild.name} ${this.client.user.username}`,
+          icon_url: this.client.user.displayAvatarURL({
+            format: 'png',
+            dynamic: true
+          })
+        })
+      ],
+      components: [row]
 
-    // Get status
-    const oldStatus = message.client.utils.getStatus(farewellChannelId, oldFarewellMessage);
-
-    const embed = new MessageEmbed()
-      .setTitle('Settings: `Farewells`')
-      .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .setDescription(`The \`farewell message\` was successfully updated. ${success}`)
-      .addField('Channel', farewellChannel ? `<#${farewellChannel.id}>` : '`None`', true)
-      .setFooter({text:message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
-      .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
-
-    if (!args[0]) {
-      await message.client.mongodb.settings.updateFarewellMessage(null, message.guild.id);
-
-      // Update status
-      const status = 'disabled';
-      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
-
-      return message.channel.send({embeds:[embed
-        .addField('Status', statusUpdate, true)
-        .addField('Message', '`None`')
-      ]});
-    }
-    
-    let farewellMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    await message.client.mongodb.settings.updateFarewellMessage(farewellMessage, message.guild.id);
-    if (farewellMessage.length > 1024) farewellMessage = farewellMessage.slice(0, 1021) + '...';
-
-    // Update status
-    const status =  message.client.utils.getStatus(farewellChannel, farewellMessage);
-    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
-    
-    message.channel.send({embeds:[embed
-      .addField('Status', statusUpdate, true)
-      .addField('Message', message.client.utils.replaceKeywords(farewellMessage))
-    ]});
+    })
   }
 };

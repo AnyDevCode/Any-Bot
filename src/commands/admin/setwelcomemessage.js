@@ -1,7 +1,15 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const { success } = require('../../utils/emojis.json');
-const { oneLine } = require('common-tags');
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require('discord.js');
+const {
+  success
+} = require('../../utils/emojis.json');
+const {
+  oneLine
+} = require('common-tags');
 
 module.exports = class SetWelcomeMessageCommand extends Command {
   constructor(client) {
@@ -9,7 +17,7 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       name: 'setwelcomemessage',
       aliases: ['setwelcomemsg', 'setwm', 'swm'],
       usage: 'setwelcomemessage <message>',
-      description: oneLine`
+      description: oneLine `
         Sets the message Any Bot will say when someone joins your server.
         You may use \`?member\` to substitute for a user mention,
         \`?username\` to substitute for someone's username,
@@ -24,55 +32,42 @@ module.exports = class SetWelcomeMessageCommand extends Command {
       examples: ['setwelcomemessage ?member has joined the server!']
     });
   }
-  async run(message, args) {
+  run(message) {
 
-    let { welcomeChannelID: welcomeChannelId, welcomeMessage: oldWelcomeMessage } = 
-      await message.client.mongodb.settings.selectRow(message.guild.id);
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Dashboard")
+        .setStyle("LINK")
+        .setURL(
+          `https://dashboard.any-bot.tech/guild/${message.guild.id}`
+        )
+        .setEmoji("🔗"),
+      );
 
-      if(oldWelcomeMessage[0].data.text){
-        oldWelcomeMessage = oldWelcomeMessage[0].data.text;
-      } else {
-        oldWelcomeMessage = null;
-      }
-      
-    let welcomeChannel = message.guild.channels.cache.get(welcomeChannelId);
+    message.channel.send({
+      embeds: [
+        new MessageEmbed()
+        .setTitle('Setting Welcome Message')
+        .setDescription(
+          oneLine `
+              This command was moved to the [dashboard](https://dashboard.any-bot.tech).
+              Please use the link below to set your welcome message.
+              `
+        )
+        .setURL('https://dashboard.any-bot.tech/settings')
+        .setColor(message.guild.me.displayHexColor)
+        .setTimestamp()
+        .setFooter({
+          text: `${message.guild.name} ${this.client.user.username}`,
+          icon_url: this.client.user.displayAvatarURL({
+            format: 'png',
+            dynamic: true
+          })
+        })
+      ],
+      components: [row]
 
-    // Get status
-    const oldStatus = message.client.utils.getStatus(welcomeChannelId, oldWelcomeMessage);
-
-    const embed = new MessageEmbed()
-      .setTitle('Settings: `Welcomes`')
-      .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .setDescription(`The \`welcome message\` was successfully updated. ${success}`)
-      .addField('Channel', welcomeChannel ? `${welcomeChannel}` : '`None`', true)
-      .setFooter({text: message.member.displayName, iconURL: message.author.displayAvatarURL({ dynamic: true })})
-      .setTimestamp()
-      .setColor(message.guild.me.displayHexColor);
-
-    if (!args[0]) {
-      await message.client.mongodb.settings.updateWelcomeMessage(null, message.guild.id);
-
-      // Update status
-      const status = 'disabled';
-      const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
-
-      return message.channel.send({embeds:[embed
-        .addField('Status', statusUpdate, true)
-        .addField('Message', '`None`')
-      ]});
-    }
-    
-    let welcomeMessage = message.content.slice(message.content.indexOf(args[0]), message.content.length);
-    await message.client.mongodb.settings.updateWelcomeMessage(welcomeMessage, message.guild.id);
-    if (welcomeMessage.length > 1024) welcomeMessage = welcomeMessage.slice(0, 1021) + '...';
-
-    // Update status
-    const status =  message.client.utils.getStatus(welcomeChannel, welcomeMessage);
-    const statusUpdate = (oldStatus !== status) ? `\`${oldStatus}\` ➔ \`${status}\`` : `\`${oldStatus}\``;
-
-    message.channel.send({embeds:[embed
-      .addField('Status', statusUpdate, true)
-      .addField('Message', message.client.utils.replaceKeywords(welcomeMessage))
-    ]});
+    })
   }
 };

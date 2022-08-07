@@ -3,6 +3,11 @@ const axios = require('axios');
 const {
     MessageEmbed
 } = require('discord.js');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const {
+    join
+} = require('path');
 
 module.exports = class CoronaCommand extends Command {
     constructor(client) {
@@ -16,6 +21,8 @@ module.exports = class CoronaCommand extends Command {
         });
     }
     async run(message, args) {
+        const lang_text = yaml.load(fs.readFileSync(join(__basedir, 'data', 'lang', message.lang, 'commands', 'utils', 'Corona.yml'), 'utf8'));
+
         let text = args.join(" ");
         const baseUrl = "https://disease.sh/v3/covid-19";
 
@@ -26,48 +33,48 @@ module.exports = class CoronaCommand extends Command {
             corona = await axios.get(url).then(res => res.data);
         } catch (error) {
             return message.channel.send({
-                content: `***${text}*** does not exist, or there is no data on the selected country.`
+                content: lang_text.errors.country_not_found.replace('%{country}', text),
             })
         }
 
         const embed = new MessageEmbed()
-            .setTitle(args[0] ? `Stats ${text.toUpperCase()}` : 'Total Corona cases in the world')
+            .setTitle(args[0] ? lang_text.messages.one_country_stats.replace('%{country}', text.toUpperCase()) : lang_text.messages.all_countries_stats)
             .setColor(message.guild.me.displayHexColor)
             .setThumbnail(args[0] ? corona.countryInfo.flag : 'https://i.giphy.com/YPbrUhP9Ryhgi2psz3.gif')
             .addFields({
-                name: 'Total Cases:',
+                name: lang_text.fields.total_cases,
                 value: corona.cases.toLocaleString(),
                 inline: true
             }, {
-                name: 'Total Deaths:',
+                name: lang_text.fields.total_deaths,
                 value: corona.deaths.toLocaleString(),
                 inline: true
             }, {
-                name: 'Total Recovered:',
+                name: lang_text.fields.total_recovered,
                 value: corona.recovered.toLocaleString(),
                 inline: true
             }, {
-                name: 'Active Cases:',
+                name: lang_text.fields.active_cases,
                 value: corona.active.toLocaleString(),
                 inline: true
             }, {
-                name: 'Total Tests:',
+                name: lang_text.fields.total_tests,
                 value: corona.tests.toLocaleString(),
                 inline: true
             }, {
-                name: 'Critical Cases:',
+                name: lang_text.fields.critical_cases,
                 value: corona.critical.toLocaleString(),
                 inline: true
             }, {
-                name: 'New Recovered Today:',
+                name: lang_text.fields.new_recovered_today,
                 value: corona.todayRecovered.toLocaleString().replace("-", ""),
                 inline: true
             }, {
-                name: 'New Cases Today:',
+                name: lang_text.fields.new_cases_today,
                 value: corona.todayCases.toLocaleString().replace("-", ""),
                 inline: true
             }, {
-                name: 'New Deaths Today:',
+                name: lang_text.fields.new_deaths_today,
                 value: corona.todayDeaths.toLocaleString(),
                 inline: true
             })

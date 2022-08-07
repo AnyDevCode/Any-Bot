@@ -188,6 +188,11 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
     antiPhishingLogsChannelID: {
         type: String,
     },
+
+    language: {
+        type: String,
+        default: "en"
+    }
 }));
 
 module.exports = {
@@ -1114,5 +1119,15 @@ module.exports = {
         } catch (error) {
             __Client.logger.error(error);
         }
-    }
+    },
+
+    async getLanguage(guildID) {
+        try {
+            return (await Guild.findOne({
+                guildID: guildID
+            })).language || "en";
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
 }

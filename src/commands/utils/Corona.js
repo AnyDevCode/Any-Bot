@@ -21,7 +21,7 @@ module.exports = class CoronaCommand extends Command {
         });
     }
     async run(message, args) {
-        const lang_text = yaml.load(fs.readFileSync(join(__basedir, 'data', 'lang', message.lang, 'commands', 'utils', 'Corona.yml'), 'utf8'));
+        const lang_text = yaml.load(fs.readFileSync(join(__basedir, 'data', 'lang', message.lang, 'commands', 'utils', 'Corona.yml'), 'utf8'))[message.lang];
 
         let text = args.join(" ");
         const baseUrl = "https://disease.sh/v3/covid-19";

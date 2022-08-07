@@ -1,6 +1,10 @@
-const { MessageEmbed } = require("discord.js");
+const {
+  MessageEmbed
+} = require("discord.js");
 const moment = require("moment");
-const { stripIndent } = require("common-tags");
+const {
+  stripIndent
+} = require("common-tags");
 
 module.exports = {
   name: "guildMemberAdd",
@@ -21,16 +25,20 @@ module.exports = {
       memberLog &&
       memberLog.viewable &&
       memberLog
-        .permissionsFor(member.guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"])
+      .permissionsFor(member.guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"])
     ) {
       const embed = new MessageEmbed()
         .setTitle("Member Joined")
         .setAuthor({
           name: member.guild.name,
-          icon_url: member.guild.iconURL({ dynamic: true }),
+          icon_url: member.guild.iconURL({
+            dynamic: true
+          }),
         })
-        .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(member.user.displayAvatarURL({
+          dynamic: true
+        }))
         .setDescription(`${member} (**${member.user.tag}**)`)
         .addField(
           "Account created on",
@@ -38,7 +46,9 @@ module.exports = {
         )
         .setTimestamp()
         .setColor(member.guild.me.displayHexColor);
-      memberLog.send({ embeds: [embed] });
+      memberLog.send({
+        embeds: [embed]
+      });
     }
 
     /** ------------------------------------------------------------------------------------------------
@@ -56,7 +66,7 @@ module.exports = {
         await client.sendSystemErrorMessage(
           member.guild,
           "auto role",
-          stripIndent`
+          stripIndent `
               Unable to assign auto role, please check the role hierarchy and ensure I have the Manage Roles permission
             `,
           err.message
@@ -68,14 +78,22 @@ module.exports = {
      * WELCOME MESSAGES
      * ------------------------------------------------------------------------------------------------ */
     // Get welcome channel
-    let { welcomeChannelID: welcomeChannelId, welcomeMessage: welcomeMessage } =
-      await client.mongodb.settings.selectRow(member.guild.id);
+    let {
+      welcomeChannelID: welcomeChannelId,
+      welcomeMessage: welcomeMessage
+    } =
+    await client.mongodb.settings.selectRow(member.guild.id);
     const welcomeChannel = member.guild.channels.cache.get(welcomeChannelId);
 
-    if (welcomeMessage[0].data.text) {
-      welcomeMessage = welcomeMessage[0].data.text;
-    } else {
-      welcomeMessage = null;
+    let welcomeMessageEmbed;
+
+    // Get welcome message
+    if (welcomeMessage.embed) {
+      welcomeMessageEmbed = welcomeMessage.embed;
+    }
+
+    if (welcomeMessage.content) {
+      welcomeMessage = welcomeMessage.content;
     }
 
     // Send welcome message
@@ -83,23 +101,54 @@ module.exports = {
       welcomeChannel &&
       welcomeChannel.viewable &&
       welcomeChannel
-        .permissionsFor(member.guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
+      .permissionsFor(member.guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
       welcomeMessage
     ) {
-      welcomeMessage = welcomeMessage
-        .replace(/`?\?member`?/g, member) // Member mention substitution
-        .replace(/`?\?username`?/g, member.user.username) // Username substitution
-        .replace(/`?\?tag`?/g, member.user.tag) // Tag substitution
-        .replace(/`?\?size`?/g, member.guild.members.cache.size) // Guild size substitution
-        .replace(/`?\?guild`?/g, member.guild.name); // Guild name substitution
-      welcomeChannel.send({
-        embeds: [
-          new MessageEmbed()
-            .setDescription(welcomeMessage)
-            .setColor(member.guild.me.displayHexColor),
-        ],
-      });
+      if (welcomeMessageEmbed) {
+        for (let key in welcomeMessageEmbed) {
+          if (typeof key === "string") {
+            //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+            welcomeMessageEmbed[key] = welcomeMessageEmbed[key].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+          } else if (typeof key === "object") {
+            //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+            for (let key2 in welcomeMessageEmbed[key]) {
+              welcomeMessageEmbed[key][key2] = welcomeMessageEmbed[key][key2].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+            }
+          } else if (typeof key === "array") {
+            //Check if is object
+            for (let key2 in welcomeMessageEmbed[key]) {
+              if (typeof key2 === "object") {
+                //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+                for (let key3 in welcomeMessageEmbed[key][key2]) {
+                  welcomeMessageEmbed[key][key2][key3] = welcomeMessageEmbed[key][key2][key3].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (welcomeMessage) {
+        //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+        welcomeMessage = welcomeMessage.replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+      }
+
+      let sendmessage = {}
+
+      if (welcomeMessage || welcomeMessageEmbed) {
+        if (welcomeMessage) {
+          sendmessage.content = welcomeMessage;
+        }
+
+        if (welcomeMessageEmbed) {
+          sendmessage.embeds = [welcomeMessageEmbed];
+        }
+
+        welcomeChannel.send(sendmessage);
+      }
+
+
     }
 
     /** ------------------------------------------------------------------------------------------------
@@ -123,7 +172,7 @@ module.exports = {
           client.sendSystemErrorMessage(
             member.guild,
             "random color",
-            stripIndent`
+            stripIndent `
                 Unable to assign random color, please check the role hierarchy and ensure I have the Manage Roles permission
               `,
             err.message
@@ -160,3 +209,32 @@ module.exports = {
     }
   },
 };
+
+module.exports.help = {
+  name: "guildMemberAdd",
+  description: "Triggered when a member joins the server",
+  type: "event",
+  usage: "guildMemberAdd",
+  example: "guildMemberAdd",
+};
+
+module.exports.conf = {
+  enabled: true,
+  guildOnly: false,
+  aliases: [],
+  permLevel: "User",
+};
+
+module.exports.settings = {
+  disabled: false,
+  category: "events",
+};
+
+module.exports.info = {
+  name: "guildMemberAdd",
+  description: "Triggered when a member joins the server",
+  type: "event",
+  category: "events",
+};
+
+module.exports.permissions = {}

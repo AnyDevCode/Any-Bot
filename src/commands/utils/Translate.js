@@ -1,7 +1,4 @@
-// noinspection GrazieInspection
-
 const Command = require("../Command.js");
-require("node-fetch");
 const translate = require("node-google-translate-skidz");
 
 module.exports = class TranslateCommand extends Command {
@@ -9,14 +6,14 @@ module.exports = class TranslateCommand extends Command {
     super(client, {
       name: "translate",
       aliases: ["trlt"],
-      usage: "translate <Input language> <Output language> <Text to translate>",
+      usage: "translate [source] [target] [text]",
       examples: [
         "translate es en Hola mundo",
         "translate en es Hello World",
-        "translate ru en Hello Rusia",
+        "translate ru en Привет Россия",
       ],
       description: "Translate the text to the language you want",
-      type: client.types.FUN,
+      type: client.types.UTILS,
     });
   }
 
@@ -28,12 +25,13 @@ module.exports = class TranslateCommand extends Command {
         `Please check the command and try again.`
       );
 
+    let [source, target, ...text] = args;
+
     try {
-      translate(
-        {
-          text: args.slice(2).join(" "),
-          source: args[0],
-          target: args[1],
+      translate({
+          text: text.join(" "),
+          source: source,
+          target: target,
         },
         function (result) {
           if (result.translation.length > 2000) {
@@ -43,7 +41,9 @@ module.exports = class TranslateCommand extends Command {
               });
             }
           } else {
-            message.channel.send({ content: result.translation });
+            message.channel.send({
+              content: result.translation
+            });
           }
         }
       );

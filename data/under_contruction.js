@@ -1,7 +1,6 @@
 module.exports = {
   name: "under_construction",
   run: async () => {
-    require("dotenv").config();
     const {Client} = require("discord.js");
     global.__basedir = __dirname;
 

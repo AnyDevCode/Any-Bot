@@ -4,7 +4,6 @@ const {
 const {
   Routes
 } = require("discord-api-types/v9");
-require("dotenv").config();
 const {
   abbreviateNumber
 } = require("js-abbreviation-number");
@@ -48,6 +47,7 @@ module.exports = {
       activity++;
     }, 30000);
 
+    if(client.statsChannels.guilds_channel) {
     setInterval(
       () => {
         //Update name of a channel
@@ -63,6 +63,7 @@ module.exports = {
       }, //Every 10 minutes
       600000
     );
+  }
 
     client.logger.info(`Logged in as ${client.user.tag}!`);
     client.logger.info(
@@ -150,97 +151,6 @@ module.exports = {
         muteRole ? muteRole.id : null,
         crownRole ? crownRole.id : null
       );
-
-      /*
-      //Get all users in the guild
-      const dbUsers = await client.mongodb.users.selectAllofGuild(guild.id);
-
-      const membersGuildObject = await guild.members.fetch();
-
-      //Check if the user is in the database
-      for (const member of membersGuildObject.values()) {
-        const user = dbUsers.find((u) => u.user_id === member.id);
-
-        if (user) {
-          //Check if have the same data
-          if (
-            user.user_name !== member.user.username ||
-            user.user_discriminator !== member.user.discriminator ||
-            guild.name !== user.guild_name
-          ) {
-            //Update the user
-            await client.mongodb.users.updateRow(
-              member.id,
-              member.user.username,
-              member.user.discriminator,
-              guild.id,
-              guild.name,
-              member.joinedAt
-                ? member.joinedAt.toString()
-                : Date.now().toString(),
-              member.user.bot ? 1 : 0,
-              user.points,
-              user.xp,
-              user.level,
-              user.total_points,
-              user.total_xp,
-              user.total_messages,
-              user.total_commands,
-              user.total_reactions,
-              user.total_voice,
-              user.total_stream,
-              user.total_pictures,
-              user.current_member
-            );
-
-            continue;
-          } else {
-            //No run more and continue with the next member
-            continue;
-          }
-        } else {
-
-        //If the user is not in the database, add them
-        await client.mongodb.users.insertRow(
-          member.id,
-          member.user.username,
-          member.user.discriminator,
-          guild.id,
-          guild.name,
-          member.joinedAt ? member.joinedAt.toString() : Date.now().toString(),
-          member.user.bot ? 1 : 0
-        );
-
-        client.logger.info(
-          `${member.user.username} has been added to the database!`
-        );
-
-        }
-
-
-      }
-      */
-
-      /** ------------------------------------------------------------------------------------------------
-       * CHECK DATABASE
-       * ------------------------------------------------------------------------------------------------ 
-      // If member left
-      if (!client.shard) {
-        const currentMember = await client.mongodb.users.selectCurrentMembers(
-          guild.id
-        );
-        for (const user of currentMember) {
-          if (!membersGuildObject.has(user.user_id)) {
-            await client.mongodb.users.updateCurrentMember(
-              0,
-              user.user_id,
-              guild.id
-            );
-          }
-        }
-      }
-
-      */
 
       // If member joined
       const missingMember = await client.mongodb.users.selectMissingMembers(

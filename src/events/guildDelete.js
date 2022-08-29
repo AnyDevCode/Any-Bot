@@ -4,6 +4,7 @@ const { fail } = require("../utils/emojis.json");
 module.exports = {
   name: "guildDelete",
   async execute(guild, commands, client) {
+    if(guild.id === "1004919883387121664") return;
     client.logger.info(`Any Bot has left ${guild.name}`);
     const serverLog = client.channels.cache.get(client.serverLogId);
     if (serverLog)

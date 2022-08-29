@@ -12,7 +12,7 @@ module.exports = class AmazonCommand extends Command {
       name: "amazon",
       usage: "amazon <article>",
       description: "Find an Amazon Product.",
-      type: client.types.FUN,
+      type: client.types.UTILS,
     });
   }
 

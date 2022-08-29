@@ -1,6 +1,10 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require('discord.js');
+const axios = require('axios');
 
 module.exports = class DogCommand extends Command {
   constructor(client) {
@@ -13,22 +17,38 @@ module.exports = class DogCommand extends Command {
     });
   }
   async run(message) {
-    try {
-      const res = await fetch('https://dog.ceo/api/breeds/image/random');
-      const img = (await res.json()).message;
-      const embed = new MessageEmbed()
-        .setTitle('🐶  Woof!  🐶')
-        .setImage(img)
-        .setFooter({
-          text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
-        })    
-        .setTimestamp()
-        .setColor(message.guild.me.displayHexColor);
-      message.channel.send({embeds: [embed]});
-    } catch (err) {
-      message.client.logger.error(err.stack);
-      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', "The Api is down");
-    }
+    const res = await axios
+      .get("https://api.any-bot.tech/api/v1/dog")
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const img = res.image;
+    const embed = new MessageEmbed()
+      .setTitle('🐶  Woof!  🐶')
+      .setImage(img)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
+      })
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Another dog")
+        .setStyle("PRIMARY")
+        .setEmoji("🐶")
+        .setCustomId("dog")
+      )
+
+    message.channel.send({
+      embeds: [embed],
+      components: [row]
+    });
   }
-};
+}

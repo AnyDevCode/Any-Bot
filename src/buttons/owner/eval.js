@@ -1,4 +1,3 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const Button = require("../Button.js");
 
 module.exports = class EvalButton extends Button {

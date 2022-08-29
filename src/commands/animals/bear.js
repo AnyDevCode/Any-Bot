@@ -1,5 +1,9 @@
 const Command = require("../Command.js");
-const { MessageEmbed } = require("discord.js");
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
 const axios = require("axios");
 
 module.exports = class BearCommand extends Command {
@@ -12,36 +16,38 @@ module.exports = class BearCommand extends Command {
     });
   }
   async run(message) {
-    try {
-      const res = await axios
-        .get("https://api.any-bot.tech/api/v1/bear")
-        .then((res) => res.data);
-      const img = res.image;
-      if (typeof img === "undefined")
-        return this.sendErrorMessage(
-          message,
-          1,
-          "Please try again in a few seconds",
-          "The Api is down"
-        );
-      const embed = new MessageEmbed()
-        .setTitle("🐻  Woof!  🐻")
-        .setImage(img)
-        .setFooter({
-          text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
-        })
-        .setTimestamp()
-        .setColor(message.guild.me.displayHexColor);
-      message.channel.send({ embeds: [embed] });
-    } catch (err) {
-      message.client.logger.error(err.stack);
-      await this.sendErrorMessage(
-        message,
-        1,
-        "Please try again in a few seconds",
-        "The Api is down"
-      );
-    }
+    const res = await axios
+      .get("https://api.any-bot.tech/api/v1/bear")
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const img = res.image;
+    const embed = new MessageEmbed()
+      .setTitle("🐻  Grrr!  🐻")
+      .setImage(img)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
+      })
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Another bear")
+        .setStyle("PRIMARY")
+        .setEmoji("🐻")
+        .setCustomId("bear"),
+      )
+
+    message.channel.send({
+      embeds: [embed],
+      components: [row]
+    });
   }
 };

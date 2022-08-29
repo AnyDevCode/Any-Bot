@@ -278,6 +278,7 @@ async function transferCrown(client, guild, crownRoleId) {
  * @param {Guild} guild
  */
 async function scheduleCrown(client, guild) {
+  if(!guild.available) return;
   const { crownRoleID: crownRoleId, crownSchedule: cron } =
     await client.mongodb.settings.selectRow(guild.id);
 
@@ -354,114 +355,6 @@ async function getMemberAvatar(member, guild, client, size) {
   }
 }
 
-async function play_song(guild, song, queue) {
-  const ytdl = require("ytdl-core");
-
-  const song_queue = queue.get(guild.id);
-
-  if (song)
-    __Client.logger.info(
-      colors.green(`[${guild.name}] `) +
-        colors.yellow(`${song.title}`) +
-        colors.green(` is now playing`)
-    );
-
-  //If no song is left in the server queue. Leave the voice channel and delete the key and value pair from the global queue.
-  if (!song) {
-    song_queue.text_channel.send("🎶 | **Queue is now empty**");
-    song_queue.voice_channel.leave();
-    queue.delete(guild.id);
-    return;
-  }
-  if (song.type === "attachment") {
-    song_queue.text_channel.send(`🎶 | **Now playing:** ${song.title}`);
-    song_queue.connection
-      .play(song.url, { seek: 0, volume: song_queue.volume })
-      .on("finish", () => {
-        if (song_queue.loop_queue) {
-          song_queue.songs.push(song);
-          song_queue.songs.shift();
-          play_song(guild, song_queue.songs[0], queue);
-        } else {
-          song_queue.songs.shift();
-          play_song(guild, song_queue.songs[0], queue);
-        }
-      });
-  } else {
-    const stream = ytdl(song.url, { filter: "audioonly" });
-    song_queue.connection
-      .play(stream, { seek: 0, volume: song_queue.volume })
-      .on("finish", () => {
-        if (song_queue.loop_queue) {
-          song_queue.songs.push(song);
-          song_queue.songs.shift();
-          play_song(guild, song_queue.songs[0], queue);
-        } else {
-          song_queue.songs.shift();
-          play_song(guild, song_queue.songs[0], queue);
-        }
-      });
-
-    await song_queue.text_channel.send(`🎶 Now playing **${song.title}**`);
-  }
-}
-
-async function skip_song(message, server_queue) {
-  if (!message.member.voice.channel)
-    return message.channel.send(
-      "You need to be in a channel to execute this command!"
-    );
-  if (!server_queue) {
-    return message.channel.send(`There are no songs in queue 😔`);
-  }
-  server_queue.connection.dispatcher.end();
-  return message.channel.send(`⏭️Skipped **${server_queue.songs[0].title}**`);
-}
-
-async function stop_song(member, server_queue) {
-  let channel = server_queue.text_channel;
-
-  server_queue.songs = [];
-  server_queue.connection.dispatcher.end();
-  server_queue = null;
-  return channel.send(`:x: Stopped the music`);
-}
-
-async function update_server_queue(message, server_queue, queue) {
-  const song_queue = queue.get(message.guild.id);
-  if (!song_queue) return;
-  server_queue.text_channel = message.channel;
-  server_queue.voice_channel = message.member.voice.channel;
-  server_queue.connection = await message.member.voice.channel.join();
-  server_queue.volume = song_queue.volume;
-  server_queue.loop_queue = song_queue.loop_queue;
-  server_queue.songs = song_queue.songs;
-  return server_queue;
-}
-
-async function force_stop_song(message, server_queue) {
-  const song_queue_2 = server_queue;
-
-  let queue = message.client.queue();
-
-  server_queue.songs = [];
-
-  let wait_message = await message.channel.send(
-    `🎶 |  Please wait while I configure me to play music for you.`
-  );
-  //Start the dispatcher
-  server_queue.connection
-    .play(
-      "https://cdn.discordapp.com/attachments/779357531532689438/938449326475182150/El_video_mas_corto_del_mundo_0_segundos____The_shortest_video_in_the_world_.mp4",
-      { volume: server_queue.volume }
-    )
-    .on("finish", () => {
-      wait_message.delete();
-      song_queue_2.voice_channel.leave();
-      queue.delete(message.guild.id);
-    });
-}
-
 function seconds_to_time(second) {
   //If seconds is a string, convert it to a number
   if (typeof second === "string") second = parseInt(second);
@@ -499,10 +392,5 @@ module.exports = {
   stringToUrlEncoded,
   getRandomInt,
   getMemberAvatar,
-  play_song,
-  skip_song,
-  stop_song,
-  update_server_queue,
-  force_stop_song,
   seconds_to_time,
 };

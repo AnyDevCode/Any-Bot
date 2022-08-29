@@ -1,33 +1,42 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const { oneLine, stripIndents } = require("common-tags");
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
+const {
+  oneLine,
+  stripIndents
+} = require("common-tags");
 
 module.exports = {
   name: "messageCreate",
-  async execute(message, commands, client, player) {
+  async execute(message, _commands, client, player) {
     if (message.channel.type === "DM" && !message.author.bot)
       return message.channel.send({
         embeds: [
           new MessageEmbed()
-            .setColor("#0099ff")
-            .setTitle(`Hi, i am ${client.user.username}`)
-            .setDescription(
-              stripIndents`
+          .setColor("#0099ff")
+          .setTitle(`Hi, i am ${client.user.username}`)
+          .setDescription(
+            stripIndents `
             Please, use me in a server.
             If you want to know more about me, use the command \`@${client.user.username} help\` in a server.
             For more information about me, check out my [GitHub](https://github.com/MDCYT/Any-Bot).
             For Support and help, join the [Support Server](https://discord.gg/5UyuwbNu8j).
             For Terms and Conditions, visit the [Terms and Conditions](https://any-bot.tech/tos).
             `
-            )
-            .setFooter({
-              text: `${client.user.username}`,
-              iconURL: client.user.avatarURL(),
-            })
-            .setThumbnail(client.user.avatarURL())
-            .setTimestamp(),
+          )
+          .setFooter({
+            text: `${client.user.username}`,
+            iconURL: client.user.avatarURL(),
+          })
+          .setThumbnail(client.user.avatarURL())
+          .setTimestamp(),
         ],
       });
     if (!message.channel.viewable || message.author.bot) return;
+
+    message.command = false;
 
     //Check if message has image attachment
     const attachment = Array.from(message.attachments.values())[0];
@@ -54,6 +63,7 @@ module.exports = {
       disabledCommands: disabledCommands,
       prefix: prefix,
       modChannelIDs: modChannelIds,
+      language: language,
     } = await client.mongodb.settings.selectRow(message.guild.id);
 
     if (typeof disabledCommands !== "string") disabledCommands = [];
@@ -64,7 +74,10 @@ module.exports = {
     if (typeof modChannelIds === "string")
       modChannelIds = modChannelIds.split(" ");
 
-    let { level, xp } = await client.mongodb.users.selectRow(
+    let {
+      level,
+      xp
+    } = await client.mongodb.users.selectRow(
       message.author.id,
       message.guild.id
     );
@@ -109,8 +122,8 @@ module.exports = {
             command.type !== client.types.MOD ||
             (command.type === client.types.MOD &&
               message.channel
-                .permissionsFor(message.author)
-                .missing(command.userPermissions) !== 0)
+              .permissionsFor(message.author)
+              .missing(command.userPermissions) !== 0)
           )
             return; // Return early so Any Bot doesn't respond
         }
@@ -142,8 +155,7 @@ module.exports = {
 
           await client.mongodb.users.updateLevelXPPointsCommandsandMessages(
             message.author.id,
-            message.guild.id,
-            {
+            message.guild.id, {
               level: newLevel || 0,
               xp: NewXP || 0,
               points: NewPoints || 0,
@@ -153,14 +165,48 @@ module.exports = {
           );
 
           message.command = true; // Add flag for messageUpdate event
+
+          //Create cooldown
+          if (command.cooldown) {
+            if (!client.cooldowns.has(message.author.id + "-" + command.name)) {
+              let date = new Date();
+              date.setSeconds(date.getSeconds() + command.cooldown);
+              client.cooldowns.set(
+                message.author.id + "-" + command.name,
+                date
+              );
+            } else {
+              const cooldown = client.cooldowns.get(
+                message.author.id + "-" + command.name
+              );
+              if (cooldown > Date.now()) {
+                return message.channel.send({
+                  content: `${message.author}, you have to wait ${Math.floor(
+                      (cooldown - Date.now()) / 1000
+                    )} seconds before using this command again.`,
+                });
+              } else {
+                let date = new Date();
+                date.setSeconds(date.getSeconds() + command.cooldown);
+                client.cooldowns.set(
+                  message.author.id + "-" + command.name,
+                  date
+                );
+              }
+            }
+          }
+
+          message.lang = language;
+
           return command.run(message, args, client, player);
+
         }
       } else if (
         (message.content === `<@${client.user.id}>` ||
           message.content === `<@!${client.user.id}>`) &&
         message.channel
-          .permissionsFor(message.guild.me)
-          .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
+        .permissionsFor(message.guild.me)
+        .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
         !modChannelIds.includes(message.channel.id)
       ) {
         const embed = new MessageEmbed()
@@ -171,14 +217,14 @@ module.exports = {
           )
           .addField(
             "Invite Me",
-            oneLine`
+            oneLine `
             You can add me to your server by clicking 
             [here](https://discordapp.com/oauth2/authorize?client_id=${message.guild.me.id}&scope=applications.commands%20bot&permissions=8)
           `
           )
           .addField(
             "Support",
-            oneLine`
+            oneLine `
             If you have questions, suggestions, or found a bug, please join the 
             [${message.guild.me.displayName} Support Server](${message.client.supportServerInvite})
           `
@@ -188,19 +234,19 @@ module.exports = {
         const linkrow = new MessageActionRow()
           .addComponents(
             new MessageButton()
-              .setLabel("Invite Me")
-              .setStyle("LINK")
-              .setURL(
-                `https://discordapp.com/oauth2/authorize?client_id=${message.guild.me.id}&scope=applications.commands%20bot&permissions=8`
-              )
-              .setEmoji("➡")
+            .setLabel("Invite Me")
+            .setStyle("LINK")
+            .setURL(
+              `https://discordapp.com/oauth2/authorize?client_id=${message.guild.me.id}&scope=applications.commands%20bot&permissions=8`
+            )
+            .setEmoji("➡")
           )
           .addComponents(
             new MessageButton()
-              .setLabel("Support Server")
-              .setStyle("LINK")
-              .setURL(message.client.supportServerInvite)
-              .setEmoji("🛠️")
+            .setLabel("Support Server")
+            .setStyle("LINK")
+            .setURL(message.client.supportServerInvite)
+            .setEmoji("🛠️")
           );
 
         message.channel.send({
@@ -234,8 +280,7 @@ module.exports = {
     // Update the total messages
     await client.mongodb.users.updateLevelXPPointsCommandsandMessages(
       message.author.id,
-      message.guild.id,
-      {
+      message.guild.id, {
         level: newLevel || 0,
         xp: NewXP || 0,
         points: NewPoints || 0,

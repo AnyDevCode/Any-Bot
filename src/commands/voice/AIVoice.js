@@ -20,7 +20,7 @@ module.exports = class aivoiceCommand extends Command {
       ],
       usage: "iavoice [voice] [text]",
       description: "Make a ia make a voice",
-      type: client.types.FUN,
+      type: client.types.VOICE,
       examples: ["iavoice ZIM I am invader"],
     });
   }

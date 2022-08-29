@@ -1,8 +1,11 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const Slash = require("../Slash.js");
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
-const fetch = require("node-fetch");
-
+const axios = require("axios");
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
 module.exports = class BirdSlash extends Slash {
   constructor(client) {
     super(client, {
@@ -14,8 +17,14 @@ module.exports = class BirdSlash extends Slash {
   }
 
   async run(interaction) {
-    const res = await fetch("https://shibe.online/api/birds");
-    const img = (await res.json())[0];
+    const res = await axios
+    .get('https://api.any-bot.tech/api/v1/bird')
+    .then((res) => res.data)
+    .catch((err) => {
+      message.client.logger.error(err.stack);
+      return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+    });
+  const img = res.image;
     const embed = new MessageEmbed()
       .setTitle("🐦  Chirp!  🐦")
       .setImage(img)

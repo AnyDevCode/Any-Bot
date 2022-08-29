@@ -1,6 +1,10 @@
 const Command = require('../Command.js')
-const { MessageEmbed } = require('discord.js')
-const { koala } = require('discord-utilities-js')
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require('discord.js')
+const axios = require('axios')
 
 module.exports = class KoalaCommand extends Command {
   constructor(client) {
@@ -12,33 +16,38 @@ module.exports = class KoalaCommand extends Command {
     })
   }
   async run(message) {
-    try {
-      const img = await koala()
-      if (typeof img === 'undefined')
-        return this.sendErrorMessage(
-          message,
-          1,
-          'Please try again in a few seconds',
-          'The Api is down',
-        )
-      const embed = new MessageEmbed()
-        .setTitle('🐨  Woof!  🐨')
-        .setImage(img)
-        .setFooter({
-          text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
-        })
-        .setTimestamp()
-        .setColor(message.guild.me.displayHexColor)
-      message.channel.send({ embeds: [embed] })
-    } catch (err) {
-      message.client.logger.error(err.stack)
-      await this.sendErrorMessage(
-        message,
-        1,
-        'Please try again in a few seconds',
-        'The Api is down',
+    const res = await axios
+      .get("https://api.any-bot.tech/api/v1/koala")
+      .then((res) => res.data)
+      .catch((err) => {
+        message.client.logger.error(err.stack);
+        return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const image = res.image;
+    const embed = new MessageEmbed()
+      .setTitle('🐨  Oooo! 🐨')
+      .setImage(image)
+      .setFooter({
+        text: message.member.displayName,
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
+      })
+      .setTimestamp()
+      .setColor(message.guild.me.displayHexColor);
+
+    const row = new MessageActionRow()
+      .addComponents(
+        new MessageButton()
+        .setLabel("Another koala")
+        .setStyle("PRIMARY")
+        .setEmoji("🐨")
+        .setCustomId("koala")
       )
-    }
+
+    message.channel.send({
+      embeds: [embed],
+      components: [row]
+    });
   }
 }

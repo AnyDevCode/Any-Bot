@@ -6,8 +6,8 @@ module.exports = class MuteCommand extends Command {
   constructor(client) {
     super(client, {
       name: 'mute',
-      usage: 'mute <user mention/ID> <time> [reason]',
-      description: 'Mutes a user for the specified amount of time (max is 14 days).',
+      usage: 'mute <user mention/ID> [time] [reason]',
+      description: 'Mutes a user for the specified amount of time (max 1 month).',
       type: client.types.MOD,
       clientPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'MANAGE_ROLES'],
       userPermissions: ['MANAGE_ROLES'],
@@ -47,7 +47,7 @@ module.exports = class MuteCommand extends Command {
       return message.channel.send({embeds: [muteEmbed]});
     }
     let time = ms(args[1]);
-    if (!time || time > 2.628e+9) // Cap at 14 days, larger than 24.8 days causes integer overflow
+    if (!time || time > 2.628e+9)
       return this.sendErrorMessage(message, 0, 'Please enter a length of time of 1 month or less (1s/m/h/d)');
 
     let reason = args.slice(2).join(' ');

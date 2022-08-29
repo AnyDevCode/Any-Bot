@@ -1,4 +1,6 @@
-const { MessageEmbed } = require("discord.js");
+const {
+  MessageEmbed
+} = require("discord.js");
 
 module.exports = {
   name: "guildMemberRemove",
@@ -19,20 +21,26 @@ module.exports = {
       memberLog &&
       memberLog.viewable &&
       memberLog
-        .permissionsFor(member.guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"])
+      .permissionsFor(member.guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"])
     ) {
       const embed = new MessageEmbed()
         .setTitle("Member Left")
         .setAuthor({
           name: member.guild.name,
-          icon_url: member.guild.iconURL({ dynamic: true }),
+          icon_url: member.guild.iconURL({
+            dynamic: true
+          }),
         })
-        .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(member.user.displayAvatarURL({
+          dynamic: true
+        }))
         .setDescription(`${member} (**${member.user.tag}**)`)
         .setTimestamp()
         .setColor(member.guild.me.displayHexColor);
-      memberLog.send({ embeds: [embed] });
+      memberLog.send({
+        embeds: [embed]
+      });
     }
 
     /** ------------------------------------------------------------------------------------------------
@@ -45,32 +53,67 @@ module.exports = {
     } = await client.mongodb.settings.selectRow(member.guild.id);
     const farewellChannel = member.guild.channels.cache.get(farewellChannelId);
 
-    if(farewellMessage[0].data.text){
-      farewellMessage = farewellMessage[0].data.text;
-    } else {
-      farewellMessage = null;
+    let farewellMessageEmbed;
+
+    // Get farewell message
+    if (farewellMessage.embed) {
+      farewellMessageEmbed = farewellMessage.embed;
+    }
+
+    if (farewellMessage.content) {
+      farewellMessage = farewellMessage.content;
     }
 
     if (
       farewellChannel &&
       farewellChannel.viewable &&
       farewellChannel
-        .permissionsFor(member.guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
+      .permissionsFor(member.guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"]) &&
       farewellMessage
     ) {
-      farewellMessage = farewellMessage
-        .replace(/`?\?member`?/g, member) // Member mention substitution
-        .replace(/`?\?username`?/g, member.user.username) // Username substitution
-        .replace(/`?\?tag`?/g, member.user.tag) // Tag substitution
-        .replace(/`?\?size`?/g, member.guild.members.cache.size); // Guild size substitution
-      farewellChannel.send({
-        embeds: [
-          new MessageEmbed()
-            .setDescription(farewellMessage)
-            .setColor(member.guild.me.displayHexColor),
-        ],
-      });
+      if (farewellMessageEmbed) {
+        for (let key in farewellMessageEmbed) {
+          if (typeof key === "string") {
+            //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+            farewellMessageEmbed[key] = farewellMessageEmbed[key].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+          } else if (typeof key === "object") {
+            //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+            for (let key2 in farewellMessageEmbed[key]) {
+              farewellMessageEmbed[key][key2] = farewellMessageEmbed[key][key2].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+            }
+          } else if (typeof key === "array") {
+            //Check if is object
+            for (let key2 in farewellMessageEmbed[key]) {
+              if (typeof key2 === "object") {
+                //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+                for (let key3 in farewellMessageEmbed[key][key2]) {
+                  farewellMessageEmbed[key][key2][key3] = farewellMessageEmbed[key][key2][key3].replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (farewellMessage) {
+        //Replacing ?member, ?tag, ?username, ?size and ?guild with the actual values
+        farewellMessage = farewellMessage.replace(/\?member/g, member).replace(/\?tag/g, member.user.tag).replace(/\?username/g, member.user.username).replace(/\?size/g, member.guild.memberCount).replace(/\?guild/g, member.guild.name);
+      }
+
+      let sendmessage = {};
+
+      if (farewellMessageEmbed || farewellMessage) {
+        if (farewellMessage) {
+          sendmessage.content = farewellMessage;
+        }
+
+        if (farewellMessageEmbed) {
+          sendmessage.embeds = [farewellMessageEmbed];
+        }
+
+        farewellChannel.send(sendmessage);
+      }
     }
 
     /** ------------------------------------------------------------------------------------------------

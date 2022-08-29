@@ -4,8 +4,7 @@ module.exports = {
     if (!interaction.isButton()) return;
     const button = interaction.client.buttons.get(interaction.customId);
 
-    if (button.ownerOnly && interaction.user.id !== interaction.client.ownerID)
-      return;
+    if (button.ownerOnly && !interaction.client.isOwner(interaction.user)) return;
 
     if (!button) return;
 

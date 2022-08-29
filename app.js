@@ -1,11 +1,11 @@
-require("dotenv").config();
+if(process.env.ENV !== "production") require("dotenv").config(); 
+
 const Client = require("./src/client.js");
 const config = require("./config.json");
 const { Player } = require("discord-player");
 const botlist = config.botlist;
 const discordModals = require("discord-modals");
 global.__basedir = __dirname;
-const WebSocket = require("ws");
 
 const client = new Client(config, {
   partials: ["CHANNEL"],

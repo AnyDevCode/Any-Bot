@@ -6,7 +6,10 @@ const {
   MessageSelectMenu,
 } = require("discord.js");
 const emojis = require("../../utils/emojis.json");
-const { oneLine, stripIndent } = require("common-tags");
+const {
+  oneLine,
+  stripIndent
+} = require("common-tags");
 
 module.exports = class HelpCommand extends Command {
   constructor(client) {
@@ -14,7 +17,7 @@ module.exports = class HelpCommand extends Command {
       name: "help",
       aliases: ["commands", "h"],
       usage: "help [command | all]",
-      description: oneLine`
+      description: oneLine `
         Displays a list of all current commands, sorted by category.
         Can be used in conjunction with a command for additional information.
         Will only display commands that you have permission to access unless the \`all\` parameter is given.
@@ -39,6 +42,9 @@ module.exports = class HelpCommand extends Command {
     const {
       INFO,
       FUN,
+      UTILS,
+      INTERNET,
+      VOICE,
       ANIMALS,
       COLOR,
       POINTS,
@@ -53,11 +59,16 @@ module.exports = class HelpCommand extends Command {
       OWNER,
       NSFW,
     } = message.client.types;
-    const { capitalize } = message.client.utils;
+    const {
+      capitalize
+    } = message.client.utils;
 
     const modules = [
       INFO,
       FUN,
+      UTILS,
+      INTERNET,
+      VOICE,
       ANIMALS,
       COLOR,
       POINTS,
@@ -126,13 +137,17 @@ module.exports = class HelpCommand extends Command {
     ) {
       embed // Build specific command help embed
         .setTitle(`Command: \`${command.name}\``)
-        .setThumbnail(message.client.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(message.client.user.displayAvatarURL({
+          dynamic: true
+        }))
         .setDescription(command.description)
         .addField("Usage", `\`${prefix}${command.usage}\``, true)
         .addField("Type", `\`${capitalize(command.type)}\``, true)
         .setFooter({
           text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          iconURL: message.author.displayAvatarURL({
+            dynamic: true
+          }),
         })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
@@ -146,13 +161,23 @@ module.exports = class HelpCommand extends Command {
           "Examples",
           command.examples.map((c) => `\`${prefix}${c}\``).join("\n")
         );
+      if (command.cooldown)
+        embed.addField(
+          "Cooldown",
+          `\`${command.cooldown} second(s)\``,
+          true
+        );
     } else if (isModule) {
       embed
         .setTitle(`Commands: \`${args[1].toLowerCase()}\``)
-        .setThumbnail(message.client.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(message.client.user.displayAvatarURL({
+          dynamic: true
+        }))
         .setFooter({
           text: message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+          iconURL: message.author.displayAvatarURL({
+            dynamic: true
+          }),
         })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
@@ -162,22 +187,22 @@ module.exports = class HelpCommand extends Command {
         if (modules[i].includes(args[1].toLowerCase())) {
           embed.setDescription(
             message.client.commands
-              .filter((c) => c.type === modules[i])
-              .map((c) => {
-                if (c.type === NSFW && !message.channel.nsfw) {
-                  isNsfw = true;
-                  return null;
-                }
-                if (
-                  disabledCommands.includes(c.name) ||
-                  (c.type === OWNER && !message.client.isOwner(message.member))
-                ) {
-                  isOwner = true;
-                  return null;
-                }
-                return `\`${c.name}\``;
-              })
-              .join(" ")
+            .filter((c) => c.type === modules[i])
+            .map((c) => {
+              if (c.type === NSFW && !message.channel.nsfw) {
+                isNsfw = true;
+                return null;
+              }
+              if (
+                disabledCommands.includes(c.name) ||
+                (c.type === OWNER && !message.client.isOwner(message.member))
+              ) {
+                isOwner = true;
+                return null;
+              }
+              return `\`${c.name}\``;
+            })
+            .join(" ")
           );
         }
         if (isNsfw)
@@ -203,6 +228,9 @@ module.exports = class HelpCommand extends Command {
       const emojiMap = {
         [INFO]: `${emojis.info} ${capitalize(INFO)}`,
         [FUN]: `${emojis.fun} ${capitalize(FUN)}`,
+        [UTILS]: `${emojis.utils} ${capitalize(UTILS)}`,
+        [INTERNET]: `${emojis.internet} ${capitalize(INTERNET)}`,
+        [VOICE]: `${emojis.voice} ${capitalize(VOICE)}`,
         [ANIMALS]: `${emojis.animals} ${capitalize(ANIMALS)}`,
         [COLOR]: `${emojis.color} ${capitalize(COLOR)}`,
         [POINTS]: `${emojis.points} ${capitalize(POINTS)}`,
@@ -221,6 +249,9 @@ module.exports = class HelpCommand extends Command {
       const sectionsMap = {
         [INFO]: `${capitalize(INFO)}`,
         [FUN]: `${capitalize(FUN)}`,
+        [UTILS]: `${capitalize(UTILS)}`,
+        [INTERNET]: `${capitalize(INTERNET)}`,
+        [VOICE]: `${capitalize(VOICE)}`,
         [ANIMALS]: `${capitalize(ANIMALS)}`,
         [COLOR]: `${capitalize(COLOR)}`,
         [POINTS]: `${capitalize(POINTS)}`,
@@ -244,7 +275,7 @@ module.exports = class HelpCommand extends Command {
       embed // Build help embed
         .setTitle(`${message.client.user.username}\'s Seccions`)
         .setDescription(
-          stripIndent`
+          stripIndent `
           **Prefix:** \`${prefix}\`
           **More Information for a command:** \`${prefix}help [command]\`
           **Total Commands:** ${size}
@@ -257,15 +288,20 @@ module.exports = class HelpCommand extends Command {
         )
         .setFooter({
           text:
-            !all && size !== total
-              ? "Only showing available categories.\n" +
-                message.member.displayName
-              : message.member.displayName,
-          iconURL: message.author.displayAvatarURL({ dynamic: true }),
+            !all && size !== total ?
+            "Only showing available categories.\n" +
+            message.member.displayName :
+            message.member.displayName,
+          iconURL: message.author.displayAvatarURL({
+            dynamic: true
+          }),
         })
         .setTimestamp()
         .setThumbnail(
-          message.client.user.displayAvatarURL({ dynamic: true, size: 1024 })
+          message.client.user.displayAvatarURL({
+            dynamic: true,
+            size: 1024
+          })
         )
         .setColor(message.guild.me.displayHexColor);
 
@@ -279,26 +315,26 @@ module.exports = class HelpCommand extends Command {
             true
           );
 
-          //Make a object with all the modules
-          /*Example:             {
-              label: "Admin",
-              description: "Admin commands",
-              value: "admin",
-              emoji: `${emojis.admin}`,
-            },
-            */
-            modules_list.push({
-              label: `${capitalize(type)}`,
-              description: `${capitalize(type)} commands`,
-              value: `${capitalize(type)}`,
-              emoji: `${emojiMap[type].split(" ")[0]}`,
-            });
+        //Make a object with all the modules
+        /*Example:             {
+            label: "Admin",
+            description: "Admin commands",
+            value: "admin",
+            emoji: `${emojis.admin}`,
+          },
+          */
+        modules_list.push({
+          label: `${capitalize(type)}`,
+          description: `${capitalize(type)} commands`,
+          value: `${capitalize(type)}`,
+          emoji: `${emojiMap[type].split(" ")[0]}`,
+        });
       }
 
       embed.addField(
         "**Links**",
         `**[Invite Me](https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8) | ` +
-          `[Support Server](${message.client.supportServerInvite}) **`
+        `[Support Server](${message.client.supportServerInvite}) **`
       );
     }
 
@@ -307,27 +343,31 @@ module.exports = class HelpCommand extends Command {
     if (args.length > 0) {
       linkrow = new MessageActionRow().addComponents(
         new MessageButton()
-          .setLabel("Invite Me")
-          .setStyle("LINK")
-          .setURL(
-            `https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8`
-          )
-          .setEmoji("🔗"),
+        .setLabel("Invite Me")
+        .setStyle("LINK")
+        .setURL(
+          `https://discordapp.com/oauth2/authorize?client_id=${message.client.user.id}&scope=bot%20applications.commands&permissions=8`
+        )
+        .setEmoji("🔗"),
         new MessageButton()
-          .setLabel("Support Server")
-          .setStyle("LINK")
-          .setURL(message.client.supportServerInvite)
-          .setEmoji("🛡")
+        .setLabel("Support Server")
+        .setStyle("LINK")
+        .setURL(message.client.supportServerInvite)
+        .setEmoji("🛡")
       );
     } else {
       linkrow = new MessageActionRow().addComponents(
         new MessageSelectMenu()
-          .setCustomId("help-menu")
-          .setPlaceholder("Select a category")
-          .addOptions(modules_list)
+        .setCustomId("help-menu")
+        .setPlaceholder("Select a category")
+        .addOptions(modules_list)
       );
     }
 
-    message.reply({ embeds: [embed], components: [linkrow], ephemeral: true });
+    message.reply({
+      embeds: [embed],
+      components: [linkrow],
+      ephemeral: true
+    });
   }
 };

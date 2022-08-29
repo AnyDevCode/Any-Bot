@@ -1,6 +1,10 @@
 const Button = require("../Button.js");
-const fetch = require("node-fetch");
-const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
+const axios = require("axios");
+const {
+  MessageEmbed,
+  MessageActionRow,
+  MessageButton
+} = require("discord.js");
 
 module.exports = class DogButton extends Button {
   constructor(client) {
@@ -10,14 +14,22 @@ module.exports = class DogButton extends Button {
   }
 
   async run(interaction) {
-    const res = await fetch("https://dog.ceo/api/breeds/image/random");
-    const img = (await res.json()).message;    
+    const res = await axios
+      .get('https://api.any-bot.tech/api/v1/dog')
+      .then((res) => res.data)
+      .catch((err) => {
+        interaction.message.client.logger.error(err.stack);
+        return this.sendErrorMessage(interaction.message, 1, "Please try again in a few seconds", "The API is down");
+      });
+    const img = res.image;
     const embed = new MessageEmbed()
-      .setTitle("🐶  Woof!  🐶")
+      .setTitle('🐶  Woof!  🐶')
       .setImage(img)
       .setFooter({
         text: interaction.user.username,
-        iconURL: interaction.user.displayAvatarURL({ dynamic: true }),
+        iconURL: interaction.user.displayAvatarURL({
+          dynamic: true
+        }),
       })
       .setTimestamp()
       .setColor(
@@ -26,12 +38,15 @@ module.exports = class DogButton extends Button {
 
     const row = new MessageActionRow().addComponents(
       new MessageButton()
-        .setLabel("Another dog")
-        .setStyle("PRIMARY")
-        .setEmoji("🐶")
-        .setCustomId("dog")
+      .setLabel("Another dog")
+      .setStyle("PRIMARY")
+      .setEmoji("🐶")
+      .setCustomId("dog")
     );
 
-    interaction.update({ embeds: [embed], components: [row] });
+    interaction.update({
+      embeds: [embed],
+      components: [row]
+    });
   }
 };

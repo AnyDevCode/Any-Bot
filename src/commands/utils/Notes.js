@@ -15,7 +15,7 @@ module.exports = class NotesCommand extends Command {
       description: oneLine`
       You can add and edit custom notes to your liking or when you need to write something down quickly.
       `,
-      type: client.types.FUN,
+      type: client.types.UTILS,
       examples: ['notes add Buy Nitro', 'notes edit 253 Buy Premiun', 'notes all', 'notes delete 167'],
     });
   }

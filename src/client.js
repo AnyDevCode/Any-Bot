@@ -1,10 +1,18 @@
 // noinspection JSClosureCompilerSyntax
 
 const Discord = require("discord.js");
-const { readdir, readdirSync } = require("fs");
-const { join, resolve } = require("path");
+const {
+  readdir,
+  readdirSync
+} = require("fs");
+const {
+  join,
+  resolve
+} = require("path");
 const AsciiTable = require("ascii-table");
-const { Collection } = require("discord.js");
+const {
+  Collection
+} = require("discord.js");
 
 let queue = new Map();
 let Commands = new Collection();
@@ -25,7 +33,7 @@ class Client extends Discord.Client {
     /**
      * Bot id
      */
-    this.id = config.botID;
+    this.id = process.env.BOTID
 
     /**
      * Create logger
@@ -44,6 +52,9 @@ class Client extends Discord.Client {
     this.types = {
       INFO: "info",
       FUN: "fun",
+      UTILS: "utils",
+      INTERNET: "internet",
+      VOICE: "voice",
       ANIMALS: "animals",
       COLOR: "color",
       POINTS: "points",
@@ -64,6 +75,12 @@ class Client extends Discord.Client {
      * @type {Collection<string, Command>}
      */
     this.commands = new Discord.Collection();
+
+    /**
+     * Collection of bot cooldowns
+     * @type {Collection<string, Date>}
+     */
+    this.cooldowns = new Discord.Collection();
 
     /**
      * Collection of bot slashes
@@ -117,7 +134,7 @@ class Client extends Discord.Client {
      * Api Url
      * @type {string}
      */
-    this.apiUrl = config.apiUrl;
+    this.apiUrl = process.env.APIURL;
 
     /**
      * Bot Stats
@@ -130,7 +147,7 @@ class Client extends Discord.Client {
      * @type {string}
      */
     //Check if the owner ID in the config is a number
-    this.ownerID = config.ownerId;
+    this.ownerID = process.env.OWNERID;
 
     /**
      * Developer's ID
@@ -142,25 +159,25 @@ class Client extends Discord.Client {
      * Any Bot's bug report channel ID
      * @type {string}
      */
-    this.bugReportChannelId = config.bugReportChannelId;
+    this.bugReportChannelId = process.env.BUGREPORTCHANNELID
 
     /**
      * Any Bot's feedback channel ID
      * @type {string}
      */
-    this.feedbackChannelId = config.feedbackChannelId;
+    this.feedbackChannelId = process.env.feedbackChannelId;
 
     /**
      * Any Bot's server log channel ID
      * @type {string}
      */
-    this.serverLogId = config.serverLogId;
+    this.serverLogId = process.env.SERVERLOGID;
 
     /**
      * Any Bot's Support Server Invite
      * @type {string}
      */
-    this.supportServerInvite = config.supportServerInvite;
+    this.supportServerInvite = process.env.SUPPORTSERVERLINK;
 
     /**
      * Any Bot's Version
@@ -365,24 +382,24 @@ class Client extends Discord.Client {
       files = files.filter((f) => f.split(".").pop() === "js");
       if (files.length === 0) return this.logger.warn("No events found");
       this.logger.info(`${files.length} event(s) found...`);
-        files.forEach((f) => {
-          const event = require(resolve(__basedir, join(path, f)));
-          if (event.once) {
-            super.once(event.name, (...args) =>
-              event.execute(...args, Slashes)
+      files.forEach((f) => {
+        const event = require(resolve(__basedir, join(path, f)));
+        if (event.once) {
+          super.once(event.name, (...args) =>
+            event.execute(...args, Slashes)
+          );
+        } else {
+          if (event.name === "interactionCreate") {
+            super.on(event.name, (...args) =>
+              event.execute(...args, Slashes, Commands, client, player)
             );
           } else {
-            if (event.name === "interactionCreate") {
-              super.on(event.name, (...args) =>
-                event.execute(...args, Slashes, Commands, client, player)
-              );
-            } else {
-              super.on(event.name, (...args) =>
-                event.execute(...args, Commands, client, player)
-              );
-            }
+            super.on(event.name, (...args) =>
+              event.execute(...args, Commands, client, player)
+            );
           }
-        });
+        }
+      });
     });
     return this;
   }
@@ -456,21 +473,25 @@ class Client extends Discord.Client {
       !systemChannel ||
       !systemChannel.viewable ||
       !systemChannel
-        .permissionsFor(guild.me)
-        .has(["SEND_MESSAGES", "EMBED_LINKS"])
+      .permissionsFor(guild.me)
+      .has(["SEND_MESSAGES", "EMBED_LINKS"])
     )
       return;
 
     const embed = new Discord.MessageEmbed()
       .setAuthor({
         name: `${this.user.tag}`,
-        iconURL: this.user.displayAvatarURL({ dynamic: true }),
+        iconURL: this.user.displayAvatarURL({
+          dynamic: true
+        }),
       })
       .setTitle(`${fail} System Error: \`${error}\``)
       .setDescription(`\`\`\`diff\n- System Failure\n+ ${errorMessage}\`\`\``)
       .setTimestamp()
       .setColor(guild.me.displayHexColor);
-    systemChannel.send({ embeds: [embed] });
+    systemChannel.send({
+      embeds: [embed]
+    });
   }
 
   setTimeout_(fn, delay) {

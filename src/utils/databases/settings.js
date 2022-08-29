@@ -91,24 +91,24 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
     },
     welcomeMessage: {
         type: Array,
-        default: [
-            {
-                type: "message",
-                data: {text: "Welcome ?member to ?guild !"}
+        default: [{
+            type: "message",
+            data: {
+                text: "Welcome ?member to ?guild !"
             }
-        ]
+        }]
     },
     farewellChannelID: {
         type: String,
     },
     farewellMessage: {
         type: Array,
-        default: [
-            {
-                type: "message",
-                data: {text: "Goodbye ?member !"}
+        default: [{
+            type: "message",
+            data: {
+                text: "Goodbye ?member !"
             }
-        ]
+        }]
     },
     pointTracking: {
         type: Number,
@@ -166,25 +166,41 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
     },
     crownMessage: {
         type: Array,
-        default: [
-            {
-                type: "message",
-                data: {text: "?member has won ?role this week! Points have been reset, better lick next time!"}
+        default: [{
+            type: "message",
+            data: {
+                text: "?member has won ?role this week! Points have been reset, better lick next time!"
             }
-        ]
+        }]
     },
     crownSchedule: {
         type: String,
         default: "0 21 * * 5"
+    },
+    antiPhishing: {
+        type: Boolean,
+        default: false
+    },
+    antiPhishingSystem: {
+        type: Number,
+        default: 1
+    },
+    antiPhishingLogsChannelID: {
+        type: String,
+    },
+
+    language: {
+        type: String,
+        default: "en"
     }
 }));
 
 module.exports = {
-    async insertRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id){
+    async insertRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id) {
         //Check if the guild is already in the table
 
         let row = await this.selectRow(guildID);
-        if(row){
+        if (row) {
             //If it is, update the row
             await this.updateRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id);
         } else {
@@ -210,17 +226,21 @@ module.exports = {
         }
     },
 
-    async selectRow(guildID){
+    async selectRow(guildID) {
         try {
-            return await Guild.findOne({guildID: guildID});
+            return await Guild.findOne({
+                guildID: guildID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id){
+    async updateRow(guildID, guildName, system_channel_id, welcome_channel_id, farewell_channel_id, crown_channel_id, xp_channel_id, mod_log_id, admin_role_id, mod_role_id, mute_role_id, crown_role_id) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
                 guildName: guildName,
                 systemChannelID: system_channel_id,
                 welcomeChannelID: welcome_channel_id,
@@ -238,651 +258,876 @@ module.exports = {
         }
     },
 
-    async updatesqlitetomongo(guildID, guildName, prefix, system_channel_id, starboard_channel_id, admin_role_id, mod_role_id, muted_role_id, auto_role_id, auto_kick, auto_ban, random_color, mod_channel_id, disabled_commands, mod_log_id, member_log_id, nickname_log_id, role_log_id, message_edit_log_id, message_delete_log_id, verification_role_id, verification_channel_id, verification_message, verification_message_id, verification_level, welcome_channel_id, welcome_message, farewell_channel_id, farewell_message, point_tracking, message_points, command_points, voice_points, xp_tracking, message_xp, command_xp, voice_xp, xp_message_action, xp_channel_id, crown_role_id, crown_channel_id, crown_message, crown_schedule){
-        try {
-            let row = await this.selectRow(guildID);
-
-            if(row) {
-                await Guild.updateOne({guildID: guildID}, {
-                    guildID: guildID,
-                    guildName: guildName,
-                    prefix: prefix,
-                    systemChannelID: system_channel_id,
-                    starboardChannelID: starboard_channel_id,
-                    adminRoleID: admin_role_id,
-                    modRoleID: mod_role_id,
-                    mutedRoleID: muted_role_id,
-                    autoRoleID: auto_role_id,
-                    autoKick: auto_kick,
-                    autoBan: auto_ban,
-                    randomColor: random_color,
-                    modChannelID: mod_channel_id,
-                    disabledCommands: disabled_commands,
-                    modLogID: mod_log_id,
-                    memberLogID: member_log_id,
-                    nicknameLogID: nickname_log_id,
-                    roleLogID: role_log_id,
-                    messageEditLogID: message_edit_log_id,
-                    messageDeleteLogID: message_delete_log_id,
-                    verificationRoleID: verification_role_id,
-                    verificationChannelID: verification_channel_id,
-                    verificationMessage: verification_message,
-                    verificationMessageID: verification_message_id,
-                    verificationLevel: verification_level,
-                    welcomeChannelID: welcome_channel_id,
-                    welcomeMessage: welcome_message,
-                    farewellChannelID: farewell_channel_id,
-                    farewellMessage: farewell_message,
-                    pointTracking: point_tracking,
-                    messagePoints: message_points,
-                    commandPoints: command_points,
-                    voicePoints: voice_points,
-                    xpTracking: xp_tracking,
-                    messageXP: message_xp,
-                    commandXP: command_xp,
-                    voiceXP: voice_xp,
-                    xpMessageAction: xp_message_action,
-                    xpChannelID: xp_channel_id,
-                    crownRoleID: crown_role_id,
-                    crownChannelID: crown_channel_id,
-                    crownMessage: crown_message,
-                    crownSchedule: crown_schedule
-                });
-            } else {
-                const guild = await new Guild({
-                    guildID: guildID,
-                    guildName: guildName,
-                    prefix: prefix,
-                    systemChannelID: system_channel_id,
-                    starboardChannelID: starboard_channel_id,
-                    adminRoleID: admin_role_id,
-                    modRoleID: mod_role_id,
-                    mutedRoleID: muted_role_id,
-                    autoRoleID: auto_role_id,
-                    autoKick: auto_kick,
-                    autoBan: auto_ban,
-                    randomColor: random_color,
-                    modChannelID: mod_channel_id,
-                    disabledCommands: disabled_commands,
-                    modLogID: mod_log_id,
-                    memberLogID: member_log_id,
-                    nicknameLogID: nickname_log_id,
-                    roleLogID: role_log_id,
-                    messageEditLogID: message_edit_log_id,
-                    messageDeleteLogID: message_delete_log_id,
-                    verificationRoleID: verification_role_id,
-                    verificationChannelID: verification_channel_id,
-                    verificationMessage: verification_message,
-                    verificationMessageID: verification_message_id,
-                    verificationLevel: verification_level,
-                    welcomeChannelID: welcome_channel_id,
-                    welcomeMessage: welcome_message,
-                    farewellChannelID: farewell_channel_id,
-                    farewellMessage: farewell_message,
-                    pointTracking: point_tracking,
-                    messagePoints: message_points,
-                    commandPoints: command_points,
-                    voicePoints: voice_points,
-                    xpTracking: xp_tracking,
-                    messageXP: message_xp,
-                    commandXP: command_xp,
-                    voiceXP: voice_xp,
-                    xpMessageAction: xp_message_action,
-                    xpChannelID: xp_channel_id,
-                    crownRoleID: crown_role_id,
-                    crownChannelID: crown_channel_id,
-                    crownMessage: crown_message,
-                    crownSchedule: crown_schedule
-                });
-                await guild.save();
-            }
-        } catch (error) {
-            __Client.logger.error(error);
-        }
-    },
-
-    async selectGuilds(){
+    async selectGuilds() {
         try {
             //Select all rows from the table, only the guildID and guildName
-            return await Guild.find({}, {guildID: 1, guildName: 1});
+            return await Guild.find({}, {
+                guildID: 1,
+                guildName: 1
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async deleteGuild(guildID){
+    async deleteGuild(guildID) {
         try {
-            return await Guild.deleteOne({guildID: guildID});
+            return await Guild.deleteOne({
+                guildID: guildID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateGuildName(guildName, guildID){
+    async updateGuildName(guildName, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {guildName: guildName});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                guildName: guildName
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectDisabledCommands(guildID){
+    async selectDisabledCommands(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {disabledCommands: 1})).disabledCommands;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                disabledCommands: 1
+            })).disabledCommands;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectPoints(guildID){
+    async selectPoints(guildID) {
         try {
-            return await Guild.findOne({guildID: guildID});
+            return await Guild.findOne({
+                guildID: guildID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectXP(guildID){
+    async selectXP(guildID) {
         try {
-            return await Guild.findOne({guildID: guildID});
+            return await Guild.findOne({
+                guildID: guildID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectPrefix(guildID){
+    async selectPrefix(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {prefix: 1})).prefix;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                prefix: 1
+            })).prefix;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectModChannelIds(guildID){
+    async selectModChannelIds(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {modChannelIDs: 1})).modChannelIDs;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                modChannelIDs: 1
+            })).modChannelIDs;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectMessageDeleteLogId(guildID){
+    async selectMessageDeleteLogId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {messageDeleteLogID: 1})).messageDeleteLogID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                messageDeleteLogID: 1
+            })).messageDeleteLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
 
-    async selectVerificationChannelId(guildID){
+    async selectVerificationChannelId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {verificationChannelID: 1})).verificationChannelID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                verificationChannelID: 1
+            })).verificationChannelID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectStarboardChannelId(guildID){
+    async selectStarboardChannelId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {starboardChannelID: 1})).starboardChannelID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                starboardChannelID: 1
+            })).starboardChannelID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateModChannelIds(modChannelIDs, guildID){
+    async updateModChannelIds(modChannelIDs, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {modChannelIDs: modChannelIDs})
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                modChannelIDs: modChannelIDs
+            })
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectAutoBan(guildID){
+    async selectAutoBan(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {autoBan: 1})).autoBan;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                autoBan: 1
+            })).autoBan;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateAutoBan(autoBan, guildID){
+    async updateAutoBan(autoBan, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {autoBan: autoBan});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                autoBan: autoBan
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectAdminRoleId(guildID){
+    async selectAdminRoleId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {adminRoleID: 1})).adminRoleID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                adminRoleID: 1
+            })).adminRoleID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateAdminRoleId(adminRoleID, guildID){
+    async updateAdminRoleId(adminRoleID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {adminRoleID: adminRoleID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                adminRoleID: adminRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectAutoKick(guildID){
+    async selectAutoKick(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {autoKick: 1})).autoKick;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                autoKick: 1
+            })).autoKick;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateAutoKick(autoKick, guildID){
+    async updateAutoKick(autoKick, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {autoKick: autoKick});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                autoKick: autoKick
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectAutoRoleId(guildID){
+    async selectAutoRoleId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {autoRoleID: 1})).autoRoleID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                autoRoleID: 1
+            })).autoRoleID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateAutoRoleId(autoRoleID, guildID){
+    async updateAutoRoleId(autoRoleID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {autoRoleID: autoRoleID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                autoRoleID: autoRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCommandXP(commandXP, guildID){
+    async updateCommandXP(commandXP, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {commandXP: commandXP});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                commandXP: commandXP
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCommandPoints(commandPoints, guildID){
+    async updateCommandPoints(commandPoints, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {commandPoints: commandPoints});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                commandPoints: commandPoints
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCrownChannelId(crownChannelID, guildID){
+    async updateCrownChannelId(crownChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {crownChannelID: crownChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                crownChannelID: crownChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCrownMessage(crownMessage, guildID){
+    async updateCrownMessage(crownMessage, guildID) {
 
         let message = [];
         message[0] = {
             type: "message",
-            data:{
+            data: {
                 text: crownMessage
             }
         }
 
         try {
-            return await Guild.updateOne({guildID: guildID}, {crownMessage: message});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                crownMessage: message
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCrownRoleId(crownRoleID, guildID){
+    async updateCrownRoleId(crownRoleID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {crownRoleID: crownRoleID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                crownRoleID: crownRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateCrownSchedule(crownSchedule, guildID){
+    async updateCrownSchedule(crownSchedule, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {crownSchedule: crownSchedule});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                crownSchedule: crownSchedule
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateFarewellChannelId(farewellChannelID, guildID){
+    async updateFarewellChannelId(farewellChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {farewellChannelID: farewellChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                farewellChannelID: farewellChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateFarewellMessage(farewellMessage, guildID){
+    async updateFarewellMessage(farewellMessage, guildID) {
 
         try {
-            return await Guild.updateOne({guildID: guildID}, {farewellMessage: [
-                {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                farewellMessage: [{
                     type: "message",
-                    data: {text: farewellMessage}
-                }
-            ]});
+                    data: {
+                        text: farewellMessage
+                    }
+                }]
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
-    async selectMemberLogId(guildID){
+    async selectMemberLogId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {memberLogID: 1})).memberLogID;
-        } catch (error) {
-            __Client.logger.error(error);
-        }
-    },
-
-    async updateMemberLogId(memberLogID, guildID){
-        try {
-            return await Guild.updateOne({guildID: guildID}, {memberLogID: memberLogID});
-        } catch (error) {
-            __Client.logger.error(error);
-        }
-    },
-
-    async selectMessageDeleteLogId(guildID){
-        try {
-            return (await Guild.findOne({guildID: guildID}, {messageDeleteLogID: 1})).messageDeleteLogID;
-        } catch (error) {
-            __Client.logger.error(error);
-        }
-    },
-    async updateMessageDeleteLogId(messageDeleteLogID, guildID){
-        try {
-            return await Guild.updateOne({guildID: guildID}, {messageDeleteLogID: messageDeleteLogID});
-        }
-        catch (error) {
-            __Client.logger.error(error);
-        }
-    },
-
-    async selectMessageEditLogId(guildID){
-        try {
-            return (await Guild.findOne({guildID: guildID}, {messageEditLogID: 1})).messageEditLogID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                memberLogID: 1
+            })).memberLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateMessageEditLogId(messageEditLogID, guildID){
+    async updateMemberLogId(memberLogID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {messageEditLogID: messageEditLogID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                memberLogID: memberLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateMessagePoints(messagePoints, guildID){
+    async selectMessageDeleteLogId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {messagePoints: messagePoints});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                messageDeleteLogID: 1
+            })).messageDeleteLogID;
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+    async updateMessageDeleteLogId(messageDeleteLogID, guildID) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                messageDeleteLogID: messageDeleteLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateMessageXP(messageXP, guildID){
+    async selectMessageEditLogId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {messageXP: messageXP});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                messageEditLogID: 1
+            })).messageEditLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectModLogId(guildID){
+    async updateMessageEditLogId(messageEditLogID, guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {modLogID: 1})).modLogID;
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                messageEditLogID: messageEditLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateModLogId(modLogID, guildID){
+    async updateMessagePoints(messagePoints, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {modLogID: modLogID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                messagePoints: messagePoints
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectModRoleId(guildID){
+    async updateMessageXP(messageXP, guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {modRoleID: 1})).modRoleID;
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                messageXP: messageXP
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateModRoleId(modRoleID, guildID){
+    async selectModLogId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {modRoleID: modRoleID});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                modLogID: 1
+            })).modLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectMuteRoleId(guildID){
+    async updateModLogId(modLogID, guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {mutedRoleID: 1})).mutedRoleID;
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                modLogID: modLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateMuteRoleId(mutedRoleID, guildID){
+    async selectModRoleId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {mutedRoleID: mutedRoleID});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                modRoleID: 1
+            })).modRoleID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectNicknameLogId(guildID){
+    async updateModRoleId(modRoleID, guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {nicknameLogID: 1})).nicknameLogID;
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                modRoleID: modRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateNicknameLogId(nicknameLogID, guildID){
+    async selectMuteRoleId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {nicknameLogID: nicknameLogID});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                mutedRoleID: 1
+            })).mutedRoleID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updatePrefix(prefix, guildID){
+    async updateMuteRoleId(mutedRoleID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {prefix: prefix});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                mutedRoleID: mutedRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectRoleLogId(guildID){
+    async selectNicknameLogId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {roleLogID: 1})).roleLogID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                nicknameLogID: 1
+            })).nicknameLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateRoleLogId(roleLogID, guildID){
+    async updateNicknameLogId(nicknameLogID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {roleLogID: roleLogID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                nicknameLogID: nicknameLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateStarboardChannelId(starboardChannelID, guildID){
+    async updatePrefix(prefix, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {starboardChannelID: starboardChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                prefix: prefix
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectSystemChannelId(guildID){
+    async selectRoleLogId(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {systemChannelID: 1})).systemChannelID;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                roleLogID: 1
+            })).roleLogID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateSystemChannelId(systemChannelID, guildID){
+    async updateRoleLogId(roleLogID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {systemChannelID: systemChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                roleLogID: roleLogID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVerificationMessage(verificationMessage, guildID){
+    async updateStarboardChannelId(starboardChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {verificationMessage: verificationMessage});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                starboardChannelID: starboardChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVerificationMessageId(verificationMessageID, guildID){
+    async selectSystemChannelId(guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {verificationMessageID: verificationMessageID});
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                systemChannelID: 1
+            })).systemChannelID;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVerificationChannelId(verificationChannelID, guildID){
+    async updateSystemChannelId(systemChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {verificationChannelID: verificationChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                systemChannelID: systemChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVerificationRoleId(verificationRoleID, guildID){
+    async updateVerificationMessage(verificationMessage, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {verificationRoleID: verificationRoleID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                verificationMessage: verificationMessage
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVoicePoints(voicePoints, guildID){
+    async updateVerificationMessageId(verificationMessageID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {voicePoints: voicePoints});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                verificationMessageID: verificationMessageID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateVoiceXP(voiceXP, guildID){
+    async updateVerificationChannelId(verificationChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {voiceXP: voiceXP});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                verificationChannelID: verificationChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateWelcomeChannelId(welcomeChannelID, guildID){
+    async updateVerificationRoleId(verificationRoleID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {welcomeChannelID: welcomeChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                verificationRoleID: verificationRoleID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateWelcomeMessage(welcomeMessage, guildID){
+    async updateVoicePoints(voicePoints, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {welcomeMessage: [
-                {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                voicePoints: voicePoints
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateVoiceXP(voiceXP, guildID) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                voiceXP: voiceXP
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateWelcomeChannelId(welcomeChannelID, guildID) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                welcomeChannelID: welcomeChannelID
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateWelcomeMessage(welcomeMessage, guildID) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                welcomeMessage: [{
                     type: "message",
-                    data: {text: welcomeMessage}
-                }
-            ]});
+                    data: {
+                        text: welcomeMessage
+                    }
+                }]
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async selectRandomColor(guildID){
+    async selectRandomColor(guildID) {
         try {
-            return (await Guild.findOne({guildID: guildID}, {randomColor: 1})).randomColor;
+            return (await Guild.findOne({
+                guildID: guildID
+            }, {
+                randomColor: 1
+            })).randomColor;
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateXPChannelId(xpChannelID, guildID){
+    async updateXPChannelId(xpChannelID, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {xpChannelID: xpChannelID});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                xpChannelID: xpChannelID
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateDisabledCommands(disabledCommands, guildID){
+    async updateDisabledCommands(disabledCommands, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {disabledCommands: disabledCommands});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                disabledCommands: disabledCommands
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updatePointTracking(pointTracking, guildID){
+    async updatePointTracking(pointTracking, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {pointTracking: pointTracking});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                pointTracking: pointTracking
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateRandomColor(randomColor, guildID){
+    async updateRandomColor(randomColor, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {randomColor: randomColor});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                randomColor: randomColor
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateXPTracking(xpTracking, guildID){
+    async updateXPTracking(xpTracking, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {xpTracking: xpTracking});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                xpTracking: xpTracking
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
-    async updateXPChannelMessage(xpChannelMessage, guildID){
+    async updateXPChannelMessage(xpChannelMessage, guildID) {
         try {
-            return await Guild.updateOne({guildID: guildID}, {xpMessageAction: xpChannelMessage});
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                xpMessageAction: xpChannelMessage
+            });
         } catch (error) {
             __Client.logger.error(error);
         }
     },
 
+    async antiPhishing(guildID) {
+        try {
+            return (await Guild.findOne({
+                guildID: guildID
+            })).antiPhishing;
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateAntiPhishing(guildID, boolean) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                antiPhishing: boolean
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async antiPhishingSystem(guildID) {
+        try {
+            return await Guild.findOne({
+                guildID: guildID
+            }, {
+                antiPhishingSystem: 1
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateAntiPhishingSystem(guildID, number) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                antiPhishingSystem: number
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async antiPhishingLogsChannelID(guildID) {
+        try {
+            return await Guild.findOne({
+                guildID: guildID
+            }, {
+                antiPhishingLogsChannelID: 1
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async updateAntiPhishingLogsChannelID(guildID, channelID) {
+        try {
+            return await Guild.updateOne({
+                guildID: guildID
+            }, {
+                antiPhishingLogsChannelID: channelID
+            });
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
+
+    async getLanguage(guildID) {
+        try {
+            return (await Guild.findOne({
+                guildID: guildID
+            })).language || "en";
+        } catch (error) {
+            __Client.logger.error(error);
+        }
+    },
 }
-
-
-

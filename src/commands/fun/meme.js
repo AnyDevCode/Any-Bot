@@ -1,6 +1,8 @@
 const Command = require('../Command.js');
-const { MessageEmbed } = require('discord.js');
-const fetch = require('node-fetch');
+const {
+  MessageEmbed
+} = require('discord.js');
+const axios = require("axios");
 
 module.exports = class MemeCommand extends Command {
   constructor(client) {
@@ -12,22 +14,25 @@ module.exports = class MemeCommand extends Command {
     });
   }
   async run(message) {
-    try {
-      let res = await fetch('https://meme-api.herokuapp.com/gimme');
-      res = await res.json();
+      let res = await axios.get("https://meme-api.herokuapp.com/gimme")
+        .then((res) => res.data)
+        .catch((err) => {
+          message.client.logger.error(err.stack);
+          return this.sendErrorMessage(message, 1, "Please try again in a few seconds", "The API is down");
+        });
       const embed = new MessageEmbed()
         .setTitle(res.title)
         .setImage(res.url)
         .setFooter({
           text: message.member.displayName,
-          icon_url: message.author.displayAvatarURL({ dynamic: true })
+          icon_url: message.author.displayAvatarURL({
+            dynamic: true
+          })
         })
         .setTimestamp()
         .setColor(message.guild.me.displayHexColor);
-      message.channel.send({embeds:[embed]});
-    } catch (err) {
-      message.client.logger.error(err.stack);
-      await this.sendErrorMessage(message, 1, 'Please try again in a few seconds', err.message);
-    }
+      message.channel.send({
+        embeds: [embed]
+      });
   }
 };

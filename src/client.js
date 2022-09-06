@@ -13,6 +13,9 @@ const AsciiTable = require("ascii-table");
 const {
   Collection
 } = require("discord.js");
+const {
+  proc
+} = require("node-os-utils");
 
 let queue = new Map();
 let Commands = new Collection();
@@ -24,10 +27,9 @@ const Slashes = [];
 class Client extends Discord.Client {
   /**
    * Create a new client
-   * @param {Object} config
    * @param {{intents: intents}} options
    */
-  constructor(config, options = {}) {
+  constructor(options = {}) {
     super(options);
 
     /**
@@ -128,7 +130,23 @@ class Client extends Discord.Client {
      * API keys
      * @type {Object}
      */
-    this.apiKeys = config.apiKeys;
+    this.apiKeys = {
+      "catApi": process.env.CATAPI,
+      "googleApi": process.env.GOOGLEAPI,
+      "fortniteshopApi": process.env.FORTNITESHOPAPI,
+      "fortniteApi": process.env.FORTNITEAPI,
+      "geometrydash": {
+        "user": process.env.GEOMETRYDASHUSER,
+        "password": process.env.GEOMETRYDASHPASSWORD
+      },
+      "somerandomapikey": process.env.SOMERANDOMAPIKEY,
+      "openweathermap": process.env.OPENWEATHERMAP,
+      "nasaapi": process.env.NASAAPI,
+      "uberduckapi_key": process.env.UBERDUCKAPI_KEY,
+      "uberduckapi_secret": process.env.UBERDUCKAPI_SECRET,
+      "osuapikey": process.env.OSUAPIKEY,
+      "customAPIKey": process.env.CUSTOMAPIKEY,
+    }
 
     /**
      * Api Url
@@ -140,7 +158,9 @@ class Client extends Discord.Client {
      * Bot Stats
      * @type {Object}
      */
-    this.statsChannels = config.botStats;
+    this.statsChannels = {
+      "guilds_channel": process.env.BOTSTATS_GUILDS
+    };
 
     /**
      * Any Bot's owner ID
@@ -153,7 +173,12 @@ class Client extends Discord.Client {
      * Developer's ID
      * @type {array}
      */
-    this.developerID = config.developers;
+    // All the developers IDs in an env file, the developer id is a field with starting with DEVELOPERID_
+    this.developerID =
+      Object.keys(process.env)
+      .filter(key => key.startsWith("DEVELOPERID_"))
+      .map(key => process.env[key]);
+
 
     /**
      * Any Bot's bug report channel ID

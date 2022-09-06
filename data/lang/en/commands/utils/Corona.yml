@@ -1,15 +1,15 @@
 errors:
-  country_not_found: '***%{country}*** does not exist, or there is no data on the selected country.'
+  country_not_found: "***%{country}*** does not exist, or there is no data on the selected country."
 messages:
-  one_country_stats: 'Stats for ***%{country}***'
-  all_world_stats: 'Total Corona cases in the world'
-fields: 
-    total_cases: 'Total cases:'
-    total_deaths: 'Total deaths:'
-    total_recovered: 'Total recovered:'
-    active_cases: 'Active cases:'
-    total_tests: 'Total tests:'
-    critical_cases: 'Critical cases:'
-    new_recovered_today: 'New recovered today:'
-    new_cases_today: 'New cases today:'
-    new_deaths_today: 'New deaths today:'
+  one_country_stats: "Stats for ***%{country}***"
+  all_world_stats: "Total Corona cases in the world"
+fields:
+  total_cases: "Total cases:"
+  total_deaths: "Total deaths:"
+  total_recovered: "Total recovered:"
+  active_cases: "Active cases:"
+  total_tests: "Total tests:"
+  critical_cases: "Critical cases:"
+  new_recovered_today: "New recovered today:"
+  new_cases_today: "New cases today:"
+  new_deaths_today: "New deaths today:"

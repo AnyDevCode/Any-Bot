@@ -23,7 +23,7 @@ module.exports = {
             If you want to know more about me, use the command \`@${client.user.username} help\` in a server.
             For more information about me, check out my [GitHub](https://github.com/MDCYT/Any-Bot).
             For Support and help, join the [Support Server](https://discord.gg/5UyuwbNu8j).
-            For Terms and Conditions, visit the [Terms and Conditions](https://any-bot.tech/tos).
+            For Terms and Conditions, visit the [Terms and Conditions](https://any-bot.xyz/tos).
             `
           )
           .setFooter({

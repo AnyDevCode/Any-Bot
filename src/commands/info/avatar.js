@@ -44,11 +44,11 @@ module.exports = class AvatarCommand extends Command {
     
     if (customavatar) {
       embed2 = new MessageEmbed();
-      embed2.setURL("https://any-bot.tech");
+      embed2.setURL("https://any-bot.xyz");
       embed2.setImage(customavatar);
 
       embed.addField("Download Custom Avatar", `[Click here](${customavatar})`);
-      embed.setURL("https://any-bot.tech");
+      embed.setURL("https://any-bot.xyz");
     }
 
     if (embed2) {

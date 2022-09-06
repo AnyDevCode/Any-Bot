@@ -11,7 +11,7 @@ module.exports = class BearButton extends Button {
 
   async run(interaction) {
     const res = await axios
-        .get("https://api.any-bot.tech/api/v1/bear")
+        .get("https://api.any-bot.xyz/api/v1/bear")
         .then((res) => res.data)
         .catch((err) => {
           interaction.message.client.logger.error(err.stack);

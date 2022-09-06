@@ -36,7 +36,7 @@ module.exports = class SetFarewellMessageCommand extends Command {
         .setLabel("Dashboard")
         .setStyle("LINK")
         .setURL(
-          `https://dashboard.any-bot.tech/guild/${message.guild.id}`
+          `https://dashboard.any-bot.xyz/guild/${message.guild.id}`
         )
         .setEmoji("🔗"),
       );
@@ -47,11 +47,11 @@ module.exports = class SetFarewellMessageCommand extends Command {
         .setTitle('Setting Farewell Message')
         .setDescription(
           oneLine `
-              This command was moved to the [dashboard](https://dashboard.any-bot.tech).
+              This command was moved to the [dashboard](https://dashboard.any-bot.xyz).
               Please use the link below to set your farewell message.
               `
         )
-        .setURL('https://dashboard.any-bot.tech/settings')
+        .setURL('https://dashboard.any-bot.xyz/settings')
         .setColor(message.guild.me.displayHexColor)
         .setTimestamp()
         .setFooter({

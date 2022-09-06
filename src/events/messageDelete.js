@@ -110,20 +110,20 @@ module.exports = {
                 if (embed3) {
                   if (!embed4) {
                     embed4 = new MessageEmbed();
-                    embed4.setURL("https://any-bot.tech");
+                    embed4.setURL("https://any-bot.xyz");
                     embed4.setImage(attachment);
                   }
                 } else {
                   embed3 = new MessageEmbed();
-                  embed3.setURL("https://any-bot.tech");
+                  embed3.setURL("https://any-bot.xyz");
                   embed3.setImage(attachment);
                 }
               } else {
                 embed2 = new MessageEmbed();
-                embed2.setURL("https://any-bot.tech");
+                embed2.setURL("https://any-bot.xyz");
                 embed2.setImage(attachment);
 
-                embed.setURL("https://any-bot.tech");
+                embed.setURL("https://any-bot.xyz");
               }
             } else {
               image = attachment;

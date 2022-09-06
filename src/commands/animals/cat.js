@@ -17,7 +17,7 @@ module.exports = class CatCommand extends Command {
   }
   async run(message) {
     const res = await axios
-      .get("https://api.any-bot.tech/api/v1/cat")
+      .get("https://api.any-bot.xyz/api/v1/cat")
       .then((res) => res.data)
       .catch((err) => {
         message.client.logger.error(err.stack);

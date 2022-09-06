@@ -15,7 +15,7 @@ module.exports = class FoxButton extends Button {
 
   async run(interaction) {
     const res = await axios
-      .get('https://api.any-bot.tech/api/v1/fox')
+      .get('https://api.any-bot.xyz/api/v1/fox')
       .then((res) => res.data)
       .catch((err) => {
         interaction.message.client.logger.error(err.stack);

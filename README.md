@@ -97,52 +97,30 @@ git clone https://github.com/MDCYT/Any-Bot.git
 After cloning, run an
 
 ```  
-npm install  
-```  
-After installation edit the ` config-example.json`
-
-```json  
-{
-  "developers": [  
-        "Only if you have developers",
-        "Only if you have more of 1 developer" 
-  ],
-  "botStats":{  
-      "guilds_channel": "Your_Guilds_Channel_Stats_Bot"  //A voice channel where the number of servers that use the bot will be displayed (optional)
-  },  
-  "apiKeys": {  
-  "googleApi": "Google_Api_Key",  //Obtain a key in https://console.developers.google.com/ (Only affect the Youtube Command)
-  "fortniteshopApi": "Fortnite_Shop_Key", //Obtain a key in https://fnbr.co/api/docs (Only affect the Fortnite Shop command)
-  "fortniteApi": "Fortnite_Api_Key",  //Obtain a key in https://fortnitetracker.com/site-api (Only affect the Fortnite User command)
-  "geometrydash": {  
-      "user": "Username",  //Geometry Dash User
-	  "password": "Password"  //Geometry Dash Password
-  },  //(Only affect the GD User command)
-  "openweathermap": "OpenWatherMap_Api_Key",  //Obtain a key in  https://openweathermap.org/api (Only affect the Weather command)
-  "nasaapi": "Nasa_Api_Key",  //Obtain a key in https://api.nasa.gov/ (Only affect the APOD command)
-  "uberduckapi_key": "UberDuck_Api_Key",  //Obtain a key in https://uberduck.ai/account/manage (Only affect the IAVoice command)
-  "uberduckapi_secret": "UberDuck_Api_Secret",//Obtain a key in https://uberduck.ai/account/manage (Only affect the IAVoice command)  
-  "osuapikey": "Osu_Api_Key"  //Obtain a key in https://osu.ppy.sh/p/api (Only affect the IAVoice command)  
-  },  
-  "botlist": false  //Only active this if your bot is in a Bot list (Edit this in src/utils/botlist.js)
-  } 
-```  
-After editing the `config-example.json` , rename to `config.json`
+npm install
+```
 
 Now, edit the ` .env-example`
 
 ``` dotenv
-TOKEN=Your_Bot_Token
-BOTID=Your_Bot_ID
-OWNERID=Your_Discord_ID
-GUILD_ID=Your_Guild_ID
-ENV=production #This will define if the slash commands are put or not
-MONGODB_URL=Your_MongoDB_URL
 APIURL="https://api.any-bot.xyz/api/v1" #You can crate you own API if you want to, check https://github.com/MDCYT/Any-Api
 SUPPORTSERVERLINK= "https://discord.gg/efZ8bQYwnN" #This is the link to the support server
 SERVERLOGID=Your_Server_Log_Channel_ID #This is the id of the channel where the server logs will be sent
 BUGREPORTCHANNELID=Your_Bug_Report_Channel_ID
 FEEDBACKCHANNELID=Your_Feedback_Channel_ID
+BOTLIST=false # This will define if the bot will post the bot stats to the bot lists or not, you can edit the bot lists in the blapi.json file
+GOOGLEAPI="API_KEY" # Obtain a key in https://console.developers.google.com/ (Only affect the Youtube Command)
+FORTNITESHOPAPI="API_KEY" # Obtain a key in https://fnbr.co/api/docs (Only affect the Fortnite Shop Command)
+FORTNITEAPI="API_KEY" # Obtain a key in https://fortnitetracker.com/site-api (Only affect the Fortnite Stats Command)
+GEOMETRYDASHUSER="USERNAME" # Obtain a username in Geometry Dash (Only affect the Geometry Dash Command)
+GEOMETRYDASHPASSWORD="PASSWORD" # Obtain a password in Geometry Dash (Only affect the Geometry Dash Command)
+SOMERANDOMAPIKEY="API_KEY" # Obtain a key in https://some-random-api.ml/ (Only affect the Some Random API Command)
+OPENWEATHERMAP="API_KEY" # Obtain a key in https://openweathermap.org/api (Only affect the Weather Command)
+NASAAPI="API_KEY" # Obtain a key in https://api.nasa.gov/ (Only affect the NASA Command)
+UBERDUCKAPI_KEY="API_KEY" # Obtain a key in https://api.uberduck.ai/ (Only affect the Uber Duck Command)
+UBERDUCKAPI_SECRET="API_SECRET" # Obtain a secret in https://api.uberduck.ai/ (Only affect the Uber Duck Command)
+OSUAPIKEY="API_KEY" # Obtain a key in https://osu.ppy.sh/p/api/ (Only affect the Osu Command)
+CUSTOMAPIKEY="API_KEY" # Obtain a key in https://api.any-bot.xyz/ (Only affect the Custom API Command)
 ``` 
 After editing the `.env-example` , rename to `.env`
 

@@ -1,0 +1,8 @@
+errors:
+  dont_provided_level: "Please provide a level System"
+  dont_provided_level_2: "Please provide a valid level System"
+  already_set: "The anti-phishing system is already set to this level"
+fields:
+  name: "Level"
+  title: "Settings: `System`"
+  description: "`The anti-phishing system has been successfully set to level **%{level}**. %{success}`"

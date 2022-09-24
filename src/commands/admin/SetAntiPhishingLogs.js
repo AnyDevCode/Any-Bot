@@ -26,18 +26,20 @@ module.exports = class SetAntiPhishingLogsCommand extends Command {
   }
   async run(message, args) {
 
+    const lang_text = this.getLanguage();
+
     let {
       antiPhishingLogsChannelID
     } = await message.client.mongodb.settings.antiPhishingLogsChannelID(message.guild.id)
 
-    const oldPhishingLog = message.guild.channels.cache.get(antiPhishingLogsChannelID) || '`None`';
+    const oldPhishingLog = message.guild.channels.cache.get(antiPhishingLogsChannelID) || lang_text.fields.none;
 
     const embed = new MessageEmbed()
-      .setTitle('Settings: `Logging`')
+      .setTitle(lang_text.fields.title)
       .setThumbnail(message.guild.iconURL({
         dynamic: true
       }))
-      .setDescription(`The \`phishing log\` was successfully updated. ${success}`)
+      .setDescription(lang_text.fields.description.replace('%{success}', success))
       .setFooter({
         text: message.member.displayName,
         iconURL: message.author.displayAvatarURL({
@@ -51,18 +53,16 @@ module.exports = class SetAntiPhishingLogsCommand extends Command {
     if (args.length === 0) {
       await message.client.mongodb.settings.updateAntiPhishingLogsChannelID(message.guild.id, null);
       return message.channel.send({
-        embeds: [embed.addField('Phising Log', `${oldPhishingLog} ➔ \`None\``)]
+        embeds: [embed.addField(lang_text.messages.phishing_channel, lang_text.messages.channel_to_none.replace('%{oldPhishingLog}', oldPhishingLog))]
       });
     }
 
     const phishingLog = this.getChannelFromMention(message, args[0]) || message.guild.channels.cache.get(args[0]);
     if (!phishingLog || phishingLog.type !== 'GUILD_TEXT' || !phishingLog.viewable)
-      return this.sendErrorMessage(message, 0, stripIndent `
-            Please mention an accessible text channel or provide a valid text channel ID
-          `);
+      return this.sendErrorMessage(message, 0, lang_text.errors.invalid_channel_or_id);
     await message.client.mongodb.settings.updateAntiPhishingLogsChannelID(message.guild.id, phishingLog.id);
     message.channel.send({
-      embeds: [embed.addField('Phising Log', `${oldPhishingLog} ➔ ${phishingLog}`)]
+      embeds: [embed.addField(lang_text.fields.title, `${oldPhishingLog} ➔ ${phishingLog}`)]
     });
   }
 };

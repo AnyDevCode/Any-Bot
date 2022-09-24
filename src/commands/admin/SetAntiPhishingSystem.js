@@ -38,20 +38,22 @@ module.exports = class SetAntiPhishingSystemCommand extends Command {
   }
   async run(message, args) {
 
-    if (!args[0]) return this.sendErrorMessage(message, 0, 'Please provide a level System')
+    const lang_text = this.getLanguage();
+
+    if (!args[0]) return this.sendErrorMessage(message, 0, lang_text.errors.dont_provided_level);
 
     let [level] = args;
     level = parseInt(level);
 
-    if (isNaN(level)) return this.sendErrorMessage(message, 0, 'Please provide a level System')
-    if (level < 0 || level > 4) return this.sendErrorMessage(message, 0, 'Please provide a valid level System')
+    if (isNaN(level)) return this.sendErrorMessage(message, 0, lang_text.errors.dont_provided_level_2)
+    if (level < 0 || level > 4) return this.sendErrorMessage(message, 0, lang_text.errors.dont_provided_level_2)
 
     const {
       antiPhishingSystem
     } = await message.client.mongodb.settings.antiPhishingSystem(message.guild.id)
 
     let embed = new MessageEmbed()
-      .setTitle('Settings: `System`')
+      .setTitle(lang_text.fields.title)
       .setThumbnail(message.guild.iconURL({
         dynamic: true
       }))
@@ -63,13 +65,13 @@ module.exports = class SetAntiPhishingSystemCommand extends Command {
       })
       .setTimestamp()
 
-    if (antiPhishingSystem === level) return this.sendErrorMessage(message, 0, 'The anti-phishing system is already set to this level')
+    if (antiPhishingSystem === level) return this.sendErrorMessage(message, 0, lang_text.errors.already_set)
 
     await message.client.mongodb.settings.updateAntiPhishingSystem(message.guild.id, level)
 
-    embed.setDescription(`The anti-phishing system has been successfully set to level **${level}**. ${success}`)
+    embed.setDescription(lang_text.fields.description.replace('%{success}', success).replace('%{level}', level))
       .setFields([{
-        name: 'Level',
+        name: lang_text.fields.name,
         value: `\`${antiPhishingSystem}\` ➔ \`${level}\``
       }])
 

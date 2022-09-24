@@ -1,0 +1,9 @@
+errors:
+  invalid_channel_or_id: "Please mention an accessible text channel or provide a valid text channel ID"
+fields:
+  none: "`None`"
+  title: "Settings: `Logging`"
+  description: "The `phishing log` was successfully updated. %{success}"
+messages:
+  phishing_channel: "Phishing Log"
+  channel_to_none: "%{oldPhishingLog} ➔ `None`"

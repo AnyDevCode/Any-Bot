@@ -1,6 +1,10 @@
 // Dependencies:
-const { MessageEmbed } = require("discord.js");
-const { success } = require("../../utils/emojis.json");
+const {
+  MessageEmbed
+} = require("discord.js");
+const {
+  success
+} = require("../../utils/emojis.json");
 // Command Require:
 const Command = require("../Command.js");
 
@@ -11,8 +15,7 @@ module.exports = class SetAdminRoleCommand extends Command {
       name: "setadminrole",
       aliases: ["setar", "sar"],
       usage: "setadminrole <role mention/ID>",
-      description:
-        "Sets the `admin role` for your server. Provide no role to clear the current `admin role`.",
+      description: "Sets the `admin role` for your server. Provide no role to clear the current `admin role`.",
       type: client.types.ADMIN,
       userPermissions: ["MANAGE_GUILD"],
       examples: ["setadminrole @Admin"],
@@ -21,21 +24,28 @@ module.exports = class SetAdminRoleCommand extends Command {
 
   // Command Code:
   async run(message, args) {
+
+    const lang_text = this.getLanguage();
+
     // Check role:
     const adminRoleId = await message.client.mongodb.settings.selectAdminRoleId(
       message.guild.id
     );
     const oldAdminRole =
-      message.guild.roles.cache.find((r) => r.id === adminRoleId) || "`None`";
+      message.guild.roles.cache.find((r) => r.id === adminRoleId) || lang_text.fields.none;
 
     // Create embed:
     const embed = new MessageEmbed()
-      .setTitle("Settings: `System`")
-      .setThumbnail(message.guild.iconURL({ dynamic: true }))
-      .setDescription(`The \`admin role\` was successfully updated. ${success}`)
+      .setTitle(lang_text.fields.title)
+      .setThumbnail(message.guild.iconURL({
+        dynamic: true
+      }))
+      .setDescription(lang_text.fields.description.replace('%{success}', success))
       .setFooter({
         text: `${message.member.displayName}`,
-        iconURL: message.author.displayAvatarURL({ dynamic: true }),
+        iconURL: message.author.displayAvatarURL({
+          dynamic: true
+        }),
       })
       .setTimestamp()
       .setColor(message.guild.me.displayHexColor);
@@ -47,7 +57,7 @@ module.exports = class SetAdminRoleCommand extends Command {
         message.guild.id
       );
       return message.channel.send({
-        embeds: [embed.addField("Admin Role", `${oldAdminRole} ➔ \`None\``)],
+        embeds: [embed.addField(lang_text.messages.admin_role, lang_text.messages.role_to_none.replace('%{oldAdminRole}', oldAdminRole))]
       });
     }
 
@@ -59,14 +69,14 @@ module.exports = class SetAdminRoleCommand extends Command {
       return this.sendErrorMessage(
         message,
         0,
-        "Please mention a role or provide a valid role ID"
+        lang_text.errors.invalid_role_or_id
       );
     await message.client.mongodb.settings.updateAdminRoleId(
       adminRole.id,
       message.guild.id
     );
     return message.channel.send({
-      embeds: [embed.addField("Admin Role", `${oldAdminRole} ➔ ${adminRole}`)],
+      embeds: [embed.addField(lang_text.fields.title, `${oldAdminRole} ➔ ${adminRole}`)],
     });
   }
 };

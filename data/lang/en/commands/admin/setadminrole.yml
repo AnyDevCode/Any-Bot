@@ -1,0 +1,9 @@
+errors:
+  invalid_role_or_id: "Please mention a role or provide a valid role ID"
+fields:
+  none: "`None`"
+  title: "Settings: `System`"
+  description: "The `admin role` was successfully updated. %{success}"
+messages:
+  admin_role: "Admin role"
+  role_to_none: "%{oldAdminRole} ➔ `None`"

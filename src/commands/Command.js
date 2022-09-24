@@ -5,6 +5,11 @@ const permissions = require('../utils/permissions.json');
 const {
   fail
 } = require('../utils/emojis.json');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const {
+  join
+} = require('path');
 
 /**
  * Any Bot's custom Command class
@@ -32,6 +37,12 @@ class Command {
      * @type {string}
      */
     this.name = options.name;
+
+    /**
+     * Language of the command
+     * @type {Object}
+     */
+    this.language = {};
 
     /**
      * Aliases of the command
@@ -294,6 +305,23 @@ class Command {
       modLog.send({
         embeds: [embed]
       }).catch(err => message.client.logger.error(err.stack));
+    }
+  }
+
+  /**
+   * Get languaje from guild
+   * @param {Message} message 
+   */
+
+  getLanguage(message) {
+    try {
+      return yaml.load(fs.readFileSync(join(__basedir, 'data', 'lang', message.language, 'commands', this.type, this.name + ".yml"), 'utf8'))
+    } catch (e) {
+      try {
+        return yaml.load(fs.readFileSync(join(__basedir, 'data', 'lang', 'en', 'commands', this.type, this.name + ".yml"), 'utf8'))
+      } catch (e) {
+        return {}
+      }
     }
   }
 

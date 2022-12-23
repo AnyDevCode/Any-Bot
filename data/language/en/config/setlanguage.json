@@ -1,0 +1,12 @@
+{
+    "info": {
+        "description": "Set language for the current server"
+    },
+    "noArgs": {
+        "title": "**Language List**",
+        "current": "**Current Language**"
+    },
+    "invalidLanguage": "This language is not supported",
+    "sameLanguage": "This language is already set",
+    "success": "Language set to **%%LANGUAGE%%**"
+}

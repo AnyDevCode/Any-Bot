@@ -1,0 +1,5 @@
+{
+    "description": "Get a random dog image",
+    "title": "🐶 Woof 🐶",
+    "error": "A error occurred while getting the dog image, please try again later"
+}

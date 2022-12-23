@@ -1,0 +1,26 @@
+{
+    "noArgs": "Porfavor, proporcione una pregunta.",
+    "disclaimer": "%%USER%% | Recuerda, solo es una respuesta aleatoria, no tome esto como una respuesta definitiva o real en decisiones importantes.",
+    "title": "Bola 8",
+    "description": "**Pregunta:** \n ```\n%%QUESTION%%\n```\n**Respuesta:** \n ```\n%%ANSWER%%\n```",
+    "info": {
+        "description": "Pregúntale a la bola 8 una pregunta y obtén una respuesta."
+    },
+    "answers": [
+        "Sí",
+        "No",
+        "Tal vez",
+        "Probablemente",
+        "Definitivamente",
+        "No lo creo",
+        "No estoy seguro",
+        "No puedo decirte",
+        "No puedo predecirlo ahora",
+        "No puedo decirte ahora",
+        "Pregúntame más tarde",
+        "No cuentes con ello",
+        "Cuéntame más",
+        "Cuenta con ello",
+        "No lo sé"
+    ]
+}

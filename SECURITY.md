@@ -6,10 +6,11 @@ Any Bot versions with major security updates and support
 
 | Version | Supported          |
 |---------| ------------------ |
-| 2.0.0   | :white_check_mark: |
-| 1.2.x   | :white_check_mark: |
+| 3.x.x   | :white_check_mark: |
+| 2.x.x   | :white_check_mark: |
+| 1.2.x   | :x:                |
 | 1.1.x   | :x:                |
-| 1.0.x   | :x: |
+| 1.0.x   | :x:                |
 | < 1.0.x | :x:                |
 
 ## Reporting a Vulnerability

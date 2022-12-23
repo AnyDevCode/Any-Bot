@@ -1,0 +1,12 @@
+{
+    "info": {
+        "description": "Cambia el idioma del bot"
+    },
+    "noArgs": {
+        "title": "**Idiomas**",
+        "current": "**Idioma actual**"
+    },
+    "invalidLanguage": "Idioma inválido o no soportado",
+    "sameLanguage": "Este idioma ya esta seleccionado como idioma actual",
+    "success": "Idioma cambiado a %%LANGUAGE%%"
+}

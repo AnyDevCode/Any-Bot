@@ -1,0 +1,86 @@
+{
+    "Utils": {
+        "name": "Utils",
+        "description": "All utils commands for the bot"
+    },
+    "Fun": {
+        "name": "Fun",
+        "description": "All fun commands for the bot"
+    },
+    "Moderation": {
+        "name": "Moderation",
+        "description": "All moderation commands for the bot"
+    },
+    "Economy": {
+        "name": "Economy",
+        "description": "All economy commands for the bot"
+    },
+    "Owner": {
+        "name": "Owner",
+        "description": "All owner commands for the bot"
+    },
+    "NSFW": {
+        "name": "NSFW",
+        "description": "All NSFW commands for the bot"
+    },
+    "Giveaway": {
+        "name": "Giveaway",
+        "description": "All giveaway commands for the bot"
+    },
+    "Ticket": {
+        "name": "Ticket",
+        "description": "All ticket commands for the bot"
+    },
+    "Leveling": {
+        "name": "Leveling",
+        "description": "All leveling commands for the bot"
+    },
+    "Image": {
+        "name": "Image",
+        "description": "All image commands for the bot"
+    },
+    "Anime": {
+        "name": "Anime",
+        "description": "All anime commands for the bot"
+    },
+    "Miscellaneous": {
+        "name": "Miscellaneous",
+        "description": "All miscellaneous commands for the bot"
+    },
+    "Info": {
+        "name": "Info",
+        "description": "All info commands for the bot"
+    },
+    "Utility": {
+        "name": "Utility",
+        "description": "All utility commands for the bot"
+    },
+    "Games": {
+        "name": "Games",
+        "description": "All games commands for the bot"
+    },
+    "Config": {
+        "name": "Config",
+        "description": "All config commands for the bot"
+    },
+    "Bot": {
+        "name": "Bot",
+        "description": "All bot commands for the bot"
+    },
+    "Other": {
+        "name": "Other",
+        "description": "All other commands for the bot"
+    },
+    "Discord": {
+        "name": "Discord",
+        "description": "All discord commands for the bot"
+    },
+    "Roleplay": {
+        "name": "Roleplay",
+        "description": "All roleplay commands for the bot"
+    },
+    "Animals": {
+        "name": "Animals",
+        "description": "All animals commands for the bot"
+    }
+}

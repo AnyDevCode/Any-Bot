@@ -1,0 +1,16 @@
+{
+    "description": "Este es el comando de ayuda. Lista todos los comandos y sus descripciones.",
+    "generalDescription": "Comandos generales.",
+    "title": "Ayuda",
+    "noneDescription": "No hay descripción disponible.",
+    "noneAliases": "No hay alias disponibles.",
+    "noneUsage": "No hay uso disponible.",
+    "noneCooldown": "Sin enfriamiento",
+    "invalid": "Comando o categoría inválidos proporcionados.",
+    "helpName": "Nombre",
+    "helpAliases": "Alias",
+    "helpUsage": "Uso",
+    "helpDescription": "Descripción",
+    "helpCategory": "Categoría",
+    "helpCooldown": "Enfriamiento"
+}

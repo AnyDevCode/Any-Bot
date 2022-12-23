@@ -1,0 +1,11 @@
+{
+    "firstMessage": "Pinging...",
+    "secondMessage": "Pong!",
+    "fields": [
+        "Latency",
+        "API Latency"
+    ],
+    "info": {
+        "description": "Pings the bot to check if it's online."
+    }
+}

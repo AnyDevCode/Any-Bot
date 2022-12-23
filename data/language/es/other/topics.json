@@ -1,0 +1,86 @@
+{
+    "Utils": {
+        "name": "Utilidades",
+        "description": "Todos los comandos de utilidades para el bot"
+    },
+    "Fun": {
+        "name": "Divertido",
+        "description": "Todos los comandos divertidos para el bot"
+    },
+    "Moderation": {
+        "name": "Moderación",
+        "description": "Todos los comandos de moderación para el bot"
+    },
+    "Economy": {
+        "name": "Economía",
+        "description": "Todos los comandos de economía para el bot"
+    },
+    "Owner": {
+        "name": "Dueño",
+        "description": "Todos los comandos de dueño para el bot"
+    },
+    "NSFW": {
+        "name": "NSFW",
+        "description": "Todos los comandos NSFW para el bot"
+    },
+    "Giveaway": {
+        "name": "Sorteo",
+        "description": "Todos los comandos de sorteo para el bot"
+    },
+    "Ticket": {
+        "name": "Ticket",
+        "description": "Todos los comandos de ticket para el bot"
+    },
+    "Leveling": {
+        "name": "Nivelación",
+        "description": "Todos los comandos de nivelación para el bot"
+    },
+    "Image": {
+        "name": "Imagen",
+        "description": "Todos los comandos de imagen para el bot"
+    },
+    "Anime": {
+        "name": "Anime",
+        "description": "Todos los comandos de anime para el bot"
+    },
+    "Miscellaneous": {
+        "name": "Misceláneo",
+        "description": "Todos los comandos misceláneos para el bot"
+    },
+    "Info": {
+        "name": "Información",
+        "description": "Todos los comandos de información para el bot"
+    },
+    "Utility": {
+        "name": "Utilidad",
+        "description": "Todos los comandos de utilidad para el bot"
+    },
+    "Games": {
+        "name": "Juegos",
+        "description": "Todos los comandos de juegos para el bot"
+    },
+    "Config": {
+        "name": "Configuración",
+        "description": "Todos los comandos de configuración para el bot"
+    },
+    "Bot": {
+        "name": "Bot",
+        "description": "Todos los comandos de bot para el bot"
+    },
+    "Other": {
+        "name": "Otros",
+        "description": "Todos los comandos de otros para el bot"
+    },
+    "Discord": {
+        "name": "Discord",
+        "description": "Todos los comandos de discord para el bot"
+    },
+    "Roleplay": {
+        "name": "Roleplay",
+        "description": "Todos los comandos de roleplay para el bot"
+    },
+    "Animals": {
+        "name": "Animales",
+        "description": "Todos los comandos de animales para el bot"
+    }
+}

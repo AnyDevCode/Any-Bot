@@ -1,0 +1,11 @@
+{
+    "firstMessage": "Pinging...",
+    "secondMessage": "Pong!",
+    "fields": [
+        "Latencia Bot",
+        "Latencia API"
+    ],
+    "info": {
+        "description": "Comando para ver la latencia del bot."
+    }
+}

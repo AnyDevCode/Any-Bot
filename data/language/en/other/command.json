@@ -1,0 +1,19 @@
+{
+    "errors": {
+        "ownerOnly": "This command can only be used by the bot owner!",
+        "disabled": "This command is disabled!",
+        "nsfw": "This command can only be used in a NSFW channel!",
+        "missingPerms": {
+            "user":{
+                "title": "Missing Permissions",
+            "description": "You are missing the following permissions: %%PERMS%%"
+            },
+            "bot":{
+                "title": "Missing Permissions",
+            "description": "I am missing the following permissions: %%PERMS%%"
+            }
+        },
+        "cooldown": "Please wait %%TIME%% more second(s) before reusing the %%CMD%% command.",
+        "unknown": "An unknown error occurred while executing this command."
+    }
+}

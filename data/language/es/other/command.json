@@ -1,0 +1,19 @@
+{
+    "errors": {
+        "ownerOnly": "Este comando solo puede ser usado por el propietario del bot!",
+        "disabled": "Este comando esta desactivado!",
+        "nsfw": "Este comando solo puede ser usado en canales NSFW!",
+        "missingPerms": {
+            "user":{
+                "title": "Permisos Faltantes",
+            "description": "Necesitas los siguientes permisos para ejecutar este comando: %%PERMS%%"
+            },
+            "bot":{
+                "title": "Permisos Faltantes",
+            "description": "Necesito los siguientes permisos para ejecutar este comando: %%PERMS%%"
+            }
+        },
+        "cooldown": "Por favor espera %%TIME%% segundos antes de volver a usar el comando %%CMD%%.",
+        "unknown": "Ha ocurrido un error desconocido, por favor intenta de nuevo mas tarde."
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "description": "This is the help command. It lists all the commands and their descriptions.",
+    "generalDescription": "General commands.",
+    "title": "Help",
+    "noneDescription": "No description available.",
+    "noneAliases": "No aliases available.",
+    "noneUsage": "No usage available.",
+    "noneCooldown": "No cooldown",
+    "invalid": "Invalid command or category provided.",
+    "helpName": "Name",
+    "helpAliases": "Aliases",
+    "helpUsage": "Usage",
+    "helpDescription": "Description",
+    "helpCategory": "Category",
+    "helpCooldown": "Cooldown"
+}

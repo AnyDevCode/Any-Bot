@@ -1,0 +1,7 @@
+{
+    "InvalidArgument": "Invalid argument",
+    "CommandFailure": "Command failed",
+    "ThisisnotaNSFWchannel": "This is not a NSFW channel",
+    "MissingPermissions": "Missing permissions",
+    "NoDataFound": "No data found"
+}

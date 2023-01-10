@@ -1,0 +1,18 @@
+{
+    "description": "Shorten a URL",
+    "errors": {
+        "noUrl": "You must provide a url to shorten",
+        "invalidUrl": "You must provide a valid url to shorten"
+    },
+    "embed": {
+        "title": "Short URL",
+        "fields": [
+            {
+                "name": "Original URL"
+            },
+            {
+                "name": "Short URL"
+            }
+        ]
+    }
+}

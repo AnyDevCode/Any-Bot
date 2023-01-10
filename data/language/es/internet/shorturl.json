@@ -1,0 +1,18 @@
+{
+    "description": "Acorta una URL",
+    "errors": {
+        "noUrl": "Debes proporcionar una url para acortar",
+        "invalidUrl": "Debes proporcionar una url válida para acortar"
+    },
+    "embed": {
+        "title": "URL acortada",
+        "fields": [
+            {
+                "name": "URL original"
+            },
+            {
+                "name": "URL acortada"
+            }
+        ]
+    }
+}

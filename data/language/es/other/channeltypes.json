@@ -1,0 +1,15 @@
+{
+    "Text": "Texto",
+    "DM": "Mensaje directo",
+    "Voice": "Voz",
+    "Group DM": "Mensaje directo de grupo",
+    "Category": "Categoría",
+    "Announcement": "Anuncio",
+    "Announcement Thread": "Hilo de anuncio",
+    "Public Thread": "Hilo público",
+    "Private Thread": "Hilo privado",
+    "Stage Voice": "Escenario de voz",
+    "Directory": "Directorio",
+    "Forum": "Foro",
+    "Unknown": "Desconocido"
+}

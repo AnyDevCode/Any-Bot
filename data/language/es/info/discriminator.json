@@ -1,0 +1,11 @@
+{
+    "description": "Comprueba cuántos usuarios tienen el mismo discriminador que tú, otro usuario, o un discriminador determinado.",
+    "errors":{
+        "invalidDiscriminator": "Discriminador o mención de usuario o id de usuario inválidos.",
+        "noUser": "No se ha encontrado ningún usuario con esa mención o id.",
+        "noUsers": "No se ha encontrado ningún usuario con ese discriminador."
+    },
+    "embed": {
+        "title": "Usuarios con discriminador #%%DISCRIMINATOR%%"
+    }
+}

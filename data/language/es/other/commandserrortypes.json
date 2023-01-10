@@ -1,0 +1,7 @@
+{
+    "InvalidArgument": "Argumento inválido",
+    "CommandFailure": "Fallo del comando",
+    "ThisisnotaNSFWchannel": "Este no es un canal NSFW",
+    "MissingPermissions": "Permisos faltantes",
+    "NoDataFound": "No se encontraron datos"
+}

@@ -1,0 +1,72 @@
+{
+    "description": "Hack a user. [Fake Random Data]",
+    "embeds": [
+        {
+            "title": "%%AUTHOR%% hacked %%MEMBER%%",
+            "description": "Looking for Data..."
+        },
+        {
+            "title": "%%AUTHOR%% hacked %%MEMBER%%",
+            "description": "Decrypting Data..."
+        },
+        {
+            "title": "Hacked %%MEMBER%%",
+            "fields": [
+                {
+                    "name": "First Name"
+                },
+                {
+                    "name": "Last Name"
+                },
+                {
+                    "name": "Email"
+                },
+                {
+                    "name": "Password"
+                },
+                {
+                    "name": "Gender"
+                },
+                {
+                    "name": "IP Address"
+                },
+                {
+                    "name": "Mac Address"
+                },
+                {
+                    "name": "Country"
+                },
+                {
+                    "name": "Phone Number"
+                },
+                {
+                    "name": "City"
+                },
+                {
+                    "name": "Street Address"
+                },
+                {
+                    "name": "Credit Card"
+                },
+                {
+                    "name": "Credit Card Type"
+                },
+                {
+                    "name": "Credit Card Expire Date"
+                },
+                {
+                    "name": "Credit Card CVV"
+                },
+                {
+                    "name": "Bitcoin Address"
+                },
+                {
+                    "name": "Ethereum Address"
+                },
+                {
+                    "name": "Data Taken From"
+                }
+            ]
+        }
+    ]
+}

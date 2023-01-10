@@ -1,0 +1,11 @@
+{
+    "errors": {
+        "noUserOrRole": "No user or role specified"
+    },
+    "roleEmbed": {
+        "title": "Permissions for the role %%ROLE%%"
+    },
+    "userEmbed": {
+        "title": "Permissions for %%USER%%"
+    }
+}

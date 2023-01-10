@@ -1,0 +1,14 @@
+{
+    "description": "Get the boosts information for the current server.",
+    "embed": {
+        "title": "Server Boosts",
+        "description": "**Boosts**: %%BOOSTS%%\n**Boost Tier**: %%TIER%%\n**Numbers of Boosters**: %%BOOSTERS%%\n**Boosters**: ```\n%%BOOSTERLIST%%\n```\n**Boosts Perks**: ```\n%%BOOSTSPERKS%%\n```"
+    },
+    "boosts": {
+        "none": "None",
+        "0": ["None"],
+        "1": ["+50 server emoji slots (for a total of 100)", "+10 custom sticker slots (for a total of 15)", "128 kbps audio quality", "Animated server icon", "Custom server invite background", "Stream to your friends in high quality (1080p)"],
+        "2": ["+50 server emoji slots (for a total of 150)", "+15 custom sticker slots (for a total of 30)", "256 kbps audio quality", "Server Banner", "50MB upload limit for all members", "1080p 60fps video quality", "Custol Role Icons", "Video Stage audience limit increased to 150"],
+        "3": ["+100 server emoji slots (for a total of 250)", "+30 custom sticker slots (for a total of 60)", "384 kbps audio quality", "Custom Invite Link for the Server", "100MB upload limit for all members", "Animated Server Banner", "Video Stage audience limit increased to 300"]
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "description": "Get the avatar of a user",
+    "embed": {
+        "title": "%%USER%%'s avatar",
+        "fields": {
+            "originalAvatar": "Download Original Avatar",
+            "originalAvatarValue": "[Click Here](%%AVATARURL%%)",
+            "customAvatar": "Download Custom Avatar",
+            "customAvatarValue": "[Click Here](%%AVATARURL%%)"
+        }
+    }
+}

@@ -5,6 +5,8 @@ let command: CommandOptions = {
     name: "8ball",
     type: CommandTypes.Fun,
     aliases: ["8b", "eightball"],
+    examples: ["8ball Is this a good bot?"],
+    usage: "8ball [question]",
     cooldown: 5,
     async run(message, args, client, language) {
         const lang = client.language.get(language || "en")?.get("8ball") || client.language.get("en")?.get("8ball");
@@ -25,7 +27,5 @@ let command: CommandOptions = {
         return message.channel.send({ embeds: [embed] })
     }
 }
-
-
 
 export = command;

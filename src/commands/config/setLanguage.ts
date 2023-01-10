@@ -1,5 +1,5 @@
 import { CommandTypes, CommandOptions } from '../../utils/utils';
-import { EmbedBuilder } from 'discord.js';
+import { EmbedBuilder, PermissionsBitField } from 'discord.js';
 import Languages from '../../utils/languages.json';
 
 let command: CommandOptions = {
@@ -8,6 +8,7 @@ let command: CommandOptions = {
     aliases: ["setlang"],
     usage: "setlanguage <language>",
     examples: ["setlanguage en", "setlanguage es"],
+    userPermissions: [PermissionsBitField.Flags.ManageGuild],
     cooldown: 60,
     async run(message, args, client, language) {
 

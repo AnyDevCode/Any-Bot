@@ -1,19 +1,46 @@
 {
     "errors": {
-        "ownerOnly": "Este comando solo puede ser usado por el propietario del bot!",
-        "disabled": "Este comando esta desactivado!",
-        "nsfw": "Este comando solo puede ser usado en canales NSFW!",
-        "missingPerms": {
+        "ownerOnly": "¡Este comando solo puede ser utilizado por el dueño del bot!",
+        "disabled": "¡Este comando está deshabilitado!",
+        "nsfw": "¡Este comando solo puede ser utilizado en un canal NSFW!",
+        "missingPermissions": {
             "user":{
-                "title": "Permisos Faltantes",
-            "description": "Necesitas los siguientes permisos para ejecutar este comando: %%PERMS%%"
+                "title": "Permisos faltantes",
+            "description": "Te faltan los siguientes permisos: %%PERMS%%"
             },
             "bot":{
-                "title": "Permisos Faltantes",
-            "description": "Necesito los siguientes permisos para ejecutar este comando: %%PERMS%%"
+                "title": "Permisos faltantes",
+            "description": "Me faltan los siguientes permisos: %%PERMS%%"
             }
         },
-        "cooldown": "Por favor espera %%TIME%% segundos antes de volver a usar el comando %%CMD%%.",
-        "unknown": "Ha ocurrido un error desconocido, por favor intenta de nuevo mas tarde."
+        "cooldown": "Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%.",
+        "premiumCooldown": {
+            "instant": "Estás en cooldown para este comando. Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%. Si tuvieras una suscripción premium, podrías usar este comando instantáneamente.",
+            "normal": "Estás en cooldown para este comando. Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%. Si tuvieras una suscripción premium, solo tendrías que esperar %%PREMIUMTIME%% segundo(s) más."
+        },
+        "unknown": "Ocurrió un error desconocido al ejecutar este comando.",
+        "premiumOnly": "¡Este comando solo puede ser utilizado por usuarios premium!"
+    },
+    "info": {
+        "title": "Hola, soy %%BOTNAME%%! ¿Necesitas ayuda?",
+        "description": "Puedes ver todo lo que puedo hacer usando el comando `%%PREFIX%%help.`",
+        "fields": [
+            {
+                "name": "Invítame",
+                "value": "Puedes añadirme a tu servidor haciendo clic [aquí](https://discordapp.com/oauth2/authorize?client_id=%%BOID%%}&scope=applications.commands%20bot&permissions=8)."
+            },
+            {
+                "name": "Soporte",
+                "value": "Si tienes preguntas, sugerencias o has encontrado un error, por favor, únete al [%%BOTNAME%% Support Server](%%BOTSUPPORT%%)."
+            }
+        ],
+        "buttons": [
+            {
+                "label": "Invítame"
+            },
+            {
+                "label": "Servidor de soporte"
+            }
+        ]
     }
 }

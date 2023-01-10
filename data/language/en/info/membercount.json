@@ -1,0 +1,7 @@
+{
+    "description": "Get the list of members for the server",
+    "embed": {
+        "title": "Members",
+        "description": "**Members**: %%MEMBERS%%\n**Humans**: %%HUMANS%%\n**Bots**: %%BOTS%%"
+    }
+}

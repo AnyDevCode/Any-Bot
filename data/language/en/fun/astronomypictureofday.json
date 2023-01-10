@@ -1,0 +1,13 @@
+{
+    "description": "Get the NASA Astronomy Picture of the Day",
+    "errors": {
+        "apiError": "An error occurred while trying to obtain the Astronomy Picture of the Day. Please try again later."
+    },
+    "embed": {
+        "footer": "Picture obtained from NASA"
+    },
+    "buttons":{
+        "hd": "HD Version",
+        "video": "Go to Video"
+    }
+}

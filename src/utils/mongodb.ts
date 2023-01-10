@@ -10,10 +10,14 @@ mongoose.connect(MONGODB_URL)
 import settings from "./models/settings";
 import users from "./models/users";
 import warns from "./models/warns";
+import premiumCodes from "./models/premiumCodes";
+import premium from "./models/premiums";
 
 // Load all models
 export = {
     settings,
     users,
-    warns
+    warns,
+    premiumCodes,
+    premium
 }

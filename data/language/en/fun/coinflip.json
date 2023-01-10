@@ -1,0 +1,9 @@
+{
+    "description": "Flips a coin",
+    "tails": "tails",
+    "heads": "heads",
+    "embed": {
+        "title": "½  Coinflip  ½",
+        "description": "I flipped a coin for you, %%AUTHOR%%. It was **%%RESULT%%**!"
+    }
+}

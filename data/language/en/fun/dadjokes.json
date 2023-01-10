@@ -1,0 +1,12 @@
+{
+    "description": "Get a random dad joke",
+    "errors": {
+        "api": "Please try again in a few seconds",
+        "apiDesc": "The API is down"
+    },
+    "embed": {
+        "title": "🤣 Dad Joke 🤣",
+        "description": "Original \n```%%ORIGINAL_JOKE%%```\nTranslation \n```%%TRANSLATED_JOKE%%```"
+    }
+
+}

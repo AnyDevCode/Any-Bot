@@ -1,0 +1,6 @@
+{
+    "description": "Convierte texto a ascii",
+    "errors": {
+        "noText": "Debes escribir algo para convertirlo a ascii"
+    }
+}

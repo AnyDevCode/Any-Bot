@@ -1,0 +1,6 @@
+{
+    "description": "Convert text to ascii",
+    "errors": {
+        "noText": "Please enter some text to convert"
+    }
+}

@@ -3,7 +3,7 @@
         "ownerOnly": "This command can only be used by the bot owner!",
         "disabled": "This command is disabled!",
         "nsfw": "This command can only be used in a NSFW channel!",
-        "missingPerms": {
+        "missingPermissions": {
             "user":{
                 "title": "Missing Permissions",
             "description": "You are missing the following permissions: %%PERMS%%"
@@ -14,6 +14,33 @@
             }
         },
         "cooldown": "Please wait %%TIME%% more second(s) before reusing the %%CMD%% command.",
-        "unknown": "An unknown error occurred while executing this command."
+        "premiumCooldown": {
+            "instant": "You are on cooldown for this command. Please wait %%TIME%% more second(s) before reusing the %%CMD%% command. If you would have a premium subscription, you would use this command instantly.",
+            "normal": "You are on cooldown for this command. Please wait %%TIME%% more second(s) before reusing the %%CMD%% command. If you would have a premium subscription, you would have to wait only %%PREMIUMTIME%% more second(s)."
+        },
+        "unknown": "An unknown error occurred while executing this command.",
+        "premiumOnly": "This command is only available to premium users!"
+    },
+    "info": {
+        "title": "Hi, I'm %%BOTNAME%%! Need help?",
+        "description": "You can see everything I can do by using the `%%PREFIX%%help` command.",
+        "fields": [
+            {
+                "name": "Invite Me",
+                "value": "You can add me to your server by clicking [here](https://discordapp.com/oauth2/authorize?client_id=%%BOID%%}&scope=applications.commands%20bot&permissions=8)."
+            },
+            {
+                "name":"Support",
+                "value":"If you have questions, suggestions, or found a bug, please join the [%%BOTNAME%% Support Server](%%BOTSUPPORT%%)."
+            }
+        ],
+        "buttons": [
+            {
+                "label": "Invite Me"
+            },
+            {
+                "label": "Support Server"
+            }
+        ]
     }
 }

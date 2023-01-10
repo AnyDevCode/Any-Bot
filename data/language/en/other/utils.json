@@ -1,0 +1,16 @@
+{
+    "embed": {
+        "title": "Error",
+        "fields": [
+            {
+                "title": "Usage"
+            },
+            {
+                "title": "Examples"
+            },
+            {
+                "title": "Error Message"
+            }
+        ]
+    }
+}

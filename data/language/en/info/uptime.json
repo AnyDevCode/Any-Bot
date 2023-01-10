@@ -1,0 +1,20 @@
+{
+    "description": "Muestra el tiempo de actividad del bot",
+    "day": "día",
+    "days": "días",
+    "hour": "hora",
+    "hours": "horas",
+    "minute": "minuto",
+    "minutes": "minutos",
+    "second": "segundo",
+    "seconds": "segundos",
+    "embed": {
+        "title": "Tiempo de actividad de %%BOT%%",
+        "description": "```prolog\n%%DAYS%%, %%HOURS%%, %%MINUTES%%, y %%SECONDS%%```",
+        "fields": [
+            {
+                "name": "Fecha de lanzamiento"
+            }
+        ]
+    }
+}

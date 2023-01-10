@@ -1,0 +1,31 @@
+{
+    "description": "Obtener información sobre un canal",
+    "errors": {
+        "invalidChannel": "Canal no encontrado"
+    },
+    "embed": {
+        "title": "Información del canal",
+        "fields": {
+            "name": "Nombre",
+            "id": "ID",
+            "type": "Tipo",
+            "created": "Creado el",
+            "nsfw": "NSFW",
+            "yes": "Sí",
+            "no": "No",
+            "slowmode": "Modo lento",
+            "seconds": "segundos",
+            "none": "Ninguno",
+            "members": "Miembros",
+            "bots": "Bots",
+            "bitrate": "Tasa de bits",
+            "kbps": "kbps",
+            "userLimit": "Límite de usuarios",
+            "full": "Lleno",
+            "membersJoined": "Miembros unidos",
+            "noMembers": "No hay miembros unidos",
+            "topic": "Tema"
+        }
+    }
+    
+}

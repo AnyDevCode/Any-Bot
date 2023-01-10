@@ -1,0 +1,11 @@
+{
+    "description": "Check how many users have the same discriminator as you, another user, or a certain discriminator.",
+    "errors":{
+        "invalidDiscriminator": "Invalid discriminator. Please enter a number between 0000 and 9999.",
+        "noUser": "No user found with this id or mention.",
+        "noUsers": "No users found with this discriminator."
+    },
+    "embed": {
+        "title": "Users with discriminator #%%DISCRIMINATOR%%"
+    }
+}

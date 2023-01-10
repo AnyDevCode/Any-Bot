@@ -81,6 +81,11 @@ class Bot extends Client {
     apiURL: string = process.env.APIURL || "http://localhost:3000";
 
     /**
+     * CDN URL
+     */
+    cdnURL: string = process.env.CDNURL || "http://localhost:3000/cdn";
+
+    /**
      * Owner ID
      */
     ownerID: string | undefined = process.env.OWNERID;
@@ -254,7 +259,11 @@ class Bot extends Client {
                         if (!pull.name) table.addRow(file, "", "❌");
                         else {
                             this.commands.set(pull.name, pull);
-                            if (pull.aliases) pull.aliases.forEach((alias: string) => this.aliases.set(alias, pull.name));
+                            if (pull.aliases) pull.aliases.forEach((alias: string) => {
+                                //Check if alias exists
+                                if (this.aliases.has(alias)) this.logger.warn("Alias " + alias + " already exists!");
+                                else this.aliases.set(alias, pull.name);
+                            });
                             table.addRow(file, pull.aliases || "None", "✅");
                         }
                     });

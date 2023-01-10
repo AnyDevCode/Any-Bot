@@ -4,7 +4,7 @@ import { Bot } from "src/client";
 export = {
     name: "ready",
     once: true,
-    run: (client: Bot) => {
+    run: async (client: Bot) => {
         const activities: ActivitiesOptions[] = [{
             name: `>help`,
             type: ActivityType.Listening
@@ -42,6 +42,12 @@ export = {
             })
             activity = ++activity % activities.length;
         }, 30000)
+
+        //For every server check the users
+        for await (const guild of client.guilds.cache) {
+            await guild[1].members.fetch();
+            client.logger.info(`Loaded ${guild[1].members.cache.size} members from ${guild[1].name}`);
+        }
 
         client.logger.info(`Logged in as ${client.user?.tag}!`);
         client.logger.info(

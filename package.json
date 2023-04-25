@@ -55,7 +55,7 @@
     "topgg-autoposter": "2.0.1",
     "unofficial-amazon-search": "2.0.8",
     "winston": "3.6.0",
-    "yaml": "1.10.2",
+    "yaml": "2.2.2",
     "youtube-search": "1.1.6"
   },
   "devDependencies": {

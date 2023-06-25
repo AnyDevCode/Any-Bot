@@ -1,0 +1,12 @@
+# Some questions from: https://www.mantelligence.com/minecraft-trivia/
+questions:
+- question: Que es la fecha de lanzamiento de Minecraft?
+  type: date
+  answers:
+    - "11/18/2011"
+- question: ¿Cuál es el nombre de la actualización de Minecraft Java Edition 1.8?
+  type: string
+  answers:
+    - Bountiful Update
+    - Bountiful
+    - "Bountiful Update 1.8"

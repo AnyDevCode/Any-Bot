@@ -1,0 +1,21 @@
+{
+    "description": "Test your knowledge in a game of trivia (only you can answer). \nIf no topic is given, a random one will be chosen. \nThe question will expire after 15 seconds.",
+    "errors": {
+        "noTopics": "No topics available.",
+        "noValidTopic": "Please provide a valid topic, use %%PREFIX%%topics for a list"
+    },
+    "embed": {
+        "title": "Solo Trivia",
+        "fields": [
+            {
+                "name": "Topic"
+            },
+            {
+                "name": "Question"
+            },
+            {
+                "name": "Correct Answers"
+            }
+        ]
+    }
+}

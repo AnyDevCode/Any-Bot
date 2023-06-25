@@ -1,3 +1,17 @@
 {
-    "fail": "false"
+    "fail": "false",
+    "reddit": "<:Reddit:1064781769250975744>",
+    "nitrouser": "<:nitro:1119860247801106542>",
+    "earlysupporter": "<:earlysupporter:1119865669182308364>",
+    "1monthboost": "<:1month:1119857784087908362>",
+    "2monthsboost": "<:2months:1119857785807577158>",
+    "3monthsboost": "<:3months:1119857788001210439>",
+    "6monthsboost": "<:6months:1119857789322407946>",
+    "9monthsboost": "<:9months:1119857792115810404>",
+    "12monthsboost": "<:12months:1119857793827090473>",
+    "15monthsboost": "<:15months:1119857796838588446>",
+    "18monthsboost": "<:18months:1119857798608588890>",
+    "24monthsboost": "<:24months:1119857801129365514>",
+    "boost": "<:boost:1120025033704738916>"
+
 }

@@ -1,7 +1,7 @@
-if(process.env.NODE_ENV !== "production") require("dotenv").config();
+if (process.env.NODE_ENV !== "production") require('dotenv').config();
 
 import { Bot } from "./src/client";
-import { GatewayIntentBits, Partials, Options, PermissionFlagsBits, GuildScheduledEventStatus, User, GlobalSweepFilter } from "discord.js";
+import { GatewayIntentBits, Partials, Options, PermissionFlagsBits, GuildScheduledEventStatus } from "discord.js";
 
 // Create a new client instance
 const client: Bot = new Bot({
@@ -100,15 +100,15 @@ const client: Bot = new Bot({
         },
     }),
     sweepers: {
-		...Options.DefaultSweeperSettings,
-		messages: {
-			interval: 60 * 60 * 24, // Every day
-			lifetime: 60 * 60 * 24 * 7, // Remove messages older than 7 days.
-		},
-		users: {
-			interval: 60 * 60, // Every hour
-			filter: () => (user) => user.bot && user.id !== client.user?.id, // Remove all bots.
-		},
+        ...Options.DefaultSweeperSettings,
+        messages: {
+            interval: 60 * 60 * 24 * 7, // Every 7 days
+            lifetime: 60 * 60 * 24 * 7, // Remove messages older than 7 days.
+        },
+        users: {
+            interval: 60 * 60, // Every hour
+            filter: () => (user) => user.bot && user.id !== client.user?.id, // Remove all bots.
+        },
         applicationCommands: {
             interval: 60 * 60, // Every hour
             filter: () => (command) => command.guildId === null && command.applicationId === client.user?.id, // Remove all global commands that are not the bot's.
@@ -122,8 +122,8 @@ const client: Bot = new Bot({
             filter: () => (emoji) => !emoji.available // Remove all unavailable emojis.
         },
         invites: {
-            interval:  60 * 60, // Every hour
-            filter: () => (invite) =>  (invite.uses === invite.maxUses && invite.maxUses !== 0) || (invite.expiresTimestamp && invite.expiresTimestamp < Date.now()) || false, // Remove all invites that are expired, have reached their max uses.
+            interval: 60 * 60, // Every hour
+            filter: () => (invite) => (invite.uses === invite.maxUses && invite.maxUses !== 0) || (invite.expiresTimestamp && invite.expiresTimestamp < Date.now()) || false, // Remove all invites that are expired, have reached their max uses.
         },
         guildMembers: {
             interval: 60 * 60, // Every hour
@@ -141,8 +141,7 @@ const client: Bot = new Bot({
             interval: 60 * 60 * 24, // Every day
             filter: () => (thread) => thread.archived === true || thread.locked === true // Remove all archived or locked threads.
         },
-
-	},        
+    },
 });
 
 function init() {

@@ -77,6 +77,7 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+.env.local
 
 # next.js build output
 .next
@@ -89,9 +90,6 @@ lerna-debug.log
 Thumbs.db
 /.github/
 src/commands/backup/backups
-data/db.sqlite-wal
-data/db.sqlite-shm
-data/db.sqlite
 data/notes.json
 data/backups
 logs/
@@ -99,9 +97,11 @@ blapi.json
 config.json
 src/commands/fun/notes.json
 /.vscode/settings.json
-/identifier.sqlite
 .storyteller
 .vscode
 
 config.json
 config2.json
+
+#Temp file
+src/utils/temp

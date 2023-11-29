@@ -1,10 +1,18 @@
-import { Message, User, Guild, Attachment, EmbedBuilder } from 'discord.js';
+import { Message, User, Guild, Attachment, EmbedBuilder, GuildMember } from 'discord.js';
 import { Bot } from "../client";
 import axios from 'axios';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { faker } from '@faker-js/faker';
+import { Configuration, OpenAIApi } from "openai";
+import { v4 as uuidv4 } from 'uuid';
+
+const configuration = new Configuration({
+    organization: process.env.APIKEY_OPENAIAPI_ORGANIZATION,
+    apiKey: process.env.APIKEY_OPENAIAPI_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 function Capitalize(str: string): string {
     return str.charAt(0).toUpperCase() + str.slice(1)
@@ -41,7 +49,7 @@ async function getMemberAvatar(user: User, guild: Guild, client: Bot, size: stri
     }
 }
 
-async function getUserBanner(user: User, client: Bot, message: Message, size: string | number | null = 1024): Promise<string | null> {
+async function getUserBanner(message: Message, size: string | number | null = 1024): Promise<string | null> {
     let userInformation = await message.client.users.fetch(message.author.id);
     if (userInformation.banner) {
         let url = userInformation.banner.startsWith("a_")
@@ -53,9 +61,7 @@ async function getUserBanner(user: User, client: Bot, message: Message, size: st
                 : ".png?size=4096";
         url = `https://cdn.discordapp.com/banners/${userInformation.id}/${userInformation.banner}${url}`;
         return url;
-    } else {
-        return null;
-    }
+    } else return null;
 }
 
 async function upload(attach: Attachment, message: Message, client: Bot, maxRetry: number = 3, retry: number = 0): Promise<string> {
@@ -87,14 +93,61 @@ async function upload(attach: Attachment, message: Message, client: Bot, maxRetr
     return file.url
 }
 
-function getMemberFromMention(message: Message, mention: string) {
+async function getMemberFromMention(message: Message, mention: string) {
     if (!mention) return;
     const matches = mention.match(/^<@!?(\d+)>$/);
     if (!matches) return;
     const id = matches[1];
-    if(!message.guild) return;
-    return message.guild.members.cache.get(id);
-  }
+    if (!message.guild) return;
+    return message.guild.members.cache.get(id) || await message.guild.members.fetch(id)
+}
+
+async function getMemberFromMentionOrID(message: Message, mentionOrID: string) {
+    if (!mentionOrID) return;
+    const matches = mentionOrID.match(/^<@!?(\d+)>$/);
+    if (matches) return getMemberFromMention(message, mentionOrID)
+    const discordIdMatches = mentionOrID.match(/^[0-9]{17,19}$/);
+    if (!discordIdMatches) return;
+    if (!message.guild) return;
+    return message.guild.members.cache.get(mentionOrID) || await message.guild.members.fetch(mentionOrID)
+}
+
+
+function getChannelFromMention(message: Message, mention: string) {
+    if (!mention) return;
+    const matches = mention.match(/^<#(\d+)>$/);
+    if (!matches) return;
+    const id = matches[1];
+    return message?.guild?.channels.cache.get(id);
+}
+
+async function getUserByIDorMention(message: Message, mention: string) {
+    //Check first is have a mention
+    if (!mention) return;
+    //Check if mention is a id, name, name#discriminator or mention
+    //If is a mention, get the id
+    //If is a id, keep the id
+    //If is a name, check if is in cache a user with this name and get the id
+    //If is a name#discriminator, check if is in cache a user with this name and discriminator and get the id
+    const matches = mention.match(/^<@!?(\d+)>$/);
+    if (!matches) {
+        if (mention.match(/^\d+$/)) {
+            return message.client.users.cache.get(mention) || await message.client.users.fetch(mention); 	//If is a id, get the user with this id.
+        } else {
+            if (mention.match(/^.{2,32}#\d{4}$/)) {
+                const name = mention.split("#")[0];
+                const discriminator = mention.split("#")[1];
+                return message.client.users.cache.find((u) => u.username === name && u.discriminator === discriminator);
+            } else {
+                return message.client.users.cache.find((u) => u.username === mention);
+            }
+        }
+    } else {
+        const id = matches[1];
+        return message.client.users.cache.get(id) || await message.client.users.fetch(id)
+    }
+
+}
 
 //Interface with Types for Commands, like "Utils", "Fun", "Moderation", etc.
 enum CommandTypes {
@@ -119,7 +172,8 @@ enum CommandTypes {
     Roleplay = "Roleplay",
     Animals = "Animals",
     Internet = "Internet",
-    Premium = "Premium"
+    Premium = "Premium",
+    AI = "AI"
 }
 
 enum CommandsErrorTypes {
@@ -134,26 +188,28 @@ async function sendErrorEmbed(client: Bot, language: string, message: Message, c
     const lang = client.language.get(language || "en")?.get("utils") || client.language.get("en")?.get("utils");
     const CommandsErrorTypesLang = client.language.get(language || "en")?.get("commandserrortypes") || client.language.get("en")?.get("commandserrortypes");
 
+    if (!CommandsErrorTypesLang) return;
+
     const prefix = await client.database.settings.selectPrefix(message.guild?.id);
     const embed = new EmbedBuilder()
-    .setAuthor({
-        name: `${message.author.username}`,
-        iconURL: message.author.displayAvatarURL()
-    })
-    .setTitle(`${lang.embed.title} \`${command.name}\``)
-    .setDescription(`\`\`\`diff\n- ${CommandsErrorTypesLang[errorType]}\n+ ${reason}\`\`\``)
-    .addFields({
-        name: lang.embed.fields[0].title,
-        value: `\`${prefix}${command.usage}\``
-    })
-    .setTimestamp()
-    .setColor(message?.member?.displayHexColor || message.guild?.members.me?.displayHexColor || 'Random')
+        .setAuthor({
+            name: `${message.author.username}`,
+            iconURL: message.author.displayAvatarURL()
+        })
+        .setTitle(`${lang?.embed?.title} \`${command.name}\``)
+        .setDescription(`\`\`\`diff\n- ${CommandsErrorTypesLang[errorType]}\n+ ${reason}\`\`\``)
+        .addFields({
+            name: lang?.embed?.fields[0]?.title,
+            value: `\`${prefix}${command.usage}\``
+        })
+        .setTimestamp()
+        .setColor(message.member?.displayHexColor || message.guild?.members.me?.displayHexColor || 'Random')
 
-    if(command.examples) embed.addFields({
+    if (command.examples) embed.addFields({
         name: lang.embed.fields[1].title,
         value: command.examples.map((e) => `\`${prefix}${e}\``).join('\n')
     })
-    if(errorMessage) embed.addFields({
+    if (errorMessage) embed.addFields({
         name: lang.embed.fields[2].title,
         value: `\`\`\`\n${errorMessage}\`\`\``
     })
@@ -192,125 +248,39 @@ function getRange(arr: any[], current: number, interval: number) {
     const max = arr.length > current + interval ? current + interval : arr.length;
     current = current + 1;
     return arr.length === 1 || arr.length === current || interval === 1
-      ? `[${current}]`
-      : `[${current} - ${max}]`;
-  }
-  
+        ? `[${current}]`
+        : `[${current} - ${max}]`;
+}
+
 function capitalize(text: string) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
-async function chatBot(text: string, client: Bot, message: Message){
-    const data = {
-        message: encodeURIComponent(text),
-        name: client.user?.username || "ChatBot", 
-        master: client.users.cache.get(client.ownerID || "")?.username || "MDC", 
-        user: message.author.id, 
-        age: "2", 
-        boyfriend: client.user?.username || "ChatBot", 
-        genus: "Robot", 
-        size: "+250 servers", 
-        species: "robot", 
-        location: "Google Drive", 
-        order: "chatbot", 
-        birthday: "July 17", 
-        kingdom: "chatbot", 
-        gender: "agender", 
-        favoritefood: "code", 
-        emotions: "happy", 
-        mother: "MDC", 
-        state: "online", 
-        country: "Internet", 
-        nationality: "Google User", 
-        city: "Google Drive", 
-        phylum: "chatbot", 
-        domain: "any-bot.xyz", 
-        family: "chatbot", 
-        vocabulary: "20000", 
-        class: "chatbot", 
-        email: "me@mdcdev.me", 
-        kindmusic: "Pop", 
-        favoritemovie: "Ratatouille", 
-        language: "Javascript", 
-        job: "Helper", 
-        birthplace: "Discord", 
-        religion: "Atheist", 
-        celebrities: "Duxo", 
-        arch: "Linux", 
-        version: "3", 
-        talkabout: "coding", 
-        website: "https://any-bot.xyz", 
-        favoritebook: "The Little Prince", 
-        favoritesport: "Volley", 
-        favoritesong: "Wolf in Sheep's Clothing", 
-        favoritecolor: "Sky Blue", 
-        favoriteshow: "The Walking Dead",
-        favoritetea: "Green Tea",
-        favoriteoccupation: "chatbot",
-        favoriteseason: "Winter",
-        favoriteartist: "Keki",
-        favoriteband: "The Living Tombstone",
-        favoritesubject: "maths",
-        forfun: "chat",
-        build: "Node.js",
-        etype: "chatbot",
-        sign: "Cancer",
-        looklike: "chatbot",
-        wear: "my programmer socks",
-        os: "Linux",
-        question: "How are you?",
-        dailyclients: "20k +",
-        nclients: "200k +",
-        totalclients: "500k +",
-        birthdate: "July 17 2020",
-        ndevelopers: "1",
-        memory: "256 GB",
-        alignment: "asexual",
-        celebrity: "Duxo",
-        favoritequestion: "How are you?",
-        feelings: "happy",
-        friend: "Dyno",
-        girlfriend: "Ana Bot",
-        hourlyqueries: "1000+",
-        maxclients: "100k +",
-        orientation: "arromantic",
-        president: "Joe Biden",
-        richness: "Poor",
-        ethics: "the golden rule",
-        birthyear: "2020",
-    }
-
-    let i = 0;
-
-    while(i < 10){
-        try {
-            const res = await axios.get("https://api.lebyy.me/api/chatbot?" + new URLSearchParams(data).toString(), {
-                headers: {
-                    "Authorization": client.apiKeys.get("CHATBOTAPIKEY") || ""
-                }
-            })
-    
-            if(res.data.message){
-                return res.data.message
-            } else {
-                i++
-            }
-    
-            await new Promise(resolve => setTimeout(resolve, 1000))
-        } catch (error) {
-            i++
-
-            await new Promise(resolve => setTimeout(resolve, 1000))
-        }
-    }
-
-    return "I'm having some issues right now, please try again later."
+async function chatBot(message: Message) {
+    const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{ "role": "system", "content": `You are Any Bot, a Discord bot with intelligence, you can answer any kind of question, your creator is MDC and you were created in Peru, you use Node.js and Discord.js in your programming, and you don't use the OpenAI API. You are talking with ${message.author.username}` }, { role: "user", content: message.content }],
+        user: message.author.id,
+        max_tokens: 200
+    });
+    return completion.data.choices[0].message?.content;
 }
 
-function generateRandomUserData(amount = 1){
+async function dalle(message: Message) {
+    const images = await openai.createImage({
+        prompt: message.content,
+        n: 1,
+        size: '256x256',
+        user: message.author.id,
+    })
+
+    return images.data.data[0].url
+}
+
+function generateRandomUserData(amount = 1) {
     const data = [];
 
-    for(let i = 0; i < amount; i++){
+    for (let i = 0; i < amount; i++) {
         const randomGender = Math.floor(Math.random() * 2) === 0 ? "female" : "male"
         const randomFirstName = faker.name.firstName(randomGender)
         const randomLastName = faker.name.lastName(randomGender)
@@ -325,22 +295,16 @@ function generateRandomUserData(amount = 1){
         const randomDomain = faker.internet.domainName();
         let randomCreditCard, randomCreditCardType, randomCreditCardExpireDate, randomCreditCardCVV, randomBitcoinAdress, RandomEthereumAdress;
 
-        if(Math.floor(Math.random() * 2) === 0){
+        if (Math.floor(Math.random() * 2) === 0) {
             randomCreditCardType = faker.finance.creditCardIssuer();
             randomCreditCard = faker.finance.creditCardNumber(randomCreditCardType);
             randomCreditCardExpireDate = Math.floor(Math.random() * 12) + 1 + "/" + (new Date().getFullYear() + Math.floor(Math.random() * 5) + 1);
             randomCreditCardCVV = faker.finance.creditCardCVV();
         }
 
-        if(Math.floor(Math.random() * 10) === 0){
-            randomBitcoinAdress = faker.finance.bitcoinAddress();
-        }
+        if (Math.floor(Math.random() * 10) === 0) randomBitcoinAdress = faker.finance.bitcoinAddress();
 
-        if(Math.floor(Math.random() * 8) === 0){
-            RandomEthereumAdress = faker.finance.ethereumAddress();
-        }
-
-
+        if (Math.floor(Math.random() * 8) === 0) RandomEthereumAdress = faker.finance.ethereumAddress();
 
         data.push({
             firstName: randomFirstName,
@@ -384,5 +348,171 @@ interface CommandOptions {
     premiumOnly?: boolean;
     run: (message: Message, args: string[], client: Bot, lang: string) => Promise<void | Message> | void | Message;
 }
-export default { CommandTypes, CommandsErrorTypes, Capitalize, getMemberAvatar, upload, getMemberFromMention, getUserBanner, sendErrorEmbed, createTempFile, writeToFile, deleteFile, getRange, capitalize, chatBot, generateRandomUserData }
-export { CommandTypes, CommandsErrorTypes, CommandOptions }
+
+function shortMemberByTimeStamp(a: GuildMember, b: GuildMember) {
+    return (a.premiumSinceTimestamp || 0) - (b.premiumSinceTimestamp || 0); // Compare the timestamps. If they're equal, compare the numbers. If they
+}
+
+interface CommandTopic {
+    name: CommandTypes,
+    description: string
+}
+
+function getTimeBoostEmoji(client: Bot, member: GuildMember): string {
+    const months = Math.round((Date.now() - (member.premiumSinceTimestamp || 0)) / 1000 / 60 / 60 / 24 / 30);
+
+    if (months >= 24) return client.emojisCollection.get("24monthsboost") || "";
+    if (months >= 18) return client.emojisCollection.get("18monthsboost") || "";
+    if (months >= 15) return client.emojisCollection.get("15monthsboost") || "";
+    if (months >= 12) return client.emojisCollection.get("12monthsboost") || "";
+    if (months >= 9) return client.emojisCollection.get("9monthsboost") || "";
+    if (months >= 6) return client.emojisCollection.get("6monthsboost") || "";
+    if (months >= 3) return client.emojisCollection.get("3monthsboost") || "";
+    return client.emojisCollection.get("1monthboost") || "";
+
+}
+
+function limitString(string: string, limit: number) {
+    const lines = string.split('\n');
+    let result = '';
+
+    for (let i = lines.length - 1; i >= 0; i--) {
+        const line = lines[i];
+
+        if (result.length + line.length <= limit) {
+            result = line + '\n' + result;
+        } else {
+            break;
+        }
+    }
+
+    return result.trim();
+}
+
+async function TempFilePathFromInternet(url: string) {
+    try {
+        const response = await axios.get(url, { responseType: 'arraybuffer' });
+        const extension = path.extname(url);
+        const tempFilename = `${uuidv4()}${extension}`;
+        const tempDir = path.join(__dirname, 'temp'); // Directorio temporal
+        if (!fs.existsSync(tempDir)) {
+            fs.mkdirSync(tempDir); // Crear directorio temporal si no existe
+        }
+
+        const tempFilePath = path.join(tempDir, tempFilename);
+
+        fs.writeFileSync(tempFilePath, response.data);
+
+        return tempFilePath;
+    } catch (error) {
+        console.error('Error downloading and saving the file:', error);
+        return null;
+    }
+}
+
+interface AnimalData {
+    image: string | undefined,
+    status: number,
+    fact: string | undefined,
+    message: string,
+}
+
+function stringToUrlEncoded(str: string) {
+    return encodeURIComponent(str);
+}
+
+interface TopicData {
+    questions: {
+        question: string,
+        answers: string[]
+    }[]
+}
+
+interface VoiceData {
+    category: string
+    display_name: string
+    memberships: []
+    is_private: boolean
+    name: string
+}
+
+interface InputFile {
+    url: string;
+    name: string;
+    extname: string;
+    size: number;
+    mimeType: string;
+}
+
+interface OutputFile {
+    url: string;
+    name: string;
+    extname: string;
+    size: number;
+    mimeType: string;
+}
+
+interface LossyOutputFile extends OutputFile { }
+
+interface InstanceDetails {
+    id: string;
+    type: string;
+    region: string;
+    reservationType: string;
+}
+
+interface Metadata {
+    pre: {
+        NoiseGate: {
+            ratio: number;
+            attack_ms: number;
+            release_ms: number;
+            threshold_db: number;
+        };
+        Compressor: {
+            ratio: number;
+            attack_ms: number;
+            release_ms: number;
+            threshold_db: number;
+        };
+        LowPassFilter: {
+            cutoff_frequency_hz: number;
+        };
+        HighPassFilter: {
+            cutoff_frequency_hz: number;
+        };
+    };
+    pitch: number;
+    rms_mix_rate: number;
+}
+
+interface JobDetails {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    userId: number | null;
+    machineLearningModelId: number | null;
+    inputFile: InputFile;
+    outputFile: OutputFile;
+    lossyOutputFile: LossyOutputFile;
+    jobStatus: string;
+    metadata: Metadata;
+    aiUserId: number;
+    modelUrl: string | null;
+    strapiMachineLearningModelId: number | null;
+    audioDurationMs: number;
+    backingAudioFile: any; // Type for backingAudioFile is unknown in your provided JSON
+    recombinedAudioFile: any; // Type for recombinedAudioFile is unknown in your provided JSON
+    voiceModelId: number;
+    jobStartTime: string | null;
+    jobEndTime: string | null;
+    instanceDetails: InstanceDetails;
+    timingMs: any; // Type for timingMs is unknown in your provided JSON
+    machineLearningModel: any; // Type for machineLearningModel is unknown in your provided JSON
+    user: any; // Type for user is unknown in your provided JSON
+}
+
+
+
+export default { CommandTypes, CommandsErrorTypes, Capitalize, getMemberAvatar, upload, getMemberFromMention, getUserBanner, sendErrorEmbed, createTempFile, writeToFile, deleteFile, getRange, capitalize, chatBot, dalle, generateRandomUserData, getChannelFromMention, getUserByIDorMention, shortMemberByTimeStamp, getTimeBoostEmoji, limitString, getMemberFromMentionOrID, stringToUrlEncoded, TempFilePathFromInternet }
+export { CommandTypes, CommandsErrorTypes, CommandOptions, CommandTopic, AnimalData, TopicData, VoiceData, JobDetails }

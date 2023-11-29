@@ -1,12 +1,12 @@
 import { Client, ClientOptions, Collection, User } from "discord.js";
 import { logger } from "./utils/logger";
-import { readdirSync } from "fs";
-import { resolve } from "path";
+import { readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 // @ts-ignore
 import AsciiTable from "ascii-table";
 import Utils from "./utils/utils";
 import MondoDB from "./utils/mongodb";
-import {Command} from "./commands/command";
+import { Command } from "./commands/command";
 
 //Make a class that extends the Client class
 class Bot extends Client {
@@ -76,6 +76,16 @@ class Bot extends Client {
     language: Collection<string, Map<string, any>> = new Collection();
 
     /**
+     * Emojis Collection
+     */
+    emojisCollection: Collection<string, string> = new Collection();
+
+    /**
+     * Topics Collection
+     */
+    topicsCollection: Collection<string, string[]> = new Collection();
+
+    /**
      * API URL
      */
     apiURL: string = process.env.APIURL || "http://localhost:3000";
@@ -136,6 +146,11 @@ class Bot extends Client {
     database = MondoDB;
 
     /**
+     * User count
+     */
+    usersCount:number = 0;
+
+    /**
     * Function to login the bot
     */
     loginBot: () => void;
@@ -156,6 +171,8 @@ class Bot extends Client {
     isOwner: (author: User) => boolean;
     loadAPIKeys: () => void;
     loadLanguageFiles: () => void;
+    loadEmojis: (file: string) => void;
+    loadTopics: (path: string) => void;
 
     /**
    * Create a new client
@@ -180,20 +197,20 @@ class Bot extends Client {
             //With fs read the env file and get the api keys, the api keys are like
             //APIKEY_CATAPI=token
             //APIKEY_CATAPI2=token
-    
+
             //Get the api keys
             let apiKeys = Object.keys(process.env).filter((key) => key.startsWith("APIKEY_"));
             let apiTable = new AsciiTable("API Keys");
-    
+
             //Add the api keys to the collection
             apiKeys.forEach((key) => {
                 apiTable.setHeading("Key", "Status");
                 apiTable.addRow(key.replace("APIKEY_", ""), "✅");
                 this.apiKeys.set(key.replace("APIKEY_", ""), process.env[key] || "");
             });
-    
+
             console.log(apiTable.toString());
-    
+
             this.logger.info(this.apiKeys.size + " API Keys loaded!");
         }
 
@@ -269,18 +286,67 @@ class Bot extends Client {
                     });
                 }
             });
-            
+
             console.log(table.toString());
 
             this.logger.info(this.commands.size + " commands loaded!");
         }
 
         /**
+         * Load emojis
+         */
+        this.loadEmojis = function (file: string) {
+            this.logger.info("Loading emojis...");
+            let table = new AsciiTable("Emojis");
+            table.setHeading("Emoji", "Status");
+
+            let emojis = JSON.parse(readFileSync(file, "utf-8"))
+
+            Object.keys(emojis).forEach((key) => {
+                this.emojisCollection.set(key, emojis[key]);
+                table.addRow(key, "✅");
+            });
+            console.log(table.toString());
+            this.logger.info(this.emojisCollection.size + " emojis loaded!");
+
+        }
+
+        /**
+         * Load topic for trivia
+         */
+        this.loadTopics = function (path: string) {
+            this.logger.info("Loading topics...");
+            let table = new AsciiTable("Topics");
+            table.setHeading("Topic", "Language", "Status");
+            //In the path there are directories with the name of the language, in each directory there are yml files with the name of the topic
+            readdirSync(path).forEach((languageDir) => {
+                if (languageDir.length === 0) return this.logger.warn("Language directory is empty!");
+
+                //Check if the directory is a directory
+                if (!languageDir.endsWith(".js") && !languageDir.endsWith(".ts")) {
+                    //Get the topics
+                    readdirSync(resolve(path, languageDir)).forEach((file) => {
+                        const topic = file.substring(0, file.indexOf("."));
+                        const oldTopics = this.topicsCollection.get(languageDir) || [];
+                        if (oldTopics.includes(topic)) return this.logger.warn(`Topic ${topic} already exists!`);
+
+                        this.topicsCollection.set(languageDir, [...oldTopics, topic]);
+
+                        table.addRow(file, languageDir, "✅");
+                    });
+                }
+            });
+
+            console.log(table.toString());
+            
+        }
+
+        /**
          * Check if the owner of the bot is the author of the message
          */
         this.isOwner = function (author: User) {
-            if(author.id === this.ownerID) return true;
-            if(this.developersIDs.includes(author.id)) return true;
+            if (author.id === this.ownerID) return true;
+            if (this.developersIDs.includes(author.id)) return true;
             return false;
         }
 

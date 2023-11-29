@@ -22,11 +22,11 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
     starboardChannelID: {
         type: String,
     },
-    adminRoleID: {
-        type: String,
+    adminRoleIDs: {
+        type: Array,
     },
-    modRoleID: {
-        type: String,
+    modRoleIDs: {
+        type: Array,
     },
     mutedRoleID: {
         type: String,
@@ -45,8 +45,8 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
         default: false
     },
     modChannelIDs: {
-        type: String,
-        default: ""
+        type: Array,
+        default: []
     },
     disabledCommands: {
         type: String,
@@ -77,7 +77,17 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
         type: String,
     },
     verificationMessage: {
-        type: String,
+        type: Object,
+        default: {
+            content: "React to this message to verify yourself!",
+            embeds: [
+                {
+                    title: "Verification",
+                    description: "React to this message to verify yourself!",
+                    color: 0x00FF00
+                }
+            ]
+        }
     },
     verificationMessageID: {
         type: String,
@@ -90,64 +100,55 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
         type: String,
     },
     welcomeMessage: {
-        type: Array,
-        default: [{
-            type: "message",
-            data: {
-                text: "Welcome ?member to ?guild !"
-            }
-        }]
+        type: Object,
+        default: {
+            content: "Welcome %%MEMBER%% to %%GUILD_NAME%%!"
+
+        }
     },
     farewellChannelID: {
         type: String,
     },
     farewellMessage: {
-        type: Array,
-        default: [{
-            type: "message",
-            data: {
-                text: "Goodbye ?member !"
-            }
-        }]
-    },
-    pointTracking: {
-        type: Number,
-        default: false,
-        required: true
-    },
-    messagePoints: {
-        type: Number,
-        default: 1,
-        required: true
-    },
-    commandPoints: {
-        type: Number,
-        default: 1,
-        required: true
-    },
-    voicePoints: {
-        type: Number,
-        default: 1,
-        required: true
+        type: Object,
+        default:
+        {
+            content: "Goodbye %%MEMBER%%!"
+        }
     },
     xpTracking: {
         type: Number,
         default: false,
         required: true
     },
-    messageXP: {
+    minMessageXP: {
         type: Number,
         default: 1,
         required: true
     },
-    commandXP: {
+    maxMessageXP: {
+        type: Number,
+        default: 5,
+        required: true
+    },
+    minCommandXP: {
         type: Number,
         default: 1,
         required: true
     },
-    voiceXP: {
+    maxCommandXP: {
+        type: Number,
+        default: 5,
+        required: true
+    },
+    minVoiceXP: {
         type: Number,
         default: 1,
+        required: true
+    },
+    maxVoiceXP: {
+        type: Number,
+        default: 5,
         required: true
     },
     xpMessageAction: {
@@ -165,13 +166,10 @@ const Guild = mongoose.model('Settings', new mongoose.Schema({
         type: String,
     },
     crownMessage: {
-        type: Array,
-        default: [{
-            type: "message",
-            data: {
-                text: "?member has won ?role this week! Points have been reset, better lick next time!"
-            }
-        }]
+        type: Object,
+        default: {
+            content: "%%MEMBER%% has won %%ROLE%% this week! Points have been reset, better lick next time!"
+        }
     },
     crownSchedule: {
         type: String,
@@ -330,13 +328,13 @@ export = {
                 guildID: guildID
             }, {
                 prefix: 1
-            }))?.prefix;
+            }))?.prefix || "ab."
         } catch (error) {
             console.log(error);
         }
     },
 
-    async selectModChannelIds(guildID: any) {
+    async selectModChannelIds(guildID: string) {
         try {
             return (await Guild.findOne({
                 guildID: guildID
@@ -415,7 +413,7 @@ export = {
                 guildID: guildID
             }, {
                 adminRoleID: 1
-            }))?.adminRoleID;
+            }))?.adminRoleIDs;
         } catch (error) {
             console.log(error);
         }
@@ -517,27 +515,6 @@ export = {
         }
     },
 
-    async updateCrownMessage(crownMessage: any, guildID: any) {
-
-        let message = [];
-        message[0] = {
-            type: "message",
-            data: {
-                text: crownMessage
-            }
-        }
-
-        try {
-            return await Guild.updateOne({
-                guildID: guildID
-            }, {
-                crownMessage: message
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
     async updateCrownRoleId(crownRoleID: any, guildID: any) {
         try {
             return await Guild.updateOne({
@@ -574,23 +551,6 @@ export = {
         }
     },
 
-    async updateFarewellMessage(farewellMessage: any, guildID: any) {
-
-        try {
-            return await Guild.updateOne({
-                guildID: guildID
-            }, {
-                farewellMessage: [{
-                    type: "message",
-                    data: {
-                        text: farewellMessage
-                    }
-                }]
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    },
     async selectMemberLogId(guildID: any) {
         try {
             return (await Guild.findOne({
@@ -716,7 +676,7 @@ export = {
                 guildID: guildID
             }, {
                 modRoleID: 1
-            }))?.modRoleID;
+            }))?.modRoleIDs;
         } catch (error) {
             console.log(error);
         }
@@ -932,23 +892,6 @@ export = {
                 guildID: guildID
             }, {
                 welcomeChannelID: welcomeChannelID
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
-    async updateWelcomeMessage(welcomeMessage: any, guildID: any) {
-        try {
-            return await Guild.updateOne({
-                guildID: guildID
-            }, {
-                welcomeMessage: [{
-                    type: "message",
-                    data: {
-                        text: welcomeMessage
-                    }
-                }]
             });
         } catch (error) {
             console.log(error);

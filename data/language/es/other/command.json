@@ -13,10 +13,10 @@
             "description": "Me faltan los siguientes permisos: %%PERMS%%"
             }
         },
-        "cooldown": "Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%.",
+        "cooldown": "Por favor espera, podras volver a usar el comando %%TIME%%",
         "premiumCooldown": {
-            "instant": "Estás en cooldown para este comando. Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%. Si tuvieras una suscripción premium, podrías usar este comando instantáneamente.",
-            "normal": "Estás en cooldown para este comando. Por favor, espera %%TIME%% segundo(s) más antes de volver a utilizar el comando %%CMD%%. Si tuvieras una suscripción premium, solo tendrías que esperar %%PREMIUMTIME%% segundo(s) más."
+            "instant": "Estás en cooldown para este comando. Por favor espera, podras volver a usar el comando %%TIME%%. Si este server tuviera una suscripcion premium activa, podrías usar este comando instantáneamente.",
+            "normal": "Estás en cooldown para este comando. Por favor espera, podras volver a usar el comando %%TIME%%. Si este server tuviera una suscripcion premium activa, %%TIME%% podrias volver a usar el comando."
         },
         "unknown": "Ocurrió un error desconocido al ejecutar este comando.",
         "premiumOnly": "¡Este comando solo puede ser utilizado por usuarios premium!"

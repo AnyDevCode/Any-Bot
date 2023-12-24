@@ -1,0 +1,12 @@
+{
+    "description": "Get a random bird image",
+    "error": "A error occurred while getting the bird image, please try again later",
+    "embed": {
+        "title": "🐦 Chirp 🐦",
+        "fields": {
+            "fact": {
+                "name": "Fact:"
+            }
+        }
+    }
+}

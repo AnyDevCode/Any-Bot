@@ -1,0 +1,12 @@
+{
+    "description": "Get a random cat image",
+    "error": "A error occurred while getting the cat image, please try again later",
+    "embed": {
+        "title": "🐱 Maiu 🐱",
+        "fields": {
+            "fact": {
+                "name": "Fact:"
+            }
+        }
+    }
+}

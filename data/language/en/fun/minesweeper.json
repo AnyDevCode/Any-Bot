@@ -1,0 +1,9 @@
+{
+    "description": "Create a minesweeper.",
+    "errors": {
+        "tooManyBombs": "The maximum number of bombs is 64."
+    },
+    "embed": {
+        "title": "Minesweeper"
+    }
+}

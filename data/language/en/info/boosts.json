@@ -1,8 +1,18 @@
 {
     "description": "Get the boosts information for the current server.",
     "embed": {
-        "title": "Server Boosts",
-        "description": "**Boosts**: %%BOOSTS%%\n**Boost Tier**: %%TIER%%\n**Numbers of Boosters**: %%BOOSTERS%%\n**Boosters**: ```\n%%BOOSTERLIST%%\n```\n**Boosts Perks**: ```\n%%BOOSTSPERKS%%\n```"
+        "title": "%%SERVER_NAME%%'s Boosts Info",
+        "description": "**List of Boosters**\n%%BOOSTERS_LIST%%",
+        "fields": {
+            "boosts": {
+                "title": "Boosts",
+                "value": "%%EMOJI_BOOST%% **Boosts** %%BOOSTS_COUNT%%\n %%EMOJI_BOOST%% **Level** %%BOOST_LEVEL%%\n %%EMOJI_BOOST%% **Boosters** %%BOOSTERS_COUNT%%"
+            }
+        }
+    },
+    "messages": {
+        "no_boosters": "No one is boosting this server",
+        "extra_boosters": "**and %%EXTRA_BOOSTERS_COUNT%% more booster(s)...**"
     },
     "boosts": {
         "none": "None",

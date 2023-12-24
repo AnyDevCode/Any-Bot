@@ -1,0 +1,11 @@
+{
+    "description": "Says a random Elizabethan insult to the specified user.\nIf no user is given, then the insult will be directed at you!",
+    "errors": {
+        "api": "Please try again in a few seconds",
+        "apiDesc": "The API is down"
+    },
+    "embed": {
+        "title": "🎭  Thou Art  🎭",
+        "description": "%%MEMBER%%, %%INSULT%%"
+    }
+}

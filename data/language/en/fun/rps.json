@@ -1,0 +1,26 @@
+{
+    "description": "Play a game of rock–paper–scissors against Any Bot!",
+    "errors": {
+        "invalidArgument": "Please enter 🪨, 🧻, or ✂️"
+    },
+    "result": {
+        "draw": "It's a draw!",
+        "lose": "**%%BOT%%** wins!",
+        "win": "**%%AUTHOR%%** wins!"
+    },
+    "embed": {
+        "title": "%%AUTHOR%% vs. %%BOT%%",
+        "fields": [
+            {
+                "name": "Your Choice:"
+            },
+            {
+                "name": "%%BOT%%'s Choice:"
+            },
+            {
+                "name": "Result:"
+            }
+        ]
+    },
+    "rps": ["Scissors ✌️", "Rock ✊", "Paper ✋"]
+}

@@ -1,0 +1,12 @@
+{
+    "description": "Get a random koala image",
+    "error": "A error occurred while getting the koala image, please try again later",
+    "embed": {
+        "title": "🐨 Koala 🐨",
+        "fields": {
+            "fact": {
+                "name": "Fact:"
+            }
+        }
+    }
+}

@@ -14,5 +14,9 @@
                 "name": "Short URL"
             }
         ]
+    },
+    "buttons": {
+        "originalLink": "Original URL",
+        "shortLink": "Shorter URL"
     }
 }

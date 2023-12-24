@@ -1,0 +1,8 @@
+{
+    "description": "Display's a custom tweet from Donald Trump with the message provided.",
+    "errors": {
+        "APIDown": "No topics available.",
+        "tryLater": "Please try again in a few seconds",
+        "noArgs": "Please provide a message to tweet"
+    }
+}

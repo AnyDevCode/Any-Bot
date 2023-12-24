@@ -1,0 +1,12 @@
+{
+    "description": "Sends a message to the specified channel. \nIf no channel is given, then the message will be sent to the current channel.",
+    "errors": {
+        "invalidChannel": "Please provide a valid channel ID or mention.",
+        "guildOnly": "You can only use this command in a server.",
+        "modChannel": "Provided channel is moderator only, please mention an accessible text channel or provide a valid text channel ID.",
+        "noText": "Please provide a message to send.",
+        "unknownError": "This error should never happen, please report this to the developers.",
+        "noPerms": "I do not have permission to send messages in that channel.",
+        "userNoPerms": "You do not have permission to send messages in the provided channel."
+    }
+}

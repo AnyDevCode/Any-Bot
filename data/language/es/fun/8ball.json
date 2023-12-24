@@ -1,11 +1,9 @@
 {
+    "description": "Pregúntale a la bola 8 una pregunta y obtén una respuesta.",
     "noArgs": "Porfavor, proporcione una pregunta.",
     "disclaimer": "%%USER%% | Recuerda, solo es una respuesta aleatoria, no tome esto como una respuesta definitiva o real en decisiones importantes.",
     "title": "Bola 8",
-    "description": "**Pregunta:** \n ```\n%%QUESTION%%\n```\n**Respuesta:** \n ```\n%%ANSWER%%\n```",
-    "info": {
-        "description": "Pregúntale a la bola 8 una pregunta y obtén una respuesta."
-    },
+    "descriptionembed": "**Pregunta:** \n ```\n%%QUESTION%%\n```\n**Respuesta:** \n ```\n%%ANSWER%%\n```",
     "answers": [
         "Sí",
         "No",

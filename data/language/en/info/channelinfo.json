@@ -1,31 +1,48 @@
 {
-    "description": "Obtener información sobre un canal",
+    "description": "Get Information about channel",
     "errors": {
-        "invalidChannel": "Canal no encontrado"
+        "invalidChannel": "Channel not found"
     },
     "embed": {
-        "title": "Información del canal",
+        "title": "Information about channel",
         "fields": {
-            "name": "Nombre",
+            "name": "Name",
             "id": "ID",
-            "type": "Tipo",
-            "created": "Creado el",
+            "type": "Type",
+            "created": "Created on",
             "nsfw": "NSFW",
-            "yes": "Sí",
+            "yes": "Yes",
             "no": "No",
-            "slowmode": "Modo lento",
-            "seconds": "segundos",
-            "none": "Ninguno",
-            "members": "Miembros",
+            "slowmode": "Slowmode",
+            "seconds": "seconds",
+            "none": "None",
+            "members": "Members",
             "bots": "Bots",
-            "bitrate": "Tasa de bits",
+            "bitrate": "Bitrate",
             "kbps": "kbps",
-            "userLimit": "Límite de usuarios",
-            "full": "Lleno",
-            "membersJoined": "Miembros unidos",
-            "noMembers": "No hay miembros unidos",
-            "topic": "Tema"
+            "userLimit": "User limit",
+            "full": "Full",
+            "membersJoined": "Joined members",
+            "noMembers": "No joined members",
+            "topic": "Topic",
+            "cooldownPerUser": "Message cooldown on posts per user",
+            "cooldownPerPost": "Cooldown amount per post",
+            "autoArchivePost": "Auto-archive period",
+            "tags": "Tags",
+            "defaultReactionEmoji": "Default Reaction Emoji",
+            "error": "Error",
+            "defaultSortOrder": "Default Sort Order",
+            "defaultForumLayout": "Default Forum Layout"
         }
+    },
+    "sortOrderTypes": { 	
+        "0": "Latest Activity",
+        "1": "Creation Date"
+    },
+    "forumLayoutTypes": {
+        "0": "No set",
+        "1": "List View", 
+        "2": "Gallery View"
     }
     
 }

@@ -1,0 +1,10 @@
+{
+    "description": "Rolls a dice with the specified number of sides. Will default to 6 sides if no number is given.",
+    "errors": {
+        "invalidNumber": "Please provide a valid number of dice sides."
+    },
+    "embed": {
+        "title": "🎲  Dice Roll  🎲",
+        "description": "%%AUTHOR%%, you rolled a **%%NUMBER%%**!"
+    }
+}

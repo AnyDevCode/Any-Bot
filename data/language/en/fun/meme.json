@@ -1,0 +1,18 @@
+{
+    "description": "Displays a random meme from the `memes`, `dankmemes`, or other subreddits.",
+    "subreddits": [""],
+    "errors": {
+        "commandFailure": "Please try again in a few seconds", 
+        "apiDown": "The API is down",
+        "blackReddit": "Due to recent events on Reddit, some subreddits are being privatized or blocked on Reddit, due to these events, some memes can not be displayed correctly, we are sorry for what happened."
+    },
+    "embed": {
+        "fields": [
+            "Subreddit",
+            "Upvotes"
+        ]
+    },
+    "buttons": {
+        "post": "View in Reddit"
+    }
+}

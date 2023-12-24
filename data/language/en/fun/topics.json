@@ -1,0 +1,7 @@
+{
+    "description": "Displays the list of all available trivia topics.",
+    "embed": {
+        "title": "Trivia Topics",
+        "description": "%%TOPICS%%\n\nType `%%PREFIX%%trivia [topic]` to choose one."
+    }
+}

@@ -1,11 +1,9 @@
 {
+    "description":"Ask the magic 8ball a question.",
     "noArgs": "Please provide a question.",
     "disclaimer": "%%USER%% | Remember, the answer of the bot is random, so don't take it seriously.",
     "title": "8ball",
-    "info": {
-        "description": "Ask the magic 8ball a question."
-    },
-    "description": "**Question:** \n ```\n%%QUESTION%%\n```\n**Answer:** \n ```\n%%ANSWER%%\n```",
+    "descriptionembed": "**Question:** \n ```\n%%QUESTION%%\n```\n**Answer:** \n ```\n%%ANSWER%%\n```",
     "answers": [
         "It is certain.",
         "It is decidedly so.",

@@ -39,5 +39,10 @@
   "UseExternalStickers": "Usar stickers externos",
   "SendMessagesInThreads": "Enviar mensajes en hilos",
   "UseEmbeddedActivities": "Usar actividades incrustadas",
-  "ModerateMembers": "Moderar miembros"
+  "ModerateMembers": "Moderar miembros",
+  "SendVoiceMessages": "Enviar mensajes de voz",
+  "UseExternalSounds": "Usar sonidos externos",
+  "UseSoundboard": "Usar Soundboard",
+  "ViewCreatorMonetizationAnalytics": "Ver analiticas de monetizacion",
+  "ManageGuildExpressions": "Administrar emojis/stickers y sonidos del servidor"
 }

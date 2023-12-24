@@ -39,5 +39,10 @@
   "UseExternalStickers": "Use External Stickers",
   "SendMessagesInThreads": "Send Messages in Threads",
   "UseEmbeddedActivities": "Use Embedded Activities",
-  "ModerateMembers": "Moderate Members"
+  "ModerateMembers": "Moderate Members",
+  "SendVoiceMessages": "Send Voice Messages",
+  "UseExternalSounds": "Use External Sounds",
+  "UseSoundboard": "Use Soundboard",
+  "ViewCreatorMonetizationAnalytics": "View Creator Monetization Analytics",
+  "ManageGuildExpressions": "Manage Guild Expressions"
 }

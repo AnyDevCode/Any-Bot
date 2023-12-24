@@ -82,5 +82,17 @@
     "Animals": {
         "name": "Animals",
         "description": "All animals commands for the bot"
+    },
+    "Internet": {
+        "name": "Internet",
+        "description":"All internet commands for the bot"
+    },
+    "Premium": {
+        "name": "Premium",
+        "description":"All premium commands for the bot"
+    },
+    "AI": {
+        "name": "AI",
+        "description": "All AI commands for the bot"
     }
 }

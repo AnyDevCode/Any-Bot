@@ -1,0 +1,12 @@
+{
+    "description": "Get a random bear image",
+    "error": "A error occurred while getting the bear image, please try again later",
+    "embed": {
+        "title": "🐻 Grrr 🐻",
+        "fields": {
+            "fact": {
+                "name": "Fact:"
+            }
+        }
+    }
+}

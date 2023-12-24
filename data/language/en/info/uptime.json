@@ -1,19 +1,10 @@
 {
-    "description": "Muestra el tiempo de actividad del bot",
-    "day": "día",
-    "days": "días",
-    "hour": "hora",
-    "hours": "horas",
-    "minute": "minuto",
-    "minutes": "minutos",
-    "second": "segundo",
-    "seconds": "segundos",
+    "description": "Displays the bot's uptime",
     "embed": {
-        "title": "Tiempo de actividad de %%BOT%%",
-        "description": "```prolog\n%%DAYS%%, %%HOURS%%, %%MINUTES%%, y %%SECONDS%%```",
+        "title": "%%BOT%%'s Uptime",
         "fields": [
             {
-                "name": "Fecha de lanzamiento"
+                "name": "Release Date"
             }
         ]
     }

@@ -1,0 +1,9 @@
+{
+    "description": "Swaps every letter within the provided message with an emoji.",
+    "errors": {
+        "noArgs": "Please provide a message to emojify."
+    },
+    "embed":{
+        "title": "Emojify"
+    }
+}

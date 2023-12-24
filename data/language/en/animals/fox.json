@@ -1,0 +1,12 @@
+{
+    "description": "Get a random fox image",
+    "error": "A error occurred while getting the fox image, please try again later",
+    "embed": {
+        "title": "🦊 Auuu 🦊",
+        "fields": {
+            "fact": {
+                "name": "Fact:"
+            }
+        }
+    }
+}

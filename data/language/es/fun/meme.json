@@ -1,0 +1,21 @@
+{
+    "description": "Muestra un meme aleatorio de los subreddits MemesESP, MemesEspanol, etc",
+    "subreddits": [
+        "MemesESP",
+        "MemesEspanol"
+    ],
+    "errors": {
+        "commandFailure": "Por favor intente de nuevo en unos segundos",
+        "apiDown": "La API está caída",
+        "blackReddit": "Debido a los últimos acontecimientos ocurridos en Reddit, algunos subreddits se están privatizando o bloqueando en Reddit, debido a estos acontecimientos, algunos memes no se podrán mostrar de forma correcta, lamentamos lo sucedido."
+    },
+    "embed": {
+        "fields": [
+            "Subreddit",
+            "Upvotes"
+        ]
+    },
+    "buttons": {
+        "post": "Ver en Reddit"
+    }
+}

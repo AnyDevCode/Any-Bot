@@ -1,0 +1,6 @@
+{
+    "description": "He answers what you tell him.",
+    "errors": {
+        "noArgs": "Do not forget to put the text you want."
+    }
+}

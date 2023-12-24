@@ -1,6 +1,5 @@
 {
     "description": "This is the help command. It lists all the commands and their descriptions.",
-    "generalDescription": "General commands.",
     "title": "Help",
     "noneDescription": "No description available.",
     "noneAliases": "No aliases available.",

@@ -1,0 +1,7 @@
+{
+    "description": "Yes",
+    "errors": {
+        "noArgs": "Please enough arguments.",
+        "noResponse": "Sorry, I am unable to process your request at this time."
+    }
+}

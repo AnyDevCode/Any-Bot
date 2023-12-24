@@ -1,0 +1,10 @@
+{
+    "description": "Talk to a chatbot!",
+    "errors": {
+        "noArgs": "Please provide a question.",
+        "noResponse": "Sorry, I don't understand that."
+    },
+    "embed": {
+        "title": ":robot:  Chat Bot!  :robot:"
+    }
+}

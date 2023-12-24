@@ -1,0 +1,7 @@
+{
+    "description": "Generate an image made with AI using DALL-E 2",
+    "errors": {
+        "noArgs": "Please provide a question.",
+        "noResponse": "Sorry, I am unable to process your request at this time."
+    }
+}

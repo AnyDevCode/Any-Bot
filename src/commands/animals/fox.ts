@@ -3,15 +3,14 @@ import { EmbedBuilder } from 'discord.js';
 import axios from 'axios';
 
 let command: CommandOptions = {
-    name: "dog",
+    name: "fox",
     type: CommandTypes.Animals,
-    aliases: ["doggo", "doge"],
     cooldown: 10,
     async run(message, args, client, language) {
-        const lang = client.language.get(language || "en")?.get("dog") || client.language.get("en")?.get("dog");
+        const lang = client.language.get(language || "en")?.get("fox") || client.language.get("en")?.get("fox");
         let data: AnimalData;
         try {
-            const { data: thedata } = await axios.get(client.apiURL + "/dog");
+            const { data: thedata } = await axios.get(client.apiURL + "/fox");
             data = thedata;
         } catch (e) {
             return message.channel.send(lang.error);

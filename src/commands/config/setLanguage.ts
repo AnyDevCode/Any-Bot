@@ -41,7 +41,7 @@ let command: CommandOptions = {
         await client.database.settings.setLanguage(message.guild?.id, lang);
         // return message.channel.send("Language set to " + Languages[lang as keyof typeof Languages]);
         const secondLanguage = client.language.get(lang)?.get("setlanguage") || client.language.get("en")?.get("setlanguage");
-        return message.channel.send(secondLanguage.success.replace("%%LANGUAGE%%", Languages[lang as keyof typeof Languages]));
+        return message.channel.send(secondLanguage.success.replace(/%%LANGUAGE%%/g, Languages[lang as keyof typeof Languages]));
     }
 }
 

@@ -10,7 +10,7 @@ let command: CommandOptions = {
     async run(message, args, client, language) {
         const permissions = client.language.get(language || "en")?.get("permissions") || client.language.get("en")?.get("permissions");
         const lang = client.language.get(language || "en")?.get("permissions-command") || client.language.get("en")?.get("permissions-command");
-        let member = client.utils.getMemberFromMention(message, args[0]) || message.guild?.members.cache.get(args[0]) || message.member;
+        let member = await client.utils.getMemberFromMentionOrID(message, args[0]) || message.member;
         let role = message.mentions.roles.first() || message.guild?.roles.cache.get(args[0]);
         if (!member && !role) return message.channel.send(lang.errors.noUserOrRole);
         if (role) {
@@ -20,7 +20,7 @@ let command: CommandOptions = {
                 else rolePerms.push(`- ${permissions[key]}`);
             }
             let embed = new EmbedBuilder()
-                .setTitle(lang.roleEmbed.title.replace("%%ROLE%%", role.name))
+                .setTitle(lang.roleEmbed.title.replace(/%%ROLE%%/g, role.name))
                 .setColor(role.hexColor || message.author.hexAccentColor || "Random")
                 .setTimestamp()
                 .setFooter({
@@ -38,7 +38,7 @@ let command: CommandOptions = {
             }
 
             let embed = new EmbedBuilder()
-                .setTitle(lang.userEmbed.title.replace("%%USER%%", member.user.tag))
+                .setTitle(lang.userEmbed.title.replace(/%%USER%%/g, member.user.tag))
                 .setColor(member.user.hexAccentColor || message.author.hexAccentColor || "Random")
                 .setTimestamp()
                 .setFooter({

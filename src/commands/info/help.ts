@@ -9,7 +9,7 @@ let command: CommandOptions = {
     usage: "help <command | category>",
     async run(message, args, client, language) {
         const lang = client.language.get(language || "en")?.get("help") || client.language.get("en")?.get("help");
-        const topicLang = client.language.get(language || "en")?.get("topics") || client.language.get("en")?.get("topics");
+        const topicLang = client.language.get(language || "en")?.get("thetopics") || client.language.get("en")?.get("thetopics");
 
         //Get all categories
         const categories = client.commands.map(cmd => cmd.type).filter((value, index, self) => self.indexOf(value) === index);
@@ -37,25 +37,30 @@ let command: CommandOptions = {
         //Now make a map with the categories and the commands
         const commands = new Map<string, Command>();
         //Add description to all commands and add them to the map
-        client.commands.forEach(cmd => {
+        client.commands.forEach((cmd: Command) => {
+            if (cmd.disabled) return;
             cmd.description = client.language.get(language || "en")?.get(cmd.name)?.description || client.language.get("en")?.get(cmd.name)?.description || lang.noneDescription;
             commands.set(cmd.name, cmd);
         });
 
+
+
         //If the user didn't provide any argument, send the help embed
         if (!args[0]) {
-
             const embed = new EmbedBuilder()
                 .setTitle(lang.title)
                 .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
                 .setFooter({
-                    text: message.member?.displayName || message.author.username,
+                    text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
                 })
                 .setTimestamp()
                 .addFields(categories.map(category => ({
-                    name: topicLang[category as CommandTypes].name,
-                    value: client.commands.filter(cmd => cmd.type === category).map(cmd => `\`${cmd.name}\``).join(", ")
+                    name: topicLang[category as CommandTypes]?.name || "Indefinido",
+                    value: Array.from(commands.values())
+                        .filter(cmd => cmd.type === category)
+                        .map(cmd => `\`${cmd.name}\``)
+                        .join(", ")
                 })))
                 .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
 
@@ -68,7 +73,7 @@ let command: CommandOptions = {
                 .setTitle(lang.title)
                 .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
                 .setFooter({
-                    text: message.member?.displayName || message.author.username,
+                    text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
                 })
                 .setTimestamp()
@@ -84,7 +89,7 @@ let command: CommandOptions = {
                 .setTitle(lang.title)
                 .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
                 .setFooter({
-                    text: message.member?.displayName || message.author.username,
+                    text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
                 })
                 .setTimestamp()
@@ -116,11 +121,10 @@ let command: CommandOptions = {
                     },
                     {
                         name: lang.helpDescription,
-                        value: commands.get(args[0])?.description || lang.noneDescription
+                        value: `\`\`\`\n${commands.get(args[0])?.description || lang.noneDescription}\`\`\``,
                     }
                 ])
                 .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
-                .setDescription(lang.generalDescription);
 
             return message.channel.send({ embeds: [embed] });
         }
@@ -130,7 +134,7 @@ let command: CommandOptions = {
             .setTitle(lang.title)
             .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
             .setFooter({
-                text: message.member?.displayName || message.author.username,
+                text: message.author.username,
                 iconURL: message.author.displayAvatarURL()
             })
             .setTimestamp()

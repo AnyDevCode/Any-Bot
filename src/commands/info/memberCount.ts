@@ -10,15 +10,15 @@ let command: CommandOptions = {
         const guild = message.guild || await client.guilds.fetch(message.guildId || "");
         const members = await guild.members.fetch();
         const embed = new EmbedBuilder()
-            .setTitle(lang.embed.title)
+            .setTitle(lang?.embed?.title)
             .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
             .setFooter({
-                text: message.member?.displayName || message.author.username,
+                text: message.author.username,
                 iconURL: message.author.displayAvatarURL()
             })
             .setTimestamp()
-            .setDescription(lang.embed.description.replace("%%MEMBERS%%", members.size.toString()).replace("%%HUMANS%%", members.filter(m => !m.user.bot).size.toString()).replace("%%BOTS%%", members.filter(m => m.user.bot).size.toString()))
-            
+            .setDescription(lang?.embed?.description.replace(/%%MEMBERS%%/g, members.size.toString()).replace(/%%HUMANS%%/g, members.filter(m => !m.user.bot).size.toString()).replace(/%%BOTS%%/g, members.filter(m => m.user.bot).size.toString()))
+
         return message.channel.send({ embeds: [embed] })
     }
 }

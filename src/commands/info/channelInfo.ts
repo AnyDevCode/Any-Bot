@@ -1,6 +1,15 @@
-import { CommandTypes, CommandOptions } from '../../utils/utils';
-import { EmbedBuilder, ChannelType } from 'discord.js';
-import moment from 'moment';
+import { CommandOptions, CommandTypes } from "../../utils/utils";
+import {
+    ChannelType,
+    EmbedBuilder,
+    ForumLayoutType,
+    Guild,
+    SortOrderType,
+    TextChannel,
+} from "discord.js";
+import moment from "moment";
+import ms from "ms";
+
 const channelTypes = {
     [ChannelType.GuildText]: "Text",
     [ChannelType.DM]: "DM",
@@ -24,103 +33,174 @@ let command: CommandOptions = {
     usage: "channelinfo [channel / channel id]",
     examples: ["channelinfo #general", "channelinfo 123456789012345678"],
     async run(message, args, client, language) {
-        let langChannelTypes = client.language.get(language || "en")?.get("channeltypes") || client.language.get("en")?.get("channeltypes");
-        let lang = client.language.get(language || "en")?.get("channelinfo") || client.language.get("en")?.get("channelinfo");
 
-        let channel = message.guild?.channels.cache.get(args[0]) || message.mentions.channels.first() || message.channel;
+        let langChannelTypes =
+            client.language.get(language || "en")?.get("channeltypes") ||
+            client.language.get("en")?.get("channeltypes");
+        let lang = client.language.get(language || "en")?.get("channelinfo") ||
+            client.language.get("en")?.get("channelinfo");
 
-        if(!channel) return message.channel.send(lang.errors.invalidChannel);
+        let channel = message.guild?.channels.cache.get(args[0]) ||
+            message.mentions.channels.first() || message.channel;
+
+        if (!channel) return message.channel.send(lang.errors.invalidChannel);
 
         const embed = new EmbedBuilder()
             .setTitle(lang.embed.title)
-            .setThumbnail(message.guild?.iconURL() || "")
+            // .setThumbnail(message.guild?.iconURL() || "")
             .addFields({
                 name: lang.embed.fields.name,
                 value: channel.toString(),
-                inline: true
-            },
-                {
-                    name: lang.embed.fields.id,
-                    value: `\`${channel.id}\``,
-                    inline: true
-                },
-                {
-                    name: lang.embed.fields.type,
-                    value: `\`${langChannelTypes[channelTypes[channel.type] || "Unknown"]}\``,
-                    inline: true
-                },
-                {
-                    name: lang.embed.fields.created,
-                    value: `\`${moment(channel.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss A")}\``,
-                    inline: true
-                })
+                inline: true,
+            }, {
+                name: lang.embed.fields.id,
+                value: `\`${channel.id}\``,
+                inline: true,
+            }, {
+                name: lang.embed.fields.type,
+                value: `\`${langChannelTypes[channelTypes[channel.type] || "Unknown"]
+                    }\``,
+                inline: true,
+            }, {
+                name: lang.embed.fields.created,
+                value: `<t:${Math.round((channel.createdTimestamp || 0) / 1000)}:F>`,
+                inline: true,
+            })
             .setColor("Random")
             .setFooter({
-                text: message.member?.displayName || message.author.username,
-                iconURL: message.author.displayAvatarURL()
+                text: message.author.username,
+                iconURL: message.author.displayAvatarURL(),
             })
-            .setTimestamp()
+            .setTimestamp();
 
-        if (channel.type === ChannelType.GuildText) {
-            embed.addFields({
-                name: lang.embed.fields.nsfw,
-                value: channel.nsfw ? `\`${lang.embed.fields.yes}\`` : `\`${lang.embed.fields.no}\``,
-                inline: true
-            }, {
-                name: lang.embed.fields.slowmode,
-                value: channel.rateLimitPerUser ? `\`${channel.rateLimitPerUser} ${lang.embed.fields.seconds}\`` : `\`${lang.embed.fields.none}\``,
-                inline: true
-            }, {
-                name: lang.embed.fields.members,
-                value: `\`${channel.members.size.toString()}\``,
-                inline: true
-            }, {
-                name: lang.embed.fields.bots,
-                value: `\`${channel.members.filter(m => m.user.bot).size.toString()}\``,
-                inline: true
-            })
-        } else
-            if (channel.type === ChannelType.GuildVoice) {
+        if (channel.isTextBased() && !channel.isDMBased() && !channel.isVoiceBased() && !channel.isThread()) embed.addFields({
+            name: lang.embed.fields.nsfw,
+            value: channel.nsfw
+                ? `\`${lang.embed.fields.yes}\``
+                : `\`${lang.embed.fields.no}\``,
+            inline: true,
+        })
+
+        switch (channel.type) {
+            case ChannelType.GuildText:
+                embed.addFields({
+                    name: lang.embed.fields.slowmode,
+                    value: channel.rateLimitPerUser
+                        ? `\`${channel.rateLimitPerUser} ${lang.embed.fields.seconds}\``
+                        : `\`${lang.embed.fields.none}\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.members,
+                    value: `\`${channel.members.size.toString()}\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.bots,
+                    value: `\`${channel.members.filter((m) => m.user.bot).size.toString()
+                        }\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.topic,
+                    value: `\`${channel.topic || lang.embed.fields.none}\``,
+                    inline: true,
+                });
+
+                break;
+            case ChannelType.GuildVoice:
+                if (!channel.isVoiceBased()) break;
+
                 embed.addFields({
                     name: lang.embed.fields.bitrate,
                     value: `\`${channel.bitrate.toString()} ${lang.embed.fields.kbps}\``,
-                    inline: true
+                    inline: true,
                 }, {
                     name: lang.embed.fields.userLimit,
                     value: `\`${channel.userLimit.toString()}\``,
-                    inline: true
+                    inline: true,
                 }, {
                     name: lang.embed.fields.full,
-                    value: channel.full ? `\`${lang.embed.fields.yes}\`` : `\`${lang.embed.fields.no}\``,
-                    inline: true
-                })
+                    value: channel.full
+                        ? `\`${lang.embed.fields.yes}\``
+                        : `\`${lang.embed.fields.no}\``,
+                    inline: true,
+                });
                 const members = Array.from(channel.members.values());
                 if (members.length > 0) {
                     embed.addFields({
                         name: lang.embed.fields.membersJoined,
-                        value: `\`\`\`diff\n + ${members.map(m => m.user.tag).join("\n + ")}\`\`\``,
-                        inline: true
-                    })
+                        value: `\`\`\`diff\n + ${client.utils.limitString(members.map((m) => m.user.tag).join("\n + "), 3800)
+                            }\`\`\``,
+                        inline: true,
+                    });
                 } else {
                     embed.addFields({
                         name: lang.embed.fields.membersJoined,
                         value: `\`\`\`diff\n - ${lang.embed.fields.noMembers}\`\`\``,
-                        inline: true
-                    })
+                        inline: true,
+                    });
                 }
-            }
 
-        if (channel.isTextBased() && !channel.isDMBased() && !channel.isThread() && !channel.isVoiceBased() && channel.topic) {
-            embed.addFields({
-                name: lang.embed.fields.topic,
-                value: `\`\`\`\n${channel.topic}\`\`\``,
-            })
+                break;
+            case ChannelType.GuildForum:
+                if (channel.isVoiceBased()) break;
+                embed.addFields({
+                    name: lang.embed.fields.cooldownPerUser,
+                    value: `\`${ms((channel.defaultThreadRateLimitPerUser || 0) * 1000, {
+                        long: true,
+                    })
+                        }\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.cooldownPerPost,
+                    value: `\`${ms((channel.rateLimitPerUser || 0) * 1000, { long: true })
+                        }\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.autoArchivePost,
+                    value: `\`${ms((channel.defaultAutoArchiveDuration || 10080) * 60 * 1000, {
+                        long: true,
+                    })
+                        }\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.tags,
+                    value: `\`${channel.availableTags.map((t) => t.name).join(", ")}\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.defaultReactionEmoji,
+                    value: channel?.defaultReactionEmoji?.id
+                        ? (client.emojis.cache.get(channel.defaultReactionEmoji?.id)
+                            ?.toString() || lang.embed.fields.error)
+                        : (channel?.defaultReactionEmoji?.name || `\n${lang.embed.fields.none}\n`),
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.defaultSortOrder,
+                    value: `\`${lang
+                        .sortOrderTypes[
+                        channel.defaultSortOrder || SortOrderType.LatestActivity
+                    ]
+                        }\``,
+
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.defaultForumLayout,
+                    value: `\`${lang
+                        .forumLayoutTypes[
+                        channel.defaultForumLayout || ForumLayoutType.NotSet
+                    ]
+                        }\``,
+                    inline: true,
+                }, {
+                    name: lang.embed.fields.topic,
+                    value: `\`\`\`\n${channel.topic}\`\`\``,
+                    inline: false,
+                });
+
+                break;
+
         }
 
-
-        return message.channel.send({ embeds: [embed] })
-
-    }
-}
+        return message.channel.send({ embeds: [embed] });
+    },
+};
 
 export = command;

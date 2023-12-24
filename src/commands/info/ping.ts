@@ -9,25 +9,25 @@ let command: CommandOptions = {
     async run(message, args, client, language) {
         const lang = client.language.get(language || "en")?.get("ping") || client.language.get("en")?.get("ping");
 
-        const msg = await message.channel.send(lang.firstMessage);
+        const msg = await message.channel.send(lang?.firstMessage);
 
         const latency = `\`\`\`ini\n[ ${Math.floor(msg.createdAt.getTime() - message.createdAt.getTime())}ms ]\`\`\``;
         const apiLatency = `\`\`\`ini\n[ ${Math.round(message.client.ws.ping)}ms ]\`\`\``
 
         const embed = new EmbedBuilder()
-            .setTitle(lang.secondMessage)
+            .setTitle(lang?.secondMessage)
             .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random") 
             .setFooter({
-                text: message.member?.displayName || message.author.username,
+                text: message.author.username,
                 iconURL: message.author.displayAvatarURL()
             })
             .setTimestamp()
             .addFields({
-                name: lang.fields[0],
+                name: lang?.fields[0],
                 value: latency,
                 inline: true
             }, {
-                name: lang.fields[1],
+                name: lang?.fields[1],
                 value: apiLatency,
                 inline: true
             })

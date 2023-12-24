@@ -4,18 +4,19 @@ import axios from 'axios';
 var translate = require('node-google-translate-skidz');
 
 let command: CommandOptions = {
-    name: "dadjokes",
+    name: "thouart",
     type: CommandTypes.Fun,
-    aliases: ['dadjk', 'dadjoke'],
-    usage: 'dadjokes',
+    aliases: ['elizabethan', 'ta'],
+    usage: 'thouart <user mention/ID>',
     cooldown: 10,
     premiumCooldown: 5,
     async run(message, args, client, language) {
 
-        const lang = client.language.get(language || "en")?.get("dadjokes") || client.language.get("en")?.get("dadjokes");
+        const lang = client.language.get(language || "en")?.get("thouart") || client.language.get("en")?.get("thouart");
+        const member = await client.utils.getMemberFromMentionOrID(message, args[0]) || message.member;
         try {
             const res = await axios
-                .get('https://icanhazdadjoke.com/', {
+                .get('https://quandyfactory.com/insult/json/', {
                     headers: {
                         "User-Agent": "Any Bot (https://github.com/MDCYT/Any-Bot)",
                         "Accept": "application/json"
@@ -24,7 +25,7 @@ let command: CommandOptions = {
                 .then((res) => res.data)
                 .catch((err) => {
                     client.logger.error(err.stack);
-                    return client.utils.sendErrorEmbed(client, language, message, this, CommandsErrorTypes.CommandFailure, lang.errors.api, lang.errors.apiDesc);
+                    return client.utils.sendErrorEmbed(client, language, message, this, CommandsErrorTypes.CommandFailure, lang?.errors?.api, lang?.errors?.apiDesc);
                 });
             const embed = new EmbedBuilder()
                 .setTitle(lang?.embed?.title)
@@ -34,19 +35,21 @@ let command: CommandOptions = {
                 })
                 .setTimestamp()
                 .setColor(message.guild?.members.me?.displayHexColor || 'Random');
+
             if (language) {
                 if (language !== "en") {
                     const translateResponse = await translate({
-                        text: res.joke,
+                        text: res.insult,
                         source: 'en',
                         target: language
                     });
-                    embed.setDescription(lang.embed.description.replace(/%%ORIGINAL_JOKE%%/g, res.joke).replace(/%%TRANSLATED_JOKE%%/g, translateResponse.translation));
+                    embed.setDescription(lang?.embed?.description?.replace(/%%MEMBER%%/g, member).replace(/%%INSULT%%/g, translateResponse.translation));
                 } else {
-                     //If the language is english, just display the original and translated version.
-                     embed.setDescription(res.joke);
+                    //If the language is english, just display the original and translated version.
+                    embed.setDescription(lang?.embed?.description?.replace(/%%MEMBER%%/g, member).replace(/%%INSULT%%/g, res.insult));
                 }
-            } else embed.setDescription(res.joke);
+            } else embed.setDescription(lang?.embed?.description?.replace(/%%MEMBER%%/g, member).replace(/%%INSULT%%/g, res.insult));
+
 
             message.channel.send({
                 embeds: [embed]

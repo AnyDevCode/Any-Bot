@@ -1,6 +1,7 @@
 import { CommandTypes, CommandOptions } from '../../utils/utils';
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import axios from 'axios';
+var translate = require('node-google-translate-skidz');
 
 let command: CommandOptions = {
     name: "astronomypicture",
@@ -21,12 +22,28 @@ let command: CommandOptions = {
                 const embed = new EmbedBuilder()
                     .setColor(message.guild?.members.me?.displayColor || "Random")
                     .setTitle(res.data.title)
-                    .setDescription(res.data.explanation)
                     .setTimestamp(date)
                     .setFooter({
                         text: lang.embed.footer,
                         iconURL: "https://www.panoramaaudiovisual.com/wp-content/uploads/2016/02/NASA-Tv.jpg"
                     })
+
+                    var explanation = ""
+                    if (language) {
+                        if (language !== "en") {
+                            const translateResponse = await translate({
+                                text: res.data.explanation,
+                                source: 'en',
+                                target: language
+                            });
+                            explanation = "**(Translated with Google Translator)** " + translateResponse.translation;
+                        } else explanation = res.data.explanation;
+                        
+                    } else explanation = res.data.explanation; 
+
+                if(explanation && explanation.length <= 4096) embed.setDescription(explanation); // If the description is less than or equal to 4096 characters, it will display it.
+                else embed.setDescription(explanation.substring(0, 4092) + "..."); // Otherwise, it will display the first 4090 characters of the description.
+
                 if (res.data.media_type === 'image') {
                     embed.setImage(res.data.url);
 
@@ -60,6 +77,7 @@ let command: CommandOptions = {
 
                     return message.channel.send({ embeds: [embed], components: [row] });
                 }
+
             })
         } catch (e) {
             return message.channel.send({ content: lang.errors.apiError });

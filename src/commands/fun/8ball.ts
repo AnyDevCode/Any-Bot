@@ -18,11 +18,11 @@ let command: CommandOptions = {
             .setTitle(lang.title)
             .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
             .setFooter({
-                text: lang.disclaimer.replace("%%USER%%", message.member?.displayName || message.author.username),
+                text: lang.disclaimer.replace(/%%USER%%/g, message.author.username),
                 iconURL: message.author.displayAvatarURL()
             })
             .setTimestamp()
-            .setDescription(lang.description.replace("%%ANSWER%%", answer).replace("%%QUESTION%%", args.join(" ")))
+            .setDescription(lang.descriptionembed.replace(/%%ANSWER%%/g, answer).replace(/%%QUESTION%%/g, args.join(" ")))
 
         return message.channel.send({ embeds: [embed] })
     }

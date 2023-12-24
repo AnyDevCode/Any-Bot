@@ -22,7 +22,7 @@ export = {
         const [, matchedPrefix] = message.content.match(prefixRegex);
         const args = message.content.slice(matchedPrefix.length).trim().split(/ +/);
         const commandName = args.shift()?.toLowerCase();
-        if((prefixRegex.test(message.content) && message.mentions.users.first()?.id === client.user?.id) && !commandName) {
+        if ((prefixRegex.test(message.content) && message.mentions.users.first()?.id === client.user?.id) && !commandName) {
             const embed = new EmbedBuilder()
                 .setTitle(lang?.info.title.replace("%%BOTNAME%%", message.client.user?.username || ""))
                 .setThumbnail(message.client.user?.displayAvatarURL() || message.author.displayAvatarURL())
@@ -42,12 +42,12 @@ export = {
                         .setStyle(ButtonStyle.Link)
                         .setLabel(lang?.info.buttons[0].label)
                         .setURL(`https://discord.com/oauth2/authorize?client_id=${message.client.user?.id}&scope=bot&permissions=8`),
-                        new ButtonBuilder()
+                    new ButtonBuilder()
                         .setStyle(ButtonStyle.Link)
                         .setLabel(lang?.info.buttons[1].label)
                         .setURL(client.supportServerInvite || "")
                 )
-                
+
             return message.channel.send({ embeds: [embed], components: [linkrow] })
         }
         if (!commandName) return;
@@ -61,7 +61,7 @@ export = {
             if (missingPermissions?.length !== 0 && typeof missingPermissions !== 'undefined') {
                 const embed = new EmbedBuilder()
                     .setTitle(lang?.errors.missingPermissions.user.title)
-                    .setDescription(lang?.errors.missingPermissions.user.description.replace("%%PERMS%%", "- "+missingPermissions.join("\n- ")))
+                    .setDescription(lang?.errors.missingPermissions.user.description.replace("%%PERMS%%", "- " + missingPermissions.join("\n- ")))
                     .setColor(message.guild.members.me?.displayHexColor || message.author.hexAccentColor || "Random")
                     .setThumbnail(message.client.user?.displayAvatarURL() || message.author.displayAvatarURL())
                 return message.channel.send({ embeds: [embed] });
@@ -72,13 +72,13 @@ export = {
             if (missingPermissions?.length !== 0 && typeof missingPermissions !== 'undefined') {
                 const embed = new EmbedBuilder()
                     .setTitle(lang?.errors.missingPermissions.bot.title)
-                    .setDescription(lang?.errors.missingPermissions.bot.description.replace("%%PERMS%%", "- "+missingPermissions.join("\n- ")))
+                    .setDescription(lang?.errors.missingPermissions.bot.description.replace("%%PERMS%%", "- " + missingPermissions.join("\n- ")))
                     .setColor(message.guild.members.me?.displayHexColor || message.author.hexAccentColor || "Random")
                     .setThumbnail(message.client.user?.displayAvatarURL() || message.author.displayAvatarURL())
                 return message.channel.send({ embeds: [embed] });
             }
         }
-        if (command.cooldown) {
+        if (command.cooldown && message.author.id !== client.ownerID) {
             if (!client.cooldowns.has(command.name)) {
                 client.cooldowns.set(command.name, new Map());
             }
@@ -87,25 +87,25 @@ export = {
             if (!timestamps) return;
             let cooldownAmount = (command.cooldown) * 1000;
             let isPremium = false;
-            if(command.premiumCooldown) {
+            if (command.premiumCooldown) {
                 isPremium = await client.database.premium.isPremium(message.guild?.id || "");
-                if(isPremium) cooldownAmount = (command.premiumCooldown) * 1000;
+                if (isPremium) cooldownAmount = (command.premiumCooldown) * 1000;
             }
             if (timestamps.has(message.author.id)) {
                 const userTime = timestamps.get(message.author.id) || 0;
                 const expirationTime = userTime + cooldownAmount;
                 if (now < expirationTime) {
-                    if(command.premiumCooldown && !isPremium) {
-                        const timeLeft = (expirationTime - now) / 1000;
-                        const premiumTimeLeft = (userTime + (command.premiumCooldown * 1000) - now) / 1000;
-                        if(premiumTimeLeft > 0){
-                            return message.channel.send(lang?.errors.premiumCooldown.normal.replace("%%TIME%%", timeLeft.toFixed(1)).replace("%%CMD%%", command.name).replace("%%PREMIUMTIME%%", premiumTimeLeft.toFixed(1)));
+                    if (command.premiumCooldown && !isPremium) {
+                        const timeLeft = (expirationTime) / 1000;
+                        const premiumTimeLeft = userTime + (command.premiumCooldown * 1000) / 1000;
+                        if (premiumTimeLeft > 0) {
+                            return message.channel.send(lang?.errors.premiumCooldown.normal.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`).replace("%%PREMIUMTIME%%", `<t:${Math.round(premiumTimeLeft)}:R>`));
                         } else {
-                            return message.channel.send(lang?.errors.premiumCooldown.instant.replace("%%TIME%%", timeLeft.toFixed(1)).replace("%%CMD%%", command.name));
+                            return message.channel.send(lang?.errors.premiumCooldown.instant.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
                         }
                     } else {
-                        const timeLeft = (expirationTime - now) / 1000;
-                        return message.channel.send(lang?.errors.cooldown.replace("%%TIME%%", timeLeft.toFixed(1)).replace("%%CMD%%", command.name));
+                        const timeLeft = (expirationTime) / 1000;
+                        return message.channel.send(lang?.errors.cooldown.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
                     }
                 }
             }

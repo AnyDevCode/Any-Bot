@@ -11,7 +11,7 @@
     "@discordjs/rest": "^0.5.0",
     "@discordjs/voice": "0.8.0",
     "ascii-table": "0.0.9",
-    "axios": "0.26.0",
+    "axios": "0.28.0",
     "bad-words": "3.0.4",
     "bdl.js": "1.0.3",
     "booru": "2.5.3",

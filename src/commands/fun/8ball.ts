@@ -16,7 +16,7 @@ let command: CommandOptions = {
         const answer = answers[Math.floor(Math.random() * answers.length)];
         const embed = new EmbedBuilder()
             .setTitle(lang.title)
-            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
             .setFooter({
                 text: lang.disclaimer.replace(/%%USER%%/g, message.author.username),
                 iconURL: message.author.displayAvatarURL()

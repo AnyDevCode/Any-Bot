@@ -20,7 +20,7 @@ let command: CommandOptions = {
 
         const embed = new EmbedBuilder()
             .setTitle(lang.embed.title)
-            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
             .setTimestamp()
             .setFooter({
                 text: message.guild?.name || message.author.username,

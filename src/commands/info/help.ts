@@ -49,7 +49,7 @@ let command: CommandOptions = {
         if (!args[0]) {
             const embed = new EmbedBuilder()
                 .setTitle(lang.title)
-                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
                 .setFooter({
                     text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
@@ -71,7 +71,7 @@ let command: CommandOptions = {
         if (categories.includes(client.utils.Capitalize(args[0]) as CommandTypes)) {
             const embed = new EmbedBuilder()
                 .setTitle(lang.title)
-                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
                 .setFooter({
                     text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
@@ -87,7 +87,7 @@ let command: CommandOptions = {
         if (commands.has(args[0])) {
             const embed = new EmbedBuilder()
                 .setTitle(lang.title)
-                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
                 .setFooter({
                     text: message.author.username,
                     iconURL: message.author.displayAvatarURL()
@@ -132,7 +132,7 @@ let command: CommandOptions = {
         //If the user provided an invalid argument, send an error message
         const embed = new EmbedBuilder()
             .setTitle(lang.title)
-            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
             .setFooter({
                 text: message.author.username,
                 iconURL: message.author.displayAvatarURL()

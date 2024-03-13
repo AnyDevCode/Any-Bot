@@ -22,7 +22,7 @@ let command: CommandOptions = {
 
             let embed = new EmbedBuilder()
                 .setTitle(firstLanguage.noArgs.title)
-                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+                .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
                 .setTimestamp()
                 .setDescription(languages.join("\n"))
                 .addFields({

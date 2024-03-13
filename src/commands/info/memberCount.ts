@@ -11,7 +11,7 @@ let command: CommandOptions = {
         const members = await guild.members.fetch();
         const embed = new EmbedBuilder()
             .setTitle(lang?.embed?.title)
-            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || "Random")
+            .setColor(client.user?.hexAccentColor || message.author.hexAccentColor || message.guild?.members.cache.get(client.user?.id as string)?.roles.color?.color || "Random")
             .setFooter({
                 text: message.author.username,
                 iconURL: message.author.displayAvatarURL()

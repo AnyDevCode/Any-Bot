@@ -48,14 +48,14 @@ export = {
                         .setURL(client.supportServerInvite || "")
                 )
 
-            return message.channel.send({ embeds: [embed], components: [linkrow] })
+            return message.reply({ embeds: [embed], components: [linkrow] })
         }
         if (!commandName) return;
         const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
         if (!command) return;
-        if (command.ownerOnly && !client.isOwner(message.author)) return message.channel.send(lang?.errors.ownerOnly);
-        if (command.disabled) return message.channel.send(lang?.errors.disabled);
-        if (!message.channel.isDMBased() && !message.channel.isThread() && command.nsfw && !message.channel.nsfw) return message.channel.send(lang?.errors.nsfw);
+        if (command.ownerOnly && !client.isOwner(message.author)) return message.reply(lang?.errors.ownerOnly);
+        if (command.disabled) return message.reply(lang?.errors.disabled);
+        if (!message.channel.isDMBased() && !message.channel.isThread() && command.nsfw && !message.channel.nsfw) return message.reply(lang?.errors.nsfw);
         if (command.userPermissions && !message.channel.isDMBased()) {
             const missingPermissions = message.channel.permissionsFor(message.author)?.missing(command.userPermissions).map(p => permissions[p]);
             if (missingPermissions?.length !== 0 && typeof missingPermissions !== 'undefined') {
@@ -64,7 +64,7 @@ export = {
                     .setDescription(lang?.errors.missingPermissions.user.description.replace("%%PERMS%%", "- " + missingPermissions.join("\n- ")))
                     .setColor(message.guild.members.me?.displayHexColor || message.author.hexAccentColor || "Random")
                     .setThumbnail(message.client.user?.displayAvatarURL() || message.author.displayAvatarURL())
-                return message.channel.send({ embeds: [embed] });
+                return message.reply({ embeds: [embed] });
             }
         }
         if (command.botPermissions && !message.channel.isDMBased() && message.guild?.members?.me) {
@@ -75,7 +75,7 @@ export = {
                     .setDescription(lang?.errors.missingPermissions.bot.description.replace("%%PERMS%%", "- " + missingPermissions.join("\n- ")))
                     .setColor(message.guild.members.me?.displayHexColor || message.author.hexAccentColor || "Random")
                     .setThumbnail(message.client.user?.displayAvatarURL() || message.author.displayAvatarURL())
-                return message.channel.send({ embeds: [embed] });
+                return message.reply({ embeds: [embed] });
             }
         }
         if (command.cooldown && message.author.id !== client.ownerID) {
@@ -99,13 +99,13 @@ export = {
                         const timeLeft = (expirationTime) / 1000;
                         const premiumTimeLeft = userTime + (command.premiumCooldown * 1000) / 1000;
                         if (premiumTimeLeft > 0) {
-                            return message.channel.send(lang?.errors.premiumCooldown.normal.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`).replace("%%PREMIUMTIME%%", `<t:${Math.round(premiumTimeLeft)}:R>`));
+                            return message.reply(lang?.errors.premiumCooldown.normal.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`).replace("%%PREMIUMTIME%%", `<t:${Math.round(premiumTimeLeft)}:R>`));
                         } else {
-                            return message.channel.send(lang?.errors.premiumCooldown.instant.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
+                            return message.reply(lang?.errors.premiumCooldown.instant.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
                         }
                     } else {
                         const timeLeft = (expirationTime) / 1000;
-                        return message.channel.send(lang?.errors.cooldown.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
+                        return message.reply(lang?.errors.cooldown.replace("%%TIME%%", `<t:${Math.round(timeLeft)}:R>`));
                     }
                 }
             }
@@ -115,14 +115,14 @@ export = {
 
         if (command.premiumOnly) {
             const isPremium = await client.database.premium.isPremium(message.guild?.id || "");
-            if (!isPremium) return message.channel.send(lang?.errors.premiumOnly);
+            if (!isPremium) return message.reply(lang?.errors.premiumOnly);
         }
 
         try {
             command.run(message, args, client, guildData?.language || "en");
         } catch (err) {
             console.log(err);
-            message.channel.send(lang?.errors.unknown);
+            message.reply(lang?.errors.unknown);
         }
     }
 }

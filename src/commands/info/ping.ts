@@ -9,7 +9,7 @@ let command: CommandOptions = {
     async run(message, args, client, language) {
         const lang = client.language.get(language || "en")?.get("ping") || client.language.get("en")?.get("ping");
 
-        const msg = await message.channel.send(lang?.firstMessage);
+        const msg = await message.reply(lang?.firstMessage);
 
         const latency = `\`\`\`ini\n[ ${Math.floor(msg.createdAt.getTime() - message.createdAt.getTime())}ms ]\`\`\``;
         const apiLatency = `\`\`\`ini\n[ ${Math.round(message.client.ws.ping)}ms ]\`\`\``

@@ -1,5 +1,5 @@
 import { CommandTypes, CommandOptions } from '../../utils/utils';
-import { EmbedBuilder } from 'discord.js';
+import { CategoryChannel, EmbedBuilder } from 'discord.js';
 import { Command } from '../command';
 
 let command: CommandOptions = {
@@ -25,7 +25,7 @@ let command: CommandOptions = {
         }
 
         //If the channel is not NSFW, remove the NSFW category
-        if (!message.channel.isDMBased() && message.channel.isTextBased() && !message.channel.isThread() && !message.channel.nsfw) {
+        if (message.channel.isTextBased() && !message.channel.isDMBased() && !message.channel.isThread() && !(message.channel instanceof CategoryChannel) && message.channel.nsfw) {
             for (let i = 0; i < categories.length; i++) {
                 if (categories[i] === CommandTypes.NSFW) {
                     categories.splice(i, 1);
@@ -64,7 +64,7 @@ let command: CommandOptions = {
                 })))
                 .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
 
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
 
         //If the user provided a category, send the commands in that category
@@ -80,7 +80,7 @@ let command: CommandOptions = {
                 .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
                 .setDescription(client.commands.filter(cmd => cmd.type === client.utils.Capitalize(args[0]) as CommandTypes).map(cmd => `\`${cmd.name}\``).join(", "))
 
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
 
         //If the user provided a command, send the command's info
@@ -111,7 +111,7 @@ let command: CommandOptions = {
                     },
                     {
                         name: lang.helpCategory,
-                        value: `\`${topicLang[commands.get(args[0])?.type as CommandTypes].name}\``,
+                        value: `\`${topicLang[commands.get(args[0])?.type as CommandTypes]?.name || "Undefined"}\``,
                         inline: true
                     },
                     {
@@ -126,7 +126,7 @@ let command: CommandOptions = {
                 ])
                 .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
 
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
 
         //If the user provided an invalid argument, send an error message
@@ -141,7 +141,7 @@ let command: CommandOptions = {
             .setThumbnail(client.user?.displayAvatarURL() || message.author.displayAvatarURL())
             .setDescription(lang.invalid);
 
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     }
 }
 

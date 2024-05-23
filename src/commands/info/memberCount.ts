@@ -19,7 +19,7 @@ let command: CommandOptions = {
             .setTimestamp()
             .setDescription(lang?.embed?.description.replace(/%%MEMBERS%%/g, members.size.toString()).replace(/%%HUMANS%%/g, members.filter(m => !m.user.bot).size.toString()).replace(/%%BOTS%%/g, members.filter(m => m.user.bot).size.toString()))
 
-        return message.channel.send({ embeds: [embed] })
+        return message.reply({ embeds: [embed] })
     }
 }
 

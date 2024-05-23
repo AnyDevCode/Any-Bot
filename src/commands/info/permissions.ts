@@ -12,7 +12,7 @@ let command: CommandOptions = {
         const lang = client.language.get(language || "en")?.get("permissions-command") || client.language.get("en")?.get("permissions-command");
         let member = await client.utils.getMemberFromMentionOrID(message, args[0]) || message.member;
         let role = message.mentions.roles.first() || message.guild?.roles.cache.get(args[0]);
-        if (!member && !role) return message.channel.send(lang.errors.noUserOrRole);
+        if (!member && !role) return message.reply(lang.errors.noUserOrRole);
         if (role) {
             let rolePerms = [];
             for (let key in permissions) {
@@ -28,7 +28,7 @@ let command: CommandOptions = {
                     iconURL: message.guild?.iconURL() || message.author.displayAvatarURL()
                 })
                 .setDescription(`\`\`\`diff\n${rolePerms.join("\n")}\`\`\``)
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
         if (member) {
             let memberPerms = [];
@@ -47,7 +47,7 @@ let command: CommandOptions = {
                 })
 
                 .setDescription(`\`\`\`diff\n${memberPerms.join("\n")}\`\`\``)
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
     }
 }

@@ -7,7 +7,8 @@ let command: CommandOptions = {
     aliases: ["boost", "bs"],
     cooldown: 5,
     async run(message, args, client, language) {
-        const lang = client.language.get(language || "en")?.get("boosts") || client.language.get("en")?.get("boosts");
+        const lang = client.language.get(language || "en")?.get("boosts") || client.language.get("en")?.get("boosts") as Record<string, string>;
+        if(!lang) return message.reply("The language provided is not available.");
         const guild = message.guild || await client.guilds.fetch(message.guildId as string);
         const members = await guild.members.fetch();
         let usersBoosting: string[] = members.filter(m => m.premiumSince).sort(client.utils.shortMemberByTimeStamp).map(m => client.emojisCollection.get("earlysupporter") + " **" + (m.user.discriminator && m.user.discriminator !== "0" ? m.user.tag : m.user.username) + "** <t:" + Math.round((m.premiumSinceTimestamp || 0) / 1000) + ":R> " + client.utils.getTimeBoostEmoji(client, m));
@@ -25,7 +26,7 @@ let command: CommandOptions = {
             })
             .setTimestamp()
             .setDescription(lang.embed.description.replace(/%%BOOSTERS_LIST%%/g, usersBoostingString))
-        return message.channel.send({ embeds: [embed] })
+        return message.reply({ embeds: [embed] })
     }
 }
 

@@ -25,7 +25,7 @@ let command: CommandOptions = {
 
             });
 
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     }
 }
 

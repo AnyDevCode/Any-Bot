@@ -40,10 +40,10 @@ let command: CommandOptions = {
         })
         .setTimestamp()
         
-        if(!users.length) return message.channel.send({ embeds: [embed.setDescription(`\`\`\`\n${lang.embed.noUsers}\`\`\``)] })
+        if(!users.length) return message.reply({ embeds: [embed.setDescription(`\`\`\`\n${lang.embed.noUsers}\`\`\``)] })
 
         
-        return message.channel.send({ embeds: [embed.setDescription(`\`\`\`\n${client.utils.limitString(users.map(u => u.tag).join("\n"), 4096)}\`\`\``)] })
+        return message.reply({ embeds: [embed.setDescription(`\`\`\`\n${client.utils.limitString(users.map(u => u.tag).join("\n"), 4096)}\`\`\``)] })
     }
 }
 

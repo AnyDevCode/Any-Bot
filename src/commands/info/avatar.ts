@@ -62,8 +62,8 @@ let command: CommandOptions = {
                 .setImage(customAvatar)
                 .setURL("https://any-bot.xyz/");
 
-            return message.channel.send({ embeds: [embed, embed2] });
-        } else return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed, embed2] });
+        } else return message.reply({ embeds: [embed] });
     },
 };
 

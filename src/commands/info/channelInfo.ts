@@ -43,7 +43,7 @@ let command: CommandOptions = {
         let channel = message.guild?.channels.cache.get(args[0]) ||
             message.mentions.channels.first() || message.channel;
 
-        if (!channel) return message.channel.send(lang.errors.invalidChannel);
+        if (!channel) return message.reply(lang.errors.invalidChannel);
 
         const embed = new EmbedBuilder()
             .setTitle(lang.embed.title)
@@ -58,7 +58,7 @@ let command: CommandOptions = {
                 inline: true,
             }, {
                 name: lang.embed.fields.type,
-                value: `\`${langChannelTypes[channelTypes[channel.type] || "Unknown"]
+                value: `\`${langChannelTypes[channelTypes[channel.type as keyof typeof channelTypes] as keyof typeof langChannelTypes || "Unknown"]
                     }\``,
                 inline: true,
             }, {
@@ -199,7 +199,7 @@ let command: CommandOptions = {
 
         }
 
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     },
 };
 

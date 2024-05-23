@@ -51,7 +51,7 @@ let command: CommandOptions = {
                     .setEmoji("🔗"),
             );
 
-        return message.channel.send({ embeds: [embed], components: [row] })
+        return message.reply({ embeds: [embed], components: [row] })
 
     }
 

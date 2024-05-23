@@ -3,12 +3,6 @@
 
 <p align="center">  
 
-<img src="https://github.com/MDCYT/Any-Bot/actions/workflows/pre-release.yml/badge.svg" alt="prerelease">  
-
-<img src="https://github.com/MDCYT/Any-Bot/actions/workflows/codeql-analysis.yml/badge.svg">  
-
-<img src="https://img.shields.io/github/downloads/MDCYT/Any-Bot/total?color=Green">  
-
 <img src="https://img.shields.io/github/repo-size/MDCYT/Any-Bot">  
 
 <img src="https://img.shields.io/badge/made%20by-MDC-purple.svg" >  

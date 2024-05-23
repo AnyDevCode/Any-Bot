@@ -22,7 +22,7 @@ let command: CommandOptions = {
     usage: "aicover [ia voice] [attachment}",
     premiumCooldown: 120,
     premiumOnly: true,
-    disabled: true,
+    disabled: false,
     async run(message, args, client, language) {
         const kitsai_token = client.apiKeys.get("KITSAI_TOKEN") || "";
 
@@ -76,8 +76,6 @@ let command: CommandOptions = {
                 iconURL: message.author.displayAvatarURL(),
             });
 
-        let wait_message = await message.channel.send({ embeds: [embed] });
-
         let headersList = {
             "authorization": `Bearer ${kitsai_token}`
         }
@@ -85,24 +83,24 @@ let command: CommandOptions = {
         let formdata = new FormData();
         formdata.append("strapiMachineLearningModelId", VoiceID);
         formdata.append("voiceModelId", VoiceID);
-        formdata.append("metadata[pitch]", "0");
-        formdata.append("metadata[rms_mix_rate]", "1");
-        formdata.append("metadata[pre][NoiseGate][threshold_db]", "-15");
-        formdata.append("metadata[pre][NoiseGate][ratio]", "2");
-        formdata.append("metadata[pre][NoiseGate][attack_ms]", "5");
-        formdata.append("metadata[pre][NoiseGate][release_ms]", "100");
-        formdata.append("metadata[pre][HighPassFilter][cutoff_frequency_hz]", "100");
-        formdata.append("metadata[pre][LowPassFilter][cutoff_frequency_hz]", "18000");
-        formdata.append("metadata[pre][Compressor][threshold_db]", "-6");
-        formdata.append("metadata[pre][Compressor][ratio]", "4");
-        formdata.append("metadata[pre][Compressor][attack_ms]", "1");
-        formdata.append("metadata[pre][Compressor][release_ms]", "40");
+        // formdata.append("metadata[pitch]", "0");
+        // formdata.append("metadata[rms_mix_rate]", "1");
+        // formdata.append("metadata[pre][NoiseGate][threshold_db]", "-15");
+        // formdata.append("metadata[pre][NoiseGate][ratio]", "2");
+        // formdata.append("metadata[pre][NoiseGate][attack_ms]", "5");
+        // formdata.append("metadata[pre][NoiseGate][release_ms]", "100");
+        // formdata.append("metadata[pre][HighPassFilter][cutoff_frequency_hz]", "100");
+        // formdata.append("metadata[pre][LowPassFilter][cutoff_frequency_hz]", "18000");
+        // formdata.append("metadata[pre][Compressor][threshold_db]", "-6");
+        // formdata.append("metadata[pre][Compressor][ratio]", "4");
+        // formdata.append("metadata[pre][Compressor][attack_ms]", "1");
+        // formdata.append("metadata[pre][Compressor][release_ms]", "40");
         formdata.append("soundFile", fs.createReadStream(pathFile));
 
         let bodyContent = formdata;
 
         let reqOptions = {
-            url: "https://arpeggi.io/api/v2/ml-inference-jobs",
+            url: "https://arpeggi.io/api/kits/v1/voice-conversions",
             method: "POST",
             headers: headersList,
             data: bodyContent,
@@ -110,13 +108,15 @@ let command: CommandOptions = {
 
         let response: JobDetails | null = (await axios.request(reqOptions))?.data;
 
-        console.log(response)
-
         if (!response) return client.utils.sendErrorEmbed(client, language, message, command, CommandsErrorTypes.InvalidArgument, "The audio file could not be processed.")
 
         const jobID = response.id;
 
         if (!jobID) return client.utils.sendErrorEmbed(client, language, message, command, CommandsErrorTypes.InvalidArgument, "The audio file could not be processed.")
+
+        embed.setThumbnail(response.model?.imageUrl || null);
+
+        let wait_message = await message.reply({ embeds: [embed] });
 
         // Wait 10 seconds for the audio to be generated
         let attemps = 0;
@@ -126,42 +126,57 @@ let command: CommandOptions = {
 
             await axios({
                 method: 'GET',
-                url: 'https://arpeggi.io/api/v2/ml-inference-jobs',
-                params: { order: 'desc', perPage: '500' },
+                url: `https://arpeggi.io/api/kits/v1/voice-conversions/${jobID}`,
                 headers: {
                     authorization: `Bearer ${kitsai_token}`
                 }
             })
-                .then(async function (response: { data: { meta: any, data: JobDetails[] | null} }) {
+                .then(async function (response: { data: JobDetails }) {
                     try {
-                        if(attemps >= 100) return;
-                        if (!response.data || !response.data?.data) {
+                        if (attemps >= 100) return;
+                        if (!response.data) {
                             attemps++;
                             return charge_mp3();
                         };
 
-                        console.log("Devolvio algo POG")
-                        for (const job of response.data.data) {
-                            if (job.id == jobID) {
-                                console.log("Ahuevo, esta la tarea")
-                                if (job.jobStatus == 'success') {
-                                    console.log("Ahuevo, acabo")
-                                    voice_mp3 = job.outputFile.url;
-                                    // Make a Discord attachment
-                                    const attachment = new AttachmentBuilder(voice_mp3, {
-                                        name: `${voice} - ${file.name}`
-                                    });
-                                    // Send the attachment
-                                    await message.reply({ files: [attachment] });
-                                    //Delete the message
+                        const job = response.data;
+
+                        if (job.id == jobID) {
+                            if (job.status == 'success') {
+                                if (!job.lossyOutputFileUrl) {
                                     wait_message.delete();
                                     attemps = 100;
-                                    return;
+                                    return client.utils.sendErrorEmbed(client, language, message, command, CommandsErrorTypes.CommandFailure, "There was an error generating the voice, please try again later.");
                                 }
-                            } else {
-                                attemps++;
-                                return await charge_mp3()
+                                voice_mp3 = job.lossyOutputFileUrl;
+                                // Make a Discord attachment
+                                const attachment = new AttachmentBuilder(voice_mp3, {
+                                    name: `${voice} - ${file.name}`
+                                });
+                                // Send the attachment
+                                await message.reply({ files: [attachment] });
+                                //Delete the message
+                                wait_message.delete();
+                                attemps = 100;
+                                return;
                             }
+
+                            if (job.status == 'error') {
+                                wait_message.delete();
+                                attemps = 100;
+                                return client.utils.sendErrorEmbed(client, language, message, command, CommandsErrorTypes.CommandFailure, "There was an error generating the voice, please try again later.");
+                            }
+
+                            if (job.status == 'cancelled') {
+                                wait_message.delete();
+                                attemps = 100;
+                                return client.utils.sendErrorEmbed(client, language, message, command, CommandsErrorTypes.CommandFailure, "There was an error generating the voice, please try again later.");
+                            }
+
+                            attemps++;
+                        } else {
+                            attemps++;
+                            return await charge_mp3()
                         }
                     } catch (error) {
                         attemps++;
@@ -178,7 +193,7 @@ let command: CommandOptions = {
                     await charge_mp3();
                     if (attemps >= 3) {
                         wait_message.delete();
-                        return message.channel.send({
+                        return message.reply({
                             content: `${message.author.username}, there was an error, please try again later.`,
                         });
                     }

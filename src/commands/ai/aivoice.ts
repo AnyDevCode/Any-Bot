@@ -69,7 +69,7 @@ let command: CommandOptions = {
                 iconURL: message.author.displayAvatarURL(),
             });
 
-        let wait_message = await message.channel.send({ embeds: [embed] });
+        let wait_message = await message.reply({ embeds: [embed] });
 
         time_wait = time_wait * 1000;
 
@@ -145,7 +145,7 @@ let command: CommandOptions = {
                     await charge_mp3();
                     if (attemps >= 3) {
                         wait_message.delete();
-                        return message.channel.send({
+                        return message.reply({
                             content: `${message.author.username}, there was an error, please try again later.`,
                         });
                     }

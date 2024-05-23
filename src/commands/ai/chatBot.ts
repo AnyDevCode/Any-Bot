@@ -13,8 +13,6 @@ let command: CommandOptions = {
 
         if (!args[0]) return client.utils.sendErrorEmbed(client, language, message, this, CommandsErrorTypes.InvalidArgument, lang.errors.noArgs);
 
-        await message.channel.sendTyping()
-
         const response = await client.utils.chatBot(message);
 
         if(!response) return client.utils.sendErrorEmbed(client, language, message, this, CommandsErrorTypes.CommandFailure, lang.errors.noResponse);

@@ -13,9 +13,9 @@ let command: CommandOptions = {
             const { data: thedata } = await axios.get(client.apiURL + "/koala");
             data = thedata;
         } catch (e) {
-            return message.channel.send(lang.error);
+            return message.reply(lang.error);
         }
-        if (!data) return message.channel.send(lang.error);
+        if (!data) return message.reply(lang.error);
 
         const embed = new EmbedBuilder()
             .setTitle(lang.embed.title)
@@ -31,7 +31,7 @@ let command: CommandOptions = {
                 value: data.fact || "IDK, this is a error, lol"
             })
 
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     }
 }
 

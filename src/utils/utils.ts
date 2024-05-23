@@ -173,7 +173,8 @@ enum CommandTypes {
     Animals = "Animals",
     Internet = "Internet",
     Premium = "Premium",
-    AI = "AI"
+    AI = "AI",
+    Social = "Social",
 }
 
 enum CommandsErrorTypes {
@@ -200,7 +201,7 @@ async function sendErrorEmbed(client: Bot, language: string, message: Message, c
         .setDescription(`\`\`\`diff\n- ${CommandsErrorTypesLang[errorType]}\n+ ${reason}\`\`\``)
         .addFields({
             name: lang?.embed?.fields[0]?.title,
-            value: `\`${prefix}${command.usage}\``
+            value: `\`${prefix}${command.usage || command.name}\``
         })
         .setTimestamp()
         .setColor(message.member?.displayHexColor || message.guild?.members.me?.displayHexColor || 'Random')
@@ -214,7 +215,7 @@ async function sendErrorEmbed(client: Bot, language: string, message: Message, c
         value: `\`\`\`\n${errorMessage}\`\`\``
     })
 
-    return message.channel.send({
+    return message.reply({
         embeds: [embed]
     })
 
@@ -392,7 +393,7 @@ function limitString(string: string, limit: number) {
 async function TempFilePathFromInternet(url: string) {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        const extension = path.extname(url);
+        const extension = path.extname(url).replace(/\?.+/, '');
         const tempFilename = `${uuidv4()}${extension}`;
         const tempDir = path.join(__dirname, 'temp'); // Directorio temporal
         if (!fs.existsSync(tempDir)) {
@@ -435,84 +436,87 @@ interface VoiceData {
     is_private: boolean
     name: string
 }
-
-interface InputFile {
-    url: string;
-    name: string;
-    extname: string;
-    size: number;
-    mimeType: string;
-}
-
-interface OutputFile {
-    url: string;
-    name: string;
-    extname: string;
-    size: number;
-    mimeType: string;
-}
-
-interface LossyOutputFile extends OutputFile { }
-
-interface InstanceDetails {
-    id: string;
-    type: string;
-    region: string;
-    reservationType: string;
-}
-
-interface Metadata {
-    pre: {
-        NoiseGate: {
-            ratio: number;
-            attack_ms: number;
-            release_ms: number;
-            threshold_db: number;
-        };
-        Compressor: {
-            ratio: number;
-            attack_ms: number;
-            release_ms: number;
-            threshold_db: number;
-        };
-        LowPassFilter: {
-            cutoff_frequency_hz: number;
-        };
-        HighPassFilter: {
-            cutoff_frequency_hz: number;
-        };
-    };
-    pitch: number;
-    rms_mix_rate: number;
-}
-
 interface JobDetails {
     id: number;
     createdAt: string;
-    updatedAt: string;
-    userId: number | null;
-    machineLearningModelId: number | null;
-    inputFile: InputFile;
-    outputFile: OutputFile;
-    lossyOutputFile: LossyOutputFile;
-    jobStatus: string;
-    metadata: Metadata;
-    aiUserId: number;
-    modelUrl: string | null;
-    strapiMachineLearningModelId: number | null;
-    audioDurationMs: number;
-    backingAudioFile: any; // Type for backingAudioFile is unknown in your provided JSON
-    recombinedAudioFile: any; // Type for recombinedAudioFile is unknown in your provided JSON
-    voiceModelId: number;
-    jobStartTime: string | null;
+    type: 'rvc' | 'uvr' | 'tts';
+    status: 'running' | 'success' | 'error' | 'cancelled';
+    jobStartTime: string
     jobEndTime: string | null;
-    instanceDetails: InstanceDetails;
-    timingMs: any; // Type for timingMs is unknown in your provided JSON
-    machineLearningModel: any; // Type for machineLearningModel is unknown in your provided JSON
-    user: any; // Type for user is unknown in your provided JSON
+    outputFileUrl: string | null;
+    lossyOutputFileUrl: string | null;
+    backingAudioFileUrl: string | null;
+    vocalAudioFileUrl: string | null;
+    lossyVocalAudioFileUrl: string | null;
+    recombinedAudioFileUrl: string | null;
+    voiceModelId: string | null | undefined;
+    model: VoiceModel | null;
+}
+
+interface VoiceModel {
+    id: string;
+    title: string;
+    tags: string[] | null;
+    imageUrl: string | null;
+    demoUrl: string | null;
+    twitterLink: string | null;
+    instagramLink: string | null;
+    tiktokLink: string | null;
+    spotifyLink: string | null;
+    youtubeLink: string | null;
+}
+
+interface GDProfile {
+    username: string;
+    playerID: string;
+    accountID: string;
+    rank: number;
+    stars: number;
+    diamonds: number;
+    coins: number;
+    userCoins: number;
+    demons: number;
+    moons: number;
+    cp: number;
+    icon: number;
+    friendRequests: boolean;
+    messages: string;
+    commentHistory: string;
+    moderator: number;
+    youtube: string | null;
+    twitter: string | null;
+    twitch: string | null;
+    ship: number;
+    ball: number;
+    ufo: number;
+    wave: number;
+    robot: number;
+    spider: number;
+    swing: number;
+    jetpack: number;
+    col1: number;
+    col2: number;
+    colG: number;
+    deathEffect: number;
+    glow: number;
+    col1RGB: {
+        r: number;
+        g: number;
+        b: number;
+    };
+    col2RGB: {
+        r: number;
+        g: number;
+        b: number;
+    };
+    colGRGB: {
+        r: number;
+        g: number;
+        b: number;
+    }
 }
 
 
 
 export default { CommandTypes, CommandsErrorTypes, Capitalize, getMemberAvatar, upload, getMemberFromMention, getUserBanner, sendErrorEmbed, createTempFile, writeToFile, deleteFile, getRange, capitalize, chatBot, dalle, generateRandomUserData, getChannelFromMention, getUserByIDorMention, shortMemberByTimeStamp, getTimeBoostEmoji, limitString, getMemberFromMentionOrID, stringToUrlEncoded, TempFilePathFromInternet }
-export { CommandTypes, CommandsErrorTypes, CommandOptions, CommandTopic, AnimalData, TopicData, VoiceData, JobDetails }
+export { CommandTypes, CommandsErrorTypes, CommandOptions, CommandTopic, AnimalData, TopicData, VoiceData, JobDetails, GDProfile }

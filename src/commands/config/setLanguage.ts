@@ -33,15 +33,15 @@ let command: CommandOptions = {
                     text: message.guild?.name || message.author.username,
                     iconURL: message.guild?.iconURL() || message.author.displayAvatarURL()
                 })
-            return message.channel.send({ embeds: [embed] });
+            return message.reply({ embeds: [embed] });
         }
         let lang = args[0].toLowerCase();
-        if (!client.language.has(lang)) return message.channel.send(firstLanguage.invalidLanguage);
-        if (language === lang) return message.channel.send(firstLanguage.sameLanguage);
+        if (!client.language.has(lang)) return message.reply(firstLanguage.invalidLanguage);
+        if (language === lang) return message.reply(firstLanguage.sameLanguage);
         await client.database.settings.setLanguage(message.guild?.id, lang);
-        // return message.channel.send("Language set to " + Languages[lang as keyof typeof Languages]);
+        // return message.reply("Language set to " + Languages[lang as keyof typeof Languages]);
         const secondLanguage = client.language.get(lang)?.get("setlanguage") || client.language.get("en")?.get("setlanguage");
-        return message.channel.send(secondLanguage.success.replace(/%%LANGUAGE%%/g, Languages[lang as keyof typeof Languages]));
+        return message.reply(secondLanguage.success.replace(/%%LANGUAGE%%/g, Languages[lang as keyof typeof Languages]));
     }
 }
 

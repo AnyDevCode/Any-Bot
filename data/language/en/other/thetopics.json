@@ -94,5 +94,9 @@
     "AI": {
         "name": "AI",
         "description": "All AI commands for the bot"
+    },
+    "Social": {
+        "name": "Social",
+        "description": "All social commands for the bot"
     }
 }

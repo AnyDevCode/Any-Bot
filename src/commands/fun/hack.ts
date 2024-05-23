@@ -26,7 +26,7 @@ let command: CommandOptions = {
             })
             .setDescription(lang?.embeds[0]?.description)
 
-        let msg = await message.channel.send({embeds: [embed]});
+        let msg = await message.reply({embeds: [embed]});
 
         let embed2 = new EmbedBuilder()
             .setColor(message.guild?.members.me?.displayHexColor || "Random")

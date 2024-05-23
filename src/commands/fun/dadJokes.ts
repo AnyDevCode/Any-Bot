@@ -48,7 +48,7 @@ let command: CommandOptions = {
                 }
             } else embed.setDescription(res.joke);
 
-            message.channel.send({
+            message.reply({
                 embeds: [embed]
             });
 

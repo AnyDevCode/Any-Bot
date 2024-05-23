@@ -11,7 +11,7 @@ let command: CommandOptions = {
     async run(message, args, client, language) {
         const lang = client.language.get(language || "en")?.get("8ball") || client.language.get("en")?.get("8ball");
 
-        if (!args[0]) return message.channel.send(lang.noArgs);
+        if (!args[0]) return message.reply(lang.noArgs);
         const answers = lang.answers;
         const answer = answers[Math.floor(Math.random() * answers.length)];
         const embed = new EmbedBuilder()
@@ -24,7 +24,7 @@ let command: CommandOptions = {
             .setTimestamp()
             .setDescription(lang.descriptionembed.replace(/%%ANSWER%%/g, answer).replace(/%%QUESTION%%/g, args.join(" ")))
 
-        return message.channel.send({ embeds: [embed] })
+        return message.reply({ embeds: [embed] })
     }
 }
 

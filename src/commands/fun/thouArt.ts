@@ -51,7 +51,7 @@ let command: CommandOptions = {
             } else embed.setDescription(lang?.embed?.description?.replace(/%%MEMBER%%/g, member).replace(/%%INSULT%%/g, res.insult));
 
 
-            message.channel.send({
+            message.reply({
                 embeds: [embed]
             });
 

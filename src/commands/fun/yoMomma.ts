@@ -47,7 +47,7 @@ let command: CommandOptions = {
                     embed.setDescription(`${member}, ${joke}`);
                 }
             } else embed.setDescription(`${member}, ${joke}`);
-            message.channel.send({
+            message.reply({
                 embeds: [embed]
             });
         } catch (err) {

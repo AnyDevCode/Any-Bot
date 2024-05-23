@@ -30,7 +30,7 @@ let command: CommandOptions = {
             .setFooter({ text: message.author.username, iconURL: message.author.displayAvatarURL() })
             .setTimestamp()
             .setColor(message.guild?.members.me?.displayHexColor || 'Random');
-        message.channel.send({ embeds: [embed] });
+        message.reply({ embeds: [embed] });
     }
 }
 

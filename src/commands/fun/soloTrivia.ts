@@ -58,7 +58,7 @@ const command: CommandOptions = {
         const url = question.match(/\bhttps?:\/\/\S+/gi);
         if (url) questionEmbed.setImage(url[0]);
 
-        message.channel.send({ embeds: [questionEmbed] });
+        message.reply({ embeds: [questionEmbed] });
 
         let winner: User;
         const collector = new MessageCollector(message.channel, {
@@ -81,8 +81,8 @@ const command: CommandOptions = {
                 .setTimestamp()
                 .setColor(message.guild?.members.me?.displayHexColor || client.user?.hexAccentColor || message.author.hexAccentColor || "Random");
 
-            if (winner) message.channel.send({ embeds: [answerEmbed.setDescription(lang?.messages?.win?.replace("%%WINNER%%", winner))] });
-            else message.channel.send({
+            if (winner) message.reply({ embeds: [answerEmbed.setDescription(lang?.messages?.win?.replace("%%WINNER%%", winner))] });
+            else message.reply({
                 embeds: [answerEmbed.setDescription(lang?.messages?.lose?.replace("%%AUTHOR%%", message.author))
                     .addFields({
                         name: lang?.embed?.fields[2]?.name,

@@ -57,10 +57,10 @@ let command: CommandOptions = {
                                     .setEmoji("🖼️")
                             );
 
-                        return message.channel.send({ embeds: [embed], components: [row] });
+                        return message.reply({ embeds: [embed], components: [row] });
                     }
 
-                    return message.channel.send({ embeds: [embed] });
+                    return message.reply({ embeds: [embed] });
 
                 } else {
                     // Create the Embed:
@@ -75,12 +75,12 @@ let command: CommandOptions = {
                                 .setEmoji("🎥")
                         );
 
-                    return message.channel.send({ embeds: [embed], components: [row] });
+                    return message.reply({ embeds: [embed], components: [row] });
                 }
 
             })
         } catch (e) {
-            return message.channel.send({ content: lang.errors.apiError });
+            return message.reply({ content: lang.errors.apiError });
         }
     }
 }

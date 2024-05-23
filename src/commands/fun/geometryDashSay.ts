@@ -22,7 +22,7 @@ let command: CommandOptions = {
 
         let txt = encodeURIComponent(args.join(' '))
 
-        if (!txt) return message.channel.send(lang.errors.noArgs);
+        if (!txt) return message.reply(lang.errors.noArgs);
 
         let links = [`https://gdcolon.com/tools/gdtextbox/img/${txt}?color=${colorize}&name=${autor}&char=${capture}`]
 
@@ -30,7 +30,7 @@ let command: CommandOptions = {
 
         let attachment = new AttachmentBuilder(image).setName("message.png");
 
-        message.channel.send({ files: [attachment] })
+        message.reply({ files: [attachment] })
     },
 }
 

@@ -66,7 +66,7 @@ let command: CommandOptions = {
                 url: res.postLink
             })
             .setColor(message.guild?.members.me?.displayHexColor || "Random");
-        message.channel.send({
+        message.reply({
             embeds: [embed],
             files: [attachment],
             components: [row]

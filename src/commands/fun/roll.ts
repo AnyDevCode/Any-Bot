@@ -23,7 +23,7 @@ let command: CommandOptions = {
             })
             .setTimestamp()
             .setColor(message.guild?.members.me?.displayHexColor || 'Random');
-        message.channel.send({ embeds: [embed] });
+        message.reply({ embeds: [embed] });
     }
 }
 

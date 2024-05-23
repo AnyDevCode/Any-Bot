@@ -40,7 +40,7 @@ let command: CommandOptions = {
             })
             .setTimestamp()
             .setColor(message.guild?.members?.me?.displayHexColor || message.member?.displayHexColor || "Random")
-        message.channel.send({
+        message.reply({
             embeds: [embed],
             files: [image]
         });

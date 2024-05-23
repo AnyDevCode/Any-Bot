@@ -103,7 +103,7 @@ let command: CommandOptions = {
             .setDescription(buscaminas.join('\n').replace(/,/g, ''))
             .setColor(message.guild?.members.me?.displayHexColor || 'Random')
             .setTimestamp()
-        return message.channel.send({ embeds: [embed] });
+        return message.reply({ embeds: [embed] });
     }
 }
 

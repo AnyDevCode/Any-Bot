@@ -14,7 +14,7 @@ let command: CommandOptions = {
         // Check if it has args:
         if (!args[0]) return client.utils.sendErrorEmbed(client, language, message, this, client.utils.CommandsErrorTypes.InvalidArgument, lang.errors.noText);
         // Check if args not are longer than 15 characters:
-        if (args.join(" ").length < 15) figlet(args.join(" "), (err, data) => message.channel.send({
+        if (args.join(" ").length < 15) figlet(args.join(" "), (err, data) => message.reply({
             content: "```" + data + "```"
         }))
         else {
@@ -25,7 +25,7 @@ let command: CommandOptions = {
                 // Write the ascii text to the temp file:
                 await client.utils.writeToFile(tempFile, data || "");
                 // Send the file:
-                message.channel.send({
+                message.reply({
                     files: [{
                         attachment: tempFile.path,
                         name: "ascii.txt"

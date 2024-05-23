@@ -12,14 +12,14 @@ let command: CommandOptions = {
         if (message.attachments.size > 0) {
             //Get the attachment
             const attachment = message.attachments.first();
+ 
+            if (!attachment) return message.reply("No attachment found");
 
-            if (!attachment) return message.channel.send("No attachment found");
-
-            return message.channel.send(await client.utils.upload(attachment, message, client));
+            return message.reply(await client.utils.upload(attachment, message, client));
 
             
         } else {
-            message.channel.send("No attachment found");
+            message.reply("No attachment found");
         }
     }
 }

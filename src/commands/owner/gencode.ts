@@ -46,7 +46,7 @@ let command: CommandOptions = {
         }
     }
 
-    message.channel.send({
+    message.reply({
         content:  `\`\`\`Generated +${codes.length}\n\n--------\n${codes.join(
             "\n"
           )}\n--------\n\nType - ${plan}\nExpires - ${moment(new Date(new Date().getTime() + expires)).format(

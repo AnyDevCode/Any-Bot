@@ -12,10 +12,10 @@ let command: CommandOptions = {
 
         let isPremium = await client.database.premium.isPremium(message.guild?.id || message.author.id);
         
-        if(!args[0] && !isPremium) return message.channel.send("You are not premium");
+        if(!args[0] && !isPremium) return message.reply("You are not premium");
         if(!args[0] && isPremium) {
             const guildData = await client.database.premium.get(message.guild?.id || message.author.id);
-            if(!guildData) return message.channel.send("An error occured")
+            if(!guildData) return message.reply("An error occured")
             let embed = new EmbedBuilder()
             .setColor("Random")
             .setAuthor({
@@ -24,7 +24,7 @@ let command: CommandOptions = {
             })
             .setTitle("Premium")
             .setDescription(`You are premium until <t:${Math.floor(guildData.expiresAt.getTime() / 1000)}:R>`);
-            return message.channel.send({embeds: [embed]});
+            return message.reply({embeds: [embed]});
         }
 
 
@@ -32,7 +32,7 @@ let command: CommandOptions = {
 
         let premium = await client.database.premiumCodes.get(code);
 
-        if(!premium) return message.channel.send("Invalid code");
+        if(!premium) return message.reply("Invalid code");
 
         let time;
         switch(premium.plan) {
@@ -56,18 +56,18 @@ let command: CommandOptions = {
         }
 
 
-        if(premium.uses <= 0) return message.channel.send("This code has been used");
+        if(premium.uses <= 0) return message.reply("This code has been used");
 
         if(isPremium) {
             const guildData = await client.database.premium.get(message.guild?.id || message.author.id);
-            if(!guildData) return message.channel.send("An error occured")
+            if(!guildData) return message.reply("An error occured")
             await client.database.premiumCodes.use(code);
             await client.database.premium.update(message.guild?.id || message.author.id, new Date( guildData.expiresAt.getTime() + time), true);
-            return message.channel.send("Successfully added premium to your server");
+            return message.reply("Successfully added premium to your server");
         } else {
             await client.database.premiumCodes.use(code);
             await client.database.premium.update(message.guild?.id || message.author.id, new Date(new Date().getTime() + time), true);
-            return message.channel.send("Successfully added premium to your server");
+            return message.reply("Successfully added premium to your server");
         }
     }
 
